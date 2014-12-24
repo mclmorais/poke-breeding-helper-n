@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="shiny_spinner_options_drawables">
+        <item>@drawable/symbol_ditto</item>
+        <item>@drawable/symbol_ditto_shiny</item>
+    </array>
+
+    <array name="string_pokemon_list">
+        <item>Bulbasaur</item>
+        <item>Ivysaur</item>
+        <item>Venosaur</item>
+    </array>
+
+    <array name="drawables">
+        <item>@drawable/pkmn_001</item>
+    </array>
+
+</resources>

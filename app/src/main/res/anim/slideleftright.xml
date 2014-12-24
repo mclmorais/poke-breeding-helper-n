@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <set xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shareInterpolator="true"
+        android:fillBefore="true"
+        android:startOffset="10">
+
+        <scale android:fromXScale="0%" android:toXScale="100%"
+            android:fromYScale="100%" android:toYScale="100%"
+            android:pivotX="100%" android:pivotY="100%"
+            android:interpolator="@android:anim/accelerate_interpolator"
+            android:duration="1500"/>
+    </set>
+</set>

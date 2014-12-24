@@ -1,0 +1,31 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="adDisabled"
+        android:summaryOff="Leaving the Ad running helps me continue to support and add features to this app. \r\nIf you want, you can turn them off here."
+        android:summaryOn="Ads disabled. Please consider re-enabling them at a later time to help support the app!"
+        android:title="Disable Ads">
+    </CheckBoxPreference>
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="addParentsAsEggs"
+        android:summaryOff="Former parents will NOT be added back as eggs when switching parents."
+        android:summaryOn="Former parents will be added back as eggs when switching parents."
+        android:title="Add parents back as eggs">
+    </CheckBoxPreference>
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="showBothPercentagesOnSwitch"
+        android:summaryOff="When switching parents, only the added chance percentage will be shown. Check to show both total and added percentage."
+        android:summaryOn="When switching parents, both total and added chance percentages will be shown. Uncheck to show only the added percentage."
+        android:title="Show total percentage">
+
+    </CheckBoxPreference>
+
+
+</PreferenceScreen>

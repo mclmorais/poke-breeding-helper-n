@@ -1,0 +1,112 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="MyRaisedButton">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/layer_card_background_button6</item>
+        <item name="android:textColor">@color/accent</item>
+    </style>
+
+    <style name="CapsLabel">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyDialogStyle" parent="@android:style/Theme.Holo.Light.Dialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="card_thumbnail">
+        <item name="android:layout_marginLeft">@dimen/thumbnail_margin_left</item>
+        <item name="android:layout_marginRight">@dimen/thumbnail_margin_right</item>
+    </style>
+
+    <style name="default_iv_icons">
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_height">@dimen/iv_button_checkbox_size</item>
+        <item name="android:layout_width">@dimen/iv_button_checkbox_size</item>
+    </style>
+
+    <style name="division_bar">
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_marginTop">3dp</item>
+    </style>
+
+    <style name="splashScreenTheme" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <!--<item name="android:windowBackground">@drawable/splash_screen</item>-->
+    </style>
+
+    <style name="card_header_title">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="card_header_title_no_left_padding">
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">-8dp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+
+    <style name="card_inside_title">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="card_header_button">
+        <!--<item name="android:layout_centerVertical">true</item>-->
+        <!--<item name="android:layout_height">@dimen/card_header_button_size</item>-->
+        <item name="android:background">@drawable/button_press_white_lightgray_selector</item>
+    </style>
+
+    <style name="card_header_button2">
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="card_contextual_button">
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_height">@dimen/card_header_button_size</item>
+        <item name="android:background">@drawable/button_press_white_lightgray_selector</item>
+    </style>
+
+    <style name="card_header_separator">
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_centerVertical">true</item>
+
+    </style>
+
+
+    <style name="CompatDarkActionBarTheme" parent="android:Theme.Holo.Light" />
+
+        <style name="ListItemBigText">
+            <item name="android:textColor">#25467A</item>
+            <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+            <item name="android:fontFamily">sans-serif-light</item>
+            <item name="android:textStyle">italic</item>
+        </style>
+
+        <style name="ListItemSubtext">
+            <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+            <item name="android:textColor">?android:attr/textColorSecondary</item>
+        </style>
+
+</resources>

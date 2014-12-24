@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:background="@drawable/layer_card_background_round"
+    android:id="@+id/frameDynamicHatch">
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:id="@+id/imageDynamicHatchIcon"
+        android:layout_gravity="right|bottom"
+        android:background="@drawable/pkmn_384" />
+
+    <ImageView
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:id="@+id/imageDynamicHatchGender"
+        android:layout_gravity="left|bottom"
+        android:background="@drawable/symbol_male"
+        android:layout_marginBottom="2dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/placeholder_number"
+        android:id="@+id/textDynamicHatchNumber"
+        android:layout_gravity="left|top"
+        style="@style/CapsLabel"
+        android:textSize="12sp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp" />
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="4dp"
+        android:id="@+id/layoutDynamicHatchIVs">
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:id="@+id/imageDynamicHatchHP"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:background="@drawable/ic_iv_circle_selector" />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:id="@+id/imageDynamicHatchATK"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:background="@drawable/ic_iv_triangle_selector" />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:id="@+id/imageDynamicHatchDEF"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:background="@drawable/ic_iv_square_selector" />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:id="@+id/imageDynamicHatchSATK"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:background="@drawable/ic_iv_heart_selector" />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:id="@+id/imageDynamicHatchSDEF"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:background="@drawable/ic_iv_star_selector" />
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:id="@+id/imageDynamicHatchSPD"
+            android:layout_row="1"
+            android:layout_column="2"
+            android:background="@drawable/ic_iv_diamond_selector" />
+    </GridLayout>
+
+</FrameLayout>

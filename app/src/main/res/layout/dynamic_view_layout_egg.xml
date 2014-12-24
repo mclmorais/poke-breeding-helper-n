@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:id="@+id/relativeLayoutDynamicEgg"
+    android:clickable="false"
+    android:background="@drawable/layer_card_background_round">
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:id="@+id/imageViewDynamicEggIcon"
+        android:layout_centerVertical="true"
+        android:background="@drawable/ic_egg_outline" />
+
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:id="@+id/imageViewDynamicEggHP"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/iv_circle_clear" />
+
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:id="@+id/imageViewDynamicEggATK"
+        android:focusableInTouchMode="false"
+        android:layout_toRightOf="@+id/imageViewDynamicEggHP"
+        android:layout_alignTop="@+id/imageViewDynamicEggHP"
+        android:background="@drawable/iv_triangle_clear" />
+
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:id="@+id/imageViewDynamicEggDEF"
+        android:focusableInTouchMode="false"
+        android:layout_toRightOf="@+id/imageViewDynamicEggATK"
+        android:layout_alignTop="@+id/imageViewDynamicEggATK"
+        android:background="@drawable/iv_square_clear" />
+
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:id="@+id/imageViewDynamicEggSATK"
+        android:focusableInTouchMode="false"
+        android:layout_below="@+id/imageViewDynamicEggHP"
+        android:layout_alignLeft="@+id/imageViewDynamicEggHP"
+        android:background="@drawable/iv_heart_clear" />
+
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:id="@+id/imageViewDynamicEggSDEF"
+        android:focusableInTouchMode="false"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/imageViewDynamicEggATK"
+        android:layout_below="@+id/imageViewDynamicEggATK"
+        android:background="@drawable/iv_star_clear" />
+
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:id="@+id/imageViewDynamicEggSPD"
+        android:focusableInTouchMode="false"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/imageViewDynamicEggDEF"
+        android:layout_below="@+id/imageViewDynamicEggDEF"
+        android:background="@drawable/iv_diamond_clear" />
+
+    <ImageView
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:id="@+id/imageViewDynamicEggGender"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="2dp"
+        android:background="@drawable/symbol_male" />
+
+    <TextView
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:id="@+id/textViewDynamicEggNumber"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:typeface="normal"
+        android:textColor="#FF000000"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="2dp"
+        android:text="@string/placeholder_number" />
+
+
+</RelativeLayout>

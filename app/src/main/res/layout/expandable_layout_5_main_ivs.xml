@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:padding="2dp"
+        android:id="@+id/layoutMaleIVsActive">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/expandableMainIVsGenderIcon"
+            android:background="@drawable/symbol_male"
+            android:layout_gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="8dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/expandableMainIVsPokemonIcon"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            android:background="@drawable/pkmn_493"
+            android:layout_alignTop="@+id/expandableMainIVsAdd"
+            android:layout_toRightOf="@+id/expandableMainIVsGenderIcon"
+            android:layout_toEndOf="@+id/expandableMainIVsGenderIcon" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/expandableMainIVsLayoutIVs"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_toLeftOf="@+id/expandableMainIVsRemove"
+            android:layout_toRightOf="@+id/expandableMainIVsPokemonIcon"
+            android:layout_toEndOf="@+id/expandableMainIVsPokemonIcon">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/expandableMainIVsHP"
+                android:background="@drawable/iv_circle_checked"
+                android:layout_alignTop="@+id/imageViewMainIVsFragmentMaleATK"
+                android:layout_toLeftOf="@+id/imageViewMainIVsFragmentMaleATK"
+                android:layout_toStartOf="@+id/imageViewMainIVsFragmentMaleATK" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/expandableMainIVsATK"
+                android:background="@drawable/iv_triangle_checked"
+                android:layout_alignTop="@+id/imageViewMainIVsFragmentMaleDEF"
+                android:layout_toLeftOf="@+id/imageViewMainIVsFragmentMaleDEF"
+                android:layout_toStartOf="@+id/imageViewMainIVsFragmentMaleDEF" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/expandableMainIVsDEF"
+                android:background="@drawable/iv_square_checked"
+                android:layout_alignTop="@+id/imageViewMainIVsFragmentMaleSATK"
+                android:layout_toLeftOf="@+id/imageViewMainIVsFragmentMaleSATK"
+                android:layout_toStartOf="@+id/imageViewMainIVsFragmentMaleSATK" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/expandableMainIVsSATK"
+                android:background="@drawable/iv_heart_checked"
+                android:layout_alignTop="@+id/imageViewMainIVsFragmentMaleSDEF"
+                android:layout_toLeftOf="@+id/imageViewMainIVsFragmentMaleSDEF"
+                android:layout_toStartOf="@+id/imageViewMainIVsFragmentMaleSDEF" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/expandableMainIVsSDEF"
+                android:background="@drawable/iv_star_checked"
+                android:layout_alignTop="@+id/imageViewMainIVsFragmentMaleSPD"
+                android:layout_toLeftOf="@+id/imageViewMainIVsFragmentMaleSPD"
+                android:layout_toStartOf="@+id/imageViewMainIVsFragmentMaleSPD" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/expandableMainIVsSPD"
+                android:background="@drawable/iv_diamond_checked"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/textViewNature"
+                android:layout_toStartOf="@+id/textViewNature" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/expandableMainIVsNature"
+            android:layout_gravity="center"
+            style="@style/CapsLabel"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:visibility="visible" />
+
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="32dp"
+            android:text="ADD"
+            android:id="@+id/expandableMainIVsAdd"
+            android:textStyle="bold"
+            style="@style/MyRaisedButton"
+            android:layout_gravity="right"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="true"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="No Pokemon Selected"
+            android:id="@+id/expandableMainIVsSelectedLabel"
+            style="@style/CapsLabel"
+            android:textColor="@android:color/darker_gray"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/expandableMainIVsPokemonIcon"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            style="@style/MyRaisedButton"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:text="X"
+            android:id="@+id/expandableMainIVsRemove"
+            android:textStyle="bold"
+            android:layout_gravity="right"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="false" />
+
+        <FrameLayout
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/layer_card_background_button6"
+            android:layout_toRightOf="@+id/expandableMainIVsPokemonIcon"
+            android:layout_centerVertical="true"
+            android:id="@+id/expandableMainIVsFrameItem"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:id="@+id/imageView8"
+                android:layout_gravity="right|bottom"
+                android:background="@drawable/ic_triangle"
+                android:visibility="gone" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/expandableMainIVsItemIcon"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_held_icon" />
+        </FrameLayout>
+    </RelativeLayout>
+
+</LinearLayout>

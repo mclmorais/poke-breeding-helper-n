@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layer_card_background"
+    android:weightSum="1"
+    android:id="@+id/cardLayoutChanceMainIVs"
+    android:clickable="true">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/layer_card_background_button6"
+            android:layout_gravity="center"
+            android:id="@+id/frameLayoutLuckIcon"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:id="@+id/imageButtonLuckIcon"
+                android:background="@drawable/ic_symbol_luck"
+                android:layout_gravity="center"
+                android:clickable="false"
+                android:visibility="visible" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:id="@+id/icSmallTriangleLuckIcon"
+                android:layout_gravity="right|bottom"
+                android:background="@drawable/ic_triangle"
+                android:clickable="false"
+                android:visibility="gone" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:id="@+id/imageViewShinyStar"
+                android:layout_gravity="left|bottom"
+                android:background="@drawable/ic_star" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:id="@+id/imageViewShinyCharm"
+                android:layout_gravity="left|top"
+                android:background="@drawable/ic_shiny_charm_active" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:id="@+id/imageViewMasudaMethod"
+                android:layout_gravity="right|top"
+                android:background="@drawable/ic_cherish_ball_active" />
+
+        </FrameLayout>
+
+        <marcelo.breguenait.breedinghelper.AutoResizeTextView
+            style="@style/card_inside_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="none"
+            android:maxLines="1"
+            android:gravity="center|center_vertical"
+            android:paddingLeft="16dp"
+            android:textAlignment="center"
+            android:id="@+id/textViewChanceGoalIVs"
+            android:paddingRight="16dp"
+            android:text="@string/placeholder_text"
+            android:textSize="18sp" /> <!-- maximum size -->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/button_press_white_lightgray_selector"
+        >
+
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            layout="@layout/expandable_layout_2_chance_egg"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/expandableLayoutChanceEgg" />
+
+    </LinearLayout>
+
+</LinearLayout>

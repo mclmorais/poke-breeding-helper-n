@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<changelog>
+    <release version="2.0b" versioncode="9" >
+        <change>
+            New Ditto interface! The app will now recognize dittos as a wildcard and suggest smarter combinations. Add all the dittos you own to the app for better results!
+        </change>
+        <change>
+            Updated suggestion interface! Instead of plain text, the app will now display a visual interface when suggesting new combinations. You can also change how the percentage works on the settings menu.
+        </change>
+        <change>
+            Bugfixes: Fixed random crashes when adding large amounts of eggs and dittos.
+        </change>
+        <change>
+            Known Issues: Unfortunately due to the nature of the changes, your current eggs may become incompatible with the app. The saving engine has been rewritten: future updates will always conserve your current data. Sorry for the inconvenience!
+        </change>
+    </release>
+
+    <release version="1.5" versioncode="6" >
+        <change>
+            Shiny chance calculation! Click the clover button and select the shiny option to use it.
+        </change>
+    </release>
+    <release version="1.4" versioncode="5" >
+        <change>
+            Equip items! Click the gender buttons to select which item to equip on the parents. You can also switch the parent with a Ditto.
+        </change>
+    </release>
+</changelog>

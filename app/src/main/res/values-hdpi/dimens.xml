@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<dimen name="iv_button_checkbox_size">24dp</dimen>
+<dimen name="symbol_small_size">24dp</dimen>
+
+</resources>
