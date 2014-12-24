@@ -2,10 +2,13 @@ package marcelo.breguenait.breedinghelper;
 
 import android.util.SparseArray;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -68,7 +71,6 @@ class PokemonInfo {
     final Nature            nature;
     final EggGroup          eggGroup1;
     final EggGroup          eggGroup2;
-    final UUID uuid;
 
     static class Builder {
         int                     id = 0;          //The national dex number of the pokemon
@@ -120,7 +122,6 @@ class PokemonInfo {
         this.nature = b.nature;
         this.eggGroup1 = b.eggGroup1;
         this.eggGroup2 = b.eggGroup2;
-        this.uuid = UUID.randomUUID();
     }
 }
 
@@ -142,7 +143,8 @@ public class NewIvManager {
         fillCombinations();
     }
 
-    private List<PokemonInfo> storedPokemonList = new ArrayList<PokemonInfo>();
+    //private List<PokemonInfo> storedPokemonList = new ArrayList<PokemonInfo>();
+    private HashMap<UUID, PokemonInfo> storedPokemonMap = new HashMap<>();
 
     final EquippedItems equippedItems = new EquippedItems();
 
@@ -154,37 +156,35 @@ public class NewIvManager {
 
     PokemonInfo goalPokemon = null;
 
-    public List<PokemonInfo> getStoredPokemonList() {
-        return storedPokemonList;
-    }
-
     public void setGoalPokemon(PokemonInfo goalPokemon) {
         this.goalPokemon = goalPokemon;
     }
-
     public PokemonInfo getGoalPokemon() {
         return goalPokemon;
     }
-
     public void storePokemon(PokemonInfo pokemon) {
-        storedPokemonList.add(pokemon);
+        storedPokemonMap.put(UUID.randomUUID(),pokemon);
     }
     public ChanceData getBestCombination() {
         if (goalPokemon == null) {
             return new ChanceData(null, null, 0);
         }
 
+        List<PokemonInfo> pokemonList = new ArrayList<>(storedPokemonMap.values());
+        List<UUID> uuidList = new ArrayList<>(storedPokemonMap.keySet());
+
         List<ChanceData> chances = new ArrayList<ChanceData>();
 
-        for (int i = 0; i < storedPokemonList.size(); i++) {
 
-            PokemonInfo firstPokemon = storedPokemonList.get(i);
+        for (int i = 0; i < pokemonList.size(); i++) {
 
-            for (int j = (i + 1); j < storedPokemonList.size(); j++) {
-                PokemonInfo secondPokemon = storedPokemonList.get(j);
+            PokemonInfo firstPokemon = pokemonList.get(i);
+
+            for (int j = (i + 1); j < pokemonList.size(); j++) {
+                PokemonInfo secondPokemon = pokemonList.get(j);
                 if (checkCompatibility(firstPokemon, secondPokemon)) {
                     double chance = getChance(firstPokemon.IVs, secondPokemon.IVs, goalPokemon.IVs);
-                    chances.add(new ChanceData(firstPokemon.uuid, secondPokemon.uuid, chance));
+                    chances.add(new ChanceData(uuidList.get(i), uuidList.get(j), chance));
                 }
             }
         }
@@ -206,6 +206,16 @@ public class NewIvManager {
             * the same chance, and if there are, check if one of the participants is already a
             * parent. If he is, select that value instead.*/
         }
+    }
+    public HashMap<UUID, PokemonInfo> getStoredPokemonList() {
+        return storedPokemonMap;
+    }
+    public void setStoredPokemonMap(HashMap<UUID,PokemonInfo> p) {
+        storedPokemonMap = p;
+    }
+    public PokemonInfo getStoredPokemon(UUID uuid) {
+        return storedPokemonMap.get(uuid);
+        //TODO: verificar se existe antes de entregar
     }
 
     /**
@@ -370,7 +380,6 @@ public class NewIvManager {
 
         return chance;
     }
-
 
 
     private void fillCombinations() {

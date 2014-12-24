@@ -16,14 +16,16 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Marcelo on 21/12/2014.
  */
 public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupFragment.BuildPokemon{
 
-    TempInterface mCallback;
+    OnPokemonListChanged mCallback;
 
     HatchAdapter    hatchAdapter;
     GridView        gridViewPokemons;
@@ -41,9 +43,9 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
         try {
             Fragment targetFragment = getTargetFragment();
             if(targetFragment == null)
-                mCallback = (TempInterface) activity;
+                mCallback = (OnPokemonListChanged) activity;
             else
-                mCallback = (TempInterface) getTargetFragment();
+                mCallback = (OnPokemonListChanged) getTargetFragment();
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement TempInterface");
@@ -100,7 +102,7 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
         return view;
     }
 
-    void setHatchAdapter(List<PokemonInfo> list, Context context) {
+    void setHatchAdapter(HashMap<UUID, PokemonInfo> list, Context context) {
         hatchAdapter = new HatchAdapter(list, context);
         gridViewPokemons.setAdapter(hatchAdapter);
         updateGridView();
@@ -114,7 +116,7 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
         b.putInt("defaultPokemon",lastAddedPokemonId);
         fragment.setArguments(b);
         fragment.setTargetFragment(this,0);
-        fragment.show(fm,"");
+        fragment.show(fm, "");
     }
 
     void updateGridView(){
@@ -131,7 +133,7 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
     @Override
     public void onBuildPokemon(PokemonInfo pokemon) {
         lastAddedPokemonId = pokemon.id;
-        mCallback.addPokemonTolist(pokemon);
+        mCallback.addPokemonToList(pokemon);
     }
 
     Bundle addPositionAsArguments(View v) {
@@ -143,8 +145,8 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
         return b;
     }
 
-    interface TempInterface {
-        void addPokemonTolist(PokemonInfo pokemon);
+    interface OnPokemonListChanged {
+        void addPokemonToList(PokemonInfo pokemon);
         void removePokemon(int position);
     }
 }

@@ -9,9 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-
+import java.util.UUID;
 
 
 public class HatchAdapter extends BaseAdapter{
@@ -64,7 +65,8 @@ public class HatchAdapter extends BaseAdapter{
 
     PreloadedDrawables preloadedDrawables;
 
-    private List<PokemonInfo> hatchList;
+    private HashMap<UUID, PokemonInfo> hatchList;
+    private ArrayList<UUID> keysList;
     private final LayoutInflater inflater;
 
     private boolean deleteMode = false;
@@ -73,9 +75,10 @@ public class HatchAdapter extends BaseAdapter{
         this.deleteMode = deleteMode;
     }
 
-    public HatchAdapter(List<PokemonInfo> hatchList, Context context) {
+    public HatchAdapter(HashMap<UUID,PokemonInfo> hatchList, Context context) {
         preloadedDrawables = new PreloadedDrawables(context);
         this.hatchList = hatchList;
+        keysList = new ArrayList<>(hatchList.keySet());
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
@@ -87,7 +90,7 @@ public class HatchAdapter extends BaseAdapter{
 
     @Override
     public Object getItem(int position) {
-        return hatchList.get(position);
+        return hatchList.get(keysList.get(position));
     }
 
     @Override
@@ -105,7 +108,14 @@ public class HatchAdapter extends BaseAdapter{
     }
 
     @Override
+    public void notifyDataSetChanged() {
+        keysList = new ArrayList<>(hatchList.keySet());
+        super.notifyDataSetChanged();
+    }
+
+    @Override
     public View getView(int i, View convertView, ViewGroup parent) {
+
 
         PokemonData data = PokemonData.getInstance();
 
@@ -131,7 +141,7 @@ public class HatchAdapter extends BaseAdapter{
         else {
             holder = (LayoutHolder) convertView.getTag();
         }
-        PokemonInfo pokemonInfo = hatchList.get(i);
+        PokemonInfo pokemonInfo = hatchList.get(keysList.get(i));
 
         if(deleteMode)
             holder.frame.setBackgroundResource(R.drawable.layer_card_background_round_red);

@@ -1,0 +1,5756 @@
+{
+  "pokemons": [
+    {
+      "id": 1,
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 1
+    },
+    {
+      "id": 2,
+      "name": "Ivysaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 1
+    },
+    {
+      "id": 3,
+      "name": "Venusaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 1
+    },
+    {
+      "id": 4,
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 4
+    },
+    {
+      "id": 5,
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 4
+    },
+    {
+      "id": 6,
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 4
+    },
+    {
+      "id": 7,
+      "name": "Squirtle",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "WATER_1",
+      "restricted_gender": "NONE",
+      "breeds": 7
+    },
+    {
+      "id": 8,
+      "name": "Wartortle",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "WATER_1",
+      "restricted_gender": "NONE",
+      "breeds": 7
+    },
+    {
+      "id": 9,
+      "name": "Blastoise",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "WATER_1",
+      "restricted_gender": "NONE",
+      "breeds": 7
+    },
+    {
+      "id": 10,
+      "name": "Caterpie",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 10
+    },
+    {
+      "id": 11,
+      "name": "Metapod",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 10
+    },
+    {
+      "id": 12,
+      "name": "Butterfree",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 10
+    },
+    {
+      "id": 13,
+      "name": "Weedle",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 13
+    },
+    {
+      "id": 14,
+      "name": "Kakuna",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 13
+    },
+    {
+      "id": 15,
+      "name": "Beedrill",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 13
+    },
+    {
+      "id": 16,
+      "name": "Pidgey",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 16
+    },
+    {
+      "id": 17,
+      "name": "Pidgeotto",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 16
+    },
+    {
+      "id": 18,
+      "name": "Pidgeot",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 16
+    },
+    {
+      "id": 19,
+      "name": "Rattata",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 19
+    },
+    {
+      "id": 20,
+      "name": "Raticate",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 19
+    },
+    {
+      "id": 21,
+      "name": "Spearow",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 21
+    },
+    {
+      "id": 22,
+      "name": "Fearow",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 21
+    },
+    {
+      "id": 23,
+      "name": "Ekans",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 23
+    },
+    {
+      "id": 24,
+      "name": "Arbok",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 23
+    },
+    {
+      "id": 25,
+      "name": "Pikachu",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 25
+    },
+    {
+      "id": 26,
+      "name": "Raichu",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 25
+    },
+    {
+      "id": 27,
+      "name": "Sandshrew",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 27
+    },
+    {
+      "id": 28,
+      "name": "Sandslash",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 27
+    },
+    {
+      "id": 29,
+      "name": "NidoranF",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 29
+    },
+    {
+      "id": 30,
+      "name": "Nidorina",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 0
+    },
+    {
+      "id": 31,
+      "name": "Nidoqueen",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 0
+    },
+    {
+      "id": 32,
+      "name": "NidoranM",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 32
+    },
+    {
+      "id": 33,
+      "name": "Nidorino",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 32
+    },
+    {
+      "id": 34,
+      "name": "Nidoking",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 32
+    },
+    {
+      "id": 35,
+      "name": "Clefairy",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 35
+    },
+    {
+      "id": 36,
+      "name": "Clefable",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 35
+    },
+    {
+      "id": 37,
+      "name": "Vulpix",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 37
+    },
+    {
+      "id": 38,
+      "name": "Ninetales",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 37
+    },
+    {
+      "id": 39,
+      "name": "Jigglypuff",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 39
+    },
+    {
+      "id": 40,
+      "name": "Wigglytuff",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 39
+    },
+    {
+      "id": 41,
+      "name": "Zubat",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 41
+    },
+    {
+      "id": 42,
+      "name": "Golbat",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 41
+    },
+    {
+      "id": 43,
+      "name": "Oddish",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 43
+    },
+    {
+      "id": 44,
+      "name": "Gloom",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 43
+    },
+    {
+      "id": 45,
+      "name": "Vileplume",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 43
+    },
+    {
+      "id": 46,
+      "name": "Paras",
+      "egg_group_1": "BUG",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 46
+    },
+    {
+      "id": 47,
+      "name": "Parasect",
+      "egg_group_1": "BUG",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 46
+    },
+    {
+      "id": 48,
+      "name": "Venonat",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 48
+    },
+    {
+      "id": 49,
+      "name": "Venomoth",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 48
+    },
+    {
+      "id": 50,
+      "name": "Diglett",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 50
+    },
+    {
+      "id": 51,
+      "name": "Dugtrio",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 50
+    },
+    {
+      "id": 52,
+      "name": "Meowth",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 52
+    },
+    {
+      "id": 53,
+      "name": "Persian",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 52
+    },
+    {
+      "id": 54,
+      "name": "Psyduck",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 54
+    },
+    {
+      "id": 55,
+      "name": "Golduck",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 54
+    },
+    {
+      "id": 56,
+      "name": "Mankey",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 56
+    },
+    {
+      "id": 57,
+      "name": "Primeape",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 56
+    },
+    {
+      "id": 58,
+      "name": "Growlithe",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 58
+    },
+    {
+      "id": 59,
+      "name": "Arcanine",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 58
+    },
+    {
+      "id": 60,
+      "name": "Poliwag",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 60
+    },
+    {
+      "id": 61,
+      "name": "Poliwhirl",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 60
+    },
+    {
+      "id": 62,
+      "name": "Poliwrath",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 60
+    },
+    {
+      "id": 63,
+      "name": "Abra",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 63
+    },
+    {
+      "id": 64,
+      "name": "Kadabra",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 63
+    },
+    {
+      "id": 65,
+      "name": "Alakazam",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 63
+    },
+    {
+      "id": 66,
+      "name": "Machop",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 66
+    },
+    {
+      "id": 67,
+      "name": "Machoke",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 66
+    },
+    {
+      "id": 68,
+      "name": "Machamp",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 66
+    },
+    {
+      "id": 69,
+      "name": "Bellsprout",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 69
+    },
+    {
+      "id": 70,
+      "name": "Weepinbell",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 69
+    },
+    {
+      "id": 71,
+      "name": "Victreebel",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 69
+    },
+    {
+      "id": 72,
+      "name": "Tentacool",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 72
+    },
+    {
+      "id": 73,
+      "name": "Tentacruel",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 72
+    },
+    {
+      "id": 74,
+      "name": "Geodude",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 74
+    },
+    {
+      "id": 75,
+      "name": "Graveler",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 74
+    },
+    {
+      "id": 76,
+      "name": "Golem",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 74
+    },
+    {
+      "id": 77,
+      "name": "Ponyta",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 77
+    },
+    {
+      "id": 78,
+      "name": "Rapidash",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 77
+    },
+    {
+      "id": 79,
+      "name": "Slowpoke",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "WATER_1",
+      "restricted_gender": "NONE",
+      "breeds": 79
+    },
+    {
+      "id": 80,
+      "name": "Slowbro",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "WATER_1",
+      "restricted_gender": "NONE",
+      "breeds": 79
+    },
+    {
+      "id": 81,
+      "name": "Magnemite",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 81
+    },
+    {
+      "id": 82,
+      "name": "Magneton",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 81
+    },
+    {
+      "id": 83,
+      "name": "Farfetch'd",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 83
+    },
+    {
+      "id": 84,
+      "name": "Doduo",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 84
+    },
+    {
+      "id": 85,
+      "name": "Dodrio",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 84
+    },
+    {
+      "id": 86,
+      "name": "Seel",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 86
+    },
+    {
+      "id": 87,
+      "name": "Dewgong",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 86
+    },
+    {
+      "id": 88,
+      "name": "Grimer",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 88
+    },
+    {
+      "id": 89,
+      "name": "Muk",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 88
+    },
+    {
+      "id": 90,
+      "name": "Shellder",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 90
+    },
+    {
+      "id": 91,
+      "name": "Cloyster",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 90
+    },
+    {
+      "id": 92,
+      "name": "Gastly",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 92
+    },
+    {
+      "id": 93,
+      "name": "Haunter",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 92
+    },
+    {
+      "id": 94,
+      "name": "Gengar",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 92
+    },
+    {
+      "id": 95,
+      "name": "Onix",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 95
+    },
+    {
+      "id": 96,
+      "name": "Drowzee",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 96
+    },
+    {
+      "id": 97,
+      "name": "Hypno",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 96
+    },
+    {
+      "id": 98,
+      "name": "Krabby",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 98
+    },
+    {
+      "id": 99,
+      "name": "Kingler",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 98
+    },
+    {
+      "id": 100,
+      "name": "Voltorb",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 100
+    },
+    {
+      "id": 101,
+      "name": "Electrode",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 100
+    },
+    {
+      "id": 102,
+      "name": "Exeggcute",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 102
+    },
+    {
+      "id": 103,
+      "name": "Exeggutor",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 102
+    },
+    {
+      "id": 104,
+      "name": "Cubone",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 104
+    },
+    {
+      "id": 105,
+      "name": "Marowak",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 104
+    },
+    {
+      "id": 106,
+      "name": "Hitmonlee",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 106
+    },
+    {
+      "id": 107,
+      "name": "Hitmonchan",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 107
+    },
+    {
+      "id": 108,
+      "name": "Lickitung",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 108
+    },
+    {
+      "id": 109,
+      "name": "Koffing",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 109
+    },
+    {
+      "id": 110,
+      "name": "Weezing",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 109
+    },
+    {
+      "id": 111,
+      "name": "Rhyhorn",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 111
+    },
+    {
+      "id": 112,
+      "name": "Rhydon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 111
+    },
+    {
+      "id": 113,
+      "name": "Chansey",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 113
+    },
+    {
+      "id": 114,
+      "name": "Tangela",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 114
+    },
+    {
+      "id": 115,
+      "name": "Kangaskhan",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 115
+    },
+    {
+      "id": 116,
+      "name": "Horsea",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 116
+    },
+    {
+      "id": 117,
+      "name": "Seadra",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 116
+    },
+    {
+      "id": 118,
+      "name": "Goldeen",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 118
+    },
+    {
+      "id": 119,
+      "name": "Seaking",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 118
+    },
+    {
+      "id": 120,
+      "name": "Staryu",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 120
+    },
+    {
+      "id": 121,
+      "name": "Starmie",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 120
+    },
+    {
+      "id": 122,
+      "name": "Mr. Mime",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 122
+    },
+    {
+      "id": 123,
+      "name": "Scyther",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 123
+    },
+    {
+      "id": 124,
+      "name": "Jynx",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 124
+    },
+    {
+      "id": 125,
+      "name": "Electabuzz",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 125
+    },
+    {
+      "id": 126,
+      "name": "Magmar",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 126
+    },
+    {
+      "id": 127,
+      "name": "Pinsir",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 127
+    },
+    {
+      "id": 128,
+      "name": "Tauros",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 128
+    },
+    {
+      "id": 129,
+      "name": "Magikarp",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 129
+    },
+    {
+      "id": 130,
+      "name": "Gyarados",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 129
+    },
+    {
+      "id": 131,
+      "name": "Lapras",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "WATER_1",
+      "restricted_gender": "NONE",
+      "breeds": 131
+    },
+    {
+      "id": 132,
+      "name": "Ditto",
+      "egg_group_1": "DITTO",
+      "egg_group_2": "NONE",
+      "restricted_gender": "DITTO",
+      "breeds": 132
+    },
+    {
+      "id": 133,
+      "name": "Eevee",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 133
+    },
+    {
+      "id": 134,
+      "name": "Vaporeon",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 133
+    },
+    {
+      "id": 135,
+      "name": "Jolteon",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 133
+    },
+    {
+      "id": 136,
+      "name": "Flareon",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 133
+    },
+    {
+      "id": 137,
+      "name": "Porygon",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 137
+    },
+    {
+      "id": 138,
+      "name": "Omanyte",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 138
+    },
+    {
+      "id": 139,
+      "name": "Omastar",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 138
+    },
+    {
+      "id": 140,
+      "name": "Kabuto",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 140
+    },
+    {
+      "id": 141,
+      "name": "Kabutops",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 140
+    },
+    {
+      "id": 142,
+      "name": "Aerodactyl",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 142
+    },
+    {
+      "id": 143,
+      "name": "Snorlax",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 143
+    },
+    {
+      "id": 144,
+      "name": "Articuno",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 145,
+      "name": "Zapdos",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 146,
+      "name": "Moltres",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 147,
+      "name": "Dratini",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 147
+    },
+    {
+      "id": 148,
+      "name": "Dragonair",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 147
+    },
+    {
+      "id": 149,
+      "name": "Dragonite",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 147
+    },
+    {
+      "id": 150,
+      "name": "Mewtwo",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 151,
+      "name": "Mew",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 152,
+      "name": "Chikorita",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 152
+    },
+    {
+      "id": 153,
+      "name": "Bayleef",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 152
+    },
+    {
+      "id": 154,
+      "name": "Meganium",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 152
+    },
+    {
+      "id": 155,
+      "name": "Cyndaquil",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 155
+    },
+    {
+      "id": 156,
+      "name": "Quilava",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 155
+    },
+    {
+      "id": 157,
+      "name": "Typhlosion",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 155
+    },
+    {
+      "id": 158,
+      "name": "Totodile",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "WATER_1",
+      "restricted_gender": "NONE",
+      "breeds": 158
+    },
+    {
+      "id": 159,
+      "name": "Croconaw",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "WATER_1",
+      "restricted_gender": "NONE",
+      "breeds": 158
+    },
+    {
+      "id": 160,
+      "name": "Feraligatr",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "WATER_1",
+      "restricted_gender": "NONE",
+      "breeds": 158
+    },
+    {
+      "id": 161,
+      "name": "Sentret",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 161
+    },
+    {
+      "id": 162,
+      "name": "Furret",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 161
+    },
+    {
+      "id": 163,
+      "name": "Hoothoot",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 163
+    },
+    {
+      "id": 164,
+      "name": "Noctowl",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 163
+    },
+    {
+      "id": 165,
+      "name": "Ledyba",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 165
+    },
+    {
+      "id": 166,
+      "name": "Ledian",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 165
+    },
+    {
+      "id": 167,
+      "name": "Spinarak",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 167
+    },
+    {
+      "id": 168,
+      "name": "Ariados",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 167
+    },
+    {
+      "id": 169,
+      "name": "Crobat",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 41
+    },
+    {
+      "id": 170,
+      "name": "Chinchou",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 170
+    },
+    {
+      "id": 171,
+      "name": "Lanturn",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 170
+    },
+    {
+      "id": 172,
+      "name": "Pichu",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 25
+    },
+    {
+      "id": 173,
+      "name": "Cleffa",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 35
+    },
+    {
+      "id": 174,
+      "name": "Igglybuff",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 39
+    },
+    {
+      "id": 175,
+      "name": "Togepi",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 175
+    },
+    {
+      "id": 176,
+      "name": "Togetic",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 175
+    },
+    {
+      "id": 177,
+      "name": "Natu",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 177
+    },
+    {
+      "id": 178,
+      "name": "Xatu",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 177
+    },
+    {
+      "id": 179,
+      "name": "Mareep",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 179
+    },
+    {
+      "id": 180,
+      "name": "Flaaffy",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 179
+    },
+    {
+      "id": 181,
+      "name": "Ampharos",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 179
+    },
+    {
+      "id": 182,
+      "name": "Bellossom",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 43
+    },
+    {
+      "id": 183,
+      "name": "Marill",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 183
+    },
+    {
+      "id": 184,
+      "name": "Azumarill",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 183
+    },
+    {
+      "id": 185,
+      "name": "Sudowoodo",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 185
+    },
+    {
+      "id": 186,
+      "name": "Politoed",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 60
+    },
+    {
+      "id": 187,
+      "name": "Hoppip",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 187
+    },
+    {
+      "id": 188,
+      "name": "Skiploom",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 187
+    },
+    {
+      "id": 189,
+      "name": "Jumpluff",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 187
+    },
+    {
+      "id": 190,
+      "name": "Aipom",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 190
+    },
+    {
+      "id": 191,
+      "name": "Sunkern",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 191
+    },
+    {
+      "id": 192,
+      "name": "Sunflora",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 191
+    },
+    {
+      "id": 193,
+      "name": "Yanma",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 193
+    },
+    {
+      "id": 194,
+      "name": "Wooper",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 194
+    },
+    {
+      "id": 195,
+      "name": "Quagsire",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 195
+    },
+    {
+      "id": 196,
+      "name": "Espeon",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 133
+    },
+    {
+      "id": 197,
+      "name": "Umbreon",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 133
+    },
+    {
+      "id": 198,
+      "name": "Murkrow",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 198
+    },
+    {
+      "id": 199,
+      "name": "Slowking",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "WATER_1",
+      "restricted_gender": "NONE",
+      "breeds": 79
+    },
+    {
+      "id": 200,
+      "name": "Misdreavus",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 200
+    },
+    {
+      "id": 201,
+      "name": "Unown",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 202,
+      "name": "Wobbuffet",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 202
+    },
+    {
+      "id": 203,
+      "name": "Girafarig",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 203
+    },
+    {
+      "id": 204,
+      "name": "Pineco",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 204
+    },
+    {
+      "id": 205,
+      "name": "Forretress",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 204
+    },
+    {
+      "id": 206,
+      "name": "Dunsparce",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 206
+    },
+    {
+      "id": 207,
+      "name": "Gligar",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 207
+    },
+    {
+      "id": 208,
+      "name": "Steelix",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 95
+    },
+    {
+      "id": 209,
+      "name": "Snubbull",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 209
+    },
+    {
+      "id": 210,
+      "name": "Granbull",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 209
+    },
+    {
+      "id": 211,
+      "name": "Qwilfish",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 211
+    },
+    {
+      "id": 212,
+      "name": "Scizor",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 123
+    },
+    {
+      "id": 213,
+      "name": "Shuckle",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 213
+    },
+    {
+      "id": 214,
+      "name": "Heracross",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 214
+    },
+    {
+      "id": 215,
+      "name": "Sneasel",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 215
+    },
+    {
+      "id": 216,
+      "name": "Teddiursa",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 216
+    },
+    {
+      "id": 217,
+      "name": "Ursaring",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 216
+    },
+    {
+      "id": 218,
+      "name": "Slugma",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 218
+    },
+    {
+      "id": 219,
+      "name": "Magcargo",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 218
+    },
+    {
+      "id": 220,
+      "name": "Swinub",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 220
+    },
+    {
+      "id": 221,
+      "name": "Piloswine",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 220
+    },
+    {
+      "id": 222,
+      "name": "Corsola",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 222
+    },
+    {
+      "id": 223,
+      "name": "Remoraid",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_2",
+      "restricted_gender": "NONE",
+      "breeds": 223
+    },
+    {
+      "id": 224,
+      "name": "Octillery",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_2",
+      "restricted_gender": "NONE",
+      "breeds": 223
+    },
+    {
+      "id": 225,
+      "name": "Delibird",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 225
+    },
+    {
+      "id": 226,
+      "name": "Mantine",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 226
+    },
+    {
+      "id": 227,
+      "name": "Skarmory",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 227
+    },
+    {
+      "id": 228,
+      "name": "Houndour",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 228
+    },
+    {
+      "id": 229,
+      "name": "Houndoom",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 228
+    },
+    {
+      "id": 230,
+      "name": "Kingdra",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 116
+    },
+    {
+      "id": 231,
+      "name": "Phanpy",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 231
+    },
+    {
+      "id": 232,
+      "name": "Donphan",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 232
+    },
+    {
+      "id": 233,
+      "name": "Porygon2",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 137
+    },
+    {
+      "id": 234,
+      "name": "Stantler",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 234
+    },
+    {
+      "id": 235,
+      "name": "Smeargle",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 235
+    },
+    {
+      "id": 236,
+      "name": "Tyrogue",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 0
+    },
+    {
+      "id": 237,
+      "name": "Hitmontop",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 236
+    },
+    {
+      "id": 238,
+      "name": "Smoochum",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 0
+    },
+    {
+      "id": 239,
+      "name": "Elekid",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 0
+    },
+    {
+      "id": 240,
+      "name": "Magby",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 0
+    },
+    {
+      "id": 241,
+      "name": "Miltank",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 241
+    },
+    {
+      "id": 242,
+      "name": "Blissey",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 113
+    },
+    {
+      "id": 243,
+      "name": "Raikou",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 244,
+      "name": "Entei",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 245,
+      "name": "Suicune",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 246,
+      "name": "Larvitar",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 246
+    },
+    {
+      "id": 247,
+      "name": "Pupitar",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 246
+    },
+    {
+      "id": 248,
+      "name": "Tyranitar",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 246
+    },
+    {
+      "id": 249,
+      "name": "Lugia",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 250,
+      "name": "Ho-Oh",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 251,
+      "name": "Celebi",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 252,
+      "name": "Treecko",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 252
+    },
+    {
+      "id": 253,
+      "name": "Grovyle",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 252
+    },
+    {
+      "id": 254,
+      "name": "Sceptile",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 252
+    },
+    {
+      "id": 255,
+      "name": "Torchic",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 255
+    },
+    {
+      "id": 256,
+      "name": "Combusken",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 255
+    },
+    {
+      "id": 257,
+      "name": "Blaziken",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 255
+    },
+    {
+      "id": 258,
+      "name": "Mudkip",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "WATER_1",
+      "restricted_gender": "NONE",
+      "breeds": 258
+    },
+    {
+      "id": 259,
+      "name": "Marshtomp",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "WATER_1",
+      "restricted_gender": "NONE",
+      "breeds": 258
+    },
+    {
+      "id": 260,
+      "name": "Swampert",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "WATER_1",
+      "restricted_gender": "NONE",
+      "breeds": 258
+    },
+    {
+      "id": 261,
+      "name": "Poochyena",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 261
+    },
+    {
+      "id": 262,
+      "name": "Mightyena",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 261
+    },
+    {
+      "id": 263,
+      "name": "Zigzagoon",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 263
+    },
+    {
+      "id": 264,
+      "name": "Linoone",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 263
+    },
+    {
+      "id": 265,
+      "name": "Wurmple",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 265
+    },
+    {
+      "id": 266,
+      "name": "Silcoon",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 265
+    },
+    {
+      "id": 267,
+      "name": "Beautifly",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 265
+    },
+    {
+      "id": 268,
+      "name": "Cascoon",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 265
+    },
+    {
+      "id": 269,
+      "name": "Dustox",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 265
+    },
+    {
+      "id": 270,
+      "name": "Lotad",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 270
+    },
+    {
+      "id": 271,
+      "name": "Lombre",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 270
+    },
+    {
+      "id": 272,
+      "name": "Ludicolo",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 270
+    },
+    {
+      "id": 273,
+      "name": "Seedot",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 273
+    },
+    {
+      "id": 274,
+      "name": "Nuzleaf",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 273
+    },
+    {
+      "id": 275,
+      "name": "Shiftry",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 273
+    },
+    {
+      "id": 276,
+      "name": "Taillow",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 276
+    },
+    {
+      "id": 277,
+      "name": "Swellow",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 276
+    },
+    {
+      "id": 278,
+      "name": "Wingull",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FLYING",
+      "restricted_gender": "NONE",
+      "breeds": 278
+    },
+    {
+      "id": 279,
+      "name": "Pelipper",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FLYING",
+      "restricted_gender": "NONE",
+      "breeds": 278
+    },
+    {
+      "id": 280,
+      "name": "Ralts",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 280
+    },
+    {
+      "id": 281,
+      "name": "Kirlia",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 280
+    },
+    {
+      "id": 282,
+      "name": "Gardevoir",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 280
+    },
+    {
+      "id": 283,
+      "name": "Surskit",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "BUG",
+      "restricted_gender": "NONE",
+      "breeds": 283
+    },
+    {
+      "id": 284,
+      "name": "Masquerain",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "BUG",
+      "restricted_gender": "NONE",
+      "breeds": 283
+    },
+    {
+      "id": 285,
+      "name": "Shroomish",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 285
+    },
+    {
+      "id": 286,
+      "name": "Breloom",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 285
+    },
+    {
+      "id": 287,
+      "name": "Slakoth",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 287
+    },
+    {
+      "id": 288,
+      "name": "Vigoroth",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 287
+    },
+    {
+      "id": 289,
+      "name": "Slaking",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 287
+    },
+    {
+      "id": 290,
+      "name": "Nincada",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 290
+    },
+    {
+      "id": 291,
+      "name": "Ninjask",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 290
+    },
+    {
+      "id": 292,
+      "name": "Shedinja",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 290
+    },
+    {
+      "id": 293,
+      "name": "Whismur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 293
+    },
+    {
+      "id": 294,
+      "name": "Loudred",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 293
+    },
+    {
+      "id": 295,
+      "name": "Exploud",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 293
+    },
+    {
+      "id": 296,
+      "name": "Makuhita",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 296
+    },
+    {
+      "id": 297,
+      "name": "Hariyama",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 296
+    },
+    {
+      "id": 298,
+      "name": "Azurill",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 0
+    },
+    {
+      "id": 299,
+      "name": "Nosepass",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 299
+    },
+    {
+      "id": 300,
+      "name": "Skitty",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 300
+    },
+    {
+      "id": 301,
+      "name": "Delcatty",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 300
+    },
+    {
+      "id": 302,
+      "name": "Sableye",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 302
+    },
+    {
+      "id": 303,
+      "name": "Mawile",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 303
+    },
+    {
+      "id": 304,
+      "name": "Aron",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 304
+    },
+    {
+      "id": 305,
+      "name": "Lairon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 304
+    },
+    {
+      "id": 306,
+      "name": "Aggron",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 304
+    },
+    {
+      "id": 307,
+      "name": "Meditite",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 307
+    },
+    {
+      "id": 308,
+      "name": "Medicham",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 307
+    },
+    {
+      "id": 309,
+      "name": "Electrike",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 309
+    },
+    {
+      "id": 310,
+      "name": "Manectric",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 309
+    },
+    {
+      "id": 311,
+      "name": "Plusle",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 311
+    },
+    {
+      "id": 312,
+      "name": "Minun",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 312
+    },
+    {
+      "id": 313,
+      "name": "Volbeat",
+      "egg_group_1": "BUG",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 313
+    },
+    {
+      "id": 314,
+      "name": "Illumise",
+      "egg_group_1": "BUG",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 314
+    },
+    {
+      "id": 315,
+      "name": "Roselia",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 315
+    },
+    {
+      "id": 316,
+      "name": "Gulpin",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 316
+    },
+    {
+      "id": 317,
+      "name": "Swalot",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 316
+    },
+    {
+      "id": 318,
+      "name": "Carvanha",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 318
+    },
+    {
+      "id": 319,
+      "name": "Sharpedo",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 318
+    },
+    {
+      "id": 320,
+      "name": "Wailmer",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "WATER_2",
+      "restricted_gender": "NONE",
+      "breeds": 320
+    },
+    {
+      "id": 321,
+      "name": "Wailord",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "WATER_2",
+      "restricted_gender": "NONE",
+      "breeds": 320
+    },
+    {
+      "id": 322,
+      "name": "Numel",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 322
+    },
+    {
+      "id": 323,
+      "name": "Camerupt",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 322
+    },
+    {
+      "id": 324,
+      "name": "Torkoal",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 324
+    },
+    {
+      "id": 325,
+      "name": "Spoink",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 325
+    },
+    {
+      "id": 326,
+      "name": "Grumpig",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 325
+    },
+    {
+      "id": 327,
+      "name": "Spinda",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "NONE",
+      "breeds": 327
+    },
+    {
+      "id": 328,
+      "name": "Trapinch",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 328
+    },
+    {
+      "id": 329,
+      "name": "Vibrava",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 328
+    },
+    {
+      "id": 330,
+      "name": "Flygon",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 328
+    },
+    {
+      "id": 331,
+      "name": "Cacnea",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "NONE",
+      "breeds": 331
+    },
+    {
+      "id": 332,
+      "name": "Cacturne",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "NONE",
+      "breeds": 331
+    },
+    {
+      "id": 333,
+      "name": "Swablu",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 333
+    },
+    {
+      "id": 334,
+      "name": "Altaria",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 333
+    },
+    {
+      "id": 335,
+      "name": "Zangoose",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 335
+    },
+    {
+      "id": 336,
+      "name": "Seviper",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 336
+    },
+    {
+      "id": 337,
+      "name": "Lunatone",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 337
+    },
+    {
+      "id": 338,
+      "name": "Solrock",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 338
+    },
+    {
+      "id": 339,
+      "name": "Barboach",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 339
+    },
+    {
+      "id": 340,
+      "name": "Whiscash",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 339
+    },
+    {
+      "id": 341,
+      "name": "Corphish",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 341
+    },
+    {
+      "id": 342,
+      "name": "Crawdaunt",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 341
+    },
+    {
+      "id": 343,
+      "name": "Baltoy",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 343
+    },
+    {
+      "id": 344,
+      "name": "Claydol",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 343
+    },
+    {
+      "id": 345,
+      "name": "Lileep",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 345
+    },
+    {
+      "id": 346,
+      "name": "Cradily",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 345
+    },
+    {
+      "id": 347,
+      "name": "Anorith",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 347
+    },
+    {
+      "id": 348,
+      "name": "Armaldo",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 347
+    },
+    {
+      "id": 349,
+      "name": "Feebas",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 349
+    },
+    {
+      "id": 350,
+      "name": "Milotic",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 349
+    },
+    {
+      "id": 351,
+      "name": "Castform",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "AMORPHOUS",
+      "restricted_gender": "NONE",
+      "breeds": 351
+    },
+    {
+      "id": 352,
+      "name": "Kecleon",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 352
+    },
+    {
+      "id": 353,
+      "name": "Shuppet",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 353
+    },
+    {
+      "id": 354,
+      "name": "Banette",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 353
+    },
+    {
+      "id": 355,
+      "name": "Duskull",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 355
+    },
+    {
+      "id": 356,
+      "name": "Dusclops",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 355
+    },
+    {
+      "id": 357,
+      "name": "Tropius",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 357
+    },
+    {
+      "id": 358,
+      "name": "Chimecho",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 358
+    },
+    {
+      "id": 359,
+      "name": "Absol",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 359
+    },
+    {
+      "id": 360,
+      "name": "Wynaut",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 0
+    },
+    {
+      "id": 361,
+      "name": "Snorunt",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "MINERAL",
+      "restricted_gender": "NONE",
+      "breeds": 361
+    },
+    {
+      "id": 362,
+      "name": "Glalie",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "MINERAL",
+      "restricted_gender": "NONE",
+      "breeds": 361
+    },
+    {
+      "id": 363,
+      "name": "Spheal",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 363
+    },
+    {
+      "id": 364,
+      "name": "Sealeo",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 363
+    },
+    {
+      "id": 365,
+      "name": "Walrein",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 363
+    },
+    {
+      "id": 366,
+      "name": "Clamperl",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 366
+    },
+    {
+      "id": 367,
+      "name": "Huntail",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 366
+    },
+    {
+      "id": 368,
+      "name": "Gorebyss",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 366
+    },
+    {
+      "id": 369,
+      "name": "Relicanth",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_2",
+      "restricted_gender": "NONE",
+      "breeds": 369
+    },
+    {
+      "id": 370,
+      "name": "Luvdisc",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 370
+    },
+    {
+      "id": 371,
+      "name": "Bagon",
+      "egg_group_1": "DRAGON",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 371
+    },
+    {
+      "id": 372,
+      "name": "Shelgon",
+      "egg_group_1": "DRAGON",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 371
+    },
+    {
+      "id": 373,
+      "name": "Salamence",
+      "egg_group_1": "DRAGON",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 371
+    },
+    {
+      "id": 374,
+      "name": "Beldum",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 374
+    },
+    {
+      "id": 375,
+      "name": "Metang",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 374
+    },
+    {
+      "id": 376,
+      "name": "Metagross",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 374
+    },
+    {
+      "id": 377,
+      "name": "Regirock",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 378,
+      "name": "Regice",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 379,
+      "name": "Registeel",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 380,
+      "name": "Latias",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 0
+    },
+    {
+      "id": 381,
+      "name": "Latios",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 0
+    },
+    {
+      "id": 382,
+      "name": "Kyogre",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 383,
+      "name": "Groudon",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 384,
+      "name": "Rayquaza",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 385,
+      "name": "Jirachi",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 386,
+      "name": "Deoxys",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 387,
+      "name": "Turtwig",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 387
+    },
+    {
+      "id": 388,
+      "name": "Grotle",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 387
+    },
+    {
+      "id": 389,
+      "name": "Torterra",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 387
+    },
+    {
+      "id": 390,
+      "name": "Chimchar",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "NONE",
+      "breeds": 390
+    },
+    {
+      "id": 391,
+      "name": "Monferno",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "NONE",
+      "breeds": 390
+    },
+    {
+      "id": 392,
+      "name": "Infernape",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "NONE",
+      "breeds": 390
+    },
+    {
+      "id": 393,
+      "name": "Piplup",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 393
+    },
+    {
+      "id": 394,
+      "name": "Prinplup",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 393
+    },
+    {
+      "id": 395,
+      "name": "Empoleon",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 393
+    },
+    {
+      "id": 396,
+      "name": "Starly",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 396
+    },
+    {
+      "id": 397,
+      "name": "Staravia",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 396
+    },
+    {
+      "id": 398,
+      "name": "Staraptor",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 396
+    },
+    {
+      "id": 399,
+      "name": "Bidoof",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 399
+    },
+    {
+      "id": 400,
+      "name": "Bibarel",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 399
+    },
+    {
+      "id": 401,
+      "name": "Kricketot",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 401
+    },
+    {
+      "id": 402,
+      "name": "Kricketune",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 401
+    },
+    {
+      "id": 403,
+      "name": "Shinx",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 403
+    },
+    {
+      "id": 404,
+      "name": "Luxio",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 403
+    },
+    {
+      "id": 405,
+      "name": "Luxray",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 403
+    },
+    {
+      "id": 406,
+      "name": "Budew",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 0
+    },
+    {
+      "id": 407,
+      "name": "Roserade",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 315
+    },
+    {
+      "id": 408,
+      "name": "Cranidos",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 408
+    },
+    {
+      "id": 409,
+      "name": "Rampardos",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 408
+    },
+    {
+      "id": 410,
+      "name": "Shieldon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 410
+    },
+    {
+      "id": 411,
+      "name": "Bastiodon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 410
+    },
+    {
+      "id": 412,
+      "name": "Burmy",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 412
+    },
+    {
+      "id": 413,
+      "name": "Wormadam",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 412
+    },
+    {
+      "id": 414,
+      "name": "Mothim",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 412
+    },
+    {
+      "id": 415,
+      "name": "Combee",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 415
+    },
+    {
+      "id": 416,
+      "name": "Vespiquen",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 415
+    },
+    {
+      "id": 417,
+      "name": "Pachirisu",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 417
+    },
+    {
+      "id": 418,
+      "name": "Buizel",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 418
+    },
+    {
+      "id": 419,
+      "name": "Floatzel",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 418
+    },
+    {
+      "id": 420,
+      "name": "Cherubi",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 420
+    },
+    {
+      "id": 421,
+      "name": "Cherrim",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 420
+    },
+    {
+      "id": 422,
+      "name": "Shellos",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "AMORPHOUS",
+      "restricted_gender": "NONE",
+      "breeds": 422
+    },
+    {
+      "id": 423,
+      "name": "Gastrodon",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "AMORPHOUS",
+      "restricted_gender": "NONE",
+      "breeds": 422
+    },
+    {
+      "id": 424,
+      "name": "Ambipom",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 190
+    },
+    {
+      "id": 425,
+      "name": "Drifloon",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 425
+    },
+    {
+      "id": 426,
+      "name": "Drifblim",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 425
+    },
+    {
+      "id": 427,
+      "name": "Buneary",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "NONE",
+      "breeds": 427
+    },
+    {
+      "id": 428,
+      "name": "Lopunny",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "NONE",
+      "breeds": 427
+    },
+    {
+      "id": 429,
+      "name": "Mismagius",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 200
+    },
+    {
+      "id": 430,
+      "name": "Honchkrow",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 198
+    },
+    {
+      "id": 431,
+      "name": "Glameow",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 431
+    },
+    {
+      "id": 432,
+      "name": "Purugly",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 431
+    },
+    {
+      "id": 433,
+      "name": "Chingling",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 0
+    },
+    {
+      "id": 434,
+      "name": "Stunky",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 434
+    },
+    {
+      "id": 435,
+      "name": "Skuntank",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 434
+    },
+    {
+      "id": 436,
+      "name": "Bronzor",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 436
+    },
+    {
+      "id": 437,
+      "name": "Bronzong",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 436
+    },
+    {
+      "id": 438,
+      "name": "Bonsly",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 0
+    },
+    {
+      "id": 439,
+      "name": "Mime Jr.",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 0
+    },
+    {
+      "id": 440,
+      "name": "Happiny",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 0
+    },
+    {
+      "id": 441,
+      "name": "Chatot",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 441
+    },
+    {
+      "id": 442,
+      "name": "Spiritomb",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 442
+    },
+    {
+      "id": 443,
+      "name": "Gible",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 443
+    },
+    {
+      "id": 444,
+      "name": "Gabite",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 443
+    },
+    {
+      "id": 445,
+      "name": "Garchomp",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 443
+    },
+    {
+      "id": 446,
+      "name": "Munchlax",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 0
+    },
+    {
+      "id": 447,
+      "name": "Riolu",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 0
+    },
+    {
+      "id": 448,
+      "name": "Lucario",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "NONE",
+      "breeds": 448
+    },
+    {
+      "id": 449,
+      "name": "Hippopotas",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 449
+    },
+    {
+      "id": 450,
+      "name": "Hippowdon",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 449
+    },
+    {
+      "id": 451,
+      "name": "Skorupi",
+      "egg_group_1": "BUG",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 451
+    },
+    {
+      "id": 452,
+      "name": "Drapion",
+      "egg_group_1": "BUG",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 451
+    },
+    {
+      "id": 453,
+      "name": "Croagunk",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 453
+    },
+    {
+      "id": 454,
+      "name": "Toxicroak",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 453
+    },
+    {
+      "id": 455,
+      "name": "Carnivine",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 455
+    },
+    {
+      "id": 456,
+      "name": "Finneon",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 456
+    },
+    {
+      "id": 457,
+      "name": "Lumineon",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 456
+    },
+    {
+      "id": 458,
+      "name": "Mantyke",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 0
+    },
+    {
+      "id": 459,
+      "name": "Snover",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 459
+    },
+    {
+      "id": 460,
+      "name": "Abomasnow",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 459
+    },
+    {
+      "id": 461,
+      "name": "Weavile",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 215
+    },
+    {
+      "id": 462,
+      "name": "Magnezone",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 81
+    },
+    {
+      "id": 463,
+      "name": "Lickilicky",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 108
+    },
+    {
+      "id": 464,
+      "name": "Rhyperior",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "FIELD",
+      "restricted_gender": "NONE",
+      "breeds": 111
+    },
+    {
+      "id": 465,
+      "name": "Tangrowth",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 114
+    },
+    {
+      "id": 466,
+      "name": "Electivire",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 125
+    },
+    {
+      "id": 467,
+      "name": "Magmortar",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 126
+    },
+    {
+      "id": 468,
+      "name": "Togekiss",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 175
+    },
+    {
+      "id": 469,
+      "name": "Yanmega",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 193
+    },
+    {
+      "id": 470,
+      "name": "Leafeon",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 133
+    },
+    {
+      "id": 471,
+      "name": "Glaceon",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 133
+    },
+    {
+      "id": 472,
+      "name": "Gliscor",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 207
+    },
+    {
+      "id": 473,
+      "name": "Mamoswine",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 220
+    },
+    {
+      "id": 474,
+      "name": "Porygon-Z",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 137
+    },
+    {
+      "id": 475,
+      "name": "Gallade",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 280
+    },
+    {
+      "id": 476,
+      "name": "Probopass",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 299
+    },
+    {
+      "id": 477,
+      "name": "Dusknoir",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 355
+    },
+    {
+      "id": 478,
+      "name": "Froslass",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "MINERAL",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 361
+    },
+    {
+      "id": 479,
+      "name": "Rotom",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 479
+    },
+    {
+      "id": 480,
+      "name": "Uxie",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 481,
+      "name": "Mesprit",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 482,
+      "name": "Azelf",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 483,
+      "name": "Dialga",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 484,
+      "name": "Palkia",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 485,
+      "name": "Heatran",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 0
+    },
+    {
+      "id": 486,
+      "name": "Regigigas",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 487,
+      "name": "Giratina",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 488,
+      "name": "Cresselia",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 0
+    },
+    {
+      "id": 489,
+      "name": "Phione",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 489
+    },
+    {
+      "id": 490,
+      "name": "Manaphy",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 489
+    },
+    {
+      "id": 491,
+      "name": "Darkrai",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 492,
+      "name": "Shaymin",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 493,
+      "name": "Arceus",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 494,
+      "name": "Victini",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 495,
+      "name": "Snivy",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 495
+    },
+    {
+      "id": 496,
+      "name": "Servine",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 495
+    },
+    {
+      "id": 497,
+      "name": "Serperior",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS",
+      "restricted_gender": "NONE",
+      "breeds": 495
+    },
+    {
+      "id": 498,
+      "name": "Tepig",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 498
+    },
+    {
+      "id": 499,
+      "name": "Pignite",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 498
+    },
+    {
+      "id": 500,
+      "name": "Emboar",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 498
+    },
+    {
+      "id": 501,
+      "name": "Oshawott",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 501
+    },
+    {
+      "id": 502,
+      "name": "Dewott",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 501
+    },
+    {
+      "id": 503,
+      "name": "Samurott",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 501
+    },
+    {
+      "id": 504,
+      "name": "Patrat",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 504
+    },
+    {
+      "id": 505,
+      "name": "Watchog",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 504
+    },
+    {
+      "id": 506,
+      "name": "Lillipup",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 506
+    },
+    {
+      "id": 507,
+      "name": "Herdier",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 506
+    },
+    {
+      "id": 508,
+      "name": "Stoutland",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 506
+    },
+    {
+      "id": 509,
+      "name": "Purrloin",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 509
+    },
+    {
+      "id": 510,
+      "name": "Liepard",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 509
+    },
+    {
+      "id": 511,
+      "name": "Pansage",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 511
+    },
+    {
+      "id": 512,
+      "name": "Simisage",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 511
+    },
+    {
+      "id": 513,
+      "name": "Pansear",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 513
+    },
+    {
+      "id": 514,
+      "name": "Simisear",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 513
+    },
+    {
+      "id": 515,
+      "name": "Panpour",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 515
+    },
+    {
+      "id": 516,
+      "name": "Simipour",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 515
+    },
+    {
+      "id": 517,
+      "name": "Munna",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 517
+    },
+    {
+      "id": 518,
+      "name": "Musharna",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 517
+    },
+    {
+      "id": 519,
+      "name": "Pidove",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 519
+    },
+    {
+      "id": 520,
+      "name": "Tranquill",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 519
+    },
+    {
+      "id": 521,
+      "name": "Unfezant",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 519
+    },
+    {
+      "id": 522,
+      "name": "Blitzle",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 522
+    },
+    {
+      "id": 523,
+      "name": "Zebstrika",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 522
+    },
+    {
+      "id": 524,
+      "name": "Roggenrola",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 524
+    },
+    {
+      "id": 525,
+      "name": "Boldore",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 524
+    },
+    {
+      "id": 526,
+      "name": "Gigalith",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 524
+    },
+    {
+      "id": 527,
+      "name": "Woobat",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "FLYING",
+      "restricted_gender": "NONE",
+      "breeds": 527
+    },
+    {
+      "id": 528,
+      "name": "Swoobat",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "FLYING",
+      "restricted_gender": "NONE",
+      "breeds": 527
+    },
+    {
+      "id": 529,
+      "name": "Drilbur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 529
+    },
+    {
+      "id": 530,
+      "name": "Excadrill",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 529
+    },
+    {
+      "id": 531,
+      "name": "Audino",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 531
+    },
+    {
+      "id": 532,
+      "name": "Timburr",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 532
+    },
+    {
+      "id": 533,
+      "name": "Gurdurr",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 532
+    },
+    {
+      "id": 534,
+      "name": "Conkeldurr",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 532
+    },
+    {
+      "id": 535,
+      "name": "Tympole",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 535
+    },
+    {
+      "id": 536,
+      "name": "Palpitoad",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 535
+    },
+    {
+      "id": 537,
+      "name": "Seismitoad",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 535
+    },
+    {
+      "id": 538,
+      "name": "Throh",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 538
+    },
+    {
+      "id": 539,
+      "name": "Sawk",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 539
+    },
+    {
+      "id": 540,
+      "name": "Sewaddle",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 540
+    },
+    {
+      "id": 541,
+      "name": "Swadloon",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 540
+    },
+    {
+      "id": 542,
+      "name": "Leavanny",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 540
+    },
+    {
+      "id": 543,
+      "name": "Venipede",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 543
+    },
+    {
+      "id": 544,
+      "name": "Whirlipede",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 543
+    },
+    {
+      "id": 545,
+      "name": "Scolipede",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 543
+    },
+    {
+      "id": 546,
+      "name": "Cottonee",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 546
+    },
+    {
+      "id": 547,
+      "name": "Whimsicott",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 546
+    },
+    {
+      "id": 548,
+      "name": "Petilil",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 548
+    },
+    {
+      "id": 549,
+      "name": "Lilligant",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 548
+    },
+    {
+      "id": 550,
+      "name": "Basculin",
+      "egg_group_1": "WATER_2",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 550
+    },
+    {
+      "id": 551,
+      "name": "Sandile",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 551
+    },
+    {
+      "id": 552,
+      "name": "Krokorok",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 551
+    },
+    {
+      "id": 553,
+      "name": "Krookodile",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 551
+    },
+    {
+      "id": 554,
+      "name": "Darumaka",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 554
+    },
+    {
+      "id": 555,
+      "name": "Darmanitan",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 554
+    },
+    {
+      "id": 556,
+      "name": "Maractus",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 556
+    },
+    {
+      "id": 557,
+      "name": "Dwebble",
+      "egg_group_1": "BUG",
+      "egg_group_2": "MINERAL",
+      "restricted_gender": "NONE",
+      "breeds": 557
+    },
+    {
+      "id": 558,
+      "name": "Crustle",
+      "egg_group_1": "BUG",
+      "egg_group_2": "MINERAL",
+      "restricted_gender": "NONE",
+      "breeds": 557
+    },
+    {
+      "id": 559,
+      "name": "Scraggy",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 560
+    },
+    {
+      "id": 560,
+      "name": "Scrafty",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 560
+    },
+    {
+      "id": 561,
+      "name": "Sigilyph",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 561
+    },
+    {
+      "id": 562,
+      "name": "Yamask",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "AMORPHOUS",
+      "restricted_gender": "NONE",
+      "breeds": 562
+    },
+    {
+      "id": 563,
+      "name": "Cofagrigus",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "AMORPHOUS",
+      "restricted_gender": "NONE",
+      "breeds": 562
+    },
+    {
+      "id": 564,
+      "name": "Tirtouga",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 564
+    },
+    {
+      "id": 565,
+      "name": "Carracosta",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 564
+    },
+    {
+      "id": 566,
+      "name": "Archen",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 566
+    },
+    {
+      "id": 567,
+      "name": "Archeops",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 566
+    },
+    {
+      "id": 568,
+      "name": "Trubbish",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 568
+    },
+    {
+      "id": 569,
+      "name": "Garbodor",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 568
+    },
+    {
+      "id": 570,
+      "name": "Zorua",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 570
+    },
+    {
+      "id": 571,
+      "name": "Zoroark",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 570
+    },
+    {
+      "id": 572,
+      "name": "Minccino",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 572
+    },
+    {
+      "id": 573,
+      "name": "Cinccino",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 572
+    },
+    {
+      "id": 574,
+      "name": "Gothita",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 574
+    },
+    {
+      "id": 575,
+      "name": "Gothorita",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 574
+    },
+    {
+      "id": 576,
+      "name": "Gothitelle",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 574
+    },
+    {
+      "id": 577,
+      "name": "Solosis",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 577
+    },
+    {
+      "id": 578,
+      "name": "Duosion",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 577
+    },
+    {
+      "id": 579,
+      "name": "Reuniclus",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 577
+    },
+    {
+      "id": 580,
+      "name": "Ducklett",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FLYING",
+      "restricted_gender": "NONE",
+      "breeds": 580
+    },
+    {
+      "id": 581,
+      "name": "Swanna",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "FLYING",
+      "restricted_gender": "NONE",
+      "breeds": 580
+    },
+    {
+      "id": 582,
+      "name": "Vanillite",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 582
+    },
+    {
+      "id": 583,
+      "name": "Vanillish",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 582
+    },
+    {
+      "id": 584,
+      "name": "Vanilluxe",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 582
+    },
+    {
+      "id": 585,
+      "name": "Deerling",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 585
+    },
+    {
+      "id": 586,
+      "name": "Sawsbuck",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 585
+    },
+    {
+      "id": 587,
+      "name": "Emolga",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 587
+    },
+    {
+      "id": 588,
+      "name": "Karrablast",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 588
+    },
+    {
+      "id": 589,
+      "name": "Escavalier",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 588
+    },
+    {
+      "id": 590,
+      "name": "Foongus",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 590
+    },
+    {
+      "id": 591,
+      "name": "Amoonguss",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 590
+    },
+    {
+      "id": 592,
+      "name": "Frillish",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 592
+    },
+    {
+      "id": 593,
+      "name": "Jellicent",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 592
+    },
+    {
+      "id": 594,
+      "name": "Alomomola",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_2",
+      "restricted_gender": "NONE",
+      "breeds": 594
+    },
+    {
+      "id": 595,
+      "name": "Joltik",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 595
+    },
+    {
+      "id": 596,
+      "name": "Galvantula",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 595
+    },
+    {
+      "id": 597,
+      "name": "Ferroseed",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "MINERAL",
+      "restricted_gender": "NONE",
+      "breeds": 597
+    },
+    {
+      "id": 598,
+      "name": "Ferrothorn",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "MINERAL",
+      "restricted_gender": "NONE",
+      "breeds": 597
+    },
+    {
+      "id": 599,
+      "name": "Klink",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 599
+    },
+    {
+      "id": 600,
+      "name": "Klang",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 599
+    },
+    {
+      "id": 601,
+      "name": "Klinklang",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 599
+    },
+    {
+      "id": 602,
+      "name": "Tynamo",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 602
+    },
+    {
+      "id": 603,
+      "name": "Eelektrik",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 602
+    },
+    {
+      "id": 604,
+      "name": "Eelektross",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 602
+    },
+    {
+      "id": 605,
+      "name": "Elgyem",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 605
+    },
+    {
+      "id": 606,
+      "name": "Beheeyem",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 605
+    },
+    {
+      "id": 607,
+      "name": "Litwick",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 607
+    },
+    {
+      "id": 608,
+      "name": "Lampent",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 607
+    },
+    {
+      "id": 609,
+      "name": "Chandelure",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 607
+    },
+    {
+      "id": 610,
+      "name": "Axew",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 610
+    },
+    {
+      "id": 611,
+      "name": "Fraxure",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 610
+    },
+    {
+      "id": 612,
+      "name": "Haxorus",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 610
+    },
+    {
+      "id": 613,
+      "name": "Cubchoo",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 613
+    },
+    {
+      "id": 614,
+      "name": "Beartic",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 613
+    },
+    {
+      "id": 615,
+      "name": "Cryogonal",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 615
+    },
+    {
+      "id": 616,
+      "name": "Shelmet",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 616
+    },
+    {
+      "id": 617,
+      "name": "Accelgor",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 616
+    },
+    {
+      "id": 618,
+      "name": "Stunfisk",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "AMORPHOUS",
+      "restricted_gender": "NONE",
+      "breeds": 618
+    },
+    {
+      "id": 619,
+      "name": "Mienfoo",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "NONE",
+      "breeds": 619
+    },
+    {
+      "id": 620,
+      "name": "Mienshao",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "NONE",
+      "breeds": 619
+    },
+    {
+      "id": 621,
+      "name": "Druddigon",
+      "egg_group_1": "DRAGON",
+      "egg_group_2": "MONSTER",
+      "restricted_gender": "NONE",
+      "breeds": 621
+    },
+    {
+      "id": 622,
+      "name": "Golett",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 622
+    },
+    {
+      "id": 623,
+      "name": "Golurk",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 622
+    },
+    {
+      "id": 624,
+      "name": "Pawniard",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 624
+    },
+    {
+      "id": 625,
+      "name": "Bisharp",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 624
+    },
+    {
+      "id": 626,
+      "name": "Bouffalant",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 626
+    },
+    {
+      "id": 627,
+      "name": "Rufflet",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 627
+    },
+    {
+      "id": 628,
+      "name": "Braviary",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 627
+    },
+    {
+      "id": 629,
+      "name": "Vullaby",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 629
+    },
+    {
+      "id": 630,
+      "name": "Mandibuzz",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 629
+    },
+    {
+      "id": 631,
+      "name": "Heatmor",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 631
+    },
+    {
+      "id": 632,
+      "name": "Durant",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 632
+    },
+    {
+      "id": 633,
+      "name": "Deino",
+      "egg_group_1": "DRAGON",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 633
+    },
+    {
+      "id": 634,
+      "name": "Zweilous",
+      "egg_group_1": "DRAGON",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 633
+    },
+    {
+      "id": 635,
+      "name": "Hydreigon",
+      "egg_group_1": "DRAGON",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 633
+    },
+    {
+      "id": 636,
+      "name": "Larvesta",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 636
+    },
+    {
+      "id": 637,
+      "name": "Volcarona",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 636
+    },
+    {
+      "id": 638,
+      "name": "Cobalion",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 639,
+      "name": "Terrakion",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 640,
+      "name": "Virizion",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 641,
+      "name": "Tornadus",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 0
+    },
+    {
+      "id": 642,
+      "name": "Thundurus",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 0
+    },
+    {
+      "id": 643,
+      "name": "Reshiram",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 644,
+      "name": "Zekrom",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 645,
+      "name": "Landorus",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "MALE_ONLY",
+      "breeds": 0
+    },
+    {
+      "id": 646,
+      "name": "Kyurem",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 647,
+      "name": "Keldeo",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 648,
+      "name": "Meloetta",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 649,
+      "name": "Genesect",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 650,
+      "name": "Chespin",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 650
+    },
+    {
+      "id": 651,
+      "name": "Quilladin",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 650
+    },
+    {
+      "id": 652,
+      "name": "Chesnaught",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 650
+    },
+    {
+      "id": 653,
+      "name": "Fennekin",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 653
+    },
+    {
+      "id": 654,
+      "name": "Braixen",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 653
+    },
+    {
+      "id": 655,
+      "name": "Delphox",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 653
+    },
+    {
+      "id": 656,
+      "name": "Froakie",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 656
+    },
+    {
+      "id": 657,
+      "name": "Frogadier",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 656
+    },
+    {
+      "id": 658,
+      "name": "Greninja",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 656
+    },
+    {
+      "id": 659,
+      "name": "Bunnelby",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 659
+    },
+    {
+      "id": 660,
+      "name": "Diggersby",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 659
+    },
+    {
+      "id": 661,
+      "name": "Fletchling",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 661
+    },
+    {
+      "id": 662,
+      "name": "Fletchinder",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 661
+    },
+    {
+      "id": 663,
+      "name": "Talonflame",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 661
+    },
+    {
+      "id": 664,
+      "name": "Scatterbug",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 664
+    },
+    {
+      "id": 665,
+      "name": "Spewpa",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 664
+    },
+    {
+      "id": 666,
+      "name": "Vivillon",
+      "egg_group_1": "BUG",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 664
+    },
+    {
+      "id": 667,
+      "name": "Litleo",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 667
+    },
+    {
+      "id": 668,
+      "name": "Pyroar",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 667
+    },
+    {
+      "id": 669,
+      "name": "Flabébé",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 669
+    },
+    {
+      "id": 670,
+      "name": "Floette",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 669
+    },
+    {
+      "id": 671,
+      "name": "Florges",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
+      "breeds": 669
+    },
+    {
+      "id": 672,
+      "name": "Skiddo",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 672
+    },
+    {
+      "id": 673,
+      "name": "Gogoat",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 672
+    },
+    {
+      "id": 674,
+      "name": "Pancham",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "NONE",
+      "breeds": 674
+    },
+    {
+      "id": 675,
+      "name": "Pangoro",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "HUMAN_LIKE",
+      "restricted_gender": "NONE",
+      "breeds": 674
+    },
+    {
+      "id": 676,
+      "name": "Furfrou",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 676
+    },
+    {
+      "id": 677,
+      "name": "Espurr",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 677
+    },
+    {
+      "id": 678,
+      "name": "Meowstic",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 677
+    },
+    {
+      "id": 679,
+      "name": "Honedge",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 679
+    },
+    {
+      "id": 680,
+      "name": "Doublade",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 679
+    },
+    {
+      "id": 681,
+      "name": "Aegislash",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 679
+    },
+    {
+      "id": 682,
+      "name": "Spritzee",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 682
+    },
+    {
+      "id": 683,
+      "name": "Aromatisse",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 682
+    },
+    {
+      "id": 684,
+      "name": "Swirlix",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 684
+    },
+    {
+      "id": 685,
+      "name": "Slurpuff",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 684
+    },
+    {
+      "id": 686,
+      "name": "Inkay",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_2",
+      "restricted_gender": "NONE",
+      "breeds": 686
+    },
+    {
+      "id": 687,
+      "name": "Malamar",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_2",
+      "restricted_gender": "NONE",
+      "breeds": 686
+    },
+    {
+      "id": 688,
+      "name": "Binacle",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 688
+    },
+    {
+      "id": 689,
+      "name": "Barbaracle",
+      "egg_group_1": "WATER_3",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 688
+    },
+    {
+      "id": 690,
+      "name": "Skrelp",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 690
+    },
+    {
+      "id": 691,
+      "name": "Dragalge",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 690
+    },
+    {
+      "id": 692,
+      "name": "Clauncher",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 692
+    },
+    {
+      "id": 693,
+      "name": "Clawitzer",
+      "egg_group_1": "WATER_1",
+      "egg_group_2": "WATER_3",
+      "restricted_gender": "NONE",
+      "breeds": 692
+    },
+    {
+      "id": 694,
+      "name": "Helioptile",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 694
+    },
+    {
+      "id": 695,
+      "name": "Heliolisk",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 694
+    },
+    {
+      "id": 696,
+      "name": "Tyrunt",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 696
+    },
+    {
+      "id": 697,
+      "name": "Tyrantrum",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON",
+      "restricted_gender": "NONE",
+      "breeds": 696
+    },
+    {
+      "id": 698,
+      "name": "Amaura",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 698
+    },
+    {
+      "id": 699,
+      "name": "Aurorus",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 698
+    },
+    {
+      "id": 700,
+      "name": "Sylveon",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 133
+    },
+    {
+      "id": 701,
+      "name": "Hawlucha",
+      "egg_group_1": "HUMAN_LIKE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 701
+    },
+    {
+      "id": 702,
+      "name": "Dedenne",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "FAIRY",
+      "restricted_gender": "NONE",
+      "breeds": 702
+    },
+    {
+      "id": 703,
+      "name": "Carbink",
+      "egg_group_1": "FAIRY",
+      "egg_group_2": "MINERAL",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 703
+    },
+    {
+      "id": 704,
+      "name": "Goomy",
+      "egg_group_1": "DRAGON",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 704
+    },
+    {
+      "id": 705,
+      "name": "Sliggoo",
+      "egg_group_1": "DRAGON",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 704
+    },
+    {
+      "id": 706,
+      "name": "Goodra",
+      "egg_group_1": "DRAGON",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 704
+    },
+    {
+      "id": 707,
+      "name": "Klefki",
+      "egg_group_1": "MINERAL",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 707
+    },
+    {
+      "id": 708,
+      "name": "Phantump",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "AMORPHOUS",
+      "restricted_gender": "NONE",
+      "breeds": 708
+    },
+    {
+      "id": 709,
+      "name": "Trevenant",
+      "egg_group_1": "GRASS",
+      "egg_group_2": "AMORPHOUS",
+      "restricted_gender": "NONE",
+      "breeds": 708
+    },
+    {
+      "id": 710,
+      "name": "Pumpkaboo",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 710
+    },
+    {
+      "id": 711,
+      "name": "Gourgeist",
+      "egg_group_1": "AMORPHOUS",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 710
+    },
+    {
+      "id": 712,
+      "name": "Bergmite",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 712
+    },
+    {
+      "id": 713,
+      "name": "Avalugg",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 712
+    },
+    {
+      "id": 714,
+      "name": "Noibat",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 714
+    },
+    {
+      "id": 715,
+      "name": "Noivern",
+      "egg_group_1": "FLYING",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 714
+    },
+    {
+      "id": 716,
+      "name": "Xerneas",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 717,
+      "name": "Yveltal",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 718,
+      "name": "Zygarde",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    },
+    {
+      "id": 719,
+      "name": "Diancie",
+      "egg_group_1": "UNDISCOVERED",
+      "egg_group_2": "NONE",
+      "restricted_gender": "GENDERLESS",
+      "breeds": 0
+    }
+  ]
+}

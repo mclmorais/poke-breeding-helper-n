@@ -69,11 +69,11 @@ public class LuckOptionsFragment extends PopupDialogFragment {
         spinnerShinyOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0)
-                    baseActivity.setShiny(false);
-                else if (position == 1)
-                    baseActivity.setShiny(true);
-                baseActivity.cardChance.updateEggChance();
+                if(position == 0);
+                    //baseActivity.setShiny(false);
+                else if (position == 1);
+                    //baseActivity.setShiny(true);
+                //baseActivity.cardChance.updateEggChance();
             }
 
             @Override
@@ -85,15 +85,15 @@ public class LuckOptionsFragment extends PopupDialogFragment {
         checkBoxShinyCharm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                baseActivity.setShinyCharmActive(isChecked);
-                baseActivity.cardChance.updateEggChance();
+                //baseActivity.setShinyCharmActive(isChecked);
+                //baseActivity.cardChance.updateEggChance();
             }
         });
         checkBoxMasudaMethod.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                baseActivity.setMasudaMethodActive(isChecked);
-                baseActivity.cardChance.updateEggChance();
+                //baseActivity.setMasudaMethodActive(isChecked);
+                //baseActivity.cardChance.updateEggChance();
             }
         });
 

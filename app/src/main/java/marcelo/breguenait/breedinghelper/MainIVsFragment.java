@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
@@ -115,7 +112,7 @@ public class MainIVsFragment extends Fragment
     Waiting waitingItem = Waiting.NONE;
 
 
-    UpdateActivePokemons mCallback;
+    OnActivePokemonsChanged mCallback;
 
     public void refreshInterface(PokemonInfo goalPokemon, IvManager.item maleItem, IvManager.item femaleItem) {
 
@@ -206,9 +203,9 @@ public class MainIVsFragment extends Fragment
         try {
             Fragment targetFragment = getTargetFragment();
             if(targetFragment == null)
-                mCallback = (UpdateActivePokemons) activity;
+                mCallback = (OnActivePokemonsChanged) activity;
             else
-                mCallback = (UpdateActivePokemons) getTargetFragment();
+                mCallback = (OnActivePokemonsChanged) getTargetFragment();
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnHeadlineSelectedListener");
@@ -466,7 +463,7 @@ public class MainIVsFragment extends Fragment
             throw new IllegalArgumentException("Item received for unknown recipient.");
     }
 
-    interface UpdateActivePokemons {
+    interface OnActivePokemonsChanged {
         void updateMaleParent(PokemonInfo updatedMale);
         void updateFemaleParent(PokemonInfo updatedFemale);
         void updateGoal(PokemonInfo updatedGoal);

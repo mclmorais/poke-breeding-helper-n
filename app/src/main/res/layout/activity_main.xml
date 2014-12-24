@@ -28,16 +28,10 @@
                 android:layout_marginRight="@dimen/distance_to_edge"
                 android:layout_marginTop="@dimen/distance_between_cards"></FrameLayout>
 
-            <include
-                android:layout_width="match_parent"
+            <FrameLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/card_layout_2_chance"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/distance_between_cards"
-                android:id="@+id/cardChance"
-                android:layout_marginLeft="@dimen/distance_to_edge"
-                android:layout_marginRight="@dimen/distance_to_edge"
-                />
+                android:id="@+id/frameLuckFragmentContainer"></FrameLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"

@@ -1,0 +1,4324 @@
+{
+  "pokemons": [
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "001",
+      "name": "Bulbasaur",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "002",
+      "name": "Ivysaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "003",
+      "name": "Venusaur",
+      "egg_group_1": "FIELD",
+      "egg_group_2": "GRASS"
+    },
+    {
+      "id": "004",
+      "name": "Charmander",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "005",
+      "name": "Charmeleon",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    },
+    {
+      "id": "006",
+      "name": "Charizard",
+      "egg_group_1": "MONSTER",
+      "egg_group_2": "DRAGON"
+    }
+  ]
+}

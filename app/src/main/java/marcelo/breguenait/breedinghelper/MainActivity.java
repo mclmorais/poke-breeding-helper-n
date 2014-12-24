@@ -28,7 +28,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import de.cketti.library.changelog.ChangeLog;
 
@@ -38,412 +40,17 @@ class Constants {
 
 public class MainActivity extends FragmentActivity
         implements
-        MainIVsFragment.UpdateActivePokemons,
-        StoredPokemonsFragment.TempInterface{
+        MainIVsFragment.OnActivePokemonsChanged,
+        StoredPokemonsFragment.OnPokemonListChanged,
+        LuckFragment.TemporaryLuckInterface{
 
     private View cardAd;
     private AdView adView;
 
-    protected final CardChance  cardChance = new CardChance(); //TODO: Only one left to transform into a fragment
     private IvManager ivManager;
     private NewIvManager newIvManager;
     private final Gson gson = new Gson();
 
-
-    class CardChance {
-        IvManager.ChanceData chanceData;
-
-        TextView        textViewChanceGoalIVs;
-
-        View            expandableLayoutChanceEgg;
-        ExpandAnimation chanceExpander;
-
-        Button          buttonSwitchParentWithEggs;
-
-        View            buttonLuck;
-        ImageView       imageShinyStar, imageShinyCharm, imageMasudaMethod;
-        View            layoutMaleSwitchInfo, layoutFemaleSwitchInfo;
-        TextView        textNewSwitchMaleInfo, textNewSwitchFemaleInfo;
-        TextView        textSwitchLuckInfo;
-        ImageView       imageSwitchMaleIcon, imageSwitchFemaleIcon;
-        View    frameMaleSwitchOutline, frameFemaleSwitchOutline;
-        private void initialize() {
-
-            /*Layout that tells the user what he should switch the parents with*/
-            layoutMaleSwitchInfo = findViewById(R.id.layoutMaleSwitchInfo);
-            layoutFemaleSwitchInfo = findViewById(R.id.layoutFemaleSwitchInfo);
-            textNewSwitchMaleInfo = (TextView) findViewById(R.id.textNewSwitchMaleIcon);
-            textNewSwitchFemaleInfo = (TextView) findViewById(R.id.textNewSwitchFemaleIcon);
-            textSwitchLuckInfo = (TextView) findViewById(R.id.textLuckSwitchInfo);
-            imageSwitchMaleIcon = (ImageView) findViewById(R.id.imageMaleSwitchIcon);
-            imageSwitchFemaleIcon = (ImageView) findViewById(R.id.imageFemaleSwitchIcon);
-            frameMaleSwitchOutline = findViewById(R.id.frameNewSwitchMaleIcon);
-            frameFemaleSwitchOutline = findViewById(R.id.frameNewSwitchFemaleIcon);
-
-
-
-            /*Finds the layout views for the on screen shinyOptionsStrings*/
-            textViewChanceGoalIVs       = (TextView) findViewById(R.id.textViewChanceGoalIVs);
-
-            buttonSwitchParentWithEggs  = (Button)   findViewById(R.id.buttonSwitchEggs);
-
-            expandableLayoutChanceEgg = findViewById(R.id.expandableLayoutChanceEgg);
-
-            /*Button (actually a frameLayout) which opens the shiny and m/f options*/
-            buttonLuck = findViewById(R.id.frameLayoutLuckIcon);
-
-            imageShinyStar = (ImageView) findViewById(R.id.imageViewShinyStar);
-            imageShinyStar.setVisibility(View.INVISIBLE);
-            imageShinyCharm = (ImageView) findViewById(R.id.imageViewShinyCharm);
-            imageShinyCharm.setVisibility(View.INVISIBLE);
-            imageMasudaMethod = (ImageView) findViewById(R.id.imageViewMasudaMethod);
-            imageMasudaMethod.setVisibility(View.INVISIBLE);
-
-            /*Links the expandable layout view to the animation*/
-            chanceExpander = new ExpandAnimation(expandableLayoutChanceEgg);
-
-            /*Sets the listener to switch the current IVs with the ones on the selected eggs*/
-            buttonSwitchParentWithEggs.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cardChance.switchEggsToMainIVs();
-
-                    chanceExpander.collapse();
-                }
-            });
-
-            /*Opens the luck and m/f options*/
-            buttonLuck.setClickable(true);
-            buttonLuck.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openLuckOptionsFragment(v);
-                }
-            });
-
-            /*Disables both swith info views until they're needed*/
-            layoutMaleSwitchInfo.setVisibility(View.GONE);
-            layoutFemaleSwitchInfo.setVisibility(View.GONE);
-
-
-        }
-
-        void updateGoalIvChance() {
-
-            /*Doesn't show chance until at least one of the goal IVs is checked. Only exception is
-            * when user wants shiny chance.*/
-//            int count = 0;
-//            for(int i = 0; i < 6; i++)
-//                count += cardMainIVs.checkBoxGoalIVs[i].isChecked()?1:0;
-//            if((count == 0) && !isShiny())
-//            {
-//                textViewChanceGoalIVs.setText("Select the goal IVs above");
-//                return;
-//            }
-
-            boolean compatible = ivManager.checkParentsCompatibility();
-
-            if(!compatible) {
-                textViewChanceGoalIVs.setText("Parents are incompatible to goal (egg group)");
-                return;
-            }
-
-            if(ivManager.getActivePokemons().getGoal() == null) {
-                textViewChanceGoalIVs.setText("Please select a goal pokemon.");
-                return;
-            }
-
-            if(ivManager.getActivePokemons().getMaleParent() == null || ivManager.getActivePokemons().getFemaleParent() == null) {
-                textViewChanceGoalIVs.setText("Please select the parents.");
-                return;
-            }
-
-            double chance = ivManager.getParentsChance();
-
-            String chanceInPercent, chanceInEggs;
-            if(chance > 0) {
-                if (chance > 0.0001) {
-                    chanceInPercent = String.format("%.2f", chance * 100);
-                    chanceInEggs = String.format("%s", Math.round(1.0 / chance));
-                } else {
-                    chanceInPercent = "<0.01";
-                    chanceInEggs = ">100000";
-                }
-
-                String chanceString = chanceInPercent + "% or 1 in " + chanceInEggs + " eggs";
-                textViewChanceGoalIVs.setText(chanceString);
-            }
-            else
-            {
-                textViewChanceGoalIVs.setText("Impossible to get goal IVs with current parents");
-            }
-        }
-
-        void updateEggChance() {
-            /*Gets a set of information regarding the chance of the eggs when compared to
-            * the current parents*/
-            chanceData = ivManager.getBestCombinationChance();
-
-            if(chanceData.status == IvManager.chanceStatus.ERROR) {
-                chanceExpander.collapse();
-                return;
-            }
-
-            textNewSwitchFemaleInfo.setTextColor(0xFF000000);
-            textNewSwitchMaleInfo.setTextColor(0xFF000000);
-
-            if(chanceData.status != IvManager.chanceStatus.ALL_WORSE_LUCK) {
-
-                if (chanceData.status == IvManager.chanceStatus.EGG_WITH_PARENT) {
-                /*If only one parent should be switched, updates the interface with the data and
-                * expands the extra layout*/
-                    int n = chanceData.firstNumber + 1;
-                    Gender eggGender = ivManager.getHatch(chanceData.firstNumber).gender;
-                    if (eggGender == Gender.MALE) {
-                        layoutMaleSwitchInfo.setVisibility(View.VISIBLE);
-                        layoutFemaleSwitchInfo.setVisibility(View.GONE);
-                        textNewSwitchMaleInfo.setText(Integer.toString(n));
-                        frameMaleSwitchOutline.setBackgroundResource(R.drawable.ic_egg_outline);
-
-
-                    } else {
-                        layoutFemaleSwitchInfo.setVisibility(View.VISIBLE);
-                        layoutMaleSwitchInfo.setVisibility(View.GONE);
-                        textNewSwitchFemaleInfo.setText(Integer.toString(n));
-                        frameFemaleSwitchOutline.setBackgroundResource(R.drawable.ic_egg_outline);
-                    }
-                } else if (chanceData.status == IvManager.chanceStatus.EGG_WITH_ANOTHER_EGG) {
-                /*If both parents should be switched, updates the interface with the data and
-                * expands the extra layout*/
-                    int first = chanceData.firstNumber + 1;
-                    int second = chanceData.secondNumber + 1;
-
-                    /*The values do not correspond to the genders - checking has to be done here*/
-                    if(ivManager.getHatch(first - 1).gender == Gender.MALE) {
-                        textNewSwitchMaleInfo.setText(Integer.toString(first));
-                        textNewSwitchFemaleInfo.setText(Integer.toString(second));
-                    }
-                    else {
-                        textNewSwitchMaleInfo.setText(Integer.toString(second));
-                        textNewSwitchFemaleInfo.setText(Integer.toString(first));
-                    }
-                    frameMaleSwitchOutline.setBackgroundResource(R.drawable.ic_egg_outline);
-                    frameFemaleSwitchOutline.setBackgroundResource(R.drawable.ic_egg_outline);
-                    layoutMaleSwitchInfo.setVisibility(View.VISIBLE);
-                    layoutFemaleSwitchInfo.setVisibility(View.VISIBLE);
-                }
-                else if (chanceData.status == IvManager.chanceStatus.DITTO_WITH_MALE_PARENT) {
-                    int dittoNumber = chanceData.firstNumber + 1;
-
-                    frameFemaleSwitchOutline.setBackgroundResource(R.drawable.ic_ditto_outline);
-
-                    layoutFemaleSwitchInfo.setVisibility(View.VISIBLE);
-                    layoutMaleSwitchInfo.setVisibility(View.GONE);
-                    textNewSwitchFemaleInfo.setText(Integer.toString(dittoNumber));
-
-                }
-                else if (chanceData.status == IvManager.chanceStatus.DITTO_WITH_FEMALE_PARENT) {
-                    int dittoNumber = chanceData.firstNumber + 1;
-
-                    frameMaleSwitchOutline.setBackgroundResource(R.drawable.ic_ditto_outline);
-
-                    layoutMaleSwitchInfo.setVisibility(View.VISIBLE);
-                    layoutFemaleSwitchInfo.setVisibility(View.GONE);
-                    textNewSwitchMaleInfo.setText(Integer.toString(dittoNumber));
-                }
-                else if (chanceData.status == IvManager.chanceStatus.DITTO_WITH_MALE_EGG) {
-                    int dittoNumber = chanceData.firstNumber + 1;
-                    int eggNumber = chanceData.secondNumber + 1;
-
-
-                    textNewSwitchMaleInfo.setText(Integer.toString(eggNumber));
-                    textNewSwitchFemaleInfo.setText(Integer.toString(dittoNumber));
-
-                    frameMaleSwitchOutline.setBackgroundResource(R.drawable.ic_egg_outline);
-                    frameFemaleSwitchOutline.setBackgroundResource(R.drawable.ic_ditto_outline);
-                    layoutMaleSwitchInfo.setVisibility(View.VISIBLE);
-                    layoutFemaleSwitchInfo.setVisibility(View.VISIBLE);
-                }
-                else if (chanceData.status == IvManager.chanceStatus.DITTO_WITH_FEMALE_EGG) {
-                    int dittoNumber = chanceData.firstNumber + 1;
-                    int eggNumber = chanceData.secondNumber + 1;
-
-
-                    textNewSwitchMaleInfo.setText(Integer.toString(dittoNumber));
-                    textNewSwitchFemaleInfo.setText(Integer.toString(eggNumber));
-
-                    frameMaleSwitchOutline.setBackgroundResource(R.drawable.ic_ditto_outline);
-                    frameFemaleSwitchOutline.setBackgroundResource(R.drawable.ic_egg_outline);
-                    layoutMaleSwitchInfo.setVisibility(View.VISIBLE);
-                    layoutFemaleSwitchInfo.setVisibility(View.VISIBLE);
-
-                }
-                else if (chanceData.status == IvManager.chanceStatus.EGG_SWAP_DITTO) {
-                    int eggNumber = chanceData.firstNumber + 1;
-
-                    if(ivManager.getHatch(eggNumber - 1).gender == Gender.MALE) {
-                        //Put egg on male, swap male ditto for female slot
-                        textNewSwitchMaleInfo.setText(Integer.toString(eggNumber));
-                        textNewSwitchFemaleInfo.setTextColor(0xFFFFFFFF);
-                        textNewSwitchFemaleInfo.setText("P");
-
-                        frameMaleSwitchOutline.setBackgroundResource(R.drawable.ic_egg_outline);
-                        frameFemaleSwitchOutline.setBackgroundResource(R.drawable.symbol_ditto);
-
-                        imageSwitchMaleIcon.setBackgroundResource(R.drawable.symbol_male);
-                    }
-                    else {
-                        //Put egg on female, swap female ditto for male slot
-                        textNewSwitchFemaleInfo.setText(Integer.toString(eggNumber));
-                        textNewSwitchMaleInfo.setTextColor(0xFFFFFFFF);
-                        textNewSwitchMaleInfo.setText("P");
-
-                        frameFemaleSwitchOutline.setBackgroundResource(R.drawable.ic_egg_outline);
-                        frameMaleSwitchOutline.setBackgroundResource(R.drawable.symbol_ditto);
-
-                        imageSwitchFemaleIcon.setBackgroundResource(R.drawable.symbol_female);
-                    }
-
-                    layoutMaleSwitchInfo.setVisibility(View.VISIBLE);
-                    layoutFemaleSwitchInfo.setVisibility(View.VISIBLE);
-                }
-                else if (chanceData.status == IvManager.chanceStatus.GENDERLESS_WITH_MALE_DITTO) {
-                    //TODO: fazer!
-                }
-                else if (chanceData.status == IvManager.chanceStatus.GENDERLESS_WITH_FEMALE_DITTO) {
-                    //TODO: fazer!
-                }
-
-
-
-
-                if (readBoolean("showBothPercentagesOnSwitch", false))
-                    textSwitchLuckInfo.setText(String.format("%.2f", (chanceData.chance) * 100) + "%" + " (+" + String.format("%.2f", (chanceData.chance - ivManager.getParentsChance()) * 100) + "%)");
-                else
-                    textSwitchLuckInfo.setText("+" + String.format("%.2f", (chanceData.chance - ivManager.getParentsChance()) * 100) + "%");
-
-                if(chanceExpander.isCollapsed()) {
-                    chanceExpander.stopAnimation();
-                    chanceExpander.expand();
-                }
-
-            }
-            else {
-                /*If no egg has a better chance than the current parents, collapses the expandable
-                * layout*/
-                chanceExpander.stopAnimation();
-                chanceExpander.collapse();
-            }
-        }
-
-        void updateItems() {
-            if(ivManager.isShiny()) {
-
-                imageShinyStar.setVisibility(View.VISIBLE);
-
-                imageShinyCharm.setVisibility(isShinyCharmActive()?View.VISIBLE:View.INVISIBLE);
-                imageMasudaMethod.setVisibility(isMasudaMethodActive()?View.VISIBLE:View.INVISIBLE);
-            }
-            else {
-                imageShinyStar.setVisibility(View.INVISIBLE);
-                imageShinyCharm.setVisibility(View.INVISIBLE);
-                imageMasudaMethod.setVisibility(View.INVISIBLE);
-            }
-
-            updateGoalIvChance();
-        }
-
-        void switchEggsToMainIVs() {
-            //TODO: passar esta lógica para IVmanager
-            if(cardChance.chanceData == null) cardChance.chanceData = ivManager.getBestCombinationChance();
-
-            if(cardChance.chanceData.status == IvManager.chanceStatus.EGG_WITH_PARENT) {
-                HatchInfo egg = ivManager.getHatch(chanceData.firstNumber);
-                ivManager.switchParent(egg.gender, chanceData.firstNumber);
-            }
-            else if (cardChance.chanceData.status == IvManager.chanceStatus.EGG_WITH_ANOTHER_EGG) {
-                int firstEggNumber = chanceData.firstNumber;
-                int secondEggNumber = chanceData.secondNumber;
-                HatchInfo firstEgg = ivManager.getHatch(firstEggNumber);
-                HatchInfo secondEgg = ivManager.getHatch(secondEggNumber);
-
-                if(firstEgg.gender == Gender.MALE)
-                    ivManager.switchBothParents(firstEggNumber, secondEggNumber);
-                else
-                    ivManager.switchBothParents(secondEggNumber,firstEggNumber);
-//                ivManager.switchParent(firstEgg.gender,chanceData.firstNumber);
-//                ivManager.switchParent(secondEgg.gender,chanceData.secondNumber);
-
-            }
-            else if (cardChance.chanceData.status == IvManager.chanceStatus.DITTO_WITH_MALE_PARENT) {
-
-                HatchInfo ditto = ivManager.getHatch(chanceData.firstNumber);
-                ivManager.switchParent(Gender.FEMALE,chanceData.firstNumber);
-            }
-            else if (cardChance.chanceData.status == IvManager.chanceStatus.DITTO_WITH_FEMALE_PARENT) {
-                HatchInfo ditto = ivManager.getHatch(chanceData.firstNumber);
-                ivManager.switchParent(Gender.MALE,chanceData.firstNumber);
-            }
-            else if (chanceData.status == IvManager.chanceStatus.DITTO_WITH_MALE_EGG) {
-
-                int dittoNumber     = chanceData.firstNumber;
-                int eggNumber       = chanceData.secondNumber;
-
-                HatchInfo ditto   = ivManager.getHatch(dittoNumber);
-                HatchInfo egg     = ivManager.getHatch(eggNumber);
-
-                ivManager.switchBothParents(eggNumber, dittoNumber);
-//                ivManager.switchParent(Gender.MALE,eggNumber);
-//                ivManager.switchParent(Gender.FEMALE,dittoNumber);
-            }
-            else if (chanceData.status == IvManager.chanceStatus.DITTO_WITH_FEMALE_EGG) {
-
-                int dittoNumber     = chanceData.firstNumber;
-                int eggNumber       = chanceData.secondNumber;
-
-                HatchInfo ditto   = ivManager.getHatch(dittoNumber);
-                HatchInfo egg     = ivManager.getHatch(eggNumber);
-
-                ivManager.switchBothParents(dittoNumber, eggNumber);
-//                ivManager.switchParent(Gender.FEMALE,eggNumber);
-//                ivManager.switchParent(Gender.MALE,dittoNumber);
-
-            }
-            else if (cardChance.chanceData.status == IvManager.chanceStatus.EGG_SWAP_DITTO) {
-
-                int eggNumber    = chanceData.firstNumber;
-                HatchInfo egg  = ivManager.getHatch(eggNumber);
-
-                if(egg.gender == Gender.MALE) {
-                    //Male Ditto -> Female
-                    //Egg -> Male (Stores female back)
-                    ivManager.swapParentsAndSwitch(Gender.MALE,eggNumber);
-                }
-                else if (egg.gender == Gender.FEMALE) {
-                    /*Female Ditto -> Male
-                    * Egg -> Female (Stores male back)*/
-                    ivManager.swapParentsAndSwitch(Gender.FEMALE,eggNumber);
-                }
-                else {
-                    throw new IllegalArgumentException("Egg to be switched should be either MALE or FEMALE");
-                }
-            }
-            else if (cardChance.chanceData.status == IvManager.chanceStatus.GENDERLESS_WITH_MALE_DITTO) {
-                ivManager.switchParent(Gender.FEMALE, chanceData.firstNumber);
-            }
-            else if (cardChance.chanceData.status == IvManager.chanceStatus.GENDERLESS_WITH_FEMALE_DITTO) {
-                ivManager.switchParent(Gender.MALE, chanceData.firstNumber);
-            }
-            else if (cardChance.chanceData.status == IvManager.chanceStatus.GENDERLESS_AND_DITTO) {
-                ivManager.switchBothParents(chanceData.firstNumber,chanceData.secondNumber);
-            }
-
-            cardChance.updateGoalIvChance();
-            cardChance.updateEggChance();
-            updateMainIVsFragment();
-            updatePokemonListFragment();
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -453,12 +60,12 @@ public class MainActivity extends FragmentActivity
         ivManager = new IvManager();
         newIvManager = new NewIvManager();
 
-        cardChance.initialize();
 
         readData();
 
         createMainIVsFragment(savedInstanceState);
         createPokemonListFragment(savedInstanceState);
+        createChanceFragment(savedInstanceState);
 
 //        cardMainIVs.refreshInterface();
 //        cardChance.updateGoalIvChance();
@@ -598,93 +205,6 @@ public class MainActivity extends FragmentActivity
 
     }
 
-    void saveData() {
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor prefEditor = sharedPreferences.edit();
-
-        String jsonString;
-
-        jsonString = gson.toJson(ivManager.getHatchesList());
-        prefEditor.putString("jsonEggList", jsonString);
-
-//        jsonString = gson.toJson(ivManager.getDittosList());
-//        prefEditor.putString("jsonDittoList",jsonString);
-
-//        jsonString = gson.toJson(ivManager.getMainIVs());
-//        prefEditor.putString("jsonCurrentMainIVs",jsonString);
-
-//        jsonString = gson.toJson(ivManager.getMaleIVs());
-//        prefEditor.putString("jsonCurrentMaleIVs",jsonString);
-//
-//        jsonString = gson.toJson(ivManager.getFemaleIVs());
-//        prefEditor.putString("jsonCurrentFemaleIVs",jsonString);
-//
-//        jsonString = gson.toJson(ivManager.getGoalIVs());
-//        prefEditor.putString("jsonCurrentGoalIVs",jsonString);
-
-        jsonString = gson.toJson(ivManager.getActivePokemons());
-        prefEditor.putString("jsonCurrentActivePokemons",jsonString);
-
-        jsonString = gson.toJson(ivManager.getMaleItem());
-        prefEditor.putString("jsonCurrentMaleItem",jsonString);
-
-        jsonString = gson.toJson(ivManager.getFemaleItem());
-        prefEditor.putString("jsonCurrentFemaleItem",jsonString);
-
-        jsonString = gson.toJson(ivManager.getShinyOptions());
-        prefEditor.putString("jsonCurrentShinyOptions",jsonString);
-
-        prefEditor.apply();
-
-
-    }
-    void readData() {
-
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-       //Map<String,?> keys = sharedPref.getAll();
-        String jsonString;
-
-        jsonString = sharedPref.getString("jsonEggList",null);
-        if(jsonString != null) {
-            Type type = new TypeToken<List<HatchInfo>>(){}.getType();
-            List<HatchInfo> eggList = gson.fromJson(jsonString, type);
-            ivManager.setHatchesList(eggList);
-        }
-
-//        jsonString = sharedPref.getString("jsonDittoList",null);
-//        if(jsonString != null) {
-//            Type type = new TypeToken<List<HatchInfo>>(){}.getType();
-//            List<HatchInfo> dittoList = gson.fromJson(jsonString, type);
-//            ivManager.setDittosList(dittoList);
-//        }
-
-//        jsonString = sharedPref.getString("jsonCurrentMainIVs",null);
-//        if(jsonString != null) {
-//            ivManager.setMainIVs(gson.fromJson(jsonString,IvManager.MainIVs.class));
-//        }
-
-        jsonString = sharedPref.getString("jsonCurrentActivePokemons",null);
-       if(jsonString != null) {
-           ivManager.setActivePokemons(gson.fromJson(jsonString,ActivePokemons.class));
-       }
-
-        jsonString = sharedPref.getString("jsonCurrentMaleItem",null);
-        if(jsonString != null) {
-            ivManager.setMaleItem(gson.fromJson(jsonString,IvManager.item.class));
-        }
-
-        jsonString = sharedPref.getString("jsonCurrentFemaleItem",null);
-        if(jsonString != null) {
-            ivManager.setFemaleItem(gson.fromJson(jsonString,IvManager.item.class));
-        }
-
-        jsonString = sharedPref.getString("jsonCurrentShinyOptions",null);
-        if(jsonString != null) {
-            ivManager.setShinyOptions(gson.fromJson(jsonString,IvManager.ShinyOptions.class));
-        }
-
-    }
 
     void openLuckOptionsFragment(View callerView) {
         FragmentManager fm = getFragmentManager();
@@ -719,18 +239,16 @@ public class MainActivity extends FragmentActivity
     }
     public void             setShinyCharmActive(boolean b) {
         ivManager.setShinyCharmActive(b);
-        cardChance.updateItems();
     }
     public boolean          isShinyCharmActive() {return ivManager.isShinyCharmActive();}
     public void             setMasudaMethodActive(boolean b) {
         ivManager.setMasudaMethodActive(b);
-        cardChance.updateItems();
     }
     public boolean          isMasudaMethodActive() {return ivManager.isMasudaMethodActive();
     }
     public void             setShiny(boolean b) {
         ivManager.setShiny(b);
-        cardChance.updateItems();
+
     }
     public boolean          isShiny() {return ivManager.isShiny();}
     public HatchInfo         getGoal() {
@@ -796,20 +314,50 @@ public class MainActivity extends FragmentActivity
 
 
     }
+    void createChanceFragment(Bundle savedInstanceState) {
+        // However, if we're being restored from a previous state,
+        // then we don't need to do anything and should return or else
+        // we could end up with overlapping fragments.
+        if (savedInstanceState != null) {
+            return;
+        }
+        LuckFragment luckFragment = new LuckFragment();
 
+        // In case this activity was started with special instructions from an
+        // Intent, pass the Intent's extras to the fragment as arguments
+        luckFragment.setArguments(getIntent().getExtras());
+
+
+
+        // Add the fragment to the 'fragment_container' FrameLayout
+        getFragmentManager().beginTransaction()
+                .add(R.id.frameLuckFragmentContainer, luckFragment).commit();
+
+    }
     void updateMainIVsFragment() {
         MainIVsFragment frag = (MainIVsFragment) getFragmentManager().findFragmentById(R.id.frameMainIVsFragmentContainer);
         if(frag != null) {
             frag.refreshInterface(newIvManager.getGoalPokemon(), ivManager.getMaleItem(), ivManager.getFemaleItem());
         }
 
-        cardChance.updateGoalIvChance();
-        cardChance.updateEggChance();
+       // cardChance.updateGoalIvChance();
+       // cardChance.updateEggChance();
     }
     void updatePokemonListFragment() {
         StoredPokemonsFragment frag = (StoredPokemonsFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         frag.updateGridView();
     }
+    void updateLuckFragment(ChanceData c) {
+
+        if(c.firstPokemon == null || c.secondPokemon == null) return;
+
+        LuckFragment frag = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
+        frag.updateChance(PokemonData.getInstance().getName(newIvManager.getStoredPokemon(c.firstPokemon).id)
+                ,PokemonData.getInstance().getName(newIvManager.getStoredPokemon(c.secondPokemon).id)
+                ,c.chance);
+    }
+
+
 
     @Override
     public void updateMaleParent(PokemonInfo updatedMale) {
@@ -859,16 +407,119 @@ public class MainActivity extends FragmentActivity
         updateMainIVsFragment();
     }
     @Override
-    public void addPokemonTolist(PokemonInfo pokemon) {
+
+    public void addPokemonToList(PokemonInfo pokemon) {
         //ivManager.addHatch(pokemon);
         newIvManager.storePokemon(pokemon);
         ChanceData a = newIvManager.getBestCombination();
+        updateLuckFragment(a);
         updatePokemonListFragment();
-        cardChance.updateEggChance();
+       // cardChance.updateEggChance();
     }
     @Override
     public void removePokemon(int position) {
         ivManager.removeHatch(position);
-        cardChance.updateEggChance();
+        //cardChance.updateEggChance();
     }
+
+    @Deprecated
+    void saveData() {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor prefEditor = sharedPreferences.edit();
+
+        String jsonString;
+
+        jsonString = gson.toJson(newIvManager.getStoredPokemonList());
+        prefEditor.putString("jsonEggList", jsonString);
+
+//        jsonString = gson.toJson(ivManager.getDittosList());
+//        prefEditor.putString("jsonDittoList",jsonString);
+
+//        jsonString = gson.toJson(ivManager.getMainIVs());
+//        prefEditor.putString("jsonCurrentMainIVs",jsonString);
+
+//        jsonString = gson.toJson(ivManager.getMaleIVs());
+//        prefEditor.putString("jsonCurrentMaleIVs",jsonString);
+//
+//        jsonString = gson.toJson(ivManager.getFemaleIVs());
+//        prefEditor.putString("jsonCurrentFemaleIVs",jsonString);
+//
+//        jsonString = gson.toJson(ivManager.getGoalIVs());
+//        prefEditor.putString("jsonCurrentGoalIVs",jsonString);
+
+        jsonString = gson.toJson(ivManager.getActivePokemons());
+        prefEditor.putString("jsonCurrentActivePokemons",jsonString);
+
+        jsonString = gson.toJson(newIvManager.getGoalPokemon());
+        prefEditor.putString("jsonCurrentGoal",jsonString);
+
+        jsonString = gson.toJson(ivManager.getMaleItem());
+        prefEditor.putString("jsonCurrentMaleItem",jsonString);
+
+        jsonString = gson.toJson(ivManager.getFemaleItem());
+        prefEditor.putString("jsonCurrentFemaleItem",jsonString);
+
+        jsonString = gson.toJson(ivManager.getShinyOptions());
+        prefEditor.putString("jsonCurrentShinyOptions",jsonString);
+
+        prefEditor.apply();
+
+
+    }
+    @Deprecated
+    void readData() {
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        //Map<String,?> keys = sharedPref.getAll();
+        String jsonString;
+
+        jsonString = sharedPref.getString("jsonEggList",null);
+        if(jsonString != null) {
+            //Type type = new TypeToken<List<HatchInfo>>(){}.getType();
+            Type type = new TypeToken<HashMap<UUID,PokemonInfo>>(){}.getType();
+            HashMap<UUID, PokemonInfo> eggList = gson.fromJson(jsonString, type);
+            newIvManager.setStoredPokemonMap(eggList);
+        }
+
+//        jsonString = sharedPref.getString("jsonDittoList",null);
+//        if(jsonString != null) {
+//            Type type = new TypeToken<List<HatchInfo>>(){}.getType();
+//            List<HatchInfo> dittoList = gson.fromJson(jsonString, type);
+//            ivManager.setDittosList(dittoList);
+//        }
+
+//        jsonString = sharedPref.getString("jsonCurrentMainIVs",null);
+//        if(jsonString != null) {
+//            ivManager.setMainIVs(gson.fromJson(jsonString,IvManager.MainIVs.class));
+//        }
+
+        jsonString = sharedPref.getString("jsonCurrentGoal",null);
+        if(jsonString != null) {
+            newIvManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
+        }
+
+
+        jsonString = sharedPref.getString("jsonCurrentActivePokemons",null);
+        if(jsonString != null) {
+            ivManager.setActivePokemons(gson.fromJson(jsonString,ActivePokemons.class));
+        }
+
+        jsonString = sharedPref.getString("jsonCurrentMaleItem",null);
+        if(jsonString != null) {
+            ivManager.setMaleItem(gson.fromJson(jsonString,IvManager.item.class));
+        }
+
+        jsonString = sharedPref.getString("jsonCurrentFemaleItem",null);
+        if(jsonString != null) {
+            ivManager.setFemaleItem(gson.fromJson(jsonString,IvManager.item.class));
+        }
+
+        jsonString = sharedPref.getString("jsonCurrentShinyOptions",null);
+        if(jsonString != null) {
+            ivManager.setShinyOptions(gson.fromJson(jsonString,IvManager.ShinyOptions.class));
+        }
+
+    }
+
 }

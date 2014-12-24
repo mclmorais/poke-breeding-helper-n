@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="title_activity_main">Main Activity</string>
+    <string name="title_activity_main">Breeding Helper</string>
     <string name="label_type">TYPE:</string>
     <string name="label_modifiers">MODIFIERS:</string>
     <string name="label_shiny_charm">Shiny Charm</string>
