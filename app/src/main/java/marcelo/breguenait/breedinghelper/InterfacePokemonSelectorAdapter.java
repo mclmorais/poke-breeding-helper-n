@@ -20,15 +20,15 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
     private final ArrayList<PokemonDataBlock> pokemonList;
     private ArrayList<PokemonDataBlock> filteredPokemonList;
     private final LayoutInflater inflater;
-    HatchInfo goalPokemon;
+    PokemonInfo goalPokemon;
     boolean showOnlyCompatible = false;
 
     void showOnlyCompatible(boolean b) {
         showOnlyCompatible = b;
     }
 
-    public void setGoal(HatchInfo hatchInfo) {
-        goalPokemon = hatchInfo;
+    public void setGoal(PokemonInfo hatchInfo) {
+          goalPokemon = hatchInfo;
 //        goalEggGroup1 = hatchInfo.eggGroup1;
 //        goalEggGroup2 = hatchInfo.eggGroup2;
 //        goalGenderRestriction = PokemonData.getInstance().getGenderRestriction(hatchInfo.id);

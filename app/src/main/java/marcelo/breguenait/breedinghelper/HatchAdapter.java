@@ -65,7 +65,7 @@ public class HatchAdapter extends BaseAdapter{
 
     PreloadedDrawables preloadedDrawables;
 
-    private HashMap<UUID, PokemonInfo> hatchList;
+    private List<PokemonInfo> hatchList;
     private ArrayList<UUID> keysList;
     private final LayoutInflater inflater;
 
@@ -75,10 +75,9 @@ public class HatchAdapter extends BaseAdapter{
         this.deleteMode = deleteMode;
     }
 
-    public HatchAdapter(HashMap<UUID,PokemonInfo> hatchList, Context context) {
+    public HatchAdapter(List<PokemonInfo> hatchList, Context context) {
         preloadedDrawables = new PreloadedDrawables(context);
         this.hatchList = hatchList;
-        keysList = new ArrayList<>(hatchList.keySet());
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
@@ -90,7 +89,7 @@ public class HatchAdapter extends BaseAdapter{
 
     @Override
     public Object getItem(int position) {
-        return hatchList.get(keysList.get(position));
+        return hatchList.get(position);
     }
 
     @Override
@@ -105,12 +104,6 @@ public class HatchAdapter extends BaseAdapter{
         View      frame;
 
         ImageView[] IVs = new ImageView[6];
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        keysList = new ArrayList<>(hatchList.keySet());
-        super.notifyDataSetChanged();
     }
 
     @Override
@@ -141,7 +134,7 @@ public class HatchAdapter extends BaseAdapter{
         else {
             holder = (LayoutHolder) convertView.getTag();
         }
-        PokemonInfo pokemonInfo = hatchList.get(keysList.get(i));
+        PokemonInfo pokemonInfo = hatchList.get(i);
 
         if(deleteMode)
             holder.frame.setBackgroundResource(R.drawable.layer_card_background_round_red);

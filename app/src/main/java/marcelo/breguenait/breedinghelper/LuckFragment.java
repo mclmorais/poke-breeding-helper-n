@@ -64,9 +64,8 @@ public class LuckFragment extends Fragment {
         mListener = null;
     }
 
-    void updateChance(String name1, String name2, double chance) {
-        luck1.setText(name1);
-        luck2.setText(name2 + " " + String.valueOf(chance));
+    void updateChance(int poke1, int poke2, double chance) {
+        luck1.setText(String.valueOf(poke1+1) + " + " + String.valueOf(poke2+1) + " = " + String.valueOf(chance));
     }
 
     /**

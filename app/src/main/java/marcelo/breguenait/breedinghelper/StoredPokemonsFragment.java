@@ -102,7 +102,7 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
         return view;
     }
 
-    void setHatchAdapter(HashMap<UUID, PokemonInfo> list, Context context) {
+    void setHatchAdapter(List<PokemonInfo> list, Context context) {
         hatchAdapter = new HatchAdapter(list, context);
         gridViewPokemons.setAdapter(hatchAdapter);
         updateGridView();

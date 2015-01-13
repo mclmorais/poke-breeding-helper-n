@@ -15,10 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
@@ -28,9 +25,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import de.cketti.library.changelog.ChangeLog;
 
@@ -251,10 +246,10 @@ public class MainActivity extends FragmentActivity
 
     }
     public boolean          isShiny() {return ivManager.isShiny();}
-    public HatchInfo         getGoal() {
-        return ivManager.getActivePokemons().getGoal();
+    public PokemonInfo         getGoal() {
+        return newIvManager.getGoalPokemon();
     }
-    public boolean goalExists() {return ivManager.getActivePokemons().getGoal() != null;}
+    public boolean goalExists() {return newIvManager.getGoalPokemon() != null;}
 
     void    saveBoolean(String key, Boolean value) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -349,12 +344,10 @@ public class MainActivity extends FragmentActivity
     }
     void updateLuckFragment(ChanceData c) {
 
-        if(c.firstPokemon == null || c.secondPokemon == null) return;
+        if(c == null) return;
 
         LuckFragment frag = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
-        frag.updateChance(PokemonData.getInstance().getName(newIvManager.getStoredPokemon(c.firstPokemon).id)
-                ,PokemonData.getInstance().getName(newIvManager.getStoredPokemon(c.secondPokemon).id)
-                ,c.chance);
+        frag.updateChance(c.firstPokemon, c.secondPokemon, c.chance);
     }
 
 
@@ -391,7 +384,8 @@ public class MainActivity extends FragmentActivity
     }
     @Override
     public void removeGoal() {
-        ivManager.removeGoal();
+        //ivManager.removeGoal();
+        newIvManager.setGoalPokemon(null);
         updateMainIVsFragment();
         updatePokemonListFragment();
         Toast.makeText(this, "Goal pokemon removed.", Toast.LENGTH_SHORT).show();
@@ -411,7 +405,7 @@ public class MainActivity extends FragmentActivity
     public void addPokemonToList(PokemonInfo pokemon) {
         //ivManager.addHatch(pokemon);
         newIvManager.storePokemon(pokemon);
-        ChanceData a = newIvManager.getBestCombination();
+        ChanceData a = newIvManager.getCurrentBestCombination();
         updateLuckFragment(a);
         updatePokemonListFragment();
        // cardChance.updateEggChance();
@@ -469,17 +463,15 @@ public class MainActivity extends FragmentActivity
     }
     @Deprecated
     void readData() {
-
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         //Map<String,?> keys = sharedPref.getAll();
         String jsonString;
 
         jsonString = sharedPref.getString("jsonEggList",null);
         if(jsonString != null) {
-            //Type type = new TypeToken<List<HatchInfo>>(){}.getType();
-            Type type = new TypeToken<HashMap<UUID,PokemonInfo>>(){}.getType();
-            HashMap<UUID, PokemonInfo> eggList = gson.fromJson(jsonString, type);
-            newIvManager.setStoredPokemonMap(eggList);
+            Type type = new TypeToken<List<PokemonInfo>>(){}.getType();
+            List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
+            newIvManager.setStoredPokemonList(eggList);
         }
 
 //        jsonString = sharedPref.getString("jsonDittoList",null);

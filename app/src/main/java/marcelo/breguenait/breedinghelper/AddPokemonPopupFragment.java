@@ -205,7 +205,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.DITTO) {
             togglePokemonGender.setBackgroundResource(R.drawable.symbol_genderless);
             togglePokemonGender.setClickable(false);
-            pokemonGender = Gender.GENDERLESS;
+            pokemonGender = Gender.DITTO;
         }
         else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.MALE_ONLY) {
             togglePokemonGender.setBackgroundResource(R.drawable.symbol_male);

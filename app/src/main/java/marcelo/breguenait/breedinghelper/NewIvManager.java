@@ -71,6 +71,7 @@ class PokemonInfo {
     final Nature            nature;
     final EggGroup          eggGroup1;
     final EggGroup          eggGroup2;
+    boolean isMaleParent, isFemaleParent;
 
     static class Builder {
         int                     id = 0;          //The national dex number of the pokemon
@@ -126,11 +127,11 @@ class PokemonInfo {
 }
 
 class ChanceData {
-    UUID firstPokemon = null;
-    UUID secondPokemon = null;
+    int firstPokemon = 0;
+    int secondPokemon = 0;
     double chance = 0.0d;
 
-    ChanceData(UUID firstPokemon, UUID secondPokemon, double chance) {
+    ChanceData(int firstPokemon, int secondPokemon, double chance) {
         this.firstPokemon = firstPokemon;
         this.secondPokemon = secondPokemon;
         this.chance = chance;
@@ -143,48 +144,62 @@ public class NewIvManager {
         fillCombinations();
     }
 
-    //private List<PokemonInfo> storedPokemonList = new ArrayList<PokemonInfo>();
-    private HashMap<UUID, PokemonInfo> storedPokemonMap = new HashMap<>();
+    private List<PokemonInfo> storedPokemonList = new ArrayList<PokemonInfo>();
 
     final EquippedItems equippedItems = new EquippedItems();
 
     private SparseArray<Integer> destinyKnotCombinations = new SparseArray<Integer>(6);
     private SparseArray<Integer> bareCombinations = new SparseArray<Integer>(20);
 
-    private UUID maleParentUuid;
-    private UUID femaleParentUuid;
-
     PokemonInfo goalPokemon = null;
+
+    ChanceData currentBestCombination = null;
+
+    public final ChanceData getCurrentBestCombination() {
+        return currentBestCombination;
+    }
 
     public void setGoalPokemon(PokemonInfo goalPokemon) {
         this.goalPokemon = goalPokemon;
+        if(goalPokemon != null)
+            updateBestCombination();
     }
     public PokemonInfo getGoalPokemon() {
         return goalPokemon;
     }
     public void storePokemon(PokemonInfo pokemon) {
-        storedPokemonMap.put(UUID.randomUUID(),pokemon);
+        storedPokemonList.add(pokemon);
+        updateBestCombination();
     }
-    public ChanceData getBestCombination() {
-        if (goalPokemon == null) {
-            return new ChanceData(null, null, 0);
-        }
 
-        List<PokemonInfo> pokemonList = new ArrayList<>(storedPokemonMap.values());
-        List<UUID> uuidList = new ArrayList<>(storedPokemonMap.keySet());
+    public List<PokemonInfo> getStoredPokemonList() {
+        return storedPokemonList;
+    }
+    public void setStoredPokemonList(List<PokemonInfo> p) {
+        storedPokemonList = p;
+    }
+    public PokemonInfo getStoredPokemon(int pos) {
+        return storedPokemonList.get(pos);
+    }
+
+
+    private void updateBestCombination() {
+        if (goalPokemon == null) {
+            currentBestCombination = null;
+        }
 
         List<ChanceData> chances = new ArrayList<ChanceData>();
 
 
-        for (int i = 0; i < pokemonList.size(); i++) {
+        for (int i = 0; i < storedPokemonList.size(); i++) {
 
-            PokemonInfo firstPokemon = pokemonList.get(i);
+            PokemonInfo firstPokemon = storedPokemonList.get(i);
 
-            for (int j = (i + 1); j < pokemonList.size(); j++) {
-                PokemonInfo secondPokemon = pokemonList.get(j);
+            for (int j = (i + 1); j < storedPokemonList.size(); j++) {
+                PokemonInfo secondPokemon = storedPokemonList.get(j);
                 if (checkCompatibility(firstPokemon, secondPokemon)) {
                     double chance = getChance(firstPokemon.IVs, secondPokemon.IVs, goalPokemon.IVs);
-                    chances.add(new ChanceData(uuidList.get(i), uuidList.get(j), chance));
+                    chances.add(new ChanceData(i, j, chance));
                 }
             }
         }
@@ -197,27 +212,16 @@ public class NewIvManager {
         }
 
         if (chances.isEmpty())
-            return new ChanceData(null, null, 0);
+            currentBestCombination = null;
         else {
             Collections.sort(chances, new ChanceComparator());
-            return chances.get(chances.size() - 1);
+            currentBestCombination = chances.get(chances.size() - 1);
             /* TODO: Right now, the function will return the last value on the list after it's been
             * sorted. A method should be implemented here that checks if there's other values with
             * the same chance, and if there are, check if one of the participants is already a
             * parent. If he is, select that value instead.*/
         }
     }
-    public HashMap<UUID, PokemonInfo> getStoredPokemonList() {
-        return storedPokemonMap;
-    }
-    public void setStoredPokemonMap(HashMap<UUID,PokemonInfo> p) {
-        storedPokemonMap = p;
-    }
-    public PokemonInfo getStoredPokemon(UUID uuid) {
-        return storedPokemonMap.get(uuid);
-        //TODO: verificar se existe antes de entregar
-    }
-
     /**
      * Checks if two given pokemons are a compatible pair when trying to breed the goal pokemon.
      * The function will look if the pair is either: <br>
@@ -228,7 +232,7 @@ public class NewIvManager {
      * @return True if they are one of the accepted pairs
      */
     private boolean checkCompatibility(PokemonInfo firstPokemon, PokemonInfo secondPokemon) {
-        if(goalPokemon == null) throw new NullPointerException();
+        if(goalPokemon == null) return false;
 
         if(firstPokemon.gender == Gender.MALE && secondPokemon.gender == Gender.FEMALE) {
             boolean femaleCompatible = checkFamilyCompatibility(secondPokemon);
