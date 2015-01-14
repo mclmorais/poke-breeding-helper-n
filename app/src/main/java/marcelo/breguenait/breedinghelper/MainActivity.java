@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,11 +35,11 @@ class Constants {
     public static final int DITTO_ID = 132;
 }
 
-public class MainActivity extends FragmentActivity
+public class MainActivity extends ActionBarActivity
         implements
-        MainIVsFragment.OnActivePokemonsChanged,
         StoredPokemonsFragment.OnPokemonListChanged,
-        LuckFragment.TemporaryLuckInterface{
+        LuckFragment.TemporaryLuckInterface,
+        GoalIVsFragment.OnGoalUpdate{
 
     private View cardAd;
     private AdView adView;
@@ -55,10 +57,12 @@ public class MainActivity extends FragmentActivity
         ivManager = new IvManager();
         newIvManager = new NewIvManager();
 
+        setSupportActionBar((Toolbar) findViewById(R.id.main_activity_toolbar));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         readData();
 
-        createMainIVsFragment(savedInstanceState);
+        createGoalIVsFragment(savedInstanceState);
         createPokemonListFragment(savedInstanceState);
         createChanceFragment(savedInstanceState);
 
@@ -80,12 +84,13 @@ public class MainActivity extends FragmentActivity
     @Override
     protected void onStart() {
         super.onStart();
-        updateMainIVsFragment();
         StoredPokemonsFragment fragList = (StoredPokemonsFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         //fragList.setHatchAdapter(ivManager.getHatchesList(), getApplicationContext());
         fragList.setHatchAdapter(newIvManager.getStoredPokemonList(), getApplicationContext());
         fragList.updateGridView();
+        updateGoalIVsFragment();
 //        cardChance.updateEggChance();
+
 
     }
     @Override
@@ -263,10 +268,10 @@ public class MainActivity extends FragmentActivity
 
     }
 
-    void createMainIVsFragment(Bundle savedInstanceState) {
+    void createGoalIVsFragment(Bundle savedInstanceState) {
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
-        if(findViewById(R.id.frameMainIVsFragmentContainer) != null) {
+        if(findViewById(R.id.frameGoalIVsFragmentContainer) != null) {
 
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
@@ -276,7 +281,7 @@ public class MainActivity extends FragmentActivity
             }
 
             // Create a new Fragment to be placed in the activity layout
-            MainIVsFragment firstFragment = new MainIVsFragment();
+            GoalIVsFragment firstFragment = new GoalIVsFragment();
 
             // In case this activity was started with special instructions from an
             // Intent, pass the Intent's extras to the fragment as arguments
@@ -284,7 +289,7 @@ public class MainActivity extends FragmentActivity
 
             // Add the fragment to the 'fragment_container' FrameLayout
             getFragmentManager().beginTransaction()
-                    .add(R.id.frameMainIVsFragmentContainer, firstFragment).commit();
+                    .add(R.id.frameGoalIVsFragmentContainer, firstFragment).commit();
 
         }
     }
@@ -329,15 +334,10 @@ public class MainActivity extends FragmentActivity
                 .add(R.id.frameLuckFragmentContainer, luckFragment).commit();
 
     }
-    void updateMainIVsFragment() {
-        MainIVsFragment frag = (MainIVsFragment) getFragmentManager().findFragmentById(R.id.frameMainIVsFragmentContainer);
-        if(frag != null) {
-            frag.refreshInterface(newIvManager.getGoalPokemon(), ivManager.getMaleItem(), ivManager.getFemaleItem());
-        }
 
        // cardChance.updateGoalIvChance();
        // cardChance.updateEggChance();
-    }
+
     void updatePokemonListFragment() {
         StoredPokemonsFragment frag = (StoredPokemonsFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         frag.updateGridView();
@@ -349,58 +349,12 @@ public class MainActivity extends FragmentActivity
         LuckFragment frag = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
         frag.updateChance(c.firstPokemon, c.secondPokemon, c.chance);
     }
+    void updateGoalIVsFragment() {
+        GoalIVsFragment frag = (GoalIVsFragment) getFragmentManager().findFragmentById(R.id.frameGoalIVsFragmentContainer);
 
+        frag.refreshGoal(newIvManager.getGoalPokemon());
+    }
 
-
-    @Override
-    public void updateMaleParent(PokemonInfo updatedMale) {
-   //     ivManager.setMaleParent(updatedMale);
-        updateMainIVsFragment();
-    }
-    @Override
-    public void updateFemaleParent(PokemonInfo updatedFemale) {
-     //   ivManager.setFemaleParent(updatedFemale);
-        updateMainIVsFragment();
-    }
-    @Override
-    public void updateGoal(PokemonInfo updatedGoal) {
-        //ivManager.setGoal(updatedGoal);
-        newIvManager.setGoalPokemon(updatedGoal);
-        updateMainIVsFragment();
-    }
-    @Override
-    public void removeMaleParent() {
-        ivManager.removeMaleParent();
-        updateMainIVsFragment();
-        updatePokemonListFragment();
-        Toast.makeText(this, "Male parent added back to the stored list.", Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    public void removeFemaleParent() {
-        ivManager.removeFemaleParent();
-        updateMainIVsFragment();
-        updatePokemonListFragment();
-        Toast.makeText(this, "Female parent added back to the stored list.", Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    public void removeGoal() {
-        //ivManager.removeGoal();
-        newIvManager.setGoalPokemon(null);
-        updateMainIVsFragment();
-        updatePokemonListFragment();
-        Toast.makeText(this, "Goal pokemon removed.", Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    public void updateParentItem(Gender gender, IvManager.item item) {
-        if(gender == Gender.MALE)
-            ivManager.setMaleItem(item);
-        else if (gender == Gender.FEMALE)
-            ivManager.setFemaleItem(item);
-        else
-            throw new IllegalArgumentException("Tried to change item without defining a valid parent.");
-        updateMainIVsFragment();
-    }
-    @Override
 
     public void addPokemonToList(PokemonInfo pokemon) {
         //ivManager.addHatch(pokemon);
@@ -514,4 +468,9 @@ public class MainActivity extends FragmentActivity
 
     }
 
+
+    @Override
+    public void updateGoal(PokemonInfo p) {
+        newIvManager.setGoalPokemon(p);
+    }
 }

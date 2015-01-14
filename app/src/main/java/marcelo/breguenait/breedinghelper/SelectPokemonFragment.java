@@ -46,7 +46,7 @@ public class SelectPokemonFragment extends PopupDialogFragment {
                 mCallback = (OnPokemonSelectedListener) getTargetFragment();
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + " must implement OnPokemonSelectedListener");
         }
 
     }
