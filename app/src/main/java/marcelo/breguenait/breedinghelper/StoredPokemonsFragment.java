@@ -16,9 +16,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by Marcelo on 21/12/2014.
@@ -27,7 +25,7 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
 
     OnPokemonListChanged mCallback;
 
-    HatchAdapter    hatchAdapter;
+    StoredPokemonAdapter storedPokemonAdapter;
     GridView        gridViewPokemons;
     Button          buttonAdd;
     ToggleButton    buttonRemove;
@@ -78,13 +76,13 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
                 if(b) {
                     texthintRemove.setVisibility(View.VISIBLE);
                     buttonRemove.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
-                    hatchAdapter.setDeleteMode(true);
+                    storedPokemonAdapter.setDeleteMode(true);
 
                 }
                 else {
                     texthintRemove.setVisibility(View.GONE);
                     buttonRemove.setTextColor(getResources().getColor(R.color.accent));
-                    hatchAdapter.setDeleteMode(false);
+                    storedPokemonAdapter.setDeleteMode(false);
                 }
                 updateGridView();
             }
@@ -103,8 +101,8 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
     }
 
     void setHatchAdapter(List<PokemonInfo> list, Context context) {
-        hatchAdapter = new HatchAdapter(list, context);
-        gridViewPokemons.setAdapter(hatchAdapter);
+        storedPokemonAdapter = new StoredPokemonAdapter(list, context);
+        gridViewPokemons.setAdapter(storedPokemonAdapter);
         updateGridView();
 
     }
@@ -120,15 +118,14 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
     }
 
     void updateGridView(){
-        if(hatchAdapter.getCount() > 0) {
+        if(storedPokemonAdapter.getCount() > 0) {
             textHintStore.setVisibility(View.GONE);
         }
         else {
             textHintStore.setVisibility(View.VISIBLE);
         }
-        hatchAdapter.notifyDataSetChanged();
+        storedPokemonAdapter.notifyDataSetChanged();
     }
-
 
     @Override
     public void onBuildPokemon(PokemonInfo pokemon) {

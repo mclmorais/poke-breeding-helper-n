@@ -3,7 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/layer_card_background"
-    android:baselineAligned="true">
+    android:baselineAligned="true"
+    android:transitionGroup="false">
 
     <RelativeLayout
         android:id="@+id/itemGridHeader"
@@ -44,9 +45,6 @@
                 android:background="@drawable/button_press_white_lightgray_selector"
                 android:textColor="@color/accent"
                 android:textStyle="bold"
-                android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/separatorFragmentPokemonList1"
-                android:layout_toStartOf="@+id/separatorFragmentPokemonList1"
                 android:layout_weight="1"
                 android:textSize="15sp"
                 android:checked="false" />
@@ -60,7 +58,8 @@
                 android:layout_alignLeft="@+id/buttonFragmentPokemonListAdd"
                 android:layout_alignStart="@+id/buttonFragmentPokemonListAdd"
                 android:layout_weight="0"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:visibility="visible" />
 
             <Button
                 android:layout_width="0dp"

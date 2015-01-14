@@ -104,6 +104,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     }
 
     void refreshGoal(PokemonInfo goal) {
+        if(goal == null) return;
         selectedPokemonId = goal.id;
         updateInterfacePokemon(goal.id);
         for(int i = 0; i < 6; i++) {

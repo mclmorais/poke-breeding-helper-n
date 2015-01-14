@@ -3,13 +3,11 @@ package marcelo.breguenait.breedinghelper;
 //TODO: mudar card de chance para 99.99% | 1 in 9 eggs <-- Separator view
 //TODO: "x item is hindering your chance!"
 
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -45,7 +43,6 @@ public class MainActivity extends ActionBarActivity
     private AdView adView;
 
     private IvManager ivManager;
-    private NewIvManager newIvManager;
     private final Gson gson = new Gson();
 
 
@@ -55,12 +52,13 @@ public class MainActivity extends ActionBarActivity
         setContentView(R.layout.activity_main);
 
         ivManager = new IvManager();
-        newIvManager = new NewIvManager();
 
         setSupportActionBar((Toolbar) findViewById(R.id.main_activity_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         readData();
+
+        ivManager.updateBestCombination();
 
         createGoalIVsFragment(savedInstanceState);
         createPokemonListFragment(savedInstanceState);
@@ -86,10 +84,12 @@ public class MainActivity extends ActionBarActivity
         super.onStart();
         StoredPokemonsFragment fragList = (StoredPokemonsFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         //fragList.setHatchAdapter(ivManager.getHatchesList(), getApplicationContext());
-        fragList.setHatchAdapter(newIvManager.getStoredPokemonList(), getApplicationContext());
+        fragList.setHatchAdapter(ivManager.getStoredPokemonList(), getApplicationContext());
         fragList.updateGridView();
+        LuckFragment luckFragment = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
+
         updateGoalIVsFragment();
-//        cardChance.updateEggChance();
+        updateLuckFragment(ivManager.getBestCombinations());
 
 
     }
@@ -206,55 +206,10 @@ public class MainActivity extends ActionBarActivity
     }
 
 
-    void openLuckOptionsFragment(View callerView) {
-        FragmentManager fm = getFragmentManager();
-        LuckOptionsFragment luckOptionsFragment = new LuckOptionsFragment();
-        Bundle b = addPositionAsArguments(callerView);
-        boolean shinyStatus[] = {isShiny(),isShinyCharmActive(),isMasudaMethodActive()};
-        b.putBooleanArray("shinyStatus",shinyStatus);
-
-        luckOptionsFragment.setArguments(b);
-
-        luckOptionsFragment.show(fm,"");
-    }
-    Bundle addPositionAsArguments(View v) {
-        int callerViewPosition[] = new int[2];
-        v.getLocationOnScreen(callerViewPosition);
-        Bundle b = new Bundle();
-        b.putInt("x",callerViewPosition[0]);
-        b.putInt("y",callerViewPosition[1]);
-        return b;
-    }
-
-    public IvManager.item   getItem(Gender g) {
-        IvManager.item it = null;
-        if(g == Gender.MALE){
-            it =  ivManager.getMaleItem();
-        }
-        if (g == Gender.FEMALE){
-            it =  ivManager.getFemaleItem();
-        }
-
-        return it;
-    }
-    public void             setShinyCharmActive(boolean b) {
-        ivManager.setShinyCharmActive(b);
-    }
-    public boolean          isShinyCharmActive() {return ivManager.isShinyCharmActive();}
-    public void             setMasudaMethodActive(boolean b) {
-        ivManager.setMasudaMethodActive(b);
-    }
-    public boolean          isMasudaMethodActive() {return ivManager.isMasudaMethodActive();
-    }
-    public void             setShiny(boolean b) {
-        ivManager.setShiny(b);
-
-    }
-    public boolean          isShiny() {return ivManager.isShiny();}
     public PokemonInfo         getGoal() {
-        return newIvManager.getGoalPokemon();
+        return ivManager.getGoalPokemon();
     }
-    public boolean goalExists() {return newIvManager.getGoalPokemon() != null;}
+    public boolean goalExists() {return ivManager.getGoalPokemon() != null;}
 
     void    saveBoolean(String key, Boolean value) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -342,32 +297,29 @@ public class MainActivity extends ActionBarActivity
         StoredPokemonsFragment frag = (StoredPokemonsFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         frag.updateGridView();
     }
-    void updateLuckFragment(ChanceData c) {
+    void updateLuckFragment(List<ChanceData> c) {
 
         if(c == null) return;
 
         LuckFragment frag = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
-        frag.updateChance(c.firstPokemon, c.secondPokemon, c.chance);
+        frag.updateCurrentChances(c);
+
     }
     void updateGoalIVsFragment() {
         GoalIVsFragment frag = (GoalIVsFragment) getFragmentManager().findFragmentById(R.id.frameGoalIVsFragmentContainer);
 
-        frag.refreshGoal(newIvManager.getGoalPokemon());
+        frag.refreshGoal(ivManager.getGoalPokemon());
     }
 
 
     public void addPokemonToList(PokemonInfo pokemon) {
-        //ivManager.addHatch(pokemon);
-        newIvManager.storePokemon(pokemon);
-        ChanceData a = newIvManager.getCurrentBestCombination();
-        updateLuckFragment(a);
+        ivManager.storePokemon(pokemon);
+        updateLuckFragment(ivManager.getBestCombinations());
         updatePokemonListFragment();
-       // cardChance.updateEggChance();
     }
     @Override
     public void removePokemon(int position) {
-        ivManager.removeHatch(position);
-        //cardChance.updateEggChance();
+        ivManager.removePokemon(position);
     }
 
     @Deprecated
@@ -378,7 +330,7 @@ public class MainActivity extends ActionBarActivity
 
         String jsonString;
 
-        jsonString = gson.toJson(newIvManager.getStoredPokemonList());
+        jsonString = gson.toJson(ivManager.getStoredPokemonList());
         prefEditor.putString("jsonEggList", jsonString);
 
 //        jsonString = gson.toJson(ivManager.getDittosList());
@@ -396,20 +348,20 @@ public class MainActivity extends ActionBarActivity
 //        jsonString = gson.toJson(ivManager.getGoalIVs());
 //        prefEditor.putString("jsonCurrentGoalIVs",jsonString);
 
-        jsonString = gson.toJson(ivManager.getActivePokemons());
-        prefEditor.putString("jsonCurrentActivePokemons",jsonString);
+//        jsonString = gson.toJson(ivManager.getActivePokemons());
+//        prefEditor.putString("jsonCurrentActivePokemons",jsonString);
 
-        jsonString = gson.toJson(newIvManager.getGoalPokemon());
+        jsonString = gson.toJson(ivManager.getGoalPokemon());
         prefEditor.putString("jsonCurrentGoal",jsonString);
 
-        jsonString = gson.toJson(ivManager.getMaleItem());
-        prefEditor.putString("jsonCurrentMaleItem",jsonString);
-
-        jsonString = gson.toJson(ivManager.getFemaleItem());
-        prefEditor.putString("jsonCurrentFemaleItem",jsonString);
-
-        jsonString = gson.toJson(ivManager.getShinyOptions());
-        prefEditor.putString("jsonCurrentShinyOptions",jsonString);
+//        jsonString = gson.toJson(ivManager.getMaleItem());
+//        prefEditor.putString("jsonCurrentMaleItem",jsonString);
+//
+//        jsonString = gson.toJson(ivManager.getFemaleItem());
+//        prefEditor.putString("jsonCurrentFemaleItem",jsonString);
+//
+//        jsonString = gson.toJson(ivManager.getShinyOptions());
+//        prefEditor.putString("jsonCurrentShinyOptions",jsonString);
 
         prefEditor.apply();
 
@@ -425,7 +377,7 @@ public class MainActivity extends ActionBarActivity
         if(jsonString != null) {
             Type type = new TypeToken<List<PokemonInfo>>(){}.getType();
             List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
-            newIvManager.setStoredPokemonList(eggList);
+            ivManager.setStoredPokemonList(eggList);
         }
 
 //        jsonString = sharedPref.getString("jsonDittoList",null);
@@ -442,35 +394,36 @@ public class MainActivity extends ActionBarActivity
 
         jsonString = sharedPref.getString("jsonCurrentGoal",null);
         if(jsonString != null) {
-            newIvManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
+            ivManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
         }
 
 
-        jsonString = sharedPref.getString("jsonCurrentActivePokemons",null);
-        if(jsonString != null) {
-            ivManager.setActivePokemons(gson.fromJson(jsonString,ActivePokemons.class));
-        }
-
-        jsonString = sharedPref.getString("jsonCurrentMaleItem",null);
-        if(jsonString != null) {
-            ivManager.setMaleItem(gson.fromJson(jsonString,IvManager.item.class));
-        }
-
-        jsonString = sharedPref.getString("jsonCurrentFemaleItem",null);
-        if(jsonString != null) {
-            ivManager.setFemaleItem(gson.fromJson(jsonString,IvManager.item.class));
-        }
-
-        jsonString = sharedPref.getString("jsonCurrentShinyOptions",null);
-        if(jsonString != null) {
-            ivManager.setShinyOptions(gson.fromJson(jsonString,IvManager.ShinyOptions.class));
-        }
+//        jsonString = sharedPref.getString("jsonCurrentActivePokemons",null);
+//        if(jsonString != null) {
+//            ivManager.setActivePokemons(gson.fromJson(jsonString,ActivePokemons.class));
+//        }
+//
+//        jsonString = sharedPref.getString("jsonCurrentMaleItem",null);
+//        if(jsonString != null) {
+//            ivManager.setMaleItem(gson.fromJson(jsonString,IvManager.item.class));
+//        }
+//
+//        jsonString = sharedPref.getString("jsonCurrentFemaleItem",null);
+//        if(jsonString != null) {
+//            ivManager.setFemaleItem(gson.fromJson(jsonString,IvManager.item.class));
+//        }
+//
+//        jsonString = sharedPref.getString("jsonCurrentShinyOptions",null);
+//        if(jsonString != null) {
+//            ivManager.setShinyOptions(gson.fromJson(jsonString,IvManager.ShinyOptions.class));
+//        }
 
     }
 
 
     @Override
     public void updateGoal(PokemonInfo p) {
-        newIvManager.setGoalPokemon(p);
+        ivManager.setGoalPokemon(p);
+        updateLuckFragment(ivManager.getBestCombinations());
     }
 }

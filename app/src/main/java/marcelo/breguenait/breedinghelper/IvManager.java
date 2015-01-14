@@ -1,1 +1,471 @@
-package marcelo.breguenait.breedinghelper;//TODO: fazer male selector mostrar egg groups e female selector mostrar family only//TODO: fazer msm coisa pro ivmanager (na getfamiliavailability)//TODO: fazer sair do modo remove quandoa cabarem os ovos//TODO: arrumar bug quando troca a imagem do gender toggleimport java.util.ArrayList;import java.util.Arrays;import java.util.Collections;import java.util.Comparator;import java.util.HashMap;import java.util.List;import java.util.Map;enum Nature {    UNKNOWN,    DOCILE,    JOLLY,    BOLD}enum EggGroup {    UNKNOWN,    NONE,    MONSTER,    HUMAN_LIKE,    WATER_1,    WATER_2,    WATER_3,    BUG,    MINERAL,    FLYING,    AMORPHOUS,    FIELD,    FAIRY,    DITTO,    GRASS,    DRAGON,    UNDISCOVERED,    GENDER_UNKNOWN}enum Gender {    MALE,    FEMALE,    GENDERLESS, //TODO: NYI!!! WILL BE CONSIDERED FEMALE IN MOST CASES AT THE MOMENT!!    DITTO       //TODO: NYI!!! WILL BE CONSIDERED FEMALE IN MOST CASES AT THE MOMENT!!}enum GenderRestriction {    NONE,    MALE_ONLY,    FEMALE_ONLY,    GENDERLESS,    DITTO}class HatchInfo {    /*Relevant variables for the future*/    final int               id;             //The national dex number of the pokemon    final Gender            gender;    final int[]             IVs;    final Nature            nature;    final EggGroup          eggGroup1;    final EggGroup          eggGroup2;    static class Builder {        int                     id = 0;          //The national dex number of the pokemon        Gender                  gender = Gender.MALE;        int[]                   IVs = {0,0,0,0,0,0};        Nature                  nature = Nature.UNKNOWN;        EggGroup                eggGroup1 = EggGroup.UNKNOWN;        EggGroup                eggGroup2 = EggGroup.UNKNOWN;        public Builder() {            id = 0;            gender = Gender.MALE;            nature = Nature.UNKNOWN;        }        public Builder id(int id) {            this.id = id;            this.eggGroup1 = PokemonData.getInstance().getFirstEggGroup(id);            this.eggGroup2 = PokemonData.getInstance().getSecondEggGroup(id);            return this;        }        public Builder gender(Gender gender) {            this.gender = gender;            return this;        }        public Builder IVs(int[] IVs) {            this.IVs = Arrays.copyOf(IVs,IVs.length);            return this;        }        public Builder nature(Nature nature) {            this.nature = nature;            return this;        }        HatchInfo build() {            return new HatchInfo(this);        }    }    public HatchInfo(Builder b) {        this.id = b.id;        this.gender = b.gender;        this.IVs = b.IVs;        this.nature = b.nature;        this.eggGroup1 = b.eggGroup1;        this.eggGroup2 = b.eggGroup2;    }}public class IvManager {    public IvManager() {        fillCombinations();    }    class ChanceData {        final chanceStatus status;        final double chance;        final int firstNumber;        final int secondNumber;        ChanceData(double chance, int firstNumber, int secondNumber, chanceStatus status) {            this.chance = chance;            this.firstNumber = firstNumber;            this.secondNumber = secondNumber;            this.status = status;        }        ChanceData(chanceStatus status) {            chance = -1;            firstNumber = -1;            secondNumber = -1;            this.status = status;        }    }    enum item {NO_ITEM,DESTINY_KNOT,POWER_HP,POWER_ATK,POWER_DEF,POWER_SATK,POWER_SDEF,POWER_SPD}    enum chanceStatus {        ALL_WORSE_LUCK,        EGG_WITH_PARENT,        EGG_WITH_ANOTHER_EGG,        DITTO_WITH_MALE_PARENT,        DITTO_WITH_FEMALE_PARENT,        DITTO_WITH_MALE_EGG,        DITTO_WITH_FEMALE_EGG,        EGG_SWAP_DITTO,        LONE_GENDERLESS,//TODO: fazer!        GENDERLESS_WITH_MALE_DITTO,        GENDERLESS_WITH_FEMALE_DITTO,        GENDERLESS_AND_DITTO,        ERROR    }    public class ShinyOptions {        boolean isShiny;        boolean shinyCharmActive;        boolean masudaMethodActive;        public ShinyOptions() {            isShiny = false;            shinyCharmActive = false;            masudaMethodActive = false;        }    }    private ActivePokemons activePokemons = new ActivePokemons();    private item maleItem = item.NO_ITEM;    private item femaleItem = item.NO_ITEM;    private ShinyOptions shinyOptions = new ShinyOptions();    private List<HatchInfo> hatchesList = new ArrayList<HatchInfo>();    private final Map<Integer, Integer> bareCombinations = new HashMap<Integer,Integer>();    private Map<item,Integer>           itemIvTable = new HashMap<item, Integer>();    /*Chance Calculators*/    public  double getChance(int[] male, int[] female, int[] goal) {        double chance;        if((maleItem == item.DESTINY_KNOT) || (femaleItem == item.DESTINY_KNOT)) {            chance = getDestinyKnotChance(male, female, goal);            if(chance == 0.0d) {                double chance2 = getBareChance(male, female, goal);                if(chance2 > chance) chance = chance2;            }        }        else {            chance = getBareChance(male, female, goal);        }        return chance;    }    public  double getParentsChance() {        HatchInfo male = activePokemons.getMaleParent();        HatchInfo female = activePokemons.getFemaleParent();        HatchInfo goal = activePokemons.getGoal();        if(male == null || female == null || goal == null) return 0.0;        if(male.eggGroup1 == EggGroup.DITTO && female.eggGroup1 == EggGroup.DITTO) return 0.0;        return getChance(activePokemons.getMaleParent().IVs,activePokemons.getFemaleParent().IVs,activePokemons.getGoal().IVs);    }    private double getDestinyKnotChance(int[] male, int[] female, int[] goal) {        double chanceTotal = 0.0d;        for(int currDk = 0; currDk < 6; currDk++)        {            double chanceCurrentDk = 1.0d;            for(int currIv = 0; currIv < 6; currIv++)            {                double chanceCurrentIv;                if(goal[currIv] != 1)                                         //Checks if the current IV doesn't matter                    chanceCurrentIv = 1.0d;                                   //If it doesn't matter, it doesn't affect the goal IVs chance                else                {                    if(currIv == currDk)                                      //Checks if the current IV is not covered by the current DK                        chanceCurrentIv = (1.0d/32.0d);                       //if its not covered, it has only the random chance                    else if((itemIvTable.get(maleItem)!= null) && (itemIvTable.get(maleItem) == currIv)){                        if (male[currIv] == 1)                            chanceCurrentIv = 1.0d;                        else                            chanceCurrentIv = 0.0d;                    }                    else if((itemIvTable.get(femaleItem)!= null) && itemIvTable.get(femaleItem)==currIv) {                        if(female[currIv] == 1)                            chanceCurrentIv = 1.0d;                        else                            chanceCurrentIv = 0.0d;                    }                    else if((male[currIv] == 1) &&  (female[currIv] == 1))   //Gives a 100% chance if both parents have the IV                        chanceCurrentIv = 1.0d;                    else if((male[currIv] == 1)||  (female[currIv] == 1))    //Gives a 50% chance if only one of them has the IV                        chanceCurrentIv = (1.0d/2.0d);                    else                        chanceCurrentIv = 0;                                  //Completely kills the chance if none of the parents have it                }                chanceCurrentDk *= chanceCurrentIv;            }            chanceTotal += ((1.0d/6.0d)*chanceCurrentDk);        }        chanceTotal = accountForShinyChance(chanceTotal);        return chanceTotal;    }    private double getBareChance(int[] male, int[] female, int[] goal) {        double chanceTotal = 0.0d;        //6x[IV Chance] * 20x[Combination Chance]. [TotalChance] = Sum of [CombinationChance]s / 20        //Iterate through every possible IV combination (C6,3)        for(int currComb = 0; currComb < bareCombinations.size(); currComb++) {            double chanceCurrComb = 1.0d;            for(int currIv = 0; currIv < 6; currIv++) {                double chanceCurrentIv;                if(goal[currIv] != 1)                                          //Checks if the current IV doesn't matter                    chanceCurrentIv = 1.0d;                                    //If it doesn't matter, it doesn't affect the goal IVs chance                else {                    if ((bareCombinations.get(currComb)&(1<<currIv))==0)       //If the current IV is not one of the selected on this combination                        chanceCurrentIv = (1.0d/32.0d);                        //It has only the random chance to be perfect                    else if((itemIvTable.get(maleItem)!= null) && (itemIvTable.get(maleItem) == currIv)){                        if (male[currIv] == 1)                            chanceCurrentIv = 1.0d;                        else                            chanceCurrentIv = 0.0d;                    }                    else if((itemIvTable.get(femaleItem)!= null) && itemIvTable.get(femaleItem)==currIv) {                        if(female[currIv] == 1)                            chanceCurrentIv = 1.0d;                        else                            chanceCurrentIv = 0.0d;                    }                    else if((male[currIv] == 1) &&  (female[currIv] == 1))   //Gives a 100% chance if both parents have the IV                        chanceCurrentIv = 1.0d;                    else if((male[currIv] == 1)||  (female[currIv] == 1))    //Gives a 50% chance if only one of them has the IV                        chanceCurrentIv = (1.0d/2.0d);                    else                        chanceCurrentIv = 0;                                 //Completely kills the chance if it's selected and none of the parents have it                }                chanceCurrComb *= chanceCurrentIv;            }            chanceTotal += ((1.0d/(double)bareCombinations.size())*chanceCurrComb);        }        chanceTotal = accountForShinyChance(chanceTotal);        return chanceTotal;    }    private double accountForShinyChance(double normalChance) {        if(shinyOptions.isShiny) {            if(shinyOptions.masudaMethodActive) {                if(shinyOptions.shinyCharmActive)                    normalChance /= 512.0d;                else                    normalChance /= 1638.0d;            }            else if(shinyOptions.shinyCharmActive) {                normalChance *= (3.0d/4096.0d);            }            else {                normalChance /= 4096.0d;            }        }        return normalChance;    }    public ChanceData getBestCombinationChance() {        /*If there's no eggs or no goal, there's no way to calculate the chance.*/        if(hatchesList.isEmpty() || (activePokemons.getGoal() == null))            return new ChanceData(chanceStatus.ERROR);        /*Creates temporary empty parents if no real parents exist*/        boolean temporaryMale = false, temporaryFemale = false;        int[] emptyIVs = {0,0,0,0,0,0};        if(activePokemons.getMaleParent() == null) {            activePokemons.setMaleParent(new HatchInfo.Builder().IVs(emptyIVs).build());            temporaryMale = true;        }        if(activePokemons.getFemaleParent() == null) {            activePokemons.setFemaleParent(new HatchInfo.Builder().IVs(emptyIVs).build());            temporaryFemale = true;        }        class ChanceComparator implements Comparator<ChanceData> {            @Override            public int compare(ChanceData e1, ChanceData e2) {                if(e1.chance > e2.chance){                    return 1;                } else if (e1.chance < e2.chance){                    return -1;                }                else {                    return 0;                }            }        }        ArrayList<ChanceData> tempList = new ArrayList<ChanceData>();        getEggCombinationChances(tempList);        getDittoCombinationChances(tempList);        getParentDittoCombinationChances(tempList);        /*Removes the temporary parents (if they were created)*/        if(temporaryMale) activePokemons.setMaleParent(null);        if(temporaryFemale) activePokemons.setFemaleParent(null);        /*If none of the comparisons achieved a better chance than the current one, returns without         *results. Otherwise, sorts the list and returns the best result.*/        if(tempList.isEmpty())            return new ChanceData(chanceStatus.ALL_WORSE_LUCK);        else        {            Collections.sort(tempList, new ChanceComparator());            ChanceData bestData = tempList.get(tempList.size()-1);            double bestChance = bestData.chance;            for(int i = 0; i < tempList.size(); i++) {                if(java.lang.Double.compare(bestChance,tempList.get(i).chance)==0) {                    if(tempList.get(i).status == chanceStatus.EGG_WITH_PARENT ||                            tempList.get(i).status == chanceStatus.DITTO_WITH_FEMALE_PARENT ||                            tempList.get(i).status == chanceStatus.DITTO_WITH_MALE_PARENT) {                        bestData = tempList.get(i);                    }                }            }            return bestData;        }    }    private void getEggCombinationChances(ArrayList<ChanceData> tempList) {        HatchInfo potentialEgg;        HatchInfo maleParent = activePokemons.getMaleParent();        HatchInfo femaleParent = activePokemons.getFemaleParent();        HatchInfo goal = activePokemons.getGoal();        /*Gets the chance that the current parents produce*/        double baseChance = getParentsChance();        /*Goes through the whole stored pokemon list*/        for(int i = 0; i < hatchesList.size(); i++)        {            potentialEgg = hatchesList.get(i);            /*If the potential pokemon is female, checks if it is in the same family of the goal            * (so that the hatches will be of the desired species). If it isn't, skips this pokemon*/            if (!checkFamilyValidity(potentialEgg)) continue;             /*If the potential pokemon doesn't belong to the goal's egg groups, skips it*/            if(!checkEggGroupValidity(potentialEgg)) continue;            /*If the potential pokemon is a ditto, skips it*/            if(potentialEgg.id == Constants.DITTO_ID) continue;            /*Selects the opposite gender of the egg. This is the gender that will be chosen when              comparing this egg to others.*/            Gender wantedGender;            if(potentialEgg.gender == Gender.MALE)  wantedGender = Gender.FEMALE;            else                                    wantedGender = Gender.MALE;            /*Compares this egg with the parents first. If it produces a better chance, adds it to            * the list.*/            double eggWithParentChance;            if(potentialEgg.gender == Gender.MALE) {                /*If the potential pokemon is male, compares it with the female parent.*/                eggWithParentChance = getChance(potentialEgg.IVs, activePokemons.getFemaleParent().IVs, activePokemons.getGoal().IVs);                if (eggWithParentChance > baseChance)                    tempList.add(new ChanceData(eggWithParentChance, i, -1, chanceStatus.EGG_WITH_PARENT));                /*If the parent the egg is trying to substitute is a Ditto, it should also check the chance                * when the ditto is on the other gender*/                if(activePokemons.getMaleParent().id == Constants.DITTO_ID) {                    eggWithParentChance = getChance(potentialEgg.IVs, activePokemons.getMaleParent().IVs, activePokemons.getGoal().IVs);                    if (eggWithParentChance > baseChance)                        tempList.add(new ChanceData(eggWithParentChance, i, -1, chanceStatus.EGG_SWAP_DITTO));                }            }            /*If the potential pokemon is female, compares it with the male parent.*/            else if(potentialEgg.gender == Gender.FEMALE) {                eggWithParentChance = getChance(activePokemons.getMaleParent().IVs, potentialEgg.IVs, activePokemons.getGoal().IVs);                if (eggWithParentChance > baseChance)                    tempList.add(new ChanceData(eggWithParentChance, i, -1, chanceStatus.EGG_WITH_PARENT));                /*If the parent the egg is trying to substitute is a Ditto, it should also check the chance                * when the ditto is on the other gender*/                if(activePokemons.getFemaleParent().id == Constants.DITTO_ID) {                    eggWithParentChance = getChance(activePokemons.getMaleParent().IVs, potentialEgg.IVs, activePokemons.getGoal().IVs);                    if (eggWithParentChance > baseChance)                        tempList.add(new ChanceData(eggWithParentChance, i, -1, chanceStatus.EGG_SWAP_DITTO));                }            }            else {                /*If the potential pokemon is genderless, the other pokemon HAS to be a ditto.                * Here, the ditto-swap doesn't apply, since it doesn't matter which is male or female.*/                /*If the male parent is a ditto, this pokemon can try to be the female parent*/                if(maleParent.id == Constants.DITTO_ID) {                    eggWithParentChance = getChance(maleParent.IVs,potentialEgg.IVs,goal.IVs);                    if (eggWithParentChance > baseChance)                        tempList.add(new ChanceData(eggWithParentChance, i, -1, chanceStatus.GENDERLESS_WITH_MALE_DITTO));                }                /*If the female parent is a ditto, this pokemon can try to be the male parent*/                else if (femaleParent.id == Constants.DITTO_ID) {                    eggWithParentChance = getChance(potentialEgg.IVs,femaleParent.IVs,goal.IVs);                    if (eggWithParentChance > baseChance)                        tempList.add(new ChanceData(eggWithParentChance, i, -1, chanceStatus.GENDERLESS_WITH_FEMALE_DITTO));                }                else if (maleParent.gender == Gender.GENDERLESS) {                    /*If the parents aren't dittos, it can only substitute the current genderless pokemon*/                    eggWithParentChance = getChance(potentialEgg.IVs,femaleParent.IVs,goal.IVs);                    if (eggWithParentChance > baseChance)                        tempList.add(new ChanceData(eggWithParentChance, i, -1, chanceStatus.GENDERLESS_WITH_FEMALE_DITTO));                }                else if (femaleParent.gender == Gender.GENDERLESS) {                    eggWithParentChance = getChance(maleParent.IVs,potentialEgg.IVs,goal.IVs);                    if (eggWithParentChance > baseChance)                        tempList.add(new ChanceData(eggWithParentChance, i, -1, chanceStatus.GENDERLESS_WITH_MALE_DITTO));                }                else {                    /*If nothing applies theres no parents; tries to add itself in the male position*/                    eggWithParentChance = getChance(potentialEgg.IVs,femaleParent.IVs,goal.IVs);                    if (eggWithParentChance > baseChance)                        tempList.add(new ChanceData(eggWithParentChance, i, -1, chanceStatus.GENDERLESS_WITH_FEMALE_DITTO));                }            }            /*Compares egg with opposite gender eggs*/            for(int j = 0; j < hatchesList.size(); j++)            {                if(j == i) continue; //Skips itself                if(hatchesList.get(j).gender != wantedGender) continue; //Skips same gender eggs                if(hatchesList.get(j).id == Constants.DITTO_ID) continue; //Skips dittos                /*If the other egg doesn't belong to the goal's egg groups, skip*/                if(!checkEggGroupValidity(hatchesList.get(j))) continue;                double newChance;                if(potentialEgg.gender == Gender.MALE) {                    /*If the first egg is Male, the second egg must belong to the same family*/                    if(!checkFamilyValidity(hatchesList.get(j))) continue;                    newChance = getChance(potentialEgg.IVs, hatchesList.get(j).IVs, activePokemons.getGoal().IVs);                }                else if(potentialEgg.gender == Gender.FEMALE)                    newChance = getChance(hatchesList.get(j).IVs, potentialEgg.IVs, activePokemons.getGoal().IVs);                else {                    newChance = 0.0d; //TODO: fazer(ta certo?)                }                if(newChance > baseChance)                    tempList.add(new ChanceData(newChance,i,j,chanceStatus.EGG_WITH_ANOTHER_EGG));            }        }    }    private void getDittoCombinationChances(ArrayList<ChanceData> tempList) {        double baseChance = getParentsChance();        HatchInfo potentialDitto;        for(int i = 0; i < hatchesList.size(); i++) {            potentialDitto = hatchesList.get(i);            /*If it's not a ditto, does nothing*/            if(potentialDitto.id != Constants.DITTO_ID)                continue;            /*If the female parent isn't a Ditto too, gets the chance using this ditto as the male*/            if(activePokemons.getFemaleParent().id != Constants.DITTO_ID) {                double dittoWithFemaleParentChance = getChance(potentialDitto.IVs, activePokemons.getFemaleParent().IVs, activePokemons.getGoal().IVs);                if (dittoWithFemaleParentChance > baseChance)                    tempList.add(new ChanceData(dittoWithFemaleParentChance, i, -1, chanceStatus.DITTO_WITH_FEMALE_PARENT));            }            /*If the male parent isn't a ditto too, gets the chance using this ditto as the female*/            if(activePokemons.getMaleParent().id != Constants.DITTO_ID) {                double dittoWithMaleParentChance = getChance(activePokemons.getMaleParent().IVs, potentialDitto.IVs, activePokemons.getGoal().IVs);                if (dittoWithMaleParentChance > baseChance)                    tempList.add(new ChanceData(dittoWithMaleParentChance, i, -1, chanceStatus.DITTO_WITH_MALE_PARENT));            }            /*Compares Ditto with opposite gender eggs*/            for(int j = 0; j < hatchesList.size(); j++)            {                /*When giving a ChanceData, the first number will be the Ditto, the second will be                * the egg.*/                HatchInfo potentialEgg = hatchesList.get(j);                /*If the potential egg is also a ditto, ignore*/                if(potentialEgg.id == Constants.DITTO_ID) continue;                /*If the potential egg doesn't belong to the goal's egg groups, ignore*/                    if (!checkEggGroupValidity(potentialEgg)) continue;                if(potentialEgg.gender == Gender.MALE) {                    double newChance;                    /*If the male isn't from the same family, putting a ditto will not give the user the selected goal*/                    if(PokemonData.getInstance().getBasicPokemon(potentialEgg.id) != PokemonData.getInstance().getBasicPokemon(activePokemons.getGoal().id)) continue;                    newChance = getChance(potentialEgg.IVs, potentialDitto.IVs, activePokemons.getGoal().IVs);                    if (newChance > baseChance)                        tempList.add(new ChanceData(newChance,i,j,chanceStatus.DITTO_WITH_MALE_EGG));                }                else if (potentialEgg.gender == Gender.FEMALE){                    double newChance;                    /*If the female egg isn't from the same family, can't put it up there with a ditto*/                    if(!checkFamilyValidity(potentialEgg)) continue;                    newChance = getChance(potentialDitto.IVs, potentialEgg.IVs, activePokemons.getGoal().IVs);                    if (newChance > baseChance)                        tempList.add(new ChanceData(newChance,i,j,chanceStatus.DITTO_WITH_FEMALE_EGG));                }                else if (potentialEgg.gender == Gender.GENDERLESS){                    double newChance = getChance(potentialDitto.IVs, potentialEgg.IVs, activePokemons.getGoal().IVs);                    if(newChance > baseChance)                        tempList.add(new ChanceData(newChance,i,j,chanceStatus.GENDERLESS_AND_DITTO));                }            }        }    }    private void getParentDittoCombinationChances(ArrayList<ChanceData> tempList) {        double baseChance = getParentsChance();        if(activePokemons.getMaleParent().id == Constants.DITTO_ID){            for(int i = 0; i < hatchesList.size(); i++) {                HatchInfo hatch = hatchesList.get(i);                /*If the potential pokemon is female, checks if it is in the same family of the goal            * (so that the hatches will be of the desired species). If it isn't, skips this pokemon*/                if (!checkFamilyValidity(hatch)) continue;                if(hatch.id == Constants.DITTO_ID) continue;                if(hatch.gender == Gender.GENDERLESS) continue; //Skips because swaps don't make sense with genderless pokemons                double newChance = 0.0d;                    newChance = getChance(hatch.IVs, activePokemons.getMaleParent().IVs, activePokemons.getGoal().IVs);                    if(newChance > baseChance) {                        tempList.add(new ChanceData(newChance, i, -1, chanceStatus.EGG_SWAP_DITTO));                    }            }        }        else if(activePokemons.getFemaleParent().id == Constants.DITTO_ID) {            for(int i = 0; i < hatchesList.size(); i++) {                HatchInfo hatch = hatchesList.get(i);                /*If the potential pokemon is female, checks if it is in the same family of the goal                * (so that the hatches will be of the desired species). If it isn't, skips this pokemon*/                if (!checkFamilyValidity(hatch)) continue;                if(hatch.id == Constants.DITTO_ID) continue;                if(hatch.gender == Gender.GENDERLESS) continue; //Skips because swaps don't make sense with genderless pokemons                double newChance = getChance(activePokemons.getFemaleParent().IVs, hatchesList.get(i).IVs, activePokemons.getGoal().IVs);                if(newChance > baseChance) {                    tempList.add(new ChanceData(newChance, i, -1, chanceStatus.EGG_SWAP_DITTO));                }            }        }    }    private boolean checkEggGroupValidity(HatchInfo potential) {        HatchInfo goal = activePokemons.getGoal();        /*If a null hatch was passed, checking validity doesn't make sense*/        if(potential == null || goal == null) return true;        /*If it's a ditto it's always compatible*/        if(potential.eggGroup1 == EggGroup.DITTO) return true;        /*If it's a legendary (or alike) it's never compatible*/        if(potential.eggGroup2 == EggGroup.UNDISCOVERED) return false;        boolean valid = false;        if(potential.eggGroup1 == goal.eggGroup1 || potential.eggGroup1 == goal.eggGroup2) {            valid = true;        }        if(potential.eggGroup2 != EggGroup.NONE && potential.eggGroup2 != EggGroup.UNKNOWN) {            if(potential.eggGroup2 == goal.eggGroup1 || potential.eggGroup2 == goal.eggGroup2) {                valid = true;            }        }        return valid;    }    private boolean checkFamilyValidity(HatchInfo potential) {        HatchInfo goal = activePokemons.getGoal();        int goalBreeds = PokemonData.getInstance().getBasicPokemon(goal.id);        int potentialBreeds = PokemonData.getInstance().getBasicPokemon(potential.id);        boolean breedsSamePokemon = false;        if(goal.gender == Gender.GENDERLESS) {            if (potential.gender == Gender.GENDERLESS) {                if (potentialBreeds == goalBreeds)                    breedsSamePokemon = true;            }        }        else if(goal.gender == Gender.MALE || goal.gender == Gender.FEMALE) {            if(potential.gender == Gender.FEMALE) {                if(potentialBreeds == goalBreeds)                    breedsSamePokemon = true;            }            else {                breedsSamePokemon = true;            }        }        return breedsSamePokemon;//        return (potential.id == goal.id);    }    //Getters    public HatchInfo    getHatch(int pos) {        return hatchesList.get(pos);    }    public List<HatchInfo>     getHatchList() {        return hatchesList;    }    public ShinyOptions getShinyOptions() {return shinyOptions;}    public List<HatchInfo> getHatchesList() {        return hatchesList;    }    public void setHatchesList(List<HatchInfo> l) { hatchesList = l;}    public ActivePokemons getActivePokemons() {        return activePokemons;    }    //Setters    public void setShinyOptions(ShinyOptions s) {shinyOptions = s;}    public void setMaleParent(HatchInfo maleParent) {        activePokemons.setMaleParent(maleParent);    }    public void setFemaleParent(HatchInfo femaleParent) {        activePokemons.setFemaleParent(femaleParent);    }    public void setGoal(HatchInfo goal) {        activePokemons.setGoal(goal);    }    public void setActivePokemons(ActivePokemons a) {        this.activePokemons = a;    }    boolean checkParentsCompatibility() {        boolean maleValid = checkEggGroupValidity(activePokemons.getMaleParent());        boolean femaleValid = checkEggGroupValidity(activePokemons.getFemaleParent());        return (maleValid && femaleValid);    }    /**     * Adds the current parent back to the list, and adds a new parent to the selected gender slot.     * Current parent is added back at the end of the list.     * @param hatchNumber  Indicates which pokemon on the list will be switched with     *                     the current parent.     * @param eggGender Indicates which gender is to be switched (only MALE and FEMALE should     *                     be passed).     */    void switchParent(Gender eggGender, int hatchNumber) {        HatchInfo lastParent;        HatchInfo newParent;        if(eggGender == Gender.MALE) {            lastParent = activePokemons.getMaleParent();            newParent = hatchesList.get(hatchNumber);            activePokemons.setMaleParent(newParent);        }        else if (eggGender == Gender.FEMALE) {            lastParent = activePokemons.getFemaleParent();            newParent = hatchesList.get(hatchNumber);            activePokemons.setFemaleParent(newParent);        }        else            throw new IllegalArgumentException("Invalid gender requested when switching parents.");        hatchesList.remove(hatchNumber);        if(lastParent != null)            hatchesList.add(lastParent);    }    void switchBothParents(int maleSubsNumber, int femaleSubsNumber) {        HatchInfo previousMaleParent = activePokemons.getMaleParent();        HatchInfo previousFemaleParent = activePokemons.getFemaleParent();        HatchInfo newMaleParent = hatchesList.get(maleSubsNumber);        HatchInfo newFemaleParent = hatchesList.get(femaleSubsNumber);        activePokemons.setMaleParent(newMaleParent);        activePokemons.setFemaleParent(newFemaleParent);        if(maleSubsNumber > femaleSubsNumber) {            hatchesList.remove(maleSubsNumber);            hatchesList.remove(femaleSubsNumber);        }        else {            hatchesList.remove(femaleSubsNumber);            hatchesList.remove(maleSubsNumber);        }        if(previousMaleParent != null)            hatchesList.add(previousMaleParent);        if(previousFemaleParent != null)            hatchesList.add(previousFemaleParent);    }    /**     * Swaps the male and female pokemons, then selects one of them to be switched. This method     * should ONLY be called when one of the parents to be swapped is a Ditto. The switch at the     * end ensures that the gendered swapped pokemon is deposited back in place of a pokemon with     * the correct gender (i.e. this method would break the system without the switch side effect).     * @param toBeSwitchedGender Gender of the parent that will be switched after the swap.     * @param hatchNumber Number position of the pokemon that will switch the selected parent.     */    void swapParentsAndSwitch(Gender toBeSwitchedGender, int hatchNumber) {        HatchInfo currentMale = activePokemons.getMaleParent();        HatchInfo currentFemale = activePokemons.getFemaleParent();        if(currentMale == null || currentFemale == null) return; //TODO: ver onde botar esse failsafe        if(toBeSwitchedGender == Gender.MALE) {            if(currentMale.gender != Gender.DITTO)                throw new IllegalArgumentException("The parent participating on the swap MUST be a Ditto.");        }        else if (toBeSwitchedGender == Gender.FEMALE) {            if(currentFemale.gender == Gender.DITTO)                throw new IllegalArgumentException("The parent participating on the swap MUST be a Ditto.");        }        activePokemons.setMaleParent(currentFemale);        activePokemons.setFemaleParent(currentMale);        switchParent(toBeSwitchedGender, hatchNumber);    }    void removeMaleParent() {        hatchesList.add(activePokemons.getMaleParent());        activePokemons.setMaleParent(null);    }    void removeFemaleParent() {        hatchesList.add(activePokemons.getFemaleParent());        activePokemons.setFemaleParent(null);    }    void removeGoal() {        activePokemons.setGoal(null);    }    public void addHatch(HatchInfo pokemon) { hatchesList.add(pokemon);}    public void removeHatch(int pos) {        hatchesList.remove(pos);    }    void        clearHatches() { hatchesList.clear();}    public boolean isShiny() {        return shinyOptions.isShiny;    }    public void    setShiny(boolean isShiny) {        shinyOptions.isShiny = isShiny;    }    public boolean isShinyCharmActive() {        return shinyOptions.shinyCharmActive;    }    public void    setShinyCharmActive(boolean shinyCharmActive) {        shinyOptions.shinyCharmActive = shinyCharmActive;    }    public boolean isMasudaMethodActive() {        return shinyOptions.masudaMethodActive;    }    public void setMasudaMethodActive(boolean masudaMethodActive) {        shinyOptions.masudaMethodActive = masudaMethodActive;    }    public void setMaleItem(item maleItem) {        this.maleItem = maleItem;    }    public void setFemaleItem(item femaleItem) {        this.femaleItem = femaleItem;    }    public item getMaleItem() {        return maleItem;    }    public item getFemaleItem() {        return femaleItem;    }    void fillCombinations() {        bareCombinations.put(0,Integer.parseInt("111000", 2));        bareCombinations.put(1,Integer.parseInt("110100", 2));        bareCombinations.put(2,Integer.parseInt("110010", 2));        bareCombinations.put(3,Integer.parseInt("110001", 2));        bareCombinations.put(4,Integer.parseInt("101100", 2));        bareCombinations.put(5,Integer.parseInt("101010", 2));        bareCombinations.put(6,Integer.parseInt("101001", 2));        bareCombinations.put(7,Integer.parseInt("100110", 2));        bareCombinations.put(8,Integer.parseInt("100101", 2));        bareCombinations.put(9,Integer.parseInt("100011", 2));        bareCombinations.put(10,Integer.parseInt("011100", 2));        bareCombinations.put(11,Integer.parseInt("011010", 2));        bareCombinations.put(12,Integer.parseInt("011001", 2));        bareCombinations.put(13,Integer.parseInt("010110", 2));        bareCombinations.put(14,Integer.parseInt("010101", 2));        bareCombinations.put(15,Integer.parseInt("010011", 2));        bareCombinations.put(16,Integer.parseInt("001110", 2));        bareCombinations.put(17,Integer.parseInt("001101", 2));        bareCombinations.put(18,Integer.parseInt("001011", 2));        bareCombinations.put(19,Integer.parseInt("000111", 2));        itemIvTable.put(item.POWER_HP,0);        itemIvTable.put(item.POWER_ATK,1);        itemIvTable.put(item.POWER_DEF,2);        itemIvTable.put(item.POWER_SATK,3);        itemIvTable.put(item.POWER_SDEF,4);        itemIvTable.put(item.POWER_SPD,5);    }}
+package marcelo.breguenait.breedinghelper;
+
+import android.util.SparseArray;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+enum Item {
+    NO_ITEM,
+    DESTINY_KNOT,
+    POWER_HP,
+    POWER_ATK,
+    POWER_DEF,
+    POWER_SATK,
+    POWER_SDEF,
+    POWER_SPD
+}
+
+enum Nature {
+    UNKNOWN,
+    DOCILE,
+    JOLLY,
+    BOLD
+}
+
+enum EggGroup {
+    UNKNOWN,
+    NONE,
+    MONSTER,
+    HUMAN_LIKE,
+    WATER_1,
+    WATER_2,
+    WATER_3,
+    BUG,
+    MINERAL,
+    FLYING,
+    AMORPHOUS,
+    FIELD,
+    FAIRY,
+    DITTO,
+    GRASS,
+    DRAGON,
+    UNDISCOVERED,
+    GENDER_UNKNOWN
+}
+
+enum Gender {
+    MALE,
+    FEMALE,
+    GENDERLESS, //TODO: NYI!!! WILL BE CONSIDERED FEMALE IN MOST CASES AT THE MOMENT!!
+    DITTO       //TODO: NYI!!! WILL BE CONSIDERED FEMALE IN MOST CASES AT THE MOMENT!!
+}
+
+enum GenderRestriction {
+    NONE,
+    MALE_ONLY,
+    FEMALE_ONLY,
+    GENDERLESS,
+    DITTO
+}
+
+class EquippedItems {
+    private Item maleItem = Item.NO_ITEM;
+    private Item femaleItem = Item.NO_ITEM;
+
+    public Item getMaleItem() {
+        return maleItem;
+    }
+
+    public void setMaleItem(Item maleItem) {
+        this.maleItem = maleItem;
+    }
+
+    public Item getFemaleItem() {
+        return femaleItem;
+    }
+
+    public void setFemaleItem(Item femaleItem) {
+        this.femaleItem = femaleItem;
+    }
+
+    public boolean destinyKnotIsEquipped() {
+        return true; //TODO: TIRAR EM RELEASE!!!!
+        //return ((maleItem == Item.DESTINY_KNOT) || (femaleItem == Item.DESTINY_KNOT));
+    }
+
+    Item getPowerItem (int IV) {
+        Item item;
+        if     (IV == 1) item =  Item.POWER_HP;
+        else if(IV == 2) item =  Item.POWER_ATK;
+        else if(IV == 3) item =  Item.POWER_DEF;
+        else if(IV == 4) item =  Item.POWER_SATK;
+        else if(IV == 5) item =  Item.POWER_SDEF;
+        else if(IV == 6) item =  Item.POWER_SPD;
+        else throw new IllegalArgumentException("Invalid IV number received.");
+
+        return item;
+    }
+
+
+}
+
+class PokemonInfo {
+    /*Relevant variables for the future*/
+    final int               id;             //The national dex number of the pokemon
+    final Gender            gender;
+    final int[]             IVs;
+    final Nature            nature;
+    final EggGroup          eggGroup1;
+    final EggGroup          eggGroup2;
+    boolean isMaleParent, isFemaleParent;
+
+    static class Builder {
+        int                     id = 0;          //The national dex number of the pokemon
+        Gender                  gender = Gender.MALE;
+        int[]                   IVs = {0,0,0,0,0,0};
+        Nature                  nature = Nature.UNKNOWN;
+        EggGroup                eggGroup1 = EggGroup.UNKNOWN;
+        EggGroup                eggGroup2 = EggGroup.UNKNOWN;
+
+        public Builder() {
+            id = 0;
+            gender = Gender.MALE;
+            nature = Nature.UNKNOWN;
+        }
+
+        public Builder id(int id) {
+            this.id = id;
+
+            this.eggGroup1 = PokemonData.getInstance().getFirstEggGroup(id);
+            this.eggGroup2 = PokemonData.getInstance().getSecondEggGroup(id);
+
+            return this;
+        }
+
+        public Builder gender(Gender gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        public Builder IVs(int[] IVs) {
+            this.IVs = Arrays.copyOf(IVs, IVs.length);
+            return this;
+        }
+
+        public Builder nature(Nature nature) {
+            this.nature = nature;
+            return this;
+        }
+
+        PokemonInfo build() {
+            return new PokemonInfo(this);
+        }
+    }
+
+    public PokemonInfo(Builder b) {
+        this.id = b.id;
+        this.gender = b.gender;
+        this.IVs = b.IVs;
+        this.nature = b.nature;
+        this.eggGroup1 = b.eggGroup1;
+        this.eggGroup2 = b.eggGroup2;
+    }
+}
+
+class ChanceData {
+    PokemonInfo firstPokemon = null, secondPokemon = null;
+    int firstPokemonNumber = 0;
+    int secondPokemonNumber = 0;
+    double chance = 0.0d;
+
+
+    ChanceData(PokemonInfo firstPokemon, PokemonInfo secondPokemon, int firstPokemonNumber, int secondPokemonNumber, double chance) {
+        this.firstPokemon = firstPokemon;
+        this.secondPokemon = secondPokemon;
+        this.firstPokemonNumber = firstPokemonNumber;
+        this.secondPokemonNumber = secondPokemonNumber;
+        this.chance = chance;
+    }
+}
+
+public class IvManager {
+
+    IvManager() {
+        fillCombinations();
+    }
+
+    private List<PokemonInfo> storedPokemonList = new ArrayList<PokemonInfo>();
+
+    final EquippedItems equippedItems = new EquippedItems();
+
+    private SparseArray<Integer> destinyKnotCombinations = new SparseArray<>(6);
+    private SparseArray<Integer> bareCombinations = new SparseArray<>(20);
+
+    List<ChanceData> bestCombinationsList = new ArrayList<>();
+
+    PokemonInfo goalPokemon = null;
+
+    ChanceData currentBestCombination = null;
+
+    public final ChanceData getCurrentBestCombination() {
+        return currentBestCombination;
+    }
+    public final List<ChanceData> getBestCombinations() {return bestCombinationsList;}
+
+    public void setGoalPokemon(PokemonInfo goalPokemon) {
+        this.goalPokemon = goalPokemon;
+        if(goalPokemon != null)
+            updateBestCombination();
+    }
+    public PokemonInfo getGoalPokemon() {
+        return goalPokemon;
+    }
+    public void storePokemon(PokemonInfo pokemon) {
+        storedPokemonList.add(pokemon);
+        updateBestCombination();
+    }
+    public void removePokemon(int position) {
+        storedPokemonList.remove(position);
+        updateBestCombination();
+    }
+
+    public List<PokemonInfo> getStoredPokemonList() {
+        return storedPokemonList;
+    }
+    public void setStoredPokemonList(List<PokemonInfo> p) {
+        storedPokemonList = p;
+    }
+    public PokemonInfo getStoredPokemon(int pos) {
+        return storedPokemonList.get(pos);
+    }
+
+    public void updateBestCombination() {
+        if (goalPokemon == null) {
+            currentBestCombination = null;
+            bestCombinationsList = null;
+            return;
+        }
+        bestCombinationsList.clear();
+
+        List<ChanceData> chances = new ArrayList<ChanceData>();
+
+        for (int i = 0; i < storedPokemonList.size(); i++) {
+
+            PokemonInfo firstPokemon = storedPokemonList.get(i);
+
+            for (int j = (i + 1); j < storedPokemonList.size(); j++) {
+                PokemonInfo secondPokemon = storedPokemonList.get(j);
+                if (checkCompatibility(firstPokemon, secondPokemon)) {
+                    double chance = getChance(firstPokemon.IVs, secondPokemon.IVs, goalPokemon.IVs);
+                    chances.add(new ChanceData(storedPokemonList.get(i), storedPokemonList.get(j),i, j, chance));
+                }
+            }
+        }
+
+        class ChanceComparator implements Comparator<ChanceData> {
+            @Override
+            public int compare(ChanceData e1, ChanceData e2) {
+                return Double.compare(e1.chance, e2.chance);
+            }
+        }
+
+        if (chances.isEmpty())
+            currentBestCombination = null;
+        else {
+            Collections.sort(chances, new ChanceComparator());
+            bestCombinationsList = chances;
+            currentBestCombination = chances.get(chances.size() - 1);
+        }
+    }
+    /**
+     * Checks if two given pokemons are a compatible pair when trying to breed the goal pokemon.
+     * The function will look if the pair is either: <br>
+     * 1. Female from the family + Male from egg group <br>
+     * 2. Ditto + Pokemon from family
+     * @param firstPokemon First pokemon to be compared
+     * @param secondPokemon Second pokemon to be compared
+     * @return True if they are one of the accepted pairs
+     */
+    private boolean checkCompatibility(PokemonInfo firstPokemon, PokemonInfo secondPokemon) {
+        if(goalPokemon == null) return false;
+
+        if(firstPokemon.gender == Gender.MALE && secondPokemon.gender == Gender.FEMALE) {
+            boolean femaleCompatible = checkFamilyCompatibility(secondPokemon);
+            boolean maleCompatible = checkEggGroupCompatibility(firstPokemon);
+
+            return (maleCompatible && femaleCompatible);
+        }
+        else if (firstPokemon.gender == Gender.FEMALE && secondPokemon.gender == Gender.MALE) {
+            boolean femaleCompatible = checkFamilyCompatibility(firstPokemon);
+            boolean maleCompatible = checkEggGroupCompatibility(secondPokemon);
+
+            return (maleCompatible && femaleCompatible);
+        }
+        else if (firstPokemon.gender == Gender.DITTO) {
+            if(secondPokemon.gender == Gender.MALE ||
+                    secondPokemon.gender == Gender.FEMALE ||
+                    secondPokemon.gender == Gender.GENDERLESS) {
+                return checkFamilyCompatibility(secondPokemon);
+            }
+        }
+        else if (secondPokemon.gender == Gender.DITTO) {
+            if (firstPokemon.gender == Gender.MALE ||
+                    firstPokemon.gender == Gender.FEMALE ||
+                    firstPokemon.gender == Gender.GENDERLESS) {
+                return checkFamilyCompatibility(firstPokemon);
+            }
+        }
+
+        return false;
+    }
+    /**
+     * Checks if the given pokemon belongs to the same family as the goal pokemon (i.e. the same
+     * evolutionary line or another close relation)
+     * @param potential The pokemon to be compared to the goal
+     * @return True if it is compatible, False if it's not
+     */
+    private boolean checkFamilyCompatibility(PokemonInfo potential) {
+        if(goalPokemon == null) throw new NullPointerException();
+
+        int goalBreeds = PokemonData.getInstance().getBasicPokemon(goalPokemon.id);
+        int potentialBreeds = PokemonData.getInstance().getBasicPokemon(potential.id);
+
+        boolean breedsSamePokemon = false;
+
+        if (potentialBreeds == goalBreeds)
+            breedsSamePokemon = true;
+
+        return breedsSamePokemon;
+    }
+    /**
+     * Checks if the given pokemon belongs to the same egg group as the goal.
+     * @param potential The pokemon to be compared to the goal
+     * @return True if it is compatible, false if it's not
+     */
+    private boolean checkEggGroupCompatibility(PokemonInfo potential) {
+        if(goalPokemon == null) throw new NullPointerException();
+
+        boolean valid = false;
+
+        if(potential.eggGroup1 == goalPokemon.eggGroup1 || potential.eggGroup1 == goalPokemon.eggGroup2) {
+            valid = true;
+        }
+
+        if(potential.eggGroup2 != EggGroup.NONE && potential.eggGroup2 != EggGroup.UNKNOWN) {
+            if(potential.eggGroup2 == goalPokemon.eggGroup1 || potential.eggGroup2 == goalPokemon.eggGroup2) {
+                valid = true;
+            }
+        }
+
+        return valid;
+    }
+    private double getChance(int[] maleIVs, int[] femaleIVs, int[] goalIVs) {
+        double chance = 0.0d;
+
+        final double MAX = 1.0d;
+        final double MIN = 0.0d;
+        final double HALF = 0.5d;
+        final double RANDOM = (1.0d/32.0d);
+
+        /*Selects which set of combinations will be used for the chance calculation*/
+        SparseArray<Integer> possibleCombinations;
+        if(equippedItems.destinyKnotIsEquipped())
+            possibleCombinations = destinyKnotCombinations;
+        else
+            possibleCombinations = bareCombinations;
+
+        /*Iterates through each available combination*/
+        for(int currentCombination = 0; currentCombination < possibleCombinations.size(); currentCombination++) {
+            double chanceCurrentCombination = 1.0d;
+
+            /*Iterates through each IV for each of the combinations*/
+            for(int currentIV = 0; currentIV < 6; currentIV++) {
+                double chanceCurrentIV = 1.0d;
+
+                /*If this IV is not wanted on the goal pokemon, it doesn't affect the chance of
+                * getting it.*/
+                if(goalIVs[currentIV] != 1) {
+                    chanceCurrentIV = 1.0d;
+                }
+                /*Else if it is wanted*/
+                else {
+                    /*If the current IV is not one of the selected to be inherited from the parents,
+                    * only the random chance of getting the maximum IV applies*/
+                    if((possibleCombinations.get(currentCombination)&(1<<currentIV))==0)
+                        chanceCurrentIV = RANDOM;
+                    /*Else if both parents have the current IV, the chance for this IV is maximum*/
+                    else if (maleIVs[currentIV] == 1 && femaleIVs[currentIV] == 1)
+                        chanceCurrentIV = MAX;
+                    /*Else if only the male parent has the current IV*/
+                    else if(maleIVs[currentIV] == 1 && femaleIVs[currentIV] == 0) {
+                        /*If the male has the corresponding power item, the chance is maximum (will always get the good IV).
+                        * If the female has the item instead, the chance is minimum (will always get the bad IV).
+                        * If neither has the item, the chance of getting the good IV from the male is half.*/
+                        if(equippedItems.getMaleItem() == equippedItems.getPowerItem(currentIV))
+                            chanceCurrentIV = MAX;
+                        else if(equippedItems.getFemaleItem() == equippedItems.getPowerItem(currentIV))
+                            chanceCurrentIV = MIN;
+                        else
+                            chanceCurrentIV = HALF;
+                    }
+                    /*Else if only the female has the current IV*/
+                    else if (femaleIVs[currentIV] == 1 && maleIVs[currentIV] == 0) {
+                        /*If the female has the corresponding power item, the chance is maximum (will always get the good IV).
+                        * If the male has the item instead, the chance is minimum (will always get the bad IV).
+                        * If neither has the item, the chance of getting the good IV from the female is half.*/
+                        if(equippedItems.getFemaleItem() == equippedItems.getPowerItem(currentIV))
+                            chanceCurrentIV = MAX;
+                        else if(equippedItems.getMaleItem() == equippedItems.getPowerItem(currentIV))
+                            chanceCurrentIV = MIN;
+                        else
+                            chanceCurrentIV = HALF;
+                    }
+                    /*Else if neither parent has a good IV*/
+                    else {
+                        chanceCurrentIV = MIN;
+                    }
+                }
+                /*After the current IV chance has been calculated,
+                applies it to the current combination chance*/
+                chanceCurrentCombination *= chanceCurrentIV;
+            }
+            /*After calculating all combinations, gets the total chance by calculating the mean*/
+            chance += chanceCurrentCombination;
+        }
+        chance = chance / ((double)possibleCombinations.size());
+
+        return chance;
+    }
+    private void fillCombinations() {
+        /*When using the destiny knot, chance is calculated by getting
+        * 5 out of the 6 possible IVs from the parents.
+        * The total number of combinations is C(6,5) = 6.*/
+        destinyKnotCombinations.put(0,Integer.parseInt("111110",2));
+        destinyKnotCombinations.put(1,Integer.parseInt("111101",2));
+        destinyKnotCombinations.put(2,Integer.parseInt("111011",2));
+        destinyKnotCombinations.put(3,Integer.parseInt("110111",2));
+        destinyKnotCombinations.put(4,Integer.parseInt("101111",2));
+        destinyKnotCombinations.put(5,Integer.parseInt("011111",2));
+
+        /*Without using the destiny knot, chance is calculated by getting
+        * 3 out of 6 possible IVs from the parents.
+        * The total number of combinations is C(6,3) = 20.*/
+        bareCombinations.put(0,Integer.parseInt("111000", 2));
+        bareCombinations.put(1,Integer.parseInt("110100", 2));
+        bareCombinations.put(2,Integer.parseInt("110010", 2));
+        bareCombinations.put(3,Integer.parseInt("110001", 2));
+        bareCombinations.put(4,Integer.parseInt("101100", 2));
+        bareCombinations.put(5,Integer.parseInt("101010", 2));
+        bareCombinations.put(6,Integer.parseInt("101001", 2));
+        bareCombinations.put(7,Integer.parseInt("100110", 2));
+        bareCombinations.put(8,Integer.parseInt("100101", 2));
+        bareCombinations.put(9,Integer.parseInt("100011", 2));
+        bareCombinations.put(10,Integer.parseInt("011100", 2));
+        bareCombinations.put(11,Integer.parseInt("011010", 2));
+        bareCombinations.put(12,Integer.parseInt("011001", 2));
+        bareCombinations.put(13,Integer.parseInt("010110", 2));
+        bareCombinations.put(14,Integer.parseInt("010101", 2));
+        bareCombinations.put(15,Integer.parseInt("010011", 2));
+        bareCombinations.put(16,Integer.parseInt("001110", 2));
+        bareCombinations.put(17,Integer.parseInt("001101", 2));
+        bareCombinations.put(18,Integer.parseInt("001011", 2));
+        bareCombinations.put(19,Integer.parseInt("000111", 2));
+    }
+}
+
+
+

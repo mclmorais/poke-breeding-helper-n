@@ -1,4 +1,4 @@
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,8 +10,6 @@
         android:layout_height="@dimen/abc_action_bar_default_height_material"
         android:layout_width="match_parent"
         android:minHeight="@dimen/abc_action_bar_default_height_material"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:background="@color/primary"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -24,24 +22,30 @@
         android:id="@+id/scrollViewMain"
         android:fillViewport="true"
         android:fadeScrollbars="false"
-        android:layout_below="@+id/main_activity_toolbar">
+        android:animateLayoutChanges="true">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/linearLayoutInsideScrollView"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true">
 
 
             <FrameLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/frameGoalIVsFragmentContainer"></FrameLayout>
+                android:id="@+id/frameGoalIVsFragmentContainer"
+                android:animateLayoutChanges="true"></FrameLayout>
 
             <FrameLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/frameLuckFragmentContainer"></FrameLayout>
+                android:id="@+id/frameLuckFragmentContainer"
+                android:layout_marginLeft="@dimen/distance_to_edge"
+                android:layout_marginRight="@dimen/distance_to_edge"
+                android:layout_marginTop="@dimen/distance_between_cards"
+                android:animateLayoutChanges="true"></FrameLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -49,7 +53,8 @@
                 android:id="@+id/framePokemonListFragmentContainer"
                 android:layout_marginLeft="@dimen/distance_to_edge"
                 android:layout_marginRight="@dimen/distance_to_edge"
-                android:layout_marginTop="@dimen/distance_between_cards"></FrameLayout>
+                android:layout_marginTop="@dimen/distance_between_cards"
+                android:animateLayoutChanges="true"></FrameLayout>
 
             <include
                 android:layout_width="fill_parent"
@@ -59,11 +64,12 @@
                 android:id="@+id/cardAd"
                 android:layout_marginLeft="@dimen/distance_to_edge"
                 android:layout_marginRight="@dimen/distance_to_edge"
-                android:layout_marginTop="@dimen/distance_between_cards" />
+                android:layout_marginTop="@dimen/distance_between_cards"
+                android:animateLayoutChanges="true"/>
 
         </LinearLayout>
     </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>
 
 

@@ -2,18 +2,65 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="marcelo.breguenait.breedinghelper.LuckFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/layer_card_background">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
-        android:id="@+id/textViewLuck1" />
 
-    <TextView
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:id="@+id/luckFragmentHeader">
+
+        <TextView
+            android:id="@+id/luckFragmentHeaderTitle"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Best Matches"
+            android:layout_alignParentTop="false"
+            style="@style/card_header_title"
+            android:visibility="visible"
+            android:singleLine="true" />
+
+        <View
+            android:id="@+id/luckFragmentSeparator1"
+            android:layout_width="1dp"
+            android:layout_height="32dp"
+            android:background="@color/background_light_gray"
+            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/luckFragmentButtonItems"
+            android:layout_toStartOf="@+id/luckFragmentButtonItems" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Items"
+            android:textAllCaps="true"
+            android:id="@+id/luckFragmentButtonItems"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/button_press_white_lightgray_selector"
+            android:textColor="@color/accent"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_light_gray"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
-        android:id="@+id/textViewLuck2"
-        android:layout_gravity="left|top" />
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/luckFragmentLayoutChances"
+        android:animateLayoutChanges="true"/>
 
 </LinearLayout>

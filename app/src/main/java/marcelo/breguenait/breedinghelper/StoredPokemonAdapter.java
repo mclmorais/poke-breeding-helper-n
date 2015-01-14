@@ -10,12 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 
-public class HatchAdapter extends BaseAdapter{
+public class StoredPokemonAdapter extends BaseAdapter{
 
     private class PreloadedDrawables {
         Drawable maleIcon;
@@ -65,7 +64,7 @@ public class HatchAdapter extends BaseAdapter{
 
     PreloadedDrawables preloadedDrawables;
 
-    private List<PokemonInfo> hatchList;
+    public List<PokemonInfo> hatchList;
     private ArrayList<UUID> keysList;
     private final LayoutInflater inflater;
 
@@ -75,7 +74,7 @@ public class HatchAdapter extends BaseAdapter{
         this.deleteMode = deleteMode;
     }
 
-    public HatchAdapter(List<PokemonInfo> hatchList, Context context) {
+    public StoredPokemonAdapter(List<PokemonInfo> hatchList, Context context) {
         preloadedDrawables = new PreloadedDrawables(context);
         this.hatchList = hatchList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -116,7 +115,7 @@ public class HatchAdapter extends BaseAdapter{
         LayoutHolder holder;
 
         if(convertView == null) {
-            hatch = inflater.inflate(R.layout.dynamic_view_layout_hatch,parent,false);
+            hatch = inflater.inflate(R.layout.dynamic_view_layout_stored_pokemon,parent,false);
 
             holder = new LayoutHolder();
             holder.frame = hatch.findViewById(R.id.frameDynamicHatch);

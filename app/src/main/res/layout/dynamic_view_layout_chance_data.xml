@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="192dp"
+    android:layout_height="56dp"
+    android:background="@drawable/layer_card_background_round">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="120dp"
+        android:layout_height="28dp"
+        android:layout_above="@+id/imageDynamicChanceSecondGender"
+        android:id="@+id/linearLayout2"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:id="@+id/imageDynamicChanceFirstGender"
+            android:layout_below="@+id/view"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/symbol_male" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="35"
+            android:id="@+id/textDynamicChanceFirstNumber"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:textColor="@color/accent" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/imageDynamicChanceFirstIcon"
+            android:background="@drawable/pkmn_051"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageDynamicChanceFirstGender"
+            android:layout_toEndOf="@+id/imageDynamicChanceFirstGender" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/imageDynamicChanceFirstIcon"
+            android:layout_alignBottom="@+id/imageDynamicChanceFirstIcon"
+            android:gravity="center_vertical|center_horizontal">
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/imageDynamicChanceFirstHP"
+                android:background="@drawable/iv_circle_clear"
+                android:layout_below="@+id/view"
+                android:layout_toRightOf="@+id/imageDynamicChanceFirstIcon"
+                android:layout_toEndOf="@+id/imageDynamicChanceFirstIcon" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/imageDynamicChanceFirstATK"
+                android:background="@drawable/iv_triangle_clear"
+                android:layout_below="@+id/view"
+                android:layout_toRightOf="@+id/imageDynamicChanceFirstIcon"
+                android:layout_toEndOf="@+id/imageDynamicChanceFirstIcon" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/imageDynamicChanceFirstDEF"
+                android:background="@drawable/iv_square_clear"
+                android:layout_below="@+id/view"
+                android:layout_toRightOf="@+id/imageDynamicChanceFirstIcon"
+                android:layout_toEndOf="@+id/imageDynamicChanceFirstIcon" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/imageDynamicChanceFirstSATK"
+                android:background="@drawable/iv_circle_clear"
+                android:layout_below="@+id/view"
+                android:layout_toRightOf="@+id/imageDynamicChanceFirstIcon"
+                android:layout_toEndOf="@+id/imageDynamicChanceFirstIcon" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/imageDynamicChanceFirstSDEF"
+                android:background="@drawable/iv_circle_clear"
+                android:layout_below="@+id/view"
+                android:layout_toRightOf="@+id/imageDynamicChanceFirstIcon"
+                android:layout_toEndOf="@+id/imageDynamicChanceFirstIcon" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/imageDynamicChanceFirstSPD"
+                android:background="@drawable/iv_circle_clear"
+                android:layout_below="@+id/view"
+                android:layout_toRightOf="@+id/imageDynamicChanceFirstIcon"
+                android:layout_toEndOf="@+id/imageDynamicChanceFirstIcon" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View android:layout_width="108dp"
+        android:layout_height="1dp"
+        android:background="@color/background_light_gray"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:id="@+id/view"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_marginTop="-2dp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="120dp"
+        android:layout_height="28dp"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/view"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:id="@+id/imageDynamicChanceSecondGender"
+            android:background="@drawable/symbol_female"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="62"
+            android:id="@+id/textDynamicChanceSecondNumber"
+            android:textStyle="bold"
+            android:textSize="10sp"
+            android:textColor="@color/accent"
+            android:password="false" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/imageDynamicChanceSecondIcon"
+            android:background="@drawable/pkmn_687"
+            android:layout_alignBottom="@+id/imageDynamicChanceSecondGender"
+            android:layout_toRightOf="@+id/imageDynamicChanceSecondGender"
+            android:layout_toEndOf="@+id/imageDynamicChanceSecondGender" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="64dp"
+            android:layout_height="fill_parent"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_alignBottom="@+id/imageDynamicChanceSecondIcon"
+            android:layout_alignTop="@+id/imageDynamicChanceSecondGender"
+            android:layout_toRightOf="@+id/imageDynamicChanceSecondIcon"
+            android:layout_alignRight="@+id/view"
+            android:layout_alignEnd="@+id/view">
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/imageDynamicChanceSecondHP"
+                android:background="@drawable/iv_circle_clear"
+                android:layout_below="@+id/view"
+                android:layout_toRightOf="@+id/imageDynamicChanceFirstIcon"
+                android:layout_toEndOf="@+id/imageDynamicChanceFirstIcon" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/imageDynamicChanceSecondATK"
+                android:background="@drawable/iv_circle_clear"
+                android:layout_below="@+id/view"
+                android:layout_toRightOf="@+id/imageDynamicChanceFirstIcon"
+                android:layout_toEndOf="@+id/imageDynamicChanceFirstIcon" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/imageDynamicChanceSecondDEF"
+                android:background="@drawable/iv_circle_clear"
+                android:layout_below="@+id/view"
+                android:layout_toRightOf="@+id/imageDynamicChanceFirstIcon"
+                android:layout_toEndOf="@+id/imageDynamicChanceFirstIcon" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/imageDynamicChanceSecondSATK"
+                android:background="@drawable/iv_circle_clear"
+                android:layout_below="@+id/view"
+                android:layout_toRightOf="@+id/imageDynamicChanceFirstIcon"
+                android:layout_toEndOf="@+id/imageDynamicChanceFirstIcon" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/imageDynamicChanceSecondSDEF"
+                android:background="@drawable/iv_circle_clear"
+                android:layout_below="@+id/view"
+                android:layout_toRightOf="@+id/imageDynamicChanceFirstIcon"
+                android:layout_toEndOf="@+id/imageDynamicChanceFirstIcon" />
+
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:id="@+id/imageDynamicChanceSecondSPD"
+                android:background="@drawable/iv_circle_clear"
+                android:layout_below="@+id/view"
+                android:layout_toRightOf="@+id/imageDynamicChanceFirstIcon"
+                android:layout_toEndOf="@+id/imageDynamicChanceFirstIcon" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <View android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/background_light_gray"
+        android:id="@+id/view2"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/linearLayout2"
+        android:layout_toEndOf="@+id/linearLayout2"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp" />
+    <ImageView
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:id="@+id/imageView23"
+        android:background="@drawable/ic_symbol_luck"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/view"
+        android:layout_toEndOf="@+id/view" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/placeholder_percentage_increase"
+        android:id="@+id/textDynamicChancePercentage"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/imageView23"
+        android:layout_toEndOf="@+id/imageView23"
+        android:textColor="@color/accent" />
+
+</RelativeLayout>
