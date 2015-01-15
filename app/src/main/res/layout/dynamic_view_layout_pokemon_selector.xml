@@ -15,7 +15,7 @@ android:background="@drawable/layer_background_round_selector"
         android:id="@+id/textViewId"
         android:layout_gravity="left|top"
         android:layout_marginLeft="2dp"
-        android:textColor="@android:color/black"
+        android:textColor="#808080"
         android:textSize="12sp"
         android:textStyle="bold" />
 

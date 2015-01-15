@@ -20,6 +20,7 @@ public class StoredPokemonAdapter extends BaseAdapter{
         Drawable maleIcon;
         Drawable femaleIcon;
         Drawable genderlessIcon;
+        Drawable missingno;
         final Drawable[] IVActive = new Drawable[6];
         final Drawable[] IVInactive = new Drawable[6];
 
@@ -30,6 +31,8 @@ public class StoredPokemonAdapter extends BaseAdapter{
             maleIcon = c.getResources().getDrawable(R.drawable.symbol_male);
             femaleIcon = c.getResources().getDrawable(R.drawable.symbol_female);
             genderlessIcon = c.getResources().getDrawable(R.drawable.symbol_genderless);
+
+            missingno = c.getResources().getDrawable(R.drawable.pkmn_missingno);
 
             IVActive[0] = c.getResources().getDrawable(R.drawable.iv_circle_checked);
             IVActive[1] = c.getResources().getDrawable(R.drawable.iv_triangle_checked);
@@ -140,7 +143,10 @@ public class StoredPokemonAdapter extends BaseAdapter{
         else
             holder.frame.setBackgroundResource(R.drawable.layer_card_background_round);
 
-        holder.icon.setBackground(data.getDrawableFromId(pokemonInfo.id).getConstantState().newDrawable());
+        if(pokemonInfo.id > 0)
+            holder.icon.setBackground(data.getDrawableFromId(pokemonInfo.id).getConstantState().newDrawable());
+        else
+            holder.icon.setBackground(preloadedDrawables.missingno);
         holder.gender.setBackground(preloadedDrawables.getGenderDrawable(pokemonInfo.gender));
         for(int j = 0; j < 6; j++)
             holder.IVs[j].setBackground(preloadedDrawables.getIVDrawable(j,(pokemonInfo.IVs[j] == 1)));

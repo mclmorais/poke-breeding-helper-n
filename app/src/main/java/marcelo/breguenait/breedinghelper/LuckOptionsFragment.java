@@ -1,10 +1,12 @@
 package marcelo.breguenait.breedinghelper;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,13 +36,14 @@ public class LuckOptionsFragment extends PopupDialogFragment {
     TypedArray shinyOptionsDrawables;
     String[] shinyOptionsStrings;
 
-    Spinner  spinnerShinyOptions;
     CheckBox checkBoxShinyCharm;
     CheckBox checkBoxMasudaMethod;
+    CheckBox checkBoxShiny;
 
     OnLuckOptionsChange mCallback;
 
     Button buttonClose;
+
 
     interface OnLuckOptionsChange {
         int getShinyStatus();
@@ -66,16 +69,36 @@ public class LuckOptionsFragment extends PopupDialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         shinyOptionsDrawables = getResources().obtainTypedArray(R.array.shiny_spinner_options_drawables);
         shinyOptionsStrings = getResources().getStringArray(R.array.shiny_spinner_options_strings);
 
-        View view =  inflater.inflate(R.layout.fragment_luck_options, container, false);
+        // create ContextThemeWrapper from the original Activity Context with the custom theme
+        final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.AppTheme);
+
+        // clone the inflater using the ContextThemeWrapper
+        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
+        View view =  localInflater.inflate(R.layout.fragment_luck_options, container, false);
 
         setDialogPosition();
 
         setListeners(view);
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        Dialog dialog = getDialog();
+        if (dialog != null)
+        {
+            int width = ViewGroup.LayoutParams.WRAP_CONTENT;
+            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            dialog.getWindow().setLayout(width,height);
+        }
     }
 
     void setListeners(View view) {
@@ -90,24 +113,10 @@ public class LuckOptionsFragment extends PopupDialogFragment {
         checkBoxMasudaMethod = (CheckBox) view.findViewById(R.id.checkBoxMasudaMethod);
         checkBoxMasudaMethod.setChecked((shinyOptions&LuckFragment.MASUDA)==LuckFragment.MASUDA);
 
+        checkBoxShiny = (CheckBox) view.findViewById(R.id.luckOptionsCheckBoxShiny);
+        checkBoxShiny.setChecked((shinyOptions&LuckFragment.SHINY)==LuckFragment.SHINY);
+        checkBoxShiny.setText((shinyOptions&LuckFragment.SHINY)==LuckFragment.SHINY?"Shiny":"Normal");
 
-        spinnerShinyOptions = (Spinner) view.findViewById(R.id.spinnerShinyOptions);
-        spinnerShinyOptions.setAdapter(new LuckSpinnerAdapter(getActivity().getApplicationContext(), R.layout.row, shinyOptionsStrings));
-        spinnerShinyOptions.setSelection((shinyOptions&LuckFragment.SHINY)==LuckFragment.SHINY?1:0,false);
-        spinnerShinyOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position == 0)
-                    mCallback.changeShinyStatus(0x01, false);
-                else if (position == 1)
-                    mCallback.changeShinyStatus(0x01, true);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         checkBoxShinyCharm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -126,6 +135,21 @@ public class LuckOptionsFragment extends PopupDialogFragment {
             @Override
             public void onClick(View v) {
                 closeFragment();
+            }
+        });
+
+
+        checkBoxShiny.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    checkBoxShiny.setText("Shiny");
+                    mCallback.changeShinyStatus(LuckFragment.SHINY,true);
+                }
+                else {
+                    checkBoxShiny.setText("Normal");
+                    mCallback.changeShinyStatus(LuckFragment.SHINY,false);
+                }
             }
         });
     }
@@ -188,9 +212,13 @@ public class LuckOptionsFragment extends PopupDialogFragment {
             params.y = sourceY -  dpToPx(32); // above source view
         }
         else {
-            params.x = sourceX - dpToPx(192); // about half of confirm button size left of source view
+            params.x = sourceX - dpToPx(256); // about half of confirm button size left of source view
             params.y = sourceY -  dpToPx(24); // above source view
         }
         window.setAttributes(params);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) { /* do nothing */ }
 }
+

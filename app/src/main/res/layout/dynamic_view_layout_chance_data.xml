@@ -163,7 +163,6 @@
         android:gravity="center|center_vertical"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/frameLayout"
-        android:layout_toStartOf="@+id/imageView23"
         android:id="@+id/linearLayout3"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true">
@@ -175,9 +174,8 @@
             android:text="62"
             android:id="@+id/textDynamicChanceSecondNumber"
             android:textStyle="bold"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:textColor="@color/secondary_text"
-            android:password="false"
             android:gravity="center"
             android:layout_marginRight="4dp" />
 
@@ -185,10 +183,6 @@
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:id="@+id/imageDynamicChanceSecondGender"
-            android:background="@drawable/symbol_female"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_marginRight="4dp" />
 
         <ImageView

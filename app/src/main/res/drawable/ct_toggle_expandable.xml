@@ -4,7 +4,7 @@
     android:exitFadeDuration="@android:integer/config_shortAnimTime">
     <item android:drawable="@drawable/ct_active_expandable"
         android:state_checked="true" />
-    <item android:drawable="@drawable/ct_maximize_active"
+    <item android:drawable="@drawable/ic_collapse_active"
         android:state_checked="false"/>
 
 </selector>

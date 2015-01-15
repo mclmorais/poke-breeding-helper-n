@@ -22,23 +22,49 @@
             android:textStyle="bold" />
 
         <EditText
+            android:hint="Pokémon Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editTextSelectPokemon" />
+            android:id="@+id/editTextSelectPokemon"
+            android:textSize="16sp" />
     </LinearLayout>
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show only compatible with goal"
-        android:id="@+id/checkBoxSelectPokemonCompatible"
-        android:enabled="true" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Goal Egg-group compatible"
+            android:id="@+id/checkBoxSelectPokemonCompatible"
+            android:enabled="true"
+            android:layout_weight="70"
+            android:textSize="12sp"
+            style="@style/CapsLabel" />
+
+        <Button
+            android:textSize="16sp"
+            android:textAllCaps="true"
+            android:textColor="@color/primary"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="@string/cancel"
+            android:id="@+id/fragmentSelectPokemonButtonCancel"
+            android:visibility="visible"
+            android:background="@drawable/button_press_white_lightgray_selector"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="8dp" />
+    </LinearLayout>
 
     <GridView
         android:verticalSpacing="2dp"
         android:animationCache="false"
         android:scrollingCache="false"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gridViewSelectPokemon"
         android:layout_gravity="center_horizontal"
@@ -48,5 +74,8 @@
         android:layout_marginBottom="4dp"
         android:layout_margin="8dp"
         android:numColumns="auto_fit"
-        android:columnWidth="44dp" />
+        android:columnWidth="44dp"
+        android:stretchMode="spacingWidth" />
+
 </LinearLayout>
+

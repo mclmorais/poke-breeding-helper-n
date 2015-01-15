@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+
+    <release version="3.0a" versioncode="11">
+        <change>
+            The app has been redesigned! You can now add pokémons instead of generic hatches!
+        </change>
+        <change>
+            Egg Groups are now considered! Add all your pokémons to the app, and only the ones compatible with your current goal will be selected!
+        </change>
+        <change>
+            Genderless pokemon logic added! The app is now able to handle genderless pokémons that can breed.
+        </change>
+        <change>
+            Remember: With great changes comes great bugs! If something isn't working right for you, report it through the app and I'll try to fix is as soon as possible.
+        </change>
+    </release>
+
     <release version="2.0b" versioncode="9" >
         <change>
             New Ditto interface! The app will now recognize dittos as a wildcard and suggest smarter combinations. Add all the dittos you own to the app for better results!

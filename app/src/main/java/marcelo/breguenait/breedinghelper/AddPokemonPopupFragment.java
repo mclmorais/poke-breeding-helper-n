@@ -36,7 +36,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
     ToggleButton togglePokemonGender;
 
-    Button confirmButton;
+    Button confirmButton, cancelButton;
 
     CheckBox[] checkBoxInputIVs = new CheckBox[6];
 
@@ -46,11 +46,14 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
     boolean showOnlyCompatible;
 
+
+
     void updateInterfacePokemon(int id) {
         selectedPokemonId = id;
         String text = PokemonData.getInstance().getName(id);
         selectedName.setText(text);
-        selectedIcon.setBackground(PokemonData.getInstance().getDrawableFromId(id).getConstantState().newDrawable());
+        if(id > 0)
+            selectedIcon.setBackground(PokemonData.getInstance().getDrawableFromId(id).getConstantState().newDrawable());
     }
 
     @Override
@@ -84,6 +87,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         togglePokemonGender = (ToggleButton) view.findViewById(R.id.toggleButtonInputGender);
 
         confirmButton = (Button) view.findViewById(R.id.confirmIVsButton);
+        cancelButton = (Button) view.findViewById(R.id.fragmentAddPokemonButtonCancel);
 
         checkBoxInputIVs[0]       = (CheckBox) view.findViewById(R.id.checkBoxInputHP);
         checkBoxInputIVs[1]       = (CheckBox) view.findViewById(R.id.checkBoxInputATK);
@@ -102,14 +106,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
             updatePokemonGender(receivedId);
         }
 
-/*        togglePokemonGender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(selectedPokemonId != 0) {
-                    updatePokemonGender(selectedPokemonId);
-                }
-            }
-        });*/
+
 
         setDialogPosition();
         return view;
@@ -146,6 +143,13 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
                     mCallback.onBuildPokemon(buildPokemon());
                     closeFragment();
                 }
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeFragment();
             }
         });
     }
@@ -271,5 +275,10 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         params.y = sourceY -  dpToPx(24); // above source view
 
         window.setAttributes(params);
+    }
+
+    @Override
+    public boolean showEggGroupFilter() {
+        return true;
     }
 }

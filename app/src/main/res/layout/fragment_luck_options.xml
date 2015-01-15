@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:theme="@style/AppTheme"
+    android:orientation="vertical" android:layout_width="220dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/layer_card_background">
+    android:background="@drawable/layer_card_background"
+    android:gravity="center_horizontal">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
         <TextView
             android:layout_width="match_parent"
@@ -23,15 +26,21 @@
             android:layout_marginRight="23dp"
             android:gravity="center_horizontal" />
 
-        <Spinner
+        <CheckBox
+            android:theme="@style/Base.Theme.AppCompat.Light.Dialog"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:id="@+id/spinnerShinyOptions"
-            android:theme="@style/AppTheme"
-            android:layout_gravity="left|top"
+            android:layout_height="wrap_content"
+            android:text="Normal"
+            android:button="@null"
+            android:id="@+id/luckOptionsCheckBoxShiny"
+            android:layout_gravity="center_horizontal"
+            android:drawableLeft="@drawable/ic_shiny_ditto_selector"
+            android:gravity="center"
             android:layout_marginLeft="23dp"
-            android:spinnerMode="dropdown"
-            android:layout_marginRight="23dp" />
+            android:layout_marginRight="23dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#606060" />
 
         <TextView
             android:layout_width="match_parent"
@@ -55,7 +64,9 @@
             android:id="@+id/checkBoxShinyCharm"
             android:layout_marginLeft="23dp"
             android:layout_marginRight="23dp"
-            android:layout_marginTop="4dp" />
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:textSize="14sp" />
 
         <View
             android:layout_width="fill_parent"
@@ -69,16 +80,18 @@
         <CheckBox
             android:button="@null"
             android:drawableLeft="@drawable/ic_toggle_cherish_ball_selector"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/label_masuda_method"
             android:id="@+id/checkBoxMasudaMethod"
             android:layout_marginLeft="23dp"
             android:layout_marginRight="23dp"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:textSize="14sp" />
     </LinearLayout>
     <View
-        android:layout_width="fill_parent"
+        android:layout_width="170dp"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"
         android:layout_marginLeft="5dp"
@@ -86,11 +99,14 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp" />
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:text="@string/label_done"
         android:id="@+id/buttonClose"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/button_press_white_lightgray_selector" />
+        android:background="@drawable/button_press_white_lightgray_selector"
+        style="@style/CapsLabel"
+        android:textSize="14sp"
+        android:textColor="@color/primary" />
 
 </LinearLayout>

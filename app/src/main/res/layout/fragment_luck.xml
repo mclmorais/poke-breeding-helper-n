@@ -36,22 +36,22 @@
             android:layout_toLeftOf="@+id/luckFragmentButtonOptions"
             android:layout_toStartOf="@+id/luckFragmentButtonOptions" />
 
-        <Button
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:text="|"
+        <ImageButton
+            android:layout_width="42dp"
+            android:layout_height="fill_parent"
+            android:text=""
             android:textAllCaps="true"
             android:id="@+id/luckFragmentButtonOptions"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/button_press_white_lightgray_selector"
             android:textColor="@color/primary"
             android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:background="@drawable/button_press_white_lightgray_selector"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_action_overflow_round" />
 
         <CheckBox
-            android:exitFadeDuration="@android:integer/config_shortAnimTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/luckFragmentCheckBoxDestinyKnot"
@@ -80,7 +80,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="4dp"
         android:layout_gravity="center_horizontal"
         android:id="@+id/luckFragmentLayoutChances"
         android:animateLayoutChanges="true"
@@ -96,9 +96,8 @@
     <ToggleButton
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:text="New Button"
         android:id="@+id/luckFragmentExpandCollapseButton"
-        android:enabled="true"
+        android:enabled="false"
         android:checked="true"
         android:drawableTop="@drawable/ct_toggle_expandable"
         android:background="@drawable/button_press_white_lightgray_selector" />

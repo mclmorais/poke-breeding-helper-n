@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -102,7 +103,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
     LayoutInflater inflater2;
     ToggleButton buttonToggleChances;
     CheckBox checkBoxDestinyKnot;
-    Button buttonOptions;
+    ImageButton buttonOptions;
 
     int shinyOptions;
 
@@ -152,7 +153,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
             }
         });
 
-        buttonOptions = (Button) v.findViewById(R.id.luckFragmentButtonOptions);
+        buttonOptions = (ImageButton) v.findViewById(R.id.luckFragmentButtonOptions);
         buttonOptions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

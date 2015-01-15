@@ -141,4 +141,9 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         selectedName.setText(name);
         selectedIcon.setBackground(PokemonData.getInstance().getDrawableFromId(id).getConstantState().newDrawable());
     }
+
+    @Override
+    public boolean showEggGroupFilter() {
+        return false;
+    }
 }

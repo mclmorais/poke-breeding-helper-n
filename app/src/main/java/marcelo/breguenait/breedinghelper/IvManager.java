@@ -113,12 +113,12 @@ class PokemonInfo {
     boolean isMaleParent, isFemaleParent;
 
     static class Builder {
-        int                     id = 0;          //The national dex number of the pokemon
-        Gender                  gender = Gender.MALE;
-        int[]                   IVs = {0,0,0,0,0,0};
-        Nature                  nature = Nature.UNKNOWN;
-        EggGroup                eggGroup1 = EggGroup.UNKNOWN;
-        EggGroup                eggGroup2 = EggGroup.UNKNOWN;
+        private int                     id = 0;          //The national dex number of the pokemon
+        private Gender                  gender = Gender.MALE;
+        private int[]                   IVs = {0,0,0,0,0,0};
+        private Nature                  nature = Nature.UNKNOWN;
+        private EggGroup                eggGroup1 = EggGroup.UNKNOWN;
+        private EggGroup                eggGroup2 = EggGroup.UNKNOWN;
 
         public Builder() {
             id = 0;
@@ -252,10 +252,13 @@ public class IvManager {
 
         for (int i = 0; i < storedPokemonList.size(); i++) {
 
+
             PokemonInfo firstPokemon = storedPokemonList.get(i);
+            if(firstPokemon.id <= 0) continue;
 
             for (int j = (i + 1); j < storedPokemonList.size(); j++) {
                 PokemonInfo secondPokemon = storedPokemonList.get(j);
+                if(secondPokemon.id <= 0) continue;
                 if (checkCompatibility(firstPokemon, secondPokemon)) {
                     double chance = getChance(firstPokemon.IVs, secondPokemon.IVs, goalPokemon.IVs);
                     chances.add(new ChanceData(storedPokemonList.get(i), storedPokemonList.get(j),i, j, chance));

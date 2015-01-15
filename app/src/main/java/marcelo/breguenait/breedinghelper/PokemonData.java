@@ -46,6 +46,7 @@ class PokemonData {
     }
 
     public static void initialize(Context c) {
+
         instance = new PokemonData(c);
     }
 
@@ -77,8 +78,7 @@ class PokemonData {
         if(id > 0)
             return tabledData.get(id).drawable;
         else {
-            id = 151;
-            return tabledData.get(id).drawable; //TODO: fazer missingno!
+            throw new IllegalArgumentException("Invalid Pokemon number when requesting it's drawable from PokemonData! (Should be 1-714)");
         }
     }
 
@@ -86,18 +86,29 @@ class PokemonData {
         return tabledData.get(id).name;
     }
     EggGroup getFirstEggGroup(int id) {
-        return tabledData.get(id).eggGroup1;
+        if(id > 0)
+            return tabledData.get(id).eggGroup1;
+        else
+            return EggGroup.UNDISCOVERED;
     }
 
     EggGroup getSecondEggGroup(int id) {
-        return tabledData.get(id).eggGroup2;
+        if(id > 0)
+            return tabledData.get(id).eggGroup2;
+        else
+            return EggGroup.UNDISCOVERED;
     }
 
     GenderRestriction getGenderRestriction(int id) {
         return tabledData.get(id).genderRestriction;
     }
 
-    int getBasicPokemon(int id) {return tabledData.get(id).breeds;}
+    int getBasicPokemon(int id) {
+        if(id > 0)
+            return tabledData.get(id).breeds;
+        else
+            return 0;
+    }
 
     private static <C> ArrayList<C> asList(SparseArray<C> sparseArray) {
         if (sparseArray == null) return null;

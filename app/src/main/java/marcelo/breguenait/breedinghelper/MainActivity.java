@@ -26,6 +26,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Map;
 
 import de.cketti.library.changelog.ChangeLog;
 
@@ -163,6 +164,7 @@ public class MainActivity extends ActionBarActivity
                 .addTestDevice("0787F1B6D26E3657D6C7F11CE39DFB1F")
                 .addTestDevice("AB68924514A4CDD20D5D115C7174D722")
                 .addTestDevice("EE498B7BD93FDB4D08CD04DE6C09F09A")
+                .addTestDevice("815CB1AC3DD5926E21AE260FC94A4D6A")
                 .build();
 
         adView.loadAd(adRequest);
@@ -332,7 +334,7 @@ public class MainActivity extends ActionBarActivity
         String jsonString;
 
         jsonString = gson.toJson(ivManager.getStoredPokemonList());
-        prefEditor.putString("jsonEggList", jsonString);
+        prefEditor.putString("jsonPokemonList", jsonString);
 
 //        jsonString = gson.toJson(ivManager.getDittosList());
 //        prefEditor.putString("jsonDittoList",jsonString);
@@ -381,7 +383,9 @@ public class MainActivity extends ActionBarActivity
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String jsonString;
 
-        jsonString = sharedPref.getString("jsonEggList",null);
+        Map<String,?> keys1 = sharedPref.getAll();
+
+        jsonString = sharedPref.getString("jsonPokemonList",null);
         if(jsonString != null) {
             Type type = new TypeToken<List<PokemonInfo>>(){}.getType();
             List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
@@ -409,6 +413,39 @@ public class MainActivity extends ActionBarActivity
         if(jsonString != null) {
             ivManager.setMaleItem(gson.fromJson(jsonString, Item.class));
         }
+
+        jsonString = sharedPref.getString("jsonDittoList",null);
+        if(jsonString != null) {
+            Type type = new TypeToken<List<PokemonInfo>>(){}.getType();
+            List<PokemonInfo> dittoList = gson.fromJson(jsonString, type);
+            for(int i = 0; i < dittoList.size(); i++) {
+                PokemonInfo p = new PokemonInfo.Builder()
+                        .id(Constants.DITTO_ID)
+                        .gender(Gender.DITTO)
+                        .IVs(dittoList.get(i).IVs)
+                        .build();
+                ivManager.storePokemon(p);
+            }
+            sharedPref.edit().remove("jsonDittoList").commit();
+        }
+
+        jsonString = sharedPref.getString("jsonEggList",null);
+        if(jsonString != null) {
+            Type type = new TypeToken<List<PokemonInfo>>(){}.getType();
+            List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
+            for(int i = 0; i < eggList.size(); i++) {
+                PokemonInfo p = new PokemonInfo.Builder()
+                        .id(0)
+                        .gender(Gender.GENDERLESS)
+                        .IVs(eggList.get(i).IVs)
+                        .build();
+                ivManager.storePokemon(p);
+            }
+            sharedPref.edit().remove("jsonEggList").apply();
+        }
+        Map<String,?> keys2 = sharedPref.getAll();
+        int x = 2;
+        int y = 4;
 
     }
 
