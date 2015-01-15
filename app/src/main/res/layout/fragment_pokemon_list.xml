@@ -43,7 +43,7 @@
                 android:textOff="REMOVE"
                 android:id="@+id/buttonFragmentPokemonListRemove"
                 android:background="@drawable/button_press_white_lightgray_selector"
-                android:textColor="@color/accent"
+                android:textColor="@color/primary"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:textSize="15sp"
@@ -70,7 +70,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/button_press_white_lightgray_selector"
-                android:textColor="@color/accent"
+                android:textColor="@color/primary"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:textSize="15sp" />
@@ -96,10 +96,10 @@
         android:layout_marginRight="8dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Store pokemons you breed here to check for better matches!"
+        android:text="Store bred pokemons here to check for matches!"
         android:id="@+id/textViewHintStore"
         style="@style/CapsLabel"
         android:textColor="@android:color/darker_gray"
@@ -136,6 +136,7 @@
         android:verticalSpacing="4dp"
         android:horizontalSpacing="4dp"
         android:stretchMode="columnWidth"
-        android:columnWidth="48dp" />
+        android:columnWidth="48dp"
+        android:animateLayoutChanges="true"/>
 
 </LinearLayout>

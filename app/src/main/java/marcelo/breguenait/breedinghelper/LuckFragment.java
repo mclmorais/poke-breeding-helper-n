@@ -1,24 +1,27 @@
 package marcelo.breguenait.breedinghelper;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -28,18 +31,32 @@ import java.util.List;
  * {@link marcelo.breguenait.breedinghelper.LuckFragment.TemporaryLuckInterface} interface
  * to handle interaction events.
  */
-public class LuckFragment extends Fragment {
+public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuckOptionsChange{
 
+    public static final int SHINY = 0x01;
+    public static final int CHARM = 0x02;
+    public static final int MASUDA = 0x04;
+
+    public interface TemporaryLuckInterface {
+        void setDestinyKnot(boolean b);
+        boolean updateDestinyKnotChance();
+        int loadShinyOptions();
+    }
     private class PreloadedDrawables {
         Drawable maleIcon;
         Drawable femaleIcon;
+        Drawable genderlessIcon;
         final Drawable[] IVActive = new Drawable[6];
         final Drawable[] IVInactive = new Drawable[6];
+
+
 
         private PreloadedDrawables(Context c) {
 
             maleIcon = c.getResources().getDrawable(R.drawable.symbol_male);
-            femaleIcon = c.getResources().getDrawable(R.drawable.symbol_female);
+            maleIcon = maleIcon.getConstantState().newDrawable();
+            femaleIcon = c.getResources().getDrawable(R.drawable.symbol_female).getConstantState().newDrawable();
+            genderlessIcon = c.getResources().getDrawable(R.drawable.symbol_genderless);
 
             IVActive[0] = c.getResources().getDrawable(R.drawable.iv_circle_checked);
             IVActive[1] = c.getResources().getDrawable(R.drawable.iv_triangle_checked);
@@ -59,7 +76,7 @@ public class LuckFragment extends Fragment {
         Drawable getGenderDrawable(Gender gender) {
             if (gender == Gender.MALE)          return maleIcon;
             else if (gender == Gender.FEMALE)   return femaleIcon;
-            else                                return maleIcon; //TODO: fazer genderless
+            else                                return genderlessIcon; //TODO: fazer genderless
         }
 
         Drawable getIVDrawable(int position, boolean active) {
@@ -72,6 +89,8 @@ public class LuckFragment extends Fragment {
 
     }
 
+    boolean showOnlyBestChance = true;
+
     PreloadedDrawables preloadedDrawables;
 
     List<ChanceData> chanceDataList;
@@ -79,7 +98,13 @@ public class LuckFragment extends Fragment {
 
     private TemporaryLuckInterface mListener;
     LinearLayout layoutChances;
+    float layoutChancesHeight;
     LayoutInflater inflater2;
+    ToggleButton buttonToggleChances;
+    CheckBox checkBoxDestinyKnot;
+    Button buttonOptions;
+
+    int shinyOptions;
 
 
     public LuckFragment() {
@@ -98,31 +123,96 @@ public class LuckFragment extends Fragment {
 
         inflater2 = (LayoutInflater) getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        layoutChancesHeight = convertDpToPixel(48, getActivity().getApplicationContext());
+
+        buttonToggleChances = (ToggleButton) v.findViewById(R.id.luckFragmentExpandCollapseButton);
+
+
+        buttonToggleChances.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                showOnlyBestChance = isChecked;
+                updateCurrentChances(chanceDataList);
+            }
+        });
+
+        checkBoxDestinyKnot = (CheckBox) v.findViewById(R.id.luckFragmentCheckBoxDestinyKnot);
+        checkBoxDestinyKnot.setChecked(mListener.updateDestinyKnotChance());
+
+        checkBoxDestinyKnot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String end = isChecked ? "enabled" : "disabled";
+                int pos[] = new int[2];
+                checkBoxDestinyKnot.getLocationOnScreen(pos);
+                Toast t = Toast.makeText(getActivity().getApplicationContext(),"Destiny Knot " + end + ".", Toast.LENGTH_SHORT);
+                t.setGravity(Gravity.TOP| Gravity.CENTER_HORIZONTAL,0,pos[1]-(int)convertDpToPixel(80,getActivity().getApplicationContext()));
+                t.show();
+                mListener.setDestinyKnot(isChecked);
+            }
+        });
+
+        buttonOptions = (Button) v.findViewById(R.id.luckFragmentButtonOptions);
+        buttonOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openLuckOptionsFragment();
+            }
+        });
+
+        shinyOptions = mListener.loadShinyOptions();
+
         return v;
 
     }
 
     public void updateCurrentChances(List<ChanceData> list) {
-        chanceDataList = list;
+
+        if(list == null) return;
+
+        chanceDataList = new ArrayList<>(list);
+
         layoutChances.removeAllViews();
 
         interfaceChanceList.clear();
 
-        Collections.reverse(list);
+
 
         for(int i = 0; i < list.size(); i++) {
-            if(i > 4) break;
-            if(list.get(i).chance < 0.0001) continue;
+            if(showOnlyBestChance) {
+                if(i > 0) break;
+            }
+            else {
+                if(i > 4) break;
+            }
+            if(list.get(i).chance == 0) continue;
+
+            if(!interfaceChanceList.isEmpty()) {
+                View sep = new View(getActivity().getApplicationContext());
+                ViewGroup.LayoutParams viewLp = new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) convertDpToPixel(1, getActivity().getApplicationContext()));
+                sep.setLayoutParams(viewLp);
+                sep.setBackgroundColor(getResources().getColor(R.color.background_light_gray));
+                sep.setVisibility(View.VISIBLE);
+                layoutChances.addView(sep);
+            }
+
             View v = inflater2.inflate(R.layout.dynamic_view_layout_chance_data,layoutChances,false);
             layoutChances.addView(v);
             interfaceChanceList.add(v);
-           // interfaceChanceList.add(inflater2.inflate(R.layout.dynamic_view_layout_chance_data,layoutChances,true));
+
+
         }
 
+        if(list.size() < 2) buttonToggleChances.setEnabled(false);
+        else buttonToggleChances.setEnabled(true);
 
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)convertDpToPixel(56,getActivity().getApplicationContext()));
+
+        params.setMargins(10,10,10,10);
 
         for(int i = 0; i < interfaceChanceList.size(); i++) {
 
+            interfaceChanceList.get(i).setLayoutParams(params);
 
 
             TextView v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceFirstNumber);
@@ -131,14 +221,20 @@ public class LuckFragment extends Fragment {
             v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceSecondNumber);
             v.setText(String.valueOf(list.get(i).secondPokemonNumber+1));
 
+            double chance = list.get(i).chance;
+            chance = applyShinyChance(chance);
+            chance *= 100;
             v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChancePercentage);
-            v.setText(String.format("%.2f",list.get(i).chance*100) + "%");
+            if(chance > 0.01)
+                v.setText(String.format("%.2f",chance) + "%");
+            else
+               v.setText("<0.01%");
 
             ImageView firstIcon = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstIcon);
-            firstIcon.setBackground(PokemonData.getInstance().getDrawableIdFromId(list.get(i).firstPokemon.id));
+            firstIcon.setBackground(PokemonData.getInstance().getDrawableFromId(list.get(i).firstPokemon.id).getConstantState().newDrawable());
 
             ImageView secondIcon = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondIcon);
-            secondIcon.setBackground(PokemonData.getInstance().getDrawableIdFromId(list.get(i).secondPokemon.id));
+            secondIcon.setBackground(PokemonData.getInstance().getDrawableFromId(list.get(i).secondPokemon.id).getConstantState().newDrawable());
 
             ImageView firstIVs[] = new ImageView[6];
             firstIVs[0] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstHP);
@@ -163,8 +259,32 @@ public class LuckFragment extends Fragment {
                 secondIVs[j].setBackground(preloadedDrawables.getIVDrawable(j, list.get(i).secondPokemon.IVs[j] != 0));
             }
 
-            
+            ImageView firstGender = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstGender);
+            firstGender.setBackground(preloadedDrawables.getGenderDrawable(list.get(i).firstPokemon.gender));
+
+            ImageView secondGender = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondGender);
+            secondGender.setBackground(preloadedDrawables.getGenderDrawable(list.get(i).secondPokemon.gender));
+
+            TextView number = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceNumber);
+            number.setText(String.valueOf(i+1));
+
+            if((shinyOptions&SHINY)==SHINY) {
+                ImageView shiny = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceShinyIndicator);
+                shiny.setVisibility(View.VISIBLE);
+            }
+
         }
+        int targetHeight = (int) (interfaceChanceList.size()*convertDpToPixel(66,getActivity().getApplicationContext()));
+        //if(targetHeight == 0) targetHeight = (int) layoutChancesHeight;
+        if(targetHeight == 0) {
+            targetHeight = (int) convertDpToPixel(32,getActivity().getApplicationContext());
+            View noMatch = inflater2.inflate(R.layout.text_no_matches,layoutChances,false);
+            interfaceChanceList.add(noMatch);
+            layoutChances.addView(noMatch);
+        }
+        ResizeAnimation r = new ResizeAnimation(layoutChances,targetHeight);
+        r.setDuration(300);
+        layoutChances.startAnimation(r);
     }
 
     @Override
@@ -188,19 +308,89 @@ public class LuckFragment extends Fragment {
         mListener = null;
     }
 
+    void openLuckOptionsFragment() {
+        FragmentManager fm = getFragmentManager();
+        LuckOptionsFragment luckOptionsFragment = new LuckOptionsFragment();
+        Bundle b = addPositionAsArguments(buttonOptions);
+        luckOptionsFragment.setArguments(b);
+        luckOptionsFragment.setTargetFragment(this,0);
+        luckOptionsFragment.show(fm,"luckOptions");
+    }
+    Bundle addPositionAsArguments(View v) {
+        int callerViewPosition[] = new int[2];
+        v.getLocationOnScreen(callerViewPosition);
+        Bundle b = new Bundle();
+        b.putInt("x",callerViewPosition[0]);
+        b.putInt("y",callerViewPosition[1]);
+        return b;
+    }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * This method converts dp unit to equivalent pixels, depending on device density.
+     *
+     * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
+     * @param context Context to get resources and device specific display metrics
+     * @return A float value to represent px equivalent to dp depending on device density
      */
-    public interface TemporaryLuckInterface {
-        // TODO: Update argument type and name
+    public static float convertDpToPixel(float dp, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float px = dp * (metrics.densityDpi / 160f);
+        return px;
+    }
+
+    /**
+     * This method converts device specific pixels to density independent pixels.
+     *
+     * @param px A value in px (pixels) unit. Which we need to convert into db
+     * @param context Context to get resources and device specific display metrics
+     * @return A float value to represent dp equivalent to px value
+     */
+    public static float convertPixelsToDp(float px, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / (metrics.densityDpi / 160f);
+        return dp;
+    }
+
+    @Override
+    public int getShinyStatus() {
+        return shinyOptions;
+    }
+
+    double applyShinyChance(double normalChance) {
+        if((shinyOptions&SHINY)==SHINY) {
+            if((shinyOptions&MASUDA)==MASUDA) {
+                if((shinyOptions&CHARM)==CHARM)
+                    normalChance /= 512.0d;
+                else
+                    normalChance /= 1638.0d;
+            }
+            else if((shinyOptions&CHARM)==CHARM) {
+                normalChance *= (3.0d/4096.0d);
+            }
+            else {
+                normalChance /= 4096.0d;
+            }
+        }
+
+        return normalChance;
+
+
+    }
+
+    @Override
+    public void changeShinyStatus(int bit, boolean add) {
+        if(add)
+            shinyOptions |= bit;
+        else
+            shinyOptions &= ~bit;
+
+        updateCurrentChances(chanceDataList);
+    }
+
+    int getShinyOptions() {
+        return shinyOptions;
     }
 
 }

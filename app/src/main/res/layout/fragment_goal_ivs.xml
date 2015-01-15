@@ -14,7 +14,7 @@
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="wrap_content"
-        android:layout_height="72dp"
+        android:layout_height="76dp"
         card_view:cardCornerRadius="4dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="false"
@@ -38,7 +38,8 @@
                 android:id="@+id/linearLayout"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/frameLayoutPokemonSelectorButton"
-                android:layout_marginLeft="8dp">
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="4dp">
 
                 <CheckBox
                     android:layout_width="32dp"
@@ -82,7 +83,7 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="GENGAR"
+                android:text="Select a pokémon"
                 android:id="@+id/textViewPokemonName"
                 android:textStyle="bold"
                 android:textSize="14sp"
@@ -99,8 +100,8 @@
                 android:layout_centerVertical="true">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
                     android:id="@+id/imageViewSelectedPokemonIcon"
                     android:background="@drawable/pkmn_094"
                     android:layout_gravity="center" />

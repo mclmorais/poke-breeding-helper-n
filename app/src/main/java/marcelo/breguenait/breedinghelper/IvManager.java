@@ -83,18 +83,17 @@ class EquippedItems {
     }
 
     public boolean destinyKnotIsEquipped() {
-        return true; //TODO: TIRAR EM RELEASE!!!!
-        //return ((maleItem == Item.DESTINY_KNOT) || (femaleItem == Item.DESTINY_KNOT));
+        return ((maleItem == Item.DESTINY_KNOT) || (femaleItem == Item.DESTINY_KNOT));
     }
 
     Item getPowerItem (int IV) {
         Item item;
-        if     (IV == 1) item =  Item.POWER_HP;
-        else if(IV == 2) item =  Item.POWER_ATK;
-        else if(IV == 3) item =  Item.POWER_DEF;
-        else if(IV == 4) item =  Item.POWER_SATK;
-        else if(IV == 5) item =  Item.POWER_SDEF;
-        else if(IV == 6) item =  Item.POWER_SPD;
+        if     (IV == 0) item =  Item.POWER_HP;
+        else if(IV == 1) item =  Item.POWER_ATK;
+        else if(IV == 2) item =  Item.POWER_DEF;
+        else if(IV == 3) item =  Item.POWER_SATK;
+        else if(IV == 4) item =  Item.POWER_SDEF;
+        else if(IV == 5) item =  Item.POWER_SPD;
         else throw new IllegalArgumentException("Invalid IV number received.");
 
         return item;
@@ -222,6 +221,13 @@ public class IvManager {
         storedPokemonList.remove(position);
         updateBestCombination();
     }
+    public void setMaleItem(Item i) {
+        equippedItems.setMaleItem(i);
+        updateBestCombination();
+    }
+    public Item getMaleItem() {
+        return equippedItems.getMaleItem();
+    }
 
     public List<PokemonInfo> getStoredPokemonList() {
         return storedPokemonList;
@@ -239,7 +245,8 @@ public class IvManager {
             bestCombinationsList = null;
             return;
         }
-        bestCombinationsList.clear();
+        if(bestCombinationsList != null)
+            bestCombinationsList.clear();
 
         List<ChanceData> chances = new ArrayList<ChanceData>();
 
@@ -267,6 +274,7 @@ public class IvManager {
             currentBestCombination = null;
         else {
             Collections.sort(chances, new ChanceComparator());
+            Collections.reverse(chances);
             bestCombinationsList = chances;
             currentBestCombination = chances.get(chances.size() - 1);
         }

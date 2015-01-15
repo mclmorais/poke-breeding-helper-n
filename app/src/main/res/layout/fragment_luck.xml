@@ -22,7 +22,9 @@
             android:layout_alignParentTop="false"
             style="@style/card_header_title"
             android:visibility="visible"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:layout_toStartOf="@+id/luckFragmentCheckBoxDestinyKnot"
+            android:layout_toLeftOf="@+id/luckFragmentCheckBoxDestinyKnot" />
 
         <View
             android:id="@+id/luckFragmentSeparator1"
@@ -31,22 +33,42 @@
             android:background="@color/background_light_gray"
             android:layout_gravity="center_vertical"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/luckFragmentButtonItems"
-            android:layout_toStartOf="@+id/luckFragmentButtonItems" />
+            android:layout_toLeftOf="@+id/luckFragmentButtonOptions"
+            android:layout_toStartOf="@+id/luckFragmentButtonOptions" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:text="Items"
+            android:text="|"
             android:textAllCaps="true"
-            android:id="@+id/luckFragmentButtonItems"
+            android:id="@+id/luckFragmentButtonOptions"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:background="@drawable/button_press_white_lightgray_selector"
-            android:textColor="@color/accent"
+            android:textColor="@color/primary"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
+
+        <CheckBox
+            android:exitFadeDuration="@android:integer/config_shortAnimTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/luckFragmentCheckBoxDestinyKnot"
+            android:layout_alignBottom="@+id/luckFragmentHeaderTitle"
+            android:layout_alignRight="@+id/luckFragmentSeparator1"
+            android:layout_alignEnd="@+id/luckFragmentSeparator1"
+            android:drawableLeft="@drawable/ic_toggle_destiny_knot_selector"
+            android:layout_marginRight="6dp" />
+        <View
+            android:id="@+id/luckFragmentSeparator2"
+            android:layout_width="1dp"
+            android:layout_height="32dp"
+            android:background="@color/background_light_gray"
+            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignRight="@+id/luckFragmentHeaderTitle"
+            android:layout_alignEnd="@+id/luckFragmentHeaderTitle" />
 
     </RelativeLayout>
     <View android:layout_width="match_parent"
@@ -58,9 +80,27 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_gravity="center_horizontal"
         android:id="@+id/luckFragmentLayoutChances"
-        android:animateLayoutChanges="true"/>
+        android:animateLayoutChanges="true"
+        android:gravity="center_horizontal" >
+
+    </LinearLayout>
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_light_gray"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp" />
+
+    <ToggleButton
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:text="New Button"
+        android:id="@+id/luckFragmentExpandCollapseButton"
+        android:enabled="true"
+        android:checked="true"
+        android:drawableTop="@drawable/ct_toggle_expandable"
+        android:background="@drawable/button_press_white_lightgray_selector" />
 
 </LinearLayout>

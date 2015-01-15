@@ -140,7 +140,7 @@ public class StoredPokemonAdapter extends BaseAdapter{
         else
             holder.frame.setBackgroundResource(R.drawable.layer_card_background_round);
 
-        holder.icon.setBackground(data.getDrawableIdFromId(pokemonInfo.id));
+        holder.icon.setBackground(data.getDrawableFromId(pokemonInfo.id).getConstantState().newDrawable());
         holder.gender.setBackground(preloadedDrawables.getGenderDrawable(pokemonInfo.gender));
         for(int j = 0; j < 6; j++)
             holder.IVs[j].setBackground(preloadedDrawables.getIVDrawable(j,(pokemonInfo.IVs[j] == 1)));

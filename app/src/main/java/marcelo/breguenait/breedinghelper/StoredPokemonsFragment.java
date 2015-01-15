@@ -31,7 +31,7 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
     ToggleButton    buttonRemove;
     int             lastAddedPokemonId = 0;
     TextView        textHintStore;
-    TextView        texthintRemove;
+    TextView        textHintRemove;
 
     @Override
     public void onAttach(Activity activity) {
@@ -60,8 +60,8 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
         buttonAdd = (Button) view.findViewById(R.id.buttonFragmentPokemonListAdd);
         buttonRemove = (ToggleButton) view.findViewById(R.id.buttonFragmentPokemonListRemove);
         textHintStore = (TextView) view.findViewById(R.id.textViewHintStore);
-        texthintRemove = (TextView) view.findViewById(R.id.textViewHintDelete);
-        texthintRemove.setVisibility(View.GONE);
+        textHintRemove = (TextView) view.findViewById(R.id.textViewHintDelete);
+        textHintRemove.setVisibility(View.GONE);
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,15 +73,15 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
         buttonRemove.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b) {
-                    texthintRemove.setVisibility(View.VISIBLE);
+                if(b && storedPokemonAdapter.getCount() > 0) {
+                    textHintRemove.setVisibility(View.VISIBLE);
                     buttonRemove.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
                     storedPokemonAdapter.setDeleteMode(true);
 
                 }
                 else {
-                    texthintRemove.setVisibility(View.GONE);
-                    buttonRemove.setTextColor(getResources().getColor(R.color.accent));
+                    textHintRemove.setVisibility(View.GONE);
+                    buttonRemove.setTextColor(getResources().getColor(R.color.primary));
                     storedPokemonAdapter.setDeleteMode(false);
                 }
                 updateGridView();
@@ -93,6 +93,9 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if(buttonRemove.isChecked()) {
                     mCallback.removePokemon(i);
+
+
+
                     updateGridView();
                 }
             }
@@ -119,9 +122,12 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
 
     void updateGridView(){
         if(storedPokemonAdapter.getCount() > 0) {
+            buttonRemove.setEnabled(true);
             textHintStore.setVisibility(View.GONE);
         }
         else {
+            buttonRemove.setChecked(false);
+            buttonRemove.setEnabled(false);
             textHintStore.setVisibility(View.VISIBLE);
         }
         storedPokemonAdapter.notifyDataSetChanged();

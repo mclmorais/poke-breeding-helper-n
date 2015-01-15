@@ -2,6 +2,8 @@ package marcelo.breguenait.breedinghelper;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -55,9 +57,20 @@ public class PopupDialogFragment extends DialogFragment {
 
         WindowManager.LayoutParams params = window.getAttributes();
 
-        // Just an example; edit to suit your needs.
-        params.x = sourceX + dpToPx(32); // about half of confirm button size left of source view
-        params.y = sourceY -  dpToPx(32); // above source view
+        DisplayMetrics metrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int screenWidth = (int) convertPixelsToDp(metrics.widthPixels,getActivity().getApplicationContext());
+        if(sourceX < (screenWidth/2)) {
+            // Just an example; edit to suit your needs.
+            params.x = sourceX + dpToPx(32); // about half of confirm button size left of source view
+            params.y = sourceY -  dpToPx(32); // above source view
+        }
+        else {
+            params.x = sourceX - dpToPx(32); // about half of confirm button size left of source view
+            params.y = sourceY -  dpToPx(32); // above source view
+        }
+
+
 
         window.setAttributes(params);
     }
@@ -66,6 +79,21 @@ public class PopupDialogFragment extends DialogFragment {
         DisplayMetrics metrics = getActivity().getResources().getDisplayMetrics();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
     }
+
+    /**
+     * This method converts device specific pixels to density independent pixels.
+     *
+     * @param px A value in px (pixels) unit. Which we need to convert into db
+     * @param context Context to get resources and device specific display metrics
+     * @return A float value to represent dp equivalent to px value
+     */
+    public static float convertPixelsToDp(float px, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / (metrics.densityDpi / 160f);
+        return dp;
+    }
+
 
     void closeFragment()
     {

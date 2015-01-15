@@ -73,7 +73,7 @@ class PokemonData {
         return tabledData.size();
     }
 
-    Drawable getDrawableIdFromId(int id) {
+    Drawable getDrawableFromId(int id) {
         if(id > 0)
             return tabledData.get(id).drawable;
         else {

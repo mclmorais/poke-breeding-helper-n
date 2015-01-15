@@ -5,12 +5,15 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +50,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         selectedPokemonId = id;
         String text = PokemonData.getInstance().getName(id);
         selectedName.setText(text);
-        selectedIcon.setBackground(PokemonData.getInstance().getDrawableIdFromId(id));
+        selectedIcon.setBackground(PokemonData.getInstance().getDrawableFromId(id).getConstantState().newDrawable());
     }
 
     @Override
@@ -193,9 +196,11 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
     void updatePokemonGender(int id) {
         if(PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.NONE) {
-            togglePokemonGender.setBackgroundResource(R.drawable.ic_toggle_gender_selector);
-            togglePokemonGender.setClickable(true);
-            pokemonGender = togglePokemonGender.isChecked()?Gender.MALE:Gender.FEMALE;
+            if(!togglePokemonGender.isClickable()) {
+                togglePokemonGender.setBackgroundResource(R.drawable.ic_toggle_gender_selector);
+                togglePokemonGender.setClickable(true);
+            }
+            pokemonGender = togglePokemonGender.isChecked() ? Gender.MALE : Gender.FEMALE;
         }
         else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.GENDERLESS) {
             togglePokemonGender.setBackgroundResource(R.drawable.symbol_genderless);
@@ -218,7 +223,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
             pokemonGender = Gender.FEMALE;
         }
 
-
+        togglePokemonGender.invalidate();
     }
 
     @Override
@@ -247,4 +252,24 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
                 .build();
     }
 
+    @Override
+    protected void setDialogPosition() {
+        if(getArguments() == null) {
+            return;
+        }
+
+        int sourceX = getArguments().getInt("x");
+        int sourceY = getArguments().getInt("y");
+
+        Window window = getDialog().getWindow();
+
+        // set "origin" to top left corner
+        window.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL);
+
+        WindowManager.LayoutParams params = window.getAttributes();
+
+        params.y = sourceY -  dpToPx(24); // above source view
+
+        window.setAttributes(params);
+    }
 }

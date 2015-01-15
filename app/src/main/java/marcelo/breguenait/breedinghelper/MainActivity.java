@@ -54,7 +54,7 @@ public class MainActivity extends ActionBarActivity
         ivManager = new IvManager();
 
         setSupportActionBar((Toolbar) findViewById(R.id.main_activity_toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         readData();
 
@@ -320,6 +320,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void removePokemon(int position) {
         ivManager.removePokemon(position);
+        updateLuckFragment(ivManager.getBestCombinations());
     }
 
     @Deprecated
@@ -354,6 +355,14 @@ public class MainActivity extends ActionBarActivity
         jsonString = gson.toJson(ivManager.getGoalPokemon());
         prefEditor.putString("jsonCurrentGoal",jsonString);
 
+        jsonString = gson.toJson(ivManager.getMaleItem());
+        prefEditor.putString("jsonMaleItem",jsonString);
+
+        LuckFragment l = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
+        jsonString = gson.toJson(l.getShinyOptions());
+        prefEditor.putString("jsonShinyOptions",jsonString);
+
+
 //        jsonString = gson.toJson(ivManager.getMaleItem());
 //        prefEditor.putString("jsonCurrentMaleItem",jsonString);
 //
@@ -370,7 +379,6 @@ public class MainActivity extends ActionBarActivity
     @Deprecated
     void readData() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        //Map<String,?> keys = sharedPref.getAll();
         String jsonString;
 
         jsonString = sharedPref.getString("jsonEggList",null);
@@ -397,26 +405,10 @@ public class MainActivity extends ActionBarActivity
             ivManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
         }
 
-
-//        jsonString = sharedPref.getString("jsonCurrentActivePokemons",null);
-//        if(jsonString != null) {
-//            ivManager.setActivePokemons(gson.fromJson(jsonString,ActivePokemons.class));
-//        }
-//
-//        jsonString = sharedPref.getString("jsonCurrentMaleItem",null);
-//        if(jsonString != null) {
-//            ivManager.setMaleItem(gson.fromJson(jsonString,IvManager.item.class));
-//        }
-//
-//        jsonString = sharedPref.getString("jsonCurrentFemaleItem",null);
-//        if(jsonString != null) {
-//            ivManager.setFemaleItem(gson.fromJson(jsonString,IvManager.item.class));
-//        }
-//
-//        jsonString = sharedPref.getString("jsonCurrentShinyOptions",null);
-//        if(jsonString != null) {
-//            ivManager.setShinyOptions(gson.fromJson(jsonString,IvManager.ShinyOptions.class));
-//        }
+        jsonString = sharedPref.getString("jsonMaleItem",null);
+        if(jsonString != null) {
+            ivManager.setMaleItem(gson.fromJson(jsonString, Item.class));
+        }
 
     }
 
@@ -425,5 +417,29 @@ public class MainActivity extends ActionBarActivity
     public void updateGoal(PokemonInfo p) {
         ivManager.setGoalPokemon(p);
         updateLuckFragment(ivManager.getBestCombinations());
+    }
+
+
+    @Override
+    public void setDestinyKnot(boolean b) {
+        ivManager.setMaleItem(b?Item.DESTINY_KNOT:Item.NO_ITEM);
+        updateLuckFragment(ivManager.getBestCombinations());
+    }
+
+    @Override
+    public boolean updateDestinyKnotChance() {
+        return ivManager.getMaleItem()==Item.DESTINY_KNOT;
+    }
+
+    @Override
+    public int loadShinyOptions() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String jsonString;
+
+        jsonString = sharedPref.getString("jsonShinyOptions",null);
+        if(jsonString != null) {
+            return (gson.fromJson(jsonString, Integer.class));
+        }
+        else return 0;
     }
 }
