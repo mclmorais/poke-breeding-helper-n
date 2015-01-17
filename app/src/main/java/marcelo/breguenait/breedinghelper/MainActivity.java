@@ -70,6 +70,27 @@ public class MainActivity extends ActionBarActivity
         toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.tooltipLayout);
         tooltipGoalIVs();
 
+        int counter = 0;
+        for(int i = 0; i < 6; i++) {
+            counter += ivManager.getGoalPokemon().IVs[i];
+        }
+
+        if(counter > 0 && ivManager.getGoalPokemon().id > 0) {
+            if(viewGoalIVsTooltip != null) {
+                viewGoalIVsTooltip.remove();
+                viewGoalIVsTooltip = null;
+            }
+            tooltipAddPokemons();
+            saveBoolean("hasSeenTooltipGoalIVs",true);
+        }
+
+        if(ivManager.getBestCombinations().size() > 0) {
+            saveBoolean("hasSeenTooltipAddPokemons",true);
+            if(viewAddPokemonsTooltip != null) {
+                viewAddPokemonsTooltip.remove();
+                viewAddPokemonsTooltip = null;
+            }
+        }
     }
 
     void tooltipGoalIVs() {
