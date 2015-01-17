@@ -143,6 +143,7 @@ public class MainActivity extends ActionBarActivity
         if(v != null) {
             Button b = (Button) v.findViewById(R.id.buttonFragmentPokemonListAdd);
             viewAddPokemonsTooltip = toolTipRelativeLayout.showToolTipForView(toolTip,b);
+            viewAddPokemonsTooltip.setOnToolTipViewClickedListener(this);
 
 
         }
