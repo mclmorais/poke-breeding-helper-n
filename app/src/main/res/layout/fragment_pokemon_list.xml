@@ -3,8 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/layer_card_background"
-    android:baselineAligned="true"
-    android:transitionGroup="false">
+    android:baselineAligned="true">
 
     <RelativeLayout
         android:id="@+id/itemGridHeader"
@@ -18,7 +17,7 @@
             android:layout_height="fill_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:fontFamily="sans-serif-condensed"
-            android:text="Stored Pokemons"
+            android:text="@string/label_stored_pokemons"
             android:layout_alignParentTop="false"
             style="@style/card_header_title"
             android:visibility="visible"
@@ -38,7 +37,7 @@
             <ToggleButton
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="REMOVE"
+                android:text="@string/label_remove"
                 android:textOn="REMOVE"
                 android:textOff="REMOVE"
                 android:id="@+id/buttonFragmentPokemonListRemove"
@@ -54,9 +53,6 @@
                 android:layout_width="1dp"
                 android:layout_height="32dp"
                 android:background="@color/background_light_gray"
-                android:layout_centerVertical="true"
-                android:layout_alignLeft="@+id/buttonFragmentPokemonListAdd"
-                android:layout_alignStart="@+id/buttonFragmentPokemonListAdd"
                 android:layout_weight="0"
                 android:layout_gravity="center_vertical"
                 android:visibility="visible" />
@@ -64,11 +60,8 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="ADD"
+                android:text="@string/label_add"
                 android:id="@+id/buttonFragmentPokemonListAdd"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:background="@drawable/button_press_white_lightgray_selector"
                 android:textColor="@color/primary"
                 android:textStyle="bold"
@@ -81,7 +74,6 @@
             android:layout_width="1dp"
             android:layout_height="32dp"
             android:background="@color/background_light_gray"
-            android:layout_weight="0"
             android:layout_gravity="center_vertical"
             android:layout_alignTop="@+id/itemGridHeaderTitle"
             android:layout_toLeftOf="@+id/linearLayout"
@@ -99,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Store bred pokemons here to check for matches!"
+        android:text="@string/hint_store_pokemons"
         android:id="@+id/textViewHintStore"
         style="@style/CapsLabel"
         android:textColor="@android:color/darker_gray"
@@ -113,7 +105,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Click on the pokemon you want to remove"
+        android:text="@string/hint_remove_pokemons"
         android:id="@+id/textViewHintDelete"
         android:textColor="@android:color/darker_gray"
         android:layout_marginLeft="8dp"

@@ -33,8 +33,9 @@
     <string name="female_added_back">Female parent was added back to the list.</string>
     <string name="both_added_back">Both parents were added back to the list.</string>
 
-    <string name="placeholder_number">00</string>
-    <string name="placeholder_percentage_increase">&#43;25.6&#37;</string>
+    <string name="placeholder_number_2">##</string>
+    <string name="placeholder_number_3">###</string>
+    <string name="placeholder_percentage">###.##&#37;</string>
     <string name="placeholder_percentage_total_and_increase" formatted="false">&#43;XX.X&#37; &#40;&#43;YY.Y%&#41;</string>
 
     <string name="save_file_name">iv_data.dat</string>
@@ -75,6 +76,20 @@
     <string name="title_activity_breeding_poke_dex">BreedingPokeDexActivity</string>
     <string name="title_activity_ev_training">EvTrainingActivity</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_no_pokemon_selected">No pokemon selected</string>
+    <string name="label_select">Select</string>
+    <string name="label_select_pokemon">Select a pokémon</string>
+    <string name="label_goal_ivs">GOAL IVS</string>
+    <string name="label_best_matches">Best Matches</string>
+    <string name="label_normal">Normal</string>
+    <string name="label_stored_pokemons">Stored Pokemons</string>
+    <string name="label_remove">REMOVE</string>
+    <string name="label_add">ADD</string>
+    <string name="hint_store_pokemons">Store bred pokemons here to check for matches!</string>
+    <string name="hint_remove_pokemons">Click on the pokemon you want to remove</string>
+    <string name="label_pokemon_name">Pokémon Name</string>
+    <string name="label_compatible_pokemons">Compatible Pokemons</string>
+    <string name="label_no_matches_found">No matches found.</string>
     <array name="shiny_spinner_options_strings">
         <item>Normal</item>
         <item>Shiny</item>

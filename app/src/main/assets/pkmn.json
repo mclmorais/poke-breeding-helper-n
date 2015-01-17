@@ -254,7 +254,7 @@
       "egg_group_1": "MONSTER",
       "egg_group_2": "FIELD",
       "restricted_gender": "MALE_ONLY",
-      "breeds": 32
+      "breeds": 29
     },
     {
       "id": 33,
@@ -262,7 +262,7 @@
       "egg_group_1": "MONSTER",
       "egg_group_2": "FIELD",
       "restricted_gender": "MALE_ONLY",
-      "breeds": 32
+      "breeds": 29
     },
     {
       "id": 34,
@@ -270,7 +270,7 @@
       "egg_group_1": "MONSTER",
       "egg_group_2": "FIELD",
       "restricted_gender": "MALE_ONLY",
-      "breeds": 32
+      "breeds": 29
     },
     {
       "id": 35,
@@ -2510,7 +2510,7 @@
       "egg_group_1": "BUG",
       "egg_group_2": "HUMAN_LIKE",
       "restricted_gender": "FEMALE_ONLY",
-      "breeds": 314
+      "breeds": 313
     },
     {
       "id": 315,

@@ -7,24 +7,26 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
-//TODO: arrumar cardchance com os icone buni
 
 public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filterable{
 
     private final ArrayList<PokemonDataBlock> pokemonList;
     private ArrayList<PokemonDataBlock> filteredPokemonList;
     private final LayoutInflater inflater;
-    PokemonInfo goalPokemon;
-    boolean showOnlyCompatible = false;
+    private PokemonInfo goalPokemon;
+    private boolean showOnlyCompatible = false;
+    private boolean showOnlyBasic = false;
 
     void showOnlyCompatible(boolean b) {
         showOnlyCompatible = b;
+    }
+
+    void setShowOnlyBasic(boolean b) {
+        showOnlyBasic = b;
     }
 
     public void setGoal(PokemonInfo hatchInfo) {
@@ -35,7 +37,7 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
 
     }
 
-    InterfacePokemonSelectorAdapter(Context mContext, ArrayList<PokemonDataBlock> data) {
+    InterfacePokemonSelectorAdapter(Context mContext) {
         this.pokemonList = PokemonData.getInstance().getOrderedData();
         this.filteredPokemonList = this.pokemonList;
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -57,10 +59,8 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
     }
 
     class LayoutHolder {
-        FrameLayout layout;
         ImageView icon;
         TextView id;
-        TextView name;
     }
 
     @Override
@@ -74,10 +74,8 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
             pokemonDynamicLayout = inflater.inflate(R.layout.dynamic_view_layout_pokemon_selector, parent, false);
 
             holder          = new LayoutHolder();
-            holder.layout   = (FrameLayout)     pokemonDynamicLayout.findViewById(R.id.frameLayoutSelectPokemon);
             holder.icon     = (ImageView)       pokemonDynamicLayout.findViewById(R.id.imageViewIcon);
             holder.id       = (TextView)        pokemonDynamicLayout.findViewById(R.id.textViewId);
-            holder.name     = (TextView)        pokemonDynamicLayout.findViewById(R.id.textViewName);
             pokemonDynamicLayout.setTag(holder);
         } else {
             holder = (LayoutHolder) convertView.getTag();
@@ -104,9 +102,7 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
             protected FilterResults performFiltering(CharSequence constraint) {
 
                 FilterResults results = new FilterResults();
-                ArrayList<PokemonDataBlock> FilteredArrayNames = new ArrayList<PokemonDataBlock>();
-
-                // perform your search here using the searchConstraint String.
+                ArrayList<PokemonDataBlock> FilteredArrayNames = new ArrayList<>();
 
                 constraint = constraint.toString().toLowerCase();
                 for (int i = 0; i < pokemonList.size(); i++) {
@@ -142,20 +138,34 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
                                     continue;
                             }
                         }
-                        //TODO: FAZER PARA MALE E FEMALE!!!!
-
                     }
 
+                    if(showOnlyBasic) {
+                        int id = currentPokemonData.id;
+                        int breeds = currentPokemonData.breeds;
+
+                        if(id != breeds) {
+                            if(id != 32 && id != 314) //Excludes nidoranM and Illumise because they're special cases
+                            continue;
+                        }
+
+
+                    }
 
 
 
 
                     String dataNames = currentPokemonData.name;
                     if (dataNames.toLowerCase().startsWith(constraint.toString()))  {
-                        FilteredArrayNames.add(currentPokemonData);
+                        if(showOnlyCompatible && currentPokemonData.breeds == PokemonData.getInstance().getBasicPokemon(goalPokemon.id))
+                            FilteredArrayNames.add(0,currentPokemonData);
+                        else
+                            FilteredArrayNames.add(currentPokemonData);
                     }
 
                 }
+
+
 
                 results.count = FilteredArrayNames.size();
                 results.values = FilteredArrayNames;

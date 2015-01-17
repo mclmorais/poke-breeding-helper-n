@@ -23,15 +23,21 @@ import java.util.List;
  */
 public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupFragment.BuildPokemon{
 
-    OnPokemonListChanged mCallback;
+    private OnPokemonListChanged mCallback;
 
-    StoredPokemonAdapter storedPokemonAdapter;
-    GridView        gridViewPokemons;
-    Button          buttonAdd;
-    ToggleButton    buttonRemove;
-    int             lastAddedPokemonId = 0;
-    TextView        textHintStore;
-    TextView        textHintRemove;
+    interface OnPokemonListChanged {
+        void addPokemonToList(PokemonInfo pokemon);
+        void removePokemon(int position);
+        PokemonInfo getGoalData();
+    }
+
+    private StoredPokemonAdapter storedPokemonAdapter;
+    private GridView        gridViewPokemons;
+    private Button          buttonAdd;
+    private ToggleButton    buttonRemove;
+    private int             lastAddedPokemonId = 0;
+    private TextView        textHintStore;
+    private TextView        textHintRemove;
 
     @Override
     public void onAttach(Activity activity) {
@@ -148,8 +154,8 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
         return b;
     }
 
-    interface OnPokemonListChanged {
-        void addPokemonToList(PokemonInfo pokemon);
-        void removePokemon(int position);
+    @Override
+    public PokemonInfo getGoal() {
+        return mCallback.getGoalData();
     }
 }

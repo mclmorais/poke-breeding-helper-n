@@ -30,7 +30,7 @@
             android:theme="@style/Base.Theme.AppCompat.Light.Dialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Normal"
+            android:text="@string/label_normal"
             android:button="@null"
             android:id="@+id/luckOptionsCheckBoxShiny"
             android:layout_gravity="center_horizontal"

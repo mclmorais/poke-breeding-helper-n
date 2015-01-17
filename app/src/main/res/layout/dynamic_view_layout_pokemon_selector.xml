@@ -11,24 +11,13 @@ android:background="@drawable/layer_background_round_selector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="999"
+        android:text="@string/placeholder_number_3"
         android:id="@+id/textViewId"
         android:layout_gravity="left|top"
         android:layout_marginLeft="2dp"
         android:textColor="#808080"
         android:textSize="12sp"
         android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/textViewName"
-        android:layout_gravity="center"
-        android:textSize="12sp"
-        android:textColor="@android:color/black"
-        android:visibility="gone" />
 
     <ImageView
         android:layout_width="wrap_content"

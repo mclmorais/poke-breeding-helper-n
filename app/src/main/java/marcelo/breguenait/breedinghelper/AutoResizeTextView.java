@@ -153,7 +153,7 @@ public class AutoResizeTextView extends TextView {
     /**
      * Set the lower text size limit and invalidate the view
      *
-     * @param minTextSize
+     *
      */
     public void setMinTextSize(float minTextSize) {
         mMinTextSize = minTextSize;

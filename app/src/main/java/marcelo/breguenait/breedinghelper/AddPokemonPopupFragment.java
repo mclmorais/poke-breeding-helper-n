@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,32 +18,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-/**
- * Created by Marcelo on 18/12/2014.
- */
 public class AddPokemonPopupFragment extends PopupDialogFragment implements SelectPokemonFragment.OnPokemonSelectedListener{
 
     public interface BuildPokemon {
         void onBuildPokemon(PokemonInfo pokemon);
+        PokemonInfo getGoal();
     }
 
-    int selectedPokemonId = 0;
-    Gender pokemonGender;
+    private int selectedPokemonId = 0;
+    private Gender pokemonGender;
 
-    TextView selectedName;
-    ImageView selectedIcon;
+    private TextView selectedName;
+    private ImageView selectedIcon;
 
-    ToggleButton togglePokemonGender;
+    private ToggleButton togglePokemonGender;
 
-    Button confirmButton, cancelButton;
+    private Button confirmButton;
+    private Button cancelButton;
 
-    CheckBox[] checkBoxInputIVs = new CheckBox[6];
+    private final CheckBox[] checkBoxInputIVs = new CheckBox[6];
 
-    View buttonPokemonSelector;
+    private View buttonPokemonSelector;
 
-    BuildPokemon mCallback;
+    private BuildPokemon mCallback;
 
-    boolean showOnlyCompatible;
+    private boolean showOnlyCompatible;
 
 
 
@@ -77,7 +75,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.expandable_layout_3_pokemon_input_fragment_test, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_pokemon, container, false);
 
         buttonPokemonSelector = view.findViewById(R.id.buttonSelectPokemon);
 
@@ -139,10 +137,8 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
                 }
 
 
-                if(selectedPokemonId != 0 && hasIVs) { //redundant
-                    mCallback.onBuildPokemon(buildPokemon());
-                    closeFragment();
-                }
+                mCallback.onBuildPokemon(buildPokemon());
+                closeFragment();
             }
         });
 
@@ -166,7 +162,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
             return;
         }
 
-        if (gender == gender.FEMALE) {
+        if (gender == Gender.FEMALE) {
             togglePokemonGender.setChecked(false);
             togglePokemonGender.setClickable(false);
             return;
@@ -238,7 +234,6 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
     }
 
     void showToast(String string) {
-        //TODO: show short or long (decided by parameter)
         Toast.makeText(getActivity().getApplicationContext(), string, Toast.LENGTH_LONG).show();
     }
 
@@ -262,7 +257,6 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
             return;
         }
 
-        int sourceX = getArguments().getInt("x");
         int sourceY = getArguments().getInt("y");
 
         Window window = getDialog().getWindow();
@@ -272,7 +266,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
         WindowManager.LayoutParams params = window.getAttributes();
 
-        params.y = sourceY -  dpToPx(24); // above source view
+        params.y = sourceY -  dpToPx(24);
 
         window.setAttributes(params);
     }
@@ -280,5 +274,15 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
     @Override
     public boolean showEggGroupFilter() {
         return true;
+    }
+
+    @Override
+    public boolean showOnlyBasic() {
+        return false;
+    }
+
+    @Override
+    public PokemonInfo getGoal() {
+        return mCallback.getGoal();
     }
 }

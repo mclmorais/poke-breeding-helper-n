@@ -3,7 +3,6 @@ package marcelo.breguenait.breedinghelper;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,23 +12,20 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
- * Created by Marcelo on 10/01/2015.
- */
 public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.OnPokemonSelectedListener{
 
     interface OnGoalUpdate {
         void updateGoal(PokemonInfo p);
     }
 
-    OnGoalUpdate mCallback;
+    private OnGoalUpdate mCallback;
 
-    final CheckBox[] goalIVs = new CheckBox[6];
-    View buttonPokemonSelector;
-    ImageView selectedIcon;
-    TextView selectedName;
+    private final CheckBox[] goalIVs = new CheckBox[6];
+    private View buttonPokemonSelector;
+    private ImageView selectedIcon;
+    private TextView selectedName;
 
-    int selectedPokemonId = 1;
+    private int selectedPokemonId = 1;
 
     @Override
     public void onAttach(Activity activity) {
@@ -109,7 +105,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         selectedPokemonId = goal.id;
         updateInterfacePokemon(goal.id);
         for(int i = 0; i < 6; i++) {
-            goalIVs[i].setChecked(goal.IVs[i]==1?true:false);
+            goalIVs[i].setChecked(goal.IVs[i] == 1);
         }
 
     }
@@ -145,5 +141,16 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     @Override
     public boolean showEggGroupFilter() {
         return false;
+    }
+
+    @Override
+    public boolean showOnlyBasic() {
+        return true;
+    }
+
+
+    @Override
+    public PokemonInfo getGoal() {
+        return updateGoalPokemon();
     }
 }

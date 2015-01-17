@@ -1,4 +1,5 @@
 package marcelo.breguenait.breedinghelper;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -13,14 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 /**
  * Created by Marcelo on 08/12/2014.
@@ -33,16 +29,16 @@ public class LuckOptionsFragment extends PopupDialogFragment {
 
     MainActivity baseActivity;
 
-    TypedArray shinyOptionsDrawables;
-    String[] shinyOptionsStrings;
+    private TypedArray shinyOptionsDrawables;
+    private String[] shinyOptionsStrings;
 
-    CheckBox checkBoxShinyCharm;
-    CheckBox checkBoxMasudaMethod;
-    CheckBox checkBoxShiny;
+    private CheckBox checkBoxShinyCharm;
+    private CheckBox checkBoxMasudaMethod;
+    private CheckBox checkBoxShiny;
 
-    OnLuckOptionsChange mCallback;
+    private OnLuckOptionsChange mCallback;
 
-    Button buttonClose;
+    private Button buttonClose;
 
 
     interface OnLuckOptionsChange {
@@ -154,39 +150,6 @@ public class LuckOptionsFragment extends PopupDialogFragment {
         });
     }
 
-    public class LuckSpinnerAdapter extends ArrayAdapter<String> {
-
-
-        public LuckSpinnerAdapter(Context context, int textViewResourceId,   String[] objects) {
-            super(context, textViewResourceId, objects);
-        }
-
-        @Override
-        public View getDropDownView(int position, View convertView,ViewGroup parent) {
-            return getCustomView(position, convertView, parent);
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            return getCustomView(position, convertView, parent);
-        }
-
-        public View getCustomView(int position, View convertView, ViewGroup parent) {
-
-            LayoutInflater inflater= getActivity().getLayoutInflater();
-            View row=inflater.inflate(R.layout.row, parent, false);
-            TextView label=(TextView)row.findViewById(R.id.company);
-            label.setText(shinyOptionsStrings[position]);
-
-
-
-            ImageView icon=(ImageView)row.findViewById(R.id.image);
-            icon.setImageResource(shinyOptionsDrawables.getResourceId(position,-1));
-
-            return row;
-        }
-    }
-
     @Override
     protected void setDialogPosition() {
         if(getArguments() == null) {
@@ -212,13 +175,12 @@ public class LuckOptionsFragment extends PopupDialogFragment {
             params.y = sourceY -  dpToPx(32); // above source view
         }
         else {
-            params.x = sourceX - dpToPx(256); // about half of confirm button size left of source view
+            params.x = sourceX - dpToPx(180); // about half of confirm button size left of source view
             params.y = sourceY -  dpToPx(24); // above source view
         }
         window.setAttributes(params);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) { /* do nothing */ }
+
 }
 

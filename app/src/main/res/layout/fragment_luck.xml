@@ -5,8 +5,6 @@
     android:orientation="vertical"
     android:background="@drawable/layer_card_background">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="48dp"
@@ -18,7 +16,7 @@
             android:layout_height="fill_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:fontFamily="sans-serif-condensed"
-            android:text="Best Matches"
+            android:text="@string/label_best_matches"
             android:layout_alignParentTop="false"
             style="@style/card_header_title"
             android:visibility="visible"

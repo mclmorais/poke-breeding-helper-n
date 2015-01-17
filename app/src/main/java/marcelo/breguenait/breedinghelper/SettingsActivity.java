@@ -1,18 +1,10 @@
 package marcelo.breguenait.breedinghelper;
 
-import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 
 /**
  * Created by Marcelo on 08/09/2014.
@@ -25,7 +17,7 @@ public class SettingsActivity extends ActionBarActivity {
       //  setContentView(R.layout.activity_settings);
 
 
-        setContentView(R.layout.activity_settings_legacy);
+        setContentView(R.layout.activity_settings);
 //        // Display the fragment as the main content.
 //        getFragmentManager().beginTransaction()
 //                .replace(android.R.id.content, new SettingsFragment())

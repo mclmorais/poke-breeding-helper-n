@@ -1,6 +1,5 @@
 package marcelo.breguenait.breedinghelper;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -11,19 +10,15 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 
 
 public class SelectPokemonFragment extends PopupDialogFragment {
@@ -31,25 +26,26 @@ public class SelectPokemonFragment extends PopupDialogFragment {
     public interface OnPokemonSelectedListener {
         public void onPokemonSelected(int id);
         boolean showEggGroupFilter();
+        boolean showOnlyBasic();
+        PokemonInfo getGoal();
     }
 
-    OnPokemonSelectedListener mCallback;
+    private OnPokemonSelectedListener mCallback;
 
-    GridView gridViewSelector;
-    EditText editTextFilter;
-    InterfacePokemonSelectorAdapter interfaceSelectorAdapter;
+    private GridView gridViewSelector;
+    private EditText editTextFilter;
+    private InterfacePokemonSelectorAdapter interfaceSelectorAdapter;
 
-    CheckBox checkBoxCompatible;
-    Button buttonCancel;
+    private CheckBox checkBoxCompatible;
+    private Button buttonCancel;
 
-    MainActivity callBackActivity;
+    private PokemonInfo goalPokemon;
 
 
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        callBackActivity = (MainActivity) activity;
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
@@ -79,10 +75,12 @@ public class SelectPokemonFragment extends PopupDialogFragment {
         View view =  localInflater.inflate(R.layout.fragment_select_pokemon, container, false);
 
 
-        interfaceSelectorAdapter = new InterfacePokemonSelectorAdapter(getActivity().getApplicationContext(), PokemonData.getInstance().getOrderedData());
+        interfaceSelectorAdapter = new InterfacePokemonSelectorAdapter(getActivity().getApplicationContext());
 
-        if(callBackActivity.goalExists())
-            interfaceSelectorAdapter.setGoal(callBackActivity.getGoal()); //TODO: Hack porco por enquanto
+        goalPokemon = mCallback.getGoal();
+
+        if(goalPokemon != null)
+            interfaceSelectorAdapter.setGoal(mCallback.getGoal());
 
         gridViewSelector = (GridView) view.findViewById(R.id.gridViewSelectPokemon);
         gridViewSelector.setAdapter(interfaceSelectorAdapter);
@@ -116,17 +114,23 @@ public class SelectPokemonFragment extends PopupDialogFragment {
         checkBoxCompatible = (CheckBox) view.findViewById(R.id.checkBoxSelectPokemonCompatible);
 
         if(getArguments().getBoolean("showOnlyCompatible",false)) {
-            if(callBackActivity.goalExists()) {
+            if(goalPokemon != null) {
                 checkBoxCompatible.setChecked(true);
                 checkBoxCompatible.setEnabled(false);
                 interfaceSelectorAdapter.showOnlyCompatible(true);
             }
         }
 
+        if(mCallback.showOnlyBasic()) {
+            interfaceSelectorAdapter.setShowOnlyBasic(mCallback.showOnlyBasic());
+            checkBoxCompatible.setChecked(true);
+            checkBoxCompatible.setText("Basic Pokemons");
+        }
+
         checkBoxCompatible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(callBackActivity.goalExists()) {
+                if(goalPokemon != null) {
                     interfaceSelectorAdapter.showOnlyCompatible(b);
                     interfaceSelectorAdapter.getFilter().filter(editTextFilter.getText());
                 }
@@ -166,10 +170,7 @@ public class SelectPokemonFragment extends PopupDialogFragment {
         int screenWidth = metrics.widthPixels;
         int screenHeight = metrics.heightPixels;
         Dialog dialog = getDialog();
-        if (dialog != null)
-        {
-            int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+        if (dialog != null) {
             dialog.getWindow().setLayout(screenWidth-margin, screenHeight-margin);
         }
     }

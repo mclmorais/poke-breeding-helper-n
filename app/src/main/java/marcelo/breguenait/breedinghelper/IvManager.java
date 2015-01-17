@@ -50,8 +50,8 @@ enum EggGroup {
 enum Gender {
     MALE,
     FEMALE,
-    GENDERLESS, //TODO: NYI!!! WILL BE CONSIDERED FEMALE IN MOST CASES AT THE MOMENT!!
-    DITTO       //TODO: NYI!!! WILL BE CONSIDERED FEMALE IN MOST CASES AT THE MOMENT!!
+    GENDERLESS,
+    DITTO
 }
 
 enum GenderRestriction {
@@ -110,7 +110,6 @@ class PokemonInfo {
     final Nature            nature;
     final EggGroup          eggGroup1;
     final EggGroup          eggGroup2;
-    boolean isMaleParent, isFemaleParent;
 
     static class Builder {
         private int                     id = 0;          //The national dex number of the pokemon
@@ -155,7 +154,7 @@ class PokemonInfo {
         }
     }
 
-    public PokemonInfo(Builder b) {
+    private PokemonInfo(Builder b) {
         this.id = b.id;
         this.gender = b.gender;
         this.IVs = b.IVs;
@@ -187,22 +186,17 @@ public class IvManager {
         fillCombinations();
     }
 
-    private List<PokemonInfo> storedPokemonList = new ArrayList<PokemonInfo>();
+    private List<PokemonInfo> storedPokemonList = new ArrayList<>();
 
-    final EquippedItems equippedItems = new EquippedItems();
+    private final EquippedItems equippedItems = new EquippedItems();
 
-    private SparseArray<Integer> destinyKnotCombinations = new SparseArray<>(6);
-    private SparseArray<Integer> bareCombinations = new SparseArray<>(20);
+    private final SparseArray<Integer> destinyKnotCombinations = new SparseArray<>(6);
+    private final SparseArray<Integer> bareCombinations = new SparseArray<>(20);
 
-    List<ChanceData> bestCombinationsList = new ArrayList<>();
+    private List<ChanceData> bestCombinationsList = new ArrayList<>();
 
-    PokemonInfo goalPokemon = null;
+    private PokemonInfo goalPokemon = null;
 
-    ChanceData currentBestCombination = null;
-
-    public final ChanceData getCurrentBestCombination() {
-        return currentBestCombination;
-    }
     public final List<ChanceData> getBestCombinations() {return bestCombinationsList;}
 
     public void setGoalPokemon(PokemonInfo goalPokemon) {
@@ -241,14 +235,13 @@ public class IvManager {
 
     public void updateBestCombination() {
         if (goalPokemon == null) {
-            currentBestCombination = null;
             bestCombinationsList = null;
             return;
         }
         if(bestCombinationsList != null)
             bestCombinationsList.clear();
 
-        List<ChanceData> chances = new ArrayList<ChanceData>();
+        List<ChanceData> chances = new ArrayList<>();
 
         for (int i = 0; i < storedPokemonList.size(); i++) {
 
@@ -273,13 +266,19 @@ public class IvManager {
             }
         }
 
-        if (chances.isEmpty())
-            currentBestCombination = null;
-        else {
+        if (!chances.isEmpty()) {
             Collections.sort(chances, new ChanceComparator());
             Collections.reverse(chances);
+
+            for(int i = 0; i < chances.size(); i++) {
+                if(Double.compare(chances.get(i).chance,1e-5) < 0) {
+                    chances.remove(i);
+                }
+            }
+
+
+
             bestCombinationsList = chances;
-            currentBestCombination = chances.get(chances.size() - 1);
         }
     }
     /**
@@ -385,7 +384,7 @@ public class IvManager {
 
             /*Iterates through each IV for each of the combinations*/
             for(int currentIV = 0; currentIV < 6; currentIV++) {
-                double chanceCurrentIV = 1.0d;
+                double chanceCurrentIV;
 
                 /*If this IV is not wanted on the goal pokemon, it doesn't affect the chance of
                 * getting it.*/

@@ -20,7 +20,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-//TODO: fazer funçao que aplica essa lógica (no lugar da atual que só ve se é femea e só está funcionando em alguns lugares)
 
 class PokemonData {
 
@@ -28,7 +27,7 @@ class PokemonData {
 
     private SparseArray<PokemonDataBlock> tabledData;
 
-    PokemonData(Context c) {
+    private PokemonData(Context c) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         /*Teaches gson how to deal with Maps of that type*/
         Type typeOfHashMap = new TypeToken<SparseArray<PokemonDataBlock>>(){}.getType();
@@ -51,10 +50,10 @@ class PokemonData {
     }
 
     public static PokemonData getInstance() {
-        //TODO: WAT
-        if(instance == null) {
-           // instance = new PokemonData();
-        }
+//        //TODO: WAT
+//        if(instance == null) {
+//           // instance = new PokemonData();
+//        }
 
         return instance;
 
@@ -92,6 +91,7 @@ class PokemonData {
             return EggGroup.UNDISCOVERED;
     }
 
+
     EggGroup getSecondEggGroup(int id) {
         if(id > 0)
             return tabledData.get(id).eggGroup2;
@@ -112,7 +112,7 @@ class PokemonData {
 
     private static <C> ArrayList<C> asList(SparseArray<C> sparseArray) {
         if (sparseArray == null) return null;
-        ArrayList<C> arrayList = new ArrayList<C>(sparseArray.size());
+        ArrayList<C> arrayList = new ArrayList<>(sparseArray.size());
         for (int i = 0; i < sparseArray.size(); i++)
             arrayList.add(sparseArray.valueAt(i));
         return arrayList;
@@ -122,7 +122,7 @@ class PokemonData {
 
 class PokemonJsonDeserializer implements JsonDeserializer<SparseArray<PokemonDataBlock>> {
 
-    Context mContext;
+    final Context mContext;
     PokemonJsonDeserializer(Context context){
         mContext = context;
     }
@@ -133,7 +133,7 @@ class PokemonJsonDeserializer implements JsonDeserializer<SparseArray<PokemonDat
         JsonArray jArray;
         jArray = json.getAsJsonObject().get("pokemons").getAsJsonArray();
 
-        SparseArray<PokemonDataBlock> pokemons = new SparseArray<PokemonDataBlock>();
+        SparseArray<PokemonDataBlock> pokemons = new SparseArray<>();
 
         for (int i = 0; i < jArray.size(); i++) {
             JsonObject jObject = (JsonObject) jArray.get(i);
@@ -180,13 +180,13 @@ class PokemonJsonDeserializer implements JsonDeserializer<SparseArray<PokemonDat
 }
 
 class PokemonDataBlock {
-    String name;
-    EggGroup eggGroup1;
-    EggGroup eggGroup2;
-    int id;
-    Drawable drawable;
-    GenderRestriction genderRestriction;
-    int breeds;
+    final String name;
+    final EggGroup eggGroup1;
+    final EggGroup eggGroup2;
+    final int id;
+    final Drawable drawable;
+    final GenderRestriction genderRestriction;
+    final int breeds;
 
     PokemonDataBlock(int id, String name, String eggGroup1, String eggGroup2, GenderRestriction genderRestriction, int breeds,Context c) {
         this.name      = name;

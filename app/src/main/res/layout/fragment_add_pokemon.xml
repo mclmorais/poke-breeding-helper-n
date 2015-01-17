@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:columnCount="10"
             android:rowCount="11"
-            android:id="@+id/gridviewPokemonInput"
+            android:id="@+id/gridViewPokemonInput"
             android:visibility="visible"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="8dp"
@@ -38,7 +38,6 @@
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:textIsSelectable="false"
-                android:textAlignment="gravity"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="4dp" />
 
@@ -53,7 +52,6 @@
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:textIsSelectable="false"
-                android:textAlignment="gravity"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="-10dp"
                 android:layout_marginBottom="4dp" />
@@ -69,7 +67,6 @@
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:textIsSelectable="false"
-                android:textAlignment="gravity"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="-10dp"
                 android:layout_marginBottom="4dp" />
@@ -85,7 +82,6 @@
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:textIsSelectable="false"
-                android:textAlignment="gravity"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="-10dp"
                 android:layout_marginBottom="4dp" />
@@ -101,7 +97,6 @@
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:textIsSelectable="false"
-                android:textAlignment="gravity"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="-10dp"
                 android:layout_marginBottom="4dp" />
@@ -117,7 +112,6 @@
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:textIsSelectable="false"
-                android:textAlignment="gravity"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="-10dp"
                 android:layout_marginBottom="4dp" />
@@ -133,7 +127,6 @@
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:textIsSelectable="false"
-                android:textAlignment="gravity"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginLeft="0dp"
                 android:layout_marginBottom="4dp" />
@@ -246,7 +239,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/imageViewSelectedIcon"
                 android:background="@drawable/pkmn_missingno"
-                android:layout_weight="0"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -257,7 +249,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="No pokemon selected"
+                android:text="@string/label_no_pokemon_selected"
+                android:ellipsize="end"
                 android:id="@+id/textViewSelectedName"
                 android:textStyle="bold"
                 android:textSize="15sp"
@@ -271,7 +264,7 @@
             <Button
                 android:layout_width="72dp"
                 android:layout_height="40dp"
-                android:text="Select"
+                android:text="@string/label_select"
                 android:id="@+id/buttonSelectPokemon"
                 style="@style/MyRaisedButton"
                 android:layout_gravity="right"
@@ -281,14 +274,6 @@
                 android:layout_marginRight="12dp"
                 android:textColor="@color/primary" />
         </RelativeLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
-
-        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"

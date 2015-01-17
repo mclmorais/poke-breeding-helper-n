@@ -1,6 +1,5 @@
 package marcelo.breguenait.breedinghelper;
-//TODO: fazer o showtotalchance ser opçao com "..." no card
-//TODO: mudar card de chance para 99.99% | 1 in 9 eggs <-- Separator view
+
 //TODO: "x item is hindering your chance!"
 
 import android.content.Intent;
@@ -26,7 +25,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Map;
 
 import de.cketti.library.changelog.ChangeLog;
 
@@ -87,7 +85,6 @@ public class MainActivity extends ActionBarActivity
         //fragList.setHatchAdapter(ivManager.getHatchesList(), getApplicationContext());
         fragList.setHatchAdapter(ivManager.getStoredPokemonList(), getApplicationContext());
         fragList.updateGridView();
-        LuckFragment luckFragment = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
 
         updateGoalIVsFragment();
         updateLuckFragment(ivManager.getBestCombinations());
@@ -165,6 +162,8 @@ public class MainActivity extends ActionBarActivity
                 .addTestDevice("AB68924514A4CDD20D5D115C7174D722")
                 .addTestDevice("EE498B7BD93FDB4D08CD04DE6C09F09A")
                 .addTestDevice("815CB1AC3DD5926E21AE260FC94A4D6A")
+                .addTestDevice("8C7BA5C848E50217D49DACC26972F1B9")
+                .addTestDevice("C4BE91EE53C4D54137B99B336B805908")
                 .build();
 
         adView.loadAd(adRequest);
@@ -212,18 +211,6 @@ public class MainActivity extends ActionBarActivity
         return ivManager.getGoalPokemon();
     }
     public boolean goalExists() {return ivManager.getGoalPokemon() != null;}
-
-    void    saveBoolean(String key, Boolean value) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor prefEditor = sharedPref.edit();
-        prefEditor.putBoolean(key,value);
-        prefEditor.apply();
-    }
-    Boolean readBoolean(String key, Boolean assumedValue) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        return sharedPref.getBoolean(key, assumedValue);
-
-    }
 
     void createGoalIVsFragment(Bundle savedInstanceState) {
         // Check that the activity is using the layout version with
@@ -325,7 +312,6 @@ public class MainActivity extends ActionBarActivity
         updateLuckFragment(ivManager.getBestCombinations());
     }
 
-    @Deprecated
     void saveData() {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -335,24 +321,6 @@ public class MainActivity extends ActionBarActivity
 
         jsonString = gson.toJson(ivManager.getStoredPokemonList());
         prefEditor.putString("jsonPokemonList", jsonString);
-
-//        jsonString = gson.toJson(ivManager.getDittosList());
-//        prefEditor.putString("jsonDittoList",jsonString);
-
-//        jsonString = gson.toJson(ivManager.getMainIVs());
-//        prefEditor.putString("jsonCurrentMainIVs",jsonString);
-
-//        jsonString = gson.toJson(ivManager.getMaleIVs());
-//        prefEditor.putString("jsonCurrentMaleIVs",jsonString);
-//
-//        jsonString = gson.toJson(ivManager.getFemaleIVs());
-//        prefEditor.putString("jsonCurrentFemaleIVs",jsonString);
-//
-//        jsonString = gson.toJson(ivManager.getGoalIVs());
-//        prefEditor.putString("jsonCurrentGoalIVs",jsonString);
-
-//        jsonString = gson.toJson(ivManager.getActivePokemons());
-//        prefEditor.putString("jsonCurrentActivePokemons",jsonString);
 
         jsonString = gson.toJson(ivManager.getGoalPokemon());
         prefEditor.putString("jsonCurrentGoal",jsonString);
@@ -364,26 +332,13 @@ public class MainActivity extends ActionBarActivity
         jsonString = gson.toJson(l.getShinyOptions());
         prefEditor.putString("jsonShinyOptions",jsonString);
 
-
-//        jsonString = gson.toJson(ivManager.getMaleItem());
-//        prefEditor.putString("jsonCurrentMaleItem",jsonString);
-//
-//        jsonString = gson.toJson(ivManager.getFemaleItem());
-//        prefEditor.putString("jsonCurrentFemaleItem",jsonString);
-//
-//        jsonString = gson.toJson(ivManager.getShinyOptions());
-//        prefEditor.putString("jsonCurrentShinyOptions",jsonString);
-
         prefEditor.apply();
 
 
     }
-    @Deprecated
     void readData() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String jsonString;
-
-        Map<String,?> keys1 = sharedPref.getAll();
 
         jsonString = sharedPref.getString("jsonPokemonList",null);
         if(jsonString != null) {
@@ -391,18 +346,6 @@ public class MainActivity extends ActionBarActivity
             List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
             ivManager.setStoredPokemonList(eggList);
         }
-
-//        jsonString = sharedPref.getString("jsonDittoList",null);
-//        if(jsonString != null) {
-//            Type type = new TypeToken<List<HatchInfo>>(){}.getType();
-//            List<HatchInfo> dittoList = gson.fromJson(jsonString, type);
-//            ivManager.setDittosList(dittoList);
-//        }
-
-//        jsonString = sharedPref.getString("jsonCurrentMainIVs",null);
-//        if(jsonString != null) {
-//            ivManager.setMainIVs(gson.fromJson(jsonString,IvManager.MainIVs.class));
-//        }
 
         jsonString = sharedPref.getString("jsonCurrentGoal",null);
         if(jsonString != null) {
@@ -426,7 +369,7 @@ public class MainActivity extends ActionBarActivity
                         .build();
                 ivManager.storePokemon(p);
             }
-            sharedPref.edit().remove("jsonDittoList").commit();
+            sharedPref.edit().remove("jsonDittoList").apply();
         }
 
         jsonString = sharedPref.getString("jsonEggList",null);
@@ -436,17 +379,13 @@ public class MainActivity extends ActionBarActivity
             for(int i = 0; i < eggList.size(); i++) {
                 PokemonInfo p = new PokemonInfo.Builder()
                         .id(0)
-                        .gender(Gender.GENDERLESS)
+                        .gender(eggList.get(i).gender)
                         .IVs(eggList.get(i).IVs)
                         .build();
                 ivManager.storePokemon(p);
             }
             sharedPref.edit().remove("jsonEggList").apply();
         }
-        Map<String,?> keys2 = sharedPref.getAll();
-        int x = 2;
-        int y = 4;
-
     }
 
 
@@ -478,5 +417,11 @@ public class MainActivity extends ActionBarActivity
             return (gson.fromJson(jsonString, Integer.class));
         }
         else return 0;
+    }
+
+
+    @Override
+    public PokemonInfo getGoalData() {
+        return getGoal();
     }
 }

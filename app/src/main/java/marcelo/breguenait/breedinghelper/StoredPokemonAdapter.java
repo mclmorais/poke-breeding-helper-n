@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class StoredPokemonAdapter extends BaseAdapter{
+class StoredPokemonAdapter extends BaseAdapter{
 
     private class PreloadedDrawables {
         Drawable maleIcon;
@@ -65,9 +65,9 @@ public class StoredPokemonAdapter extends BaseAdapter{
 
     }
 
-    PreloadedDrawables preloadedDrawables;
+    private final PreloadedDrawables preloadedDrawables;
 
-    public List<PokemonInfo> hatchList;
+    private List<PokemonInfo> hatchList;
     private ArrayList<UUID> keysList;
     private final LayoutInflater inflater;
 

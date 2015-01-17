@@ -1,18 +1,17 @@
 package marcelo.breguenait.breedinghelper;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -44,9 +43,9 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         int loadShinyOptions();
     }
     private class PreloadedDrawables {
-        Drawable maleIcon;
-        Drawable femaleIcon;
-        Drawable genderlessIcon;
+        final Drawable maleIcon;
+        final Drawable femaleIcon;
+        final Drawable genderlessIcon;
         final Drawable[] IVActive = new Drawable[6];
         final Drawable[] IVInactive = new Drawable[6];
 
@@ -54,8 +53,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
 
         private PreloadedDrawables(Context c) {
 
-            maleIcon = c.getResources().getDrawable(R.drawable.symbol_male);
-            maleIcon = maleIcon.getConstantState().newDrawable();
+            maleIcon = c.getResources().getDrawable(R.drawable.symbol_male).getConstantState().newDrawable();
             femaleIcon = c.getResources().getDrawable(R.drawable.symbol_female).getConstantState().newDrawable();
             genderlessIcon = c.getResources().getDrawable(R.drawable.symbol_genderless);
 
@@ -77,7 +75,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         Drawable getGenderDrawable(Gender gender) {
             if (gender == Gender.MALE)          return maleIcon;
             else if (gender == Gender.FEMALE)   return femaleIcon;
-            else                                return genderlessIcon; //TODO: fazer genderless
+            else                                return genderlessIcon;
         }
 
         Drawable getIVDrawable(int position, boolean active) {
@@ -90,22 +88,21 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
 
     }
 
-    boolean showOnlyBestChance = true;
+    private boolean showOnlyBestChance = true;
 
-    PreloadedDrawables preloadedDrawables;
+    private PreloadedDrawables preloadedDrawables;
 
-    List<ChanceData> chanceDataList;
-    List<View> interfaceChanceList = new ArrayList<>();
+    private List<ChanceData> chanceDataList;
+    private final List<View> interfaceChanceList = new ArrayList<>();
 
     private TemporaryLuckInterface mListener;
-    LinearLayout layoutChances;
-    float layoutChancesHeight;
-    LayoutInflater inflater2;
-    ToggleButton buttonToggleChances;
-    CheckBox checkBoxDestinyKnot;
-    ImageButton buttonOptions;
+    private LinearLayout layoutChances;
+    private LayoutInflater inflater2;
+    private ToggleButton buttonExpandChances;
+    private CheckBox checkBoxDestinyKnot;
+    private ImageButton buttonOptions;
 
-    int shinyOptions;
+    private int shinyOptions;
 
 
     public LuckFragment() {
@@ -124,12 +121,10 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
 
         inflater2 = (LayoutInflater) getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        layoutChancesHeight = convertDpToPixel(48, getActivity().getApplicationContext());
-
-        buttonToggleChances = (ToggleButton) v.findViewById(R.id.luckFragmentExpandCollapseButton);
+        buttonExpandChances = (ToggleButton) v.findViewById(R.id.luckFragmentExpandCollapseButton);
 
 
-        buttonToggleChances.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        buttonExpandChances.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 showOnlyBestChance = isChecked;
@@ -174,11 +169,25 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         chanceDataList = new ArrayList<>(list);
 
         layoutChances.removeAllViews();
-
         interfaceChanceList.clear();
 
+        if(list.isEmpty()) {
+            int targetHeight = (int) convertDpToPixel(32,getActivity().getApplicationContext());
+            View noMatch = inflater2.inflate(R.layout.text_no_matches,layoutChances,false);
+            interfaceChanceList.add(noMatch);
+            layoutChances.addView(noMatch);
+            ResizeAnimation r = new ResizeAnimation(layoutChances,targetHeight);
+            r.setDuration(300);
+            layoutChances.startAnimation(r);
+
+            buttonExpandChances.setEnabled(false);
+            buttonExpandChances.setChecked(true);
+            return;
 
 
+        }
+
+        /*Inflates generic chance views based on how many chances (up to a maximum)*/
         for(int i = 0; i < list.size(); i++) {
             if(showOnlyBestChance) {
                 if(i > 0) break;
@@ -186,35 +195,36 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
             else {
                 if(i > 4) break;
             }
-            if(list.get(i).chance == 0) continue;
 
+            /*Adds separators in between views*/
             if(!interfaceChanceList.isEmpty()) {
-                View sep = new View(getActivity().getApplicationContext());
+                View separator = new View(getActivity().getApplicationContext());
                 ViewGroup.LayoutParams viewLp = new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) convertDpToPixel(1, getActivity().getApplicationContext()));
-                sep.setLayoutParams(viewLp);
-                sep.setBackgroundColor(getResources().getColor(R.color.background_light_gray));
-                sep.setVisibility(View.VISIBLE);
-                layoutChances.addView(sep);
+                separator.setLayoutParams(viewLp);
+                separator.setBackgroundColor(getResources().getColor(R.color.background_light_gray));
+                separator.setVisibility(View.VISIBLE);
+                layoutChances.addView(separator);
             }
 
             View v = inflater2.inflate(R.layout.dynamic_view_layout_chance_data,layoutChances,false);
             layoutChances.addView(v);
             interfaceChanceList.add(v);
-
-
         }
 
-        if(list.size() < 2) buttonToggleChances.setEnabled(false);
-        else buttonToggleChances.setEnabled(true);
+        /*Decides on the expand/collapse button behavior based on how many chances there are*/
+        if(list.size() < 2) {
+            buttonExpandChances.setEnabled(false);
+            buttonExpandChances.setChecked(true);
+        }
+        else buttonExpandChances.setEnabled(true);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)convertDpToPixel(56,getActivity().getApplicationContext()));
-
-        params.setMargins(10,10,10,10);
+        int margin = (int) convertDpToPixel(5,getActivity().getApplicationContext());
+        params.setMargins(margin,margin,margin,margin);
 
         for(int i = 0; i < interfaceChanceList.size(); i++) {
 
             interfaceChanceList.get(i).setLayoutParams(params);
-
 
             TextView v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceFirstNumber);
             v.setText(String.valueOf(list.get(i).firstPokemonNumber+1));
@@ -277,12 +287,12 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         }
         int targetHeight = (int) (interfaceChanceList.size()*convertDpToPixel(66,getActivity().getApplicationContext()));
         //if(targetHeight == 0) targetHeight = (int) layoutChancesHeight;
-        if(targetHeight == 0) {
-            targetHeight = (int) convertDpToPixel(32,getActivity().getApplicationContext());
-            View noMatch = inflater2.inflate(R.layout.text_no_matches,layoutChances,false);
-            interfaceChanceList.add(noMatch);
-            layoutChances.addView(noMatch);
-        }
+//        if(targetHeight == 0) {
+//            targetHeight = (int) convertDpToPixel(32,getActivity().getApplicationContext());
+//            View noMatch = inflater2.inflate(R.layout.text_no_matches,layoutChances,false);
+//            interfaceChanceList.add(noMatch);
+//            layoutChances.addView(noMatch);
+//        }
         ResizeAnimation r = new ResizeAnimation(layoutChances,targetHeight);
         r.setDuration(300);
         layoutChances.startAnimation(r);
@@ -333,11 +343,10 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
      * @param context Context to get resources and device specific display metrics
      * @return A float value to represent px equivalent to dp depending on device density
      */
-    public static float convertDpToPixel(float dp, Context context){
+    private static float convertDpToPixel(float dp, Context context){
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
-        float px = dp * (metrics.densityDpi / 160f);
-        return px;
+        return dp * (metrics.densityDpi / 160f);
     }
 
     /**
@@ -350,8 +359,8 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
     public static float convertPixelsToDp(float px, Context context){
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
-        float dp = px / (metrics.densityDpi / 160f);
-        return dp;
+        return px / (metrics.densityDpi / 160f);
+
     }
 
     @Override

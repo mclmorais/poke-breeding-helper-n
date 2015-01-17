@@ -18,11 +18,11 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/label_filter"
             android:id="@+id/textViewLabelSelectPokemon"
-            android:textSize="12dp"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <EditText
-            android:hint="Pokémon Name"
+            android:hint="@string/label_pokemon_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editTextSelectPokemon"
@@ -36,9 +36,9 @@
         android:gravity="center_vertical">
 
         <CheckBox
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Goal Egg-group compatible"
+            android:text="@string/label_compatible_pokemons"
             android:id="@+id/checkBoxSelectPokemonCompatible"
             android:enabled="true"
             android:layout_weight="70"
