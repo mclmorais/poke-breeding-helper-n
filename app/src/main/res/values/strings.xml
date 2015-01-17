@@ -85,7 +85,7 @@
     <string name="label_stored_pokemons">Stored Pokemons</string>
     <string name="label_remove">REMOVE</string>
     <string name="label_add">ADD</string>
-    <string name="hint_store_pokemons">Store bred pokemons here to check for matches!</string>
+    <string name="hint_store_pokemons">Store bred pokemons and potential parents here to check for matches!</string>
     <string name="hint_remove_pokemons">Click on the pokemon you want to remove</string>
     <string name="label_pokemon_name">Pokémon Name</string>
     <string name="label_compatible_pokemons">Compatible Pokemons</string>
