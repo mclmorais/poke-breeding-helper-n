@@ -58,8 +58,10 @@ public class MainActivity extends ActionBarActivity
 
     @Override
     public void onToolTipViewClicked(ToolTipView toolTipView) {
-        if(toolTipView == viewGoalIVsTooltip)
-            saveBoolean("hasSeenTooltipGoalIVs",true);
+        if(toolTipView == viewGoalIVsTooltip) {
+            saveBoolean("hasSeenTooltipGoalIVs", true);
+            tooltipAddPokemons();
+        }
         else if (toolTipView == viewAddPokemonsTooltip)
             saveBoolean("hasSeenTooltipAddPokemons",true);
     }
@@ -76,6 +78,9 @@ public class MainActivity extends ActionBarActivity
             tooltipAddPokemons();
             return;
         }
+
+        if(viewGoalIVsTooltip != null)
+            return;
 
         ToolTip toolTip = new ToolTip()
                 .withText("Select the Pokémon and the IVs " + System.getProperty("line.separator") + "you want as a goal below")
@@ -101,6 +106,8 @@ public class MainActivity extends ActionBarActivity
         if(readBoolean("hasSeenTooltipAddPokemons",false)) {
             return;
         }
+
+        if(viewAddPokemonsTooltip != null) return;
 
         ToolTip toolTip = new ToolTip()
                 .withText("Add potential parents here and" + System.getProperty("line.separator") + "the app will tell you when" + System.getProperty("line.separator") + "a match is found")
@@ -373,8 +380,12 @@ public class MainActivity extends ActionBarActivity
 
         if(c == null) return;
 
-        if(c.size() >= 2) {
+        if(c.size() > 0) {
             saveBoolean("hasSeenTooltipAddPokemons",true);
+            if(viewAddPokemonsTooltip != null) {
+                viewAddPokemonsTooltip.remove();
+                viewAddPokemonsTooltip = null;
+            }
         }
 
         LuckFragment frag = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
@@ -485,7 +496,10 @@ public class MainActivity extends ActionBarActivity
             counter += p.IVs[i];
         }
         if(counter > 0 && p.id > 0) {
-            viewGoalIVsTooltip.remove();
+            if(viewGoalIVsTooltip != null) {
+                viewGoalIVsTooltip.remove();
+                viewGoalIVsTooltip = null;
+            }
             tooltipAddPokemons();
             saveBoolean("hasSeenTooltipGoalIVs",true);
         }

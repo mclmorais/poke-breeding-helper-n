@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 
-    <release version="3.0" versioncode="12">
+    <release version="3.0a" versioncode="13">
         <change>
-            The app has been redesigned! You can now add pokémons instead of generic hatches!
+            3.0a: Added small tooltip tutorial for new users. Fixed issue where the app would assume a Bulbasaur when no goal pokémon was selected.
+        </change>
+        <change>
+            The app has been redesigned! You no longer need to add parents. Just store all your pokémons and the app will automatically select the best pairs!
         </change>
         <change>
             Egg Groups are now considered! Add all your pokémons to the app, and only the ones compatible with your current goal will be selected!
@@ -12,8 +15,9 @@
             Genderless pokemon logic added! The app is now able to handle genderless pokémons that can breed.
         </change>
         <change>
-            Remember: if something isn't working right for you, report it through the app and I'll try to fix is as soon as possible.
+            If something isn't working right for you, report it through the app and I'll try to fix is as soon as possible.
         </change>
+
     </release>
 
     <release version="2.0b" versioncode="9" >

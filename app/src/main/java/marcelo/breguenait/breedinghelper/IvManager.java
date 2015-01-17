@@ -63,7 +63,7 @@ enum GenderRestriction {
 }
 
 class EquippedItems {
-    private Item maleItem = Item.NO_ITEM;
+    private Item maleItem = Item.DESTINY_KNOT; //Temporário até eu pensar melhor o que vou fazer com esses itens
     private Item femaleItem = Item.NO_ITEM;
 
     public Item getMaleItem() {
