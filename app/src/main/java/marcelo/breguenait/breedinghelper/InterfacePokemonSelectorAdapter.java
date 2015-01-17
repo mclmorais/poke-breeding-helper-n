@@ -95,6 +95,7 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 filteredPokemonList = (ArrayList<PokemonDataBlock>) results.values;
+                if(filteredPokemonList == null) filteredPokemonList = new ArrayList<>();
                 notifyDataSetChanged();
             }
 
@@ -106,11 +107,16 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
 
                 constraint = constraint.toString().toLowerCase();
                 for (int i = 0; i < pokemonList.size(); i++) {
+
+
                     PokemonDataBlock currentPokemonData = pokemonList.get(i);
 
                     /*If only compatible pokemons should be shown, ignores pokemons that don't have
                     * at least one egg group compatible with the current goal pokemon.*/
                     if(showOnlyCompatible) {
+                        if(goalPokemon.id <= 0)
+                            break;
+
                         boolean group1Compatible = false, group2Compatible = false;
                         EggGroup eggGroup1 = currentPokemonData.eggGroup1;
                         EggGroup eggGroup2 = currentPokemonData.eggGroup2;

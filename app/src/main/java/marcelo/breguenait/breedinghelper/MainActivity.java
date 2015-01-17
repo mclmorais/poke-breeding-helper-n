@@ -4,16 +4,19 @@ package marcelo.breguenait.breedinghelper;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -22,6 +25,9 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nhaarman.supertooltips.ToolTip;
+import com.nhaarman.supertooltips.ToolTipRelativeLayout;
+import com.nhaarman.supertooltips.ToolTipView;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -36,7 +42,8 @@ public class MainActivity extends ActionBarActivity
         implements
         StoredPokemonsFragment.OnPokemonListChanged,
         LuckFragment.TemporaryLuckInterface,
-        GoalIVsFragment.OnGoalUpdate{
+        GoalIVsFragment.OnGoalUpdate,
+        ToolTipView.OnToolTipViewClickedListener{
 
     private View cardAd;
     private AdView adView;
@@ -44,8 +51,74 @@ public class MainActivity extends ActionBarActivity
     private IvManager ivManager;
     private final Gson gson = new Gson();
 
+    ToolTipView viewGoalIVsTooltip;
+    ToolTipView viewAddPokemonsTooltip;
+
+    ToolTipRelativeLayout toolTipRelativeLayout;
 
     @Override
+    public void onToolTipViewClicked(ToolTipView toolTipView) {
+        if(toolTipView == viewGoalIVsTooltip)
+            saveBoolean("hasSeenTooltipGoalIVs",true);
+        else if (toolTipView == viewAddPokemonsTooltip)
+            saveBoolean("hasSeenTooltipAddPokemons",true);
+    }
+
+    void setTooltips() {
+        toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.tooltipLayout);
+        tooltipGoalIVs();
+
+    }
+
+    void tooltipGoalIVs() {
+
+        if(readBoolean("hasSeenTooltipGoalIVs",false)){
+            tooltipAddPokemons();
+            return;
+        }
+
+        ToolTip toolTip = new ToolTip()
+                .withText("Select the Pokémon and the IVs " + System.getProperty("line.separator") + "you want as a goal below")
+                .withColor(getResources().getColor(R.color.accent))
+                .withShadow()
+                .withTextColor(Color.WHITE)
+                .withAnimationType(ToolTip.AnimationType.FROM_TOP);
+
+
+        GoalIVsFragment f = (GoalIVsFragment) getFragmentManager().findFragmentById(R.id.frameGoalIVsFragmentContainer);
+
+
+        View v = f.getView();
+        if(v != null) {
+            CardView c = (CardView) v.findViewById(R.id.goalCardView);
+
+            viewGoalIVsTooltip = toolTipRelativeLayout.showToolTipForView(toolTip, c);
+            viewGoalIVsTooltip.setOnToolTipViewClickedListener(this);
+        }
+    }
+
+    void tooltipAddPokemons() {
+        if(readBoolean("hasSeenTooltipAddPokemons",false)) {
+            return;
+        }
+
+        ToolTip toolTip = new ToolTip()
+                .withText("Add potential parents here and" + System.getProperty("line.separator") + "the app will tell you when" + System.getProperty("line.separator") + "a match is found")
+                .withColor(getResources().getColor(R.color.accent))
+                .withShadow()
+                .withTextColor(Color.WHITE)
+                .withAnimationType(ToolTip.AnimationType.FROM_TOP);
+
+        StoredPokemonsFragment f = (StoredPokemonsFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        View v = f.getView();
+        if(v != null) {
+            Button b = (Button) v.findViewById(R.id.buttonFragmentPokemonListAdd);
+            viewAddPokemonsTooltip = toolTipRelativeLayout.showToolTipForView(toolTip,b);
+
+
+        }
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -57,11 +130,15 @@ public class MainActivity extends ActionBarActivity
 
         readData();
 
+
+
         ivManager.updateBestCombination();
 
         createGoalIVsFragment(savedInstanceState);
         createPokemonListFragment(savedInstanceState);
         createChanceFragment(savedInstanceState);
+
+
 
 //        cardMainIVs.refreshInterface();
 //        cardChance.updateGoalIvChance();
@@ -88,6 +165,8 @@ public class MainActivity extends ActionBarActivity
 
         updateGoalIVsFragment();
         updateLuckFragment(ivManager.getBestCombinations());
+
+        setTooltips();
 
 
     }
@@ -235,7 +314,11 @@ public class MainActivity extends ActionBarActivity
             getFragmentManager().beginTransaction()
                     .add(R.id.frameGoalIVsFragmentContainer, firstFragment).commit();
 
+
+
         }
+
+
     }
     void createPokemonListFragment(Bundle savedInstanceState) {
         // However, if we're being restored from a previous state,
@@ -289,6 +372,10 @@ public class MainActivity extends ActionBarActivity
     void updateLuckFragment(List<ChanceData> c) {
 
         if(c == null) return;
+
+        if(c.size() >= 2) {
+            saveBoolean("hasSeenTooltipAddPokemons",true);
+        }
 
         LuckFragment frag = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
         frag.updateCurrentChances(c);
@@ -392,6 +479,16 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void updateGoal(PokemonInfo p) {
         ivManager.setGoalPokemon(p);
+
+        int counter = 0;
+        for(int i = 0; i < 6; i++) {
+            counter += p.IVs[i];
+        }
+        if(counter > 0 && p.id > 0) {
+            viewGoalIVsTooltip.remove();
+            tooltipAddPokemons();
+            saveBoolean("hasSeenTooltipGoalIVs",true);
+        }
         updateLuckFragment(ivManager.getBestCombinations());
     }
 
@@ -424,4 +521,17 @@ public class MainActivity extends ActionBarActivity
     public PokemonInfo getGoalData() {
         return getGoal();
     }
+
+    void    saveBoolean(String key, Boolean value) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor prefEditor = sharedPref.edit();
+        prefEditor.putBoolean(key,value);
+        prefEditor.apply();
+    }
+    Boolean readBoolean(String key, Boolean assumedValue) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        return sharedPref.getBoolean(key, assumedValue);
+
+    }
+
 }

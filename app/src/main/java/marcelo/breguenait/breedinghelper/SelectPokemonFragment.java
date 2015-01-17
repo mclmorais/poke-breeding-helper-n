@@ -79,6 +79,8 @@ public class SelectPokemonFragment extends PopupDialogFragment {
 
         goalPokemon = mCallback.getGoal();
 
+
+
         if(goalPokemon != null)
             interfaceSelectorAdapter.setGoal(mCallback.getGoal());
 
@@ -112,6 +114,7 @@ public class SelectPokemonFragment extends PopupDialogFragment {
         });
 
         checkBoxCompatible = (CheckBox) view.findViewById(R.id.checkBoxSelectPokemonCompatible);
+
 
         if(getArguments().getBoolean("showOnlyCompatible",false)) {
             if(goalPokemon != null) {

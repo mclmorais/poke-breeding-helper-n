@@ -25,7 +25,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     private ImageView selectedIcon;
     private TextView selectedName;
 
-    private int selectedPokemonId = 1;
+    private int selectedPokemonId = 0;
 
     @Override
     public void onAttach(Activity activity) {
@@ -102,6 +102,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
 
     void refreshGoal(PokemonInfo goal) {
         if(goal == null) return;
+        if(goal.id <= 0) return;
         selectedPokemonId = goal.id;
         updateInterfacePokemon(goal.id);
         for(int i = 0; i < 6; i++) {
