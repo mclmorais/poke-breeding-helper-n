@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
 
-    <release version="3.0a" versioncode="13">
+    <release version="3.2" versioncode="14">
         <change>
-            3.0a: Added small tooltip tutorial for new users. Fixed issue where the app would assume a Bulbasaur when no goal pokémon was selected.
+            3.2: Fixed minor issues and typos.
         </change>
         <change>
-            The app has been redesigned! You no longer need to add parents. Just store all your pokémons and the app will automatically select the best pairs!
+            The app has been redesigned! You no longer need to add parents. Just store all your Pokémon and the app will automatically select the best pairs!
         </change>
         <change>
-            Egg Groups are now considered! Add all your pokémons to the app, and only the ones compatible with your current goal will be selected!
+            Egg Groups are now considered! Add all your Pokémon to the app, and only the ones compatible with your current goal will be selected!
         </change>
         <change>
-            Genderless pokemon logic added! The app is now able to handle genderless pokémons that can breed.
+            Genderless pokemon logic added! The app is now able to handle genderless Pokémon that can breed.
         </change>
         <change>
             If something isn't working right for you, report it through the app and I'll try to fix is as soon as possible.

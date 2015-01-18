@@ -427,6 +427,7 @@ public class MainActivity extends ActionBarActivity
         updateLuckFragment(ivManager.getBestCombinations());
         updatePokemonListFragment();
     }
+
     @Override
     public void removePokemon(int position) {
         ivManager.removePokemon(position);

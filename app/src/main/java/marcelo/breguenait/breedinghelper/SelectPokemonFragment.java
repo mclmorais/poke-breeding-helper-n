@@ -127,7 +127,7 @@ public class SelectPokemonFragment extends PopupDialogFragment {
         if(mCallback.showOnlyBasic()) {
             interfaceSelectorAdapter.setShowOnlyBasic(mCallback.showOnlyBasic());
             checkBoxCompatible.setChecked(true);
-            checkBoxCompatible.setText("Basic Pokemons");
+            checkBoxCompatible.setText("Basic Pokémon");
         }
 
         checkBoxCompatible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
