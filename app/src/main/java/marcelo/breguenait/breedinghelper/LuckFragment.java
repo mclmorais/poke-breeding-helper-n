@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link marcelo.breguenait.breedinghelper.LuckFragment.TemporaryLuckInterface} interface
+ * {@link marcelo.breguenait.breedinghelper.LuckFragment.UpdateLuckInterface} interface
  * to handle interaction events.
  */
 public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuckOptionsChange{
@@ -37,11 +37,12 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
     public static final int CHARM = 0x02;
     public static final int MASUDA = 0x04;
 
-    public interface TemporaryLuckInterface {
+    public interface UpdateLuckInterface {
         void setDestinyKnot(boolean b);
         boolean updateDestinyKnotChance();
         int loadShinyOptions();
     }
+
     private class PreloadedDrawables {
         final Drawable maleIcon;
         final Drawable femaleIcon;
@@ -95,7 +96,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
     private List<ChanceData> chanceDataList;
     private final List<View> interfaceChanceList = new ArrayList<>();
 
-    private TemporaryLuckInterface mListener;
+    private UpdateLuckInterface mListener;
     private LinearLayout layoutChances;
     private LayoutInflater inflater2;
     private ToggleButton buttonExpandChances;
@@ -109,7 +110,20 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         // Required empty public constructor
     }
 
-
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            Fragment targetFragment = getTargetFragment();
+            if(targetFragment == null)
+                mListener = (UpdateLuckInterface) activity;
+            else
+                mListener = (UpdateLuckInterface) getTargetFragment();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -160,6 +174,11 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
 
         return v;
 
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     public void updateCurrentChances(List<ChanceData> list) {
@@ -239,7 +258,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
             if(chance > 0.01)
                 v.setText(String.format("%.2f",chance) + "%");
             else
-               v.setText("<0.01%");
+                v.setText("<0.01%");
 
             ImageView firstIcon = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstIcon);
             firstIcon.setBackground(PokemonData.getInstance().getDrawableFromId(list.get(i).firstPokemon.id).getConstantState().newDrawable());
@@ -286,37 +305,10 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
 
         }
         int targetHeight = (int) (interfaceChanceList.size()*convertDpToPixel(66,getActivity().getApplicationContext()));
-        //if(targetHeight == 0) targetHeight = (int) layoutChancesHeight;
-//        if(targetHeight == 0) {
-//            targetHeight = (int) convertDpToPixel(32,getActivity().getApplicationContext());
-//            View noMatch = inflater2.inflate(R.layout.text_no_matches,layoutChances,false);
-//            interfaceChanceList.add(noMatch);
-//            layoutChances.addView(noMatch);
-//        }
+
         ResizeAnimation r = new ResizeAnimation(layoutChances,targetHeight);
         r.setDuration(300);
         layoutChances.startAnimation(r);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if(targetFragment == null)
-                mListener = (TemporaryLuckInterface) activity;
-            else
-                mListener = (TemporaryLuckInterface) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     void openLuckOptionsFragment() {

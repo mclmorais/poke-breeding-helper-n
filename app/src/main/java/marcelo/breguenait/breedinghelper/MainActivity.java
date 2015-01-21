@@ -41,7 +41,7 @@ class Constants {
 public class MainActivity extends ActionBarActivity
         implements
         StoredPokemonsFragment.OnPokemonListChanged,
-        LuckFragment.TemporaryLuckInterface,
+        LuckFragment.UpdateLuckInterface,
         GoalIVsFragment.OnGoalUpdate,
         ToolTipView.OnToolTipViewClickedListener{
 
