@@ -61,6 +61,7 @@
     </LinearLayout>
 
     <GridView
+        android:listSelector="@android:color/transparent"
         android:verticalSpacing="2dp"
         android:animationCache="false"
         android:scrollingCache="false"

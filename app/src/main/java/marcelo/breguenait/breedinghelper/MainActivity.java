@@ -40,7 +40,7 @@ class Constants {
 
 public class MainActivity extends ActionBarActivity
         implements
-        StoredPokemonsFragment.OnPokemonListChanged,
+        StoredPokemonFragment.OnPokemonListChanged,
         LuckFragment.UpdateLuckInterface,
         GoalIVsFragment.OnGoalUpdate,
         ToolTipView.OnToolTipViewClickedListener{
@@ -138,7 +138,7 @@ public class MainActivity extends ActionBarActivity
                 .withTextColor(Color.WHITE)
                 .withAnimationType(ToolTip.AnimationType.FROM_TOP);
 
-        StoredPokemonsFragment f = (StoredPokemonsFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        StoredPokemonFragment f = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         View v = f.getView();
         if(v != null) {
             Button b = (Button) v.findViewById(R.id.buttonFragmentPokemonListAdd);
@@ -188,7 +188,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onStart() {
         super.onStart();
-        StoredPokemonsFragment fragList = (StoredPokemonsFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        StoredPokemonFragment fragList = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         //fragList.setHatchAdapter(ivManager.getHatchesList(), getApplicationContext());
         fragList.setHatchAdapter(ivManager.getStoredPokemonList(), getApplicationContext());
         fragList.updateGridView();
@@ -357,17 +357,17 @@ public class MainActivity extends ActionBarActivity
         if (savedInstanceState != null) {
             return;
         }
-        StoredPokemonsFragment storedPokemonsFragment = new StoredPokemonsFragment();
+        StoredPokemonFragment storedStoredPokemonFragment = new StoredPokemonFragment();
 
         // In case this activity was started with special instructions from an
         // Intent, pass the Intent's extras to the fragment as arguments
-        storedPokemonsFragment.setArguments(getIntent().getExtras());
+        storedStoredPokemonFragment.setArguments(getIntent().getExtras());
 
 
 
         // Add the fragment to the 'fragment_container' FrameLayout
             getFragmentManager().beginTransaction()
-                .add(R.id.framePokemonListFragmentContainer, storedPokemonsFragment).commit();
+                .add(R.id.framePokemonListFragmentContainer, storedStoredPokemonFragment).commit();
 
 
     }
@@ -396,7 +396,7 @@ public class MainActivity extends ActionBarActivity
        // cardChance.updateEggChance();
 
     void updatePokemonListFragment() {
-        StoredPokemonsFragment frag = (StoredPokemonsFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        StoredPokemonFragment frag = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         frag.updateGridView();
     }
     void updateLuckFragment(List<ChanceData> c) {
@@ -572,4 +572,8 @@ public class MainActivity extends ActionBarActivity
 
     }
 
+    @Override
+    public PokemonInfo getSelectedPokemonData(int position) {
+        return ivManager.getStoredPokemon(position);
+    }
 }

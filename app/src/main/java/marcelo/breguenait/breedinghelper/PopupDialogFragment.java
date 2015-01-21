@@ -61,7 +61,6 @@ public class PopupDialogFragment extends DialogFragment {
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int screenWidth = (int) convertPixelsToDp(metrics.widthPixels,getActivity().getApplicationContext());
         if(sourceX < (screenWidth/2)) {
-            // Just an example; edit to suit your needs.
             params.x = sourceX + dpToPx(32); // about half of confirm button size left of source view
             params.y = sourceY -  dpToPx(32); // above source view
         }

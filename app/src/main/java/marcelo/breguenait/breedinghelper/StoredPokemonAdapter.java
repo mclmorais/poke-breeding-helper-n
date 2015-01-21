@@ -9,9 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 
 class StoredPokemonAdapter extends BaseAdapter{
@@ -23,8 +21,6 @@ class StoredPokemonAdapter extends BaseAdapter{
         Drawable missingno;
         final Drawable[] IVActive = new Drawable[6];
         final Drawable[] IVInactive = new Drawable[6];
-
-        boolean deleteMode = false;
 
         private PreloadedDrawables(Context c) {
 
@@ -68,7 +64,6 @@ class StoredPokemonAdapter extends BaseAdapter{
     private final PreloadedDrawables preloadedDrawables;
 
     private List<PokemonInfo> hatchList;
-    private ArrayList<UUID> keysList;
     private final LayoutInflater inflater;
 
     private boolean deleteMode = false;
@@ -141,7 +136,7 @@ class StoredPokemonAdapter extends BaseAdapter{
         if(deleteMode)
             holder.frame.setBackgroundResource(R.drawable.layer_card_background_round_red);
         else
-            holder.frame.setBackgroundResource(R.drawable.layer_card_background_round);
+            holder.frame.setBackgroundResource(R.drawable.layer_background_round_selector);
 
         if(pokemonInfo.id > 0)
             holder.icon.setBackground(data.getDrawableFromId(pokemonInfo.id).getConstantState().newDrawable());

@@ -1,0 +1,196 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="250dp"
+    android:layout_height="200dp"
+    tools:context="marcelo.breguenait.breedinghelper.StoredPokemonPopupFragment"
+    android:background="@drawable/layer_card_background">
+
+
+    <FrameLayout
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/frameLayout2"
+        android:background="@drawable/ic_egg_outline">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/placeholder_number_2"
+            android:id="@+id/textPokemonPopupNumber"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+    </FrameLayout>
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:id="@+id/imagePokemonPopupIcon"
+        android:background="@drawable/pkmn_297"
+        android:layout_alignParentTop="false"
+        android:layout_toRightOf="@+id/frameLayout2"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Hariyama"
+        android:id="@+id/textPokemonPopupName"
+        style="@style/CapsLabel"
+        android:textIsSelectable="false"
+        android:textSize="16sp"
+        android:layout_alignTop="@+id/imagePokemonPopupIcon"
+        android:layout_toRightOf="@+id/imagePokemonPopupIcon"
+        android:layout_toEndOf="@+id/imagePokemonPopupIcon" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:id="@+id/linearLayout4"
+        android:layout_below="@+id/textPokemonPopupName"
+        android:layout_toRightOf="@+id/imagePokemonPopupIcon"
+        android:layout_toEndOf="@+id/imagePokemonPopupIcon">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:id="@+id/imagePokemonPopupHP"
+            android:background="@drawable/iv_circle_clear" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:id="@+id/imagePokemonPopupATK"
+            android:background="@drawable/iv_triangle_clear" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:id="@+id/imagePokemonPopupDEF"
+            android:background="@drawable/iv_square_clear" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:id="@+id/imagePokemonPopupSATK"
+            android:background="@drawable/iv_heart_clear" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:id="@+id/imagePokemonPopupSDEF"
+            android:background="@drawable/iv_star_clear" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:id="@+id/imagePokemonPopupSPD"
+            android:background="@drawable/iv_diamond_clear" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Nature not set"
+        android:textAllCaps="true"
+        android:id="@+id/textPokemonPopupNature"
+        android:textIsSelectable="false"
+        android:textSize="14sp"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textPokemonPopupNature"
+        android:layout_marginTop="12dp"
+        android:id="@+id/linearLayout5"
+        android:layout_above="@+id/buttonPokemonPopupClose">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Egg Groups:"
+            android:id="@+id/textView7"
+            android:layout_gravity="center_horizontal"
+            style="@style/CapsLabel" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="WATER 2"
+            android:id="@+id/textPokemonPopupEggGroup1"
+            android:layout_gravity="center_horizontal"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="FIELD"
+            android:id="@+id/textPokemonPopupEggGroup2"
+            android:layout_gravity="center_horizontal"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_light_gray"
+        android:id="@+id/horizontalSeparator1"
+        android:layout_below="@+id/linearLayout5"
+        android:layout_centerHorizontal="true" />
+    <Button
+        android:textSize="16sp"
+        android:textAllCaps="true"
+        android:textColor="@color/primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="close"
+        android:id="@+id/buttonPokemonPopupClose"
+        android:visibility="visible"
+        android:background="@drawable/button_press_white_lightgray_selector"
+        android:textStyle="bold"
+        android:layout_weight="0.5"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="@style/MyRaisedButton"
+        android:layout_width="56dp"
+        android:layout_height="40dp"
+        android:text="Edit"
+        android:id="@+id/button"
+        android:layout_gravity="right"
+        android:textColor="@color/primary"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true" />
+
+    <TextView
+        style="@style/CapsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Nature:"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"
+        android:layout_below="@+id/button"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

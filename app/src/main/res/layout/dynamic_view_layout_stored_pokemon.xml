@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="48dp"
     android:layout_height="48dp"
-    android:background="@drawable/layer_card_background_round"
+    android:background="@drawable/layer_background_round_selector"
     android:id="@+id/frameDynamicHatch">
 
     <ImageView

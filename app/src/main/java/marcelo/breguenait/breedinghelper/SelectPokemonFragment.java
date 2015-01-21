@@ -178,8 +178,6 @@ public class SelectPokemonFragment extends PopupDialogFragment {
         }
     }
 
-
-
     @Override
     protected void setDialogPosition() {
 //        if(getArguments() == null) {

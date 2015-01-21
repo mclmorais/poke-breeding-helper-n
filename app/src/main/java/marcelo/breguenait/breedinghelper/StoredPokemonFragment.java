@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -21,7 +22,8 @@ import java.util.List;
 /**
  * Created by Marcelo on 21/12/2014.
  */
-public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupFragment.BuildPokemon{
+public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFragment.BuildPokemon,
+        StoredPokemonPopupFragment.OnPokemonPopupListener {
 
     private OnPokemonListChanged mCallback;
 
@@ -29,6 +31,7 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
         void addPokemonToList(PokemonInfo pokemon);
         void removePokemon(int position);
         PokemonInfo getGoalData();
+        PokemonInfo getSelectedPokemonData(int position);
     }
 
     private StoredPokemonAdapter storedPokemonAdapter;
@@ -60,13 +63,14 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_pokemon_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_stored_pokemon, container, false);
 
         gridViewPokemons = (GridView) view.findViewById(R.id.gridViewPokemonsList);
-        buttonAdd = (Button) view.findViewById(R.id.buttonFragmentPokemonListAdd);
-        buttonRemove = (ToggleButton) view.findViewById(R.id.buttonFragmentPokemonListRemove);
-        textHintStore = (TextView) view.findViewById(R.id.textViewHintStore);
-        textHintRemove = (TextView) view.findViewById(R.id.textViewHintDelete);
+        buttonAdd        = (Button) view.findViewById(R.id.buttonFragmentPokemonListAdd);
+        buttonRemove     = (ToggleButton) view.findViewById(R.id.buttonFragmentPokemonListRemove);
+        textHintStore    = (TextView) view.findViewById(R.id.textViewHintStore);
+        textHintRemove   = (TextView) view.findViewById(R.id.textViewHintDelete);
+
         textHintRemove.setVisibility(View.GONE);
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
@@ -99,13 +103,15 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if(buttonRemove.isChecked()) {
                     mCallback.removePokemon(i);
-
-
-
                     updateGridView();
+                }
+                else {
+                    openStoredPokemonPopupFragment(view, mCallback.getSelectedPokemonData(i));
                 }
             }
         });
+
+
         return view;
     }
 
@@ -124,6 +130,15 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
         fragment.setArguments(b);
         fragment.setTargetFragment(this,0);
         fragment.show(fm, "");
+    }
+
+    void openStoredPokemonPopupFragment(View callerView, PokemonInfo selectedPokemon) {
+        FragmentManager fragmentManager = getFragmentManager();
+        int callerViewPosition[] = new int[2];
+        callerView.getLocationOnScreen(callerViewPosition);
+        StoredPokemonPopupFragment fragment = StoredPokemonPopupFragment.newInstance(callerViewPosition, selectedPokemon);
+        fragment.setTargetFragment(this,0);
+        fragment.show(fragmentManager,"storedPokemonPopup");
     }
 
     void updateGridView(){
@@ -157,5 +172,10 @@ public class StoredPokemonsFragment extends Fragment implements AddPokemonPopupF
     @Override
     public PokemonInfo getGoal() {
         return mCallback.getGoalData();
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
