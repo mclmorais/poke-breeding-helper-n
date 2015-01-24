@@ -1933,7 +1933,7 @@
       "name": "Blissey",
       "egg_group_1": "FAIRY",
       "egg_group_2": "NONE",
-      "restricted_gender": "NONE",
+      "restricted_gender": "FEMALE_ONLY",
       "breeds": 113
     },
     {

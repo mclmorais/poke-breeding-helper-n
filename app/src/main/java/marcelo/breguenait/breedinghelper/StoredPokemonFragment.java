@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -22,13 +21,14 @@ import java.util.List;
 /**
  * Created by Marcelo on 21/12/2014.
  */
-public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFragment.BuildPokemon,
+public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFragment.OnBuildPokemon,
         StoredPokemonPopupFragment.OnPokemonPopupListener {
 
     private OnPokemonListChanged mCallback;
 
     interface OnPokemonListChanged {
         void addPokemonToList(PokemonInfo pokemon);
+        void editPokemon(PokemonInfo pokemon, int position);
         void removePokemon(int position);
         PokemonInfo getGoalData();
         PokemonInfo getSelectedPokemonData(int position);
@@ -106,7 +106,7 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
                     updateGridView();
                 }
                 else {
-                    openStoredPokemonPopupFragment(view, mCallback.getSelectedPokemonData(i));
+                    openStoredPokemonPopupFragment(view, mCallback.getSelectedPokemonData(i), i);
                 }
             }
         });
@@ -132,11 +132,11 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
         fragment.show(fm, "");
     }
 
-    void openStoredPokemonPopupFragment(View callerView, PokemonInfo selectedPokemon) {
+    void openStoredPokemonPopupFragment(View callerView, PokemonInfo selectedPokemon, int pokemonPos) {
         FragmentManager fragmentManager = getFragmentManager();
         int callerViewPosition[] = new int[2];
         callerView.getLocationOnScreen(callerViewPosition);
-        StoredPokemonPopupFragment fragment = StoredPokemonPopupFragment.newInstance(callerViewPosition, selectedPokemon);
+        StoredPokemonPopupFragment fragment = StoredPokemonPopupFragment.newInstance(callerViewPosition, selectedPokemon, pokemonPos);
         fragment.setTargetFragment(this,0);
         fragment.show(fragmentManager,"storedPokemonPopup");
     }
@@ -175,7 +175,11 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onPokemonAltered(PokemonInfo alteredPokemon, int position) {
+        mCallback.editPokemon(alteredPokemon,position);
+        storedPokemonAdapter.notifyDataSetChanged();
 
     }
+
+
 }

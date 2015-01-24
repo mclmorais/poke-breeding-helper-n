@@ -20,13 +20,15 @@ import android.widget.ToggleButton;
 
 public class AddPokemonPopupFragment extends PopupDialogFragment implements SelectPokemonFragment.OnPokemonSelectedListener{
 
-    public interface BuildPokemon {
+    public interface OnBuildPokemon {
         void onBuildPokemon(PokemonInfo pokemon);
         PokemonInfo getGoal();
     }
 
     private int selectedPokemonId = 0;
     private Gender pokemonGender;
+
+    private PokemonInfo selectedPokemon;
 
     private TextView selectedName;
     private ImageView selectedIcon;
@@ -40,18 +42,23 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
     private View buttonPokemonSelector;
 
-    private BuildPokemon mCallback;
+    private OnBuildPokemon mCallback;
 
     private boolean showOnlyCompatible;
-
-
 
     void updateInterfacePokemon(int id) {
         selectedPokemonId = id;
         String text = PokemonData.getInstance().getName(id);
         selectedName.setText(text);
-        if(id > 0)
-            selectedIcon.setBackground(PokemonData.getInstance().getDrawableFromId(id).getConstantState().newDrawable());
+//        if(id > 0)
+//            selectedIcon.setBackground(PokemonData.getInstance().getDrawableFromId(id).getConstantState().newDrawable());
+
+        String iconId = "pkmn_big_" + String.format("%03d", id);
+        selectedIcon.setBackgroundResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
+    }
+
+    public void setSelectedPokemon(PokemonInfo selectedPokemon) {
+        this.selectedPokemon = selectedPokemon;
     }
 
     @Override
@@ -62,9 +69,9 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         try {
             Fragment targetFragment = getTargetFragment();
             if(targetFragment == null)
-                mCallback = (BuildPokemon) activity;
+                mCallback = (OnBuildPokemon) activity;
             else
-                mCallback = (BuildPokemon) getTargetFragment();
+                mCallback = (OnBuildPokemon) getTargetFragment();
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement BuildPokemon");
@@ -104,7 +111,15 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
             updatePokemonGender(receivedId);
         }
 
-
+        if(selectedPokemon != null) {
+            updateInterfacePokemon(selectedPokemon.id);
+            updatePokemonGender(selectedPokemon.id);
+            for(int i = 0; i < 6; i++) {
+                checkBoxInputIVs[i].setChecked(selectedPokemon.IVs[i]==1);
+            }
+            if(selectedPokemon.gender != Gender.GENDERLESS)
+                togglePokemonGender.setChecked(selectedPokemon.gender == Gender.MALE?true:false);
+        }
 
         setDialogPosition();
         return view;

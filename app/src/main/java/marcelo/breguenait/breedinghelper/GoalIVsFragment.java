@@ -136,7 +136,9 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         selectedPokemonId = id;
         String name = PokemonData.getInstance().getName(id);
         selectedName.setText(name);
-        selectedIcon.setBackground(PokemonData.getInstance().getDrawableFromId(id).getConstantState().newDrawable());
+        String iconId = "pkmn_big_" + String.format("%03d", id);
+        selectedIcon.setBackgroundResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
+       // selectedIcon.setBackground(PokemonData.getInstance().getDrawableFromId(id).getConstantState().newDrawable());
     }
 
     @Override

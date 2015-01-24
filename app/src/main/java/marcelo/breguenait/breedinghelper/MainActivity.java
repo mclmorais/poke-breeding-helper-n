@@ -576,4 +576,9 @@ public class MainActivity extends ActionBarActivity
     public PokemonInfo getSelectedPokemonData(int position) {
         return ivManager.getStoredPokemon(position);
     }
+
+    @Override
+    public void editPokemon(PokemonInfo pokemon, int position) {
+        ivManager.editPokemon(pokemon,position);
+    }
 }
