@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="3.4" versioncode="16">
+        <change>
+            "Delete mode" will now be turned off if you decide to add a new Pokémon.
+        </change>
+    </release>
+
     <release version="3.3" versioncode="15">
         <change>
             New icons added to each Pokémon!

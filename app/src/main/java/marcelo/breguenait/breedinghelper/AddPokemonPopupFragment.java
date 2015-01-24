@@ -81,7 +81,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        setRetainInstance(true);
         View view = inflater.inflate(R.layout.fragment_add_pokemon, container, false);
 
         buttonPokemonSelector = view.findViewById(R.id.buttonSelectPokemon);

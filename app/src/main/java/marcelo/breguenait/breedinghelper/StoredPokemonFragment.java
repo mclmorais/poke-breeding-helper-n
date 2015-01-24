@@ -77,6 +77,7 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
             @Override
             public void onClick(View view) {
                 openAddPokemonFragment(view);
+                buttonRemove.setChecked(false);
             }
         });
 

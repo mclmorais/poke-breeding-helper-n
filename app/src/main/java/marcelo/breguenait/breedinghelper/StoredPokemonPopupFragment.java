@@ -119,10 +119,13 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setRetainInstance(true);
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mPosX = getArguments().getInt(ARG_POS_X);
-            mPosY = getArguments().getInt(ARG_POS_Y);
+        if(savedInstanceState == null) {
+            if (getArguments() != null) {
+                mPosX = getArguments().getInt(ARG_POS_X);
+                mPosY = getArguments().getInt(ARG_POS_Y);
+            }
         }
     }
 
