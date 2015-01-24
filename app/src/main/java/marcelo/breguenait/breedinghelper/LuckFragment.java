@@ -253,12 +253,19 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
 
             double chance = list.get(i).chance;
             chance = applyShinyChance(chance);
-            chance *= 100;
             v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChancePercentage);
-            if(chance > 0.01)
-                v.setText(String.format("%.2f",chance) + "%");
+            if(chance*100 > 0.01)
+                v.setText(String.format("%.2f",chance*100) + "%");
             else
                 v.setText("<0.01%");
+
+            v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceEggs);
+            double eggs = 1/chance;
+            if(eggs > 999)
+                v.setText(">999 eggs");
+            else
+                v.setText("~" + String.format("%.0f",1/chance) + " eggs");
+
 
             ImageView firstIcon = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstIcon);
             firstIcon.setBackground(PokemonData.getInstance().getDrawableFromId(list.get(i).firstPokemon.id).getConstantState().newDrawable());

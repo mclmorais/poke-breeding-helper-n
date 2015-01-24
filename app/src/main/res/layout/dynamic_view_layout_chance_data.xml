@@ -7,7 +7,7 @@
 <RelativeLayout
     android:orientation="vertical" android:layout_width="0dp"
     android:layout_height="56dp"
-    android:layout_weight="75">
+    android:layout_weight="70">
 
     <FrameLayout
         android:layout_width="36dp"
@@ -225,7 +225,7 @@
         android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_weight="25"
+        android:layout_weight="30"
         android:gravity="center">
 
         <ImageView
@@ -234,15 +234,33 @@
             android:id="@+id/imageView23"
             android:background="@drawable/ic_symbol_luck" />
 
-        <TextView
-            android:layout_width="50dp"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="64dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/placeholder_percentage"
-            android:id="@+id/textDynamicChancePercentage"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:textColor="@color/secondary_text"/>
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="0,26%"
+                android:id="@+id/textDynamicChancePercentage"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondary_text"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="~192 eggs"
+                android:id="@+id/textDynamicChanceEggs"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondary_text" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="3.3" versioncode="15">
+        <change>
+            New icons added to each Pokémon!
+        </change>
+        <change>
+            You can now see more information or edit your stored Pokémon by selecting them on the "Stored Pokémon" card.
+        </change>
+        <change>
+            An approximation of the number of eggs needed to get the goal Pokémon will now also be shown on the "Best Matches" card.
+        </change>
 
+    </release>
     <release version="3.2" versioncode="14">
         <change>
             3.2: Fixed minor issues and typos.

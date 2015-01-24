@@ -8,8 +8,8 @@ android {
         applicationId "marcelo.breguenait.breedinghelper"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 14
-        versionName "3.2"
+        versionCode 15
+        versionName "3.3"
     }
     buildTypes {
         release {
