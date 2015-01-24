@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -129,7 +130,14 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View thisFragment = inflater.inflate(R.layout.fragment_stored_pokemon_popup, container, false);
+        //View thisFragment = inflater.inflate(R.layout.fragment_stored_pokemon_popup, container, false);
+
+        // create ContextThemeWrapper from the original Activity Context with the custom theme
+        final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.AppTheme);
+
+        // clone the inflater using the ContextThemeWrapper
+        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
+        View thisFragment =  localInflater.inflate(R.layout.fragment_stored_pokemon_popup, container, false);
 
         setListeners(thisFragment);
         updateInterface();
@@ -140,7 +148,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
     @Override
     public void onStart() {
         super.onStart();
-        int height = dpToPx(220);
+        int height = dpToPx(210);
         int width = dpToPx(250);
 
         Dialog dialog = getDialog();
@@ -258,9 +266,11 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
         if(eggGroup2.equals("NONE")) eggGroup2 = "";
         textEggGroup2.setText(eggGroup2);
 
-        String nature = selectedPokemon.nature.toString();
-        if(nature.equals("UNKNOWN")) nature = "Nature not set";
-        textNature.setText(nature);
+        if(selectedPokemon.nature != null) {
+            String nature = selectedPokemon.nature.toString();
+            if (nature.equals("UNKNOWN")) nature = "Nature not set";
+            textNature.setText(nature);
+        }
 
         for(int i = 0; i < 6; i++) {
             IVs[i].setBackground(preloadedDrawables.getIVDrawable(i,selectedPokemon.IVs[i]==1));

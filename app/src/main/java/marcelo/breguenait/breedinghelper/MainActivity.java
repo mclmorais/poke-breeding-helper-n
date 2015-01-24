@@ -53,6 +53,7 @@ public class MainActivity extends ActionBarActivity
 
     ToolTipView viewGoalIVsTooltip;
     ToolTipView viewAddPokemonsTooltip;
+    ToolTipView viewEditPokemonTooltip;
 
     ToolTipRelativeLayout toolTipRelativeLayout;
 
@@ -62,13 +63,21 @@ public class MainActivity extends ActionBarActivity
             saveBoolean("hasSeenTooltipGoalIVs", true);
             tooltipAddPokemons();
         }
-        else if (toolTipView == viewAddPokemonsTooltip)
-            saveBoolean("hasSeenTooltipAddPokemons",true);
+        else if (toolTipView == viewAddPokemonsTooltip) {
+            saveBoolean("hasSeenTooltipAddPokemons", true);
+            tooltipEditPokemon();
+        }
+        else if (toolTipView == viewEditPokemonTooltip)
+            saveBoolean("hasSeenTooltipEditPokemon",true);
+
     }
 
     void setTooltips() {
         toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.tooltipLayout);
         tooltipGoalIVs();
+
+        if(ivManager.getStoredPokemonList().size() > 0)
+            tooltipEditPokemon();
 
         if(ivManager.getGoalPokemon() != null) {
             int counter = 0;
@@ -92,6 +101,8 @@ public class MainActivity extends ActionBarActivity
                 viewAddPokemonsTooltip = null;
             }
         }
+
+
     }
 
     void tooltipGoalIVs() {
@@ -126,6 +137,7 @@ public class MainActivity extends ActionBarActivity
 
     void tooltipAddPokemons() {
         if(readBoolean("hasSeenTooltipAddPokemons",false)) {
+            tooltipEditPokemon();
             return;
         }
 
@@ -144,6 +156,33 @@ public class MainActivity extends ActionBarActivity
             Button b = (Button) v.findViewById(R.id.buttonFragmentPokemonListAdd);
             viewAddPokemonsTooltip = toolTipRelativeLayout.showToolTipForView(toolTip,b);
             viewAddPokemonsTooltip.setOnToolTipViewClickedListener(this);
+
+
+        }
+    }
+
+    void tooltipEditPokemon() {
+        if(readBoolean("hasSeenTooltipEditPokemon",false)) {
+            return;
+        }
+
+        if(viewEditPokemonTooltip != null) return;
+
+        if(ivManager.getStoredPokemonList().isEmpty()) return;
+
+        ToolTip toolTip = new ToolTip()
+                .withText("Click on your stored Pokémon" + System.getProperty("line.separator") + "to see or edit its information")
+                .withColor(getResources().getColor(R.color.accent))
+                .withShadow()
+                .withTextColor(Color.WHITE)
+                .withAnimationType(ToolTip.AnimationType.FROM_TOP);
+
+        StoredPokemonFragment f = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        View v = f.getView();
+        if(v != null) {
+            ExpandableGridView b = (ExpandableGridView) v.findViewById(R.id.gridViewPokemonsList);
+            viewEditPokemonTooltip = toolTipRelativeLayout.showToolTipForView(toolTip,b);
+            viewEditPokemonTooltip.setOnToolTipViewClickedListener(this);
 
 
         }
@@ -424,6 +463,7 @@ public class MainActivity extends ActionBarActivity
 
     public void addPokemonToList(PokemonInfo pokemon) {
         ivManager.storePokemon(pokemon);
+        tooltipEditPokemon();
         updateLuckFragment(ivManager.getBestCombinations());
         updatePokemonListFragment();
     }
@@ -580,5 +620,6 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void editPokemon(PokemonInfo pokemon, int position) {
         ivManager.editPokemon(pokemon,position);
+        updateLuckFragment(ivManager.getBestCombinations());
     }
 }

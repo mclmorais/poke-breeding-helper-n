@@ -102,7 +102,7 @@
                     android:layout_width="42dp"
                     android:layout_height="42dp"
                     android:id="@+id/imageViewSelectedPokemonIcon"
-                    android:background="@drawable/pkmn_missingno"
+                    android:background="@drawable/pkmn_big_000"
                     android:layout_gravity="center" />
             </FrameLayout>
 

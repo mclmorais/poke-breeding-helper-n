@@ -235,8 +235,8 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="42dp"
-                android:layout_height="42dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:id="@+id/imageViewSelectedIcon"
                 android:background="@drawable/pkmn_big_000"
                 android:layout_centerVertical="true"
@@ -268,11 +268,10 @@
                 android:id="@+id/buttonSelectPokemon"
                 style="@style/MyRaisedButton"
                 android:layout_gravity="right"
-                android:layout_alignParentTop="true"
+                android:textColor="@color/primary"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="12dp"
-                android:textColor="@color/primary" />
+                android:layout_alignParentEnd="true" />
         </RelativeLayout>
 
         <View

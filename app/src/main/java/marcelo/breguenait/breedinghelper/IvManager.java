@@ -214,6 +214,7 @@ public class IvManager {
     public void editPokemon(PokemonInfo pokemon, int position) {
         storedPokemonList.remove(position);
         storedPokemonList.add(position,pokemon);
+        updateBestCombination();
     }
     public void removePokemon(int position) {
         storedPokemonList.remove(position);

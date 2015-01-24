@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="250dp"
-    android:layout_height="220dp"
+    android:layout_height="210dp"
     tools:context="marcelo.breguenait.breedinghelper.StoredPokemonPopupFragment"
     android:background="@drawable/layer_card_background"
     android:padding="8dp">
@@ -95,7 +95,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:id="@+id/imagePokemonPopupIcon"
-            android:background="@drawable/pkmn_big_250"
+            android:background="@drawable/pkmn_big_040"
             android:layout_alignTop="@+id/textView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -120,7 +120,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
-                    android:layout_below="@+id/linearLayout4" />
+                    android:layout_below="@+id/linearLayout4"
+                    android:visibility="gone" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -134,7 +135,8 @@
                     android:gravity="center_horizontal"
                     android:layout_below="@+id/textView"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_marginBottom="16dp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:layout_width="wrap_content"
