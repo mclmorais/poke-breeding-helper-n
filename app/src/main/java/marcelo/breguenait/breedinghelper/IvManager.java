@@ -208,6 +208,28 @@ public class IvManager {
         fillCombinations();
     }
 
+    private boolean hasEverstone = true;
+
+    public boolean hasEverstone() {
+        return hasEverstone;
+    }
+
+    public void setEverstone(boolean hasEverstone) {
+        this.hasEverstone = hasEverstone;
+        updateBestCombination();
+    }
+
+    private boolean considerNature = false;
+
+    boolean considerNature() {
+        return considerNature;
+    }
+
+    void setConsiderNature(boolean b) {
+        considerNature = b;
+        updateBestCombination();
+    }
+
     private List<PokemonInfo> storedPokemonList = new ArrayList<>();
 
     private final EquippedItems equippedItems = new EquippedItems();
@@ -270,17 +292,18 @@ public class IvManager {
 
         List<ChanceData> chances = new ArrayList<>();
 
+        //Runs through all possible different combinations of pokémon
         for (int i = 0; i < storedPokemonList.size(); i++) {
-
-
             PokemonInfo firstPokemon = storedPokemonList.get(i);
             if(firstPokemon.id <= 0) continue;
 
             for (int j = (i + 1); j < storedPokemonList.size(); j++) {
                 PokemonInfo secondPokemon = storedPokemonList.get(j);
                 if(secondPokemon.id <= 0) continue;
+
                 if (checkCompatibility(firstPokemon, secondPokemon)) {
                     double chance = getChance(firstPokemon.IVs, secondPokemon.IVs, goalPokemon.IVs);
+                    chance = checkNatureChance(firstPokemon.nature,secondPokemon.nature,chance);
                     chances.add(new ChanceData(storedPokemonList.get(i), storedPokemonList.get(j),i, j, chance));
                 }
             }
@@ -303,11 +326,23 @@ public class IvManager {
                 }
             }
 
-
-
             bestCombinationsList = chances;
         }
     }
+
+    double checkNatureChance(Nature firstNature, Nature secondNature, double chance) {
+
+        if(considerNature && goalPokemon.nature != Nature.UNSET) {
+            if (hasEverstone) {
+                if (firstNature != goalPokemon.nature && secondNature != goalPokemon.nature) {
+                    chance *= (1.0 / 25.0);
+                }
+            } else chance *= (1.0 / 25.0);
+        }
+
+        return chance;
+    }
+
     /**
      * Checks if two given pokemons are a compatible pair when trying to breed the goal pokemon.
      * The function will look if the pair is either: <br>

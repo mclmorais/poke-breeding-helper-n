@@ -121,13 +121,13 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:layout_below="@+id/linearLayout4"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Nature not set"
+                    android:text="Unset"
                     android:textAllCaps="true"
                     android:id="@+id/textPokemonPopupNature"
                     android:textIsSelectable="false"
@@ -136,7 +136,7 @@
                     android:layout_below="@+id/textView"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="16dp"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <TextView
                     android:layout_width="wrap_content"

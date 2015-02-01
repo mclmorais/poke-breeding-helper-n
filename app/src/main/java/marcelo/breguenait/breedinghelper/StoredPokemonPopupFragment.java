@@ -291,6 +291,11 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
         textNumber.setText(String.valueOf(pokemonPos+1));
 
 
+        Nature nature = selectedPokemon.nature;
+        if(nature == null) nature = Nature.UNSET;
+        textNature.setText(nature.toString());
+
+
     }
 
     void openAddPokemonFragment(View callerView){

@@ -112,6 +112,8 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
         spinnerNature = (Spinner) view.findViewById(R.id.spinnerAddPokemonNature);
 
+        spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, Nature.values()));
+
         showOnlyCompatible = getArguments().getBoolean("showOnlyCompatible", false);
         setGenderDisplay();
         setListeners();
@@ -130,9 +132,13 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
             }
             if(selectedPokemon.gender != Gender.GENDERLESS)
                 togglePokemonGender.setChecked(selectedPokemon.gender == Gender.MALE);
+
+            Nature nature = selectedPokemon.nature;
+            if(nature == null) nature = Nature.UNSET;
+            spinnerNature.setSelection(getIndex(spinnerNature,nature.toString()));
         }
 
-        spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, Nature.values()));
+
 
         setDialogPosition();
         return view;
@@ -313,5 +319,17 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
     @Override
     public PokemonInfo getGoal() {
         return mCallback.getGoal();
+    }
+
+    private int getIndex(Spinner spinner, String myString){
+
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equals(myString)){
+                index = i;
+            }
+        }
+        return index;
     }
 }

@@ -24,6 +24,8 @@ import android.widget.ToggleButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import static marcelo.breguenait.breedinghelper.R.id.imageDynamicChanceSecondItem;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +43,10 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         void setDestinyKnot(boolean b);
         boolean updateDestinyKnotChance();
         int loadShinyOptions();
+        PokemonInfo getGoal();
+        boolean careAboutNatures();
+        void setEverstone(boolean b);
+        boolean updateEverstoneStatus();
     }
 
     private class PreloadedDrawables {
@@ -100,7 +106,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
     private LinearLayout layoutChances;
     private LayoutInflater inflater2;
     private ToggleButton buttonExpandChances;
-    private CheckBox checkBoxDestinyKnot;
+    private CheckBox checkBoxDestinyKnot, checkBoxEverstone;
     private ImageButton buttonOptions;
 
     private int shinyOptions;
@@ -108,6 +114,12 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
 
     public LuckFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Override
@@ -162,6 +174,23 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
             }
         });
 
+        checkBoxEverstone = (CheckBox) v.findViewById(R.id.checkBoxLuckFragmentEverstone);
+
+        checkBoxEverstone.setChecked(mListener.updateEverstoneStatus());
+
+        checkBoxEverstone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String end = isChecked ? "enabled" : "disabled";
+                int pos[] = new int[2];
+                checkBoxEverstone.getLocationOnScreen(pos);
+                Toast t = Toast.makeText(getActivity().getApplicationContext(), "Everstone " + end + ".", Toast.LENGTH_SHORT);
+                t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, pos[1] - (int) convertDpToPixel(80, getActivity().getApplicationContext()));
+                t.show();
+                mListener.setEverstone(isChecked);
+            }
+        });
+
         buttonOptions = (ImageButton) v.findViewById(R.id.luckFragmentButtonOptions);
         buttonOptions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,13 +210,20 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         mListener = null;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
     public void updateCurrentChances(List<ChanceData> list) {
 
         if(list == null) return;
 
         chanceDataList = new ArrayList<>(list);
 
-        layoutChances.removeAllViews();
+        if(layoutChances != null)
+            layoutChances.removeAllViews();
         interfaceChanceList.clear();
 
         if(list.isEmpty()) {
@@ -237,7 +273,8 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         }
         else buttonExpandChances.setEnabled(true);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)convertDpToPixel(56,getActivity().getApplicationContext()));
+      //  LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)convertDpToPixel(72,getActivity().getApplicationContext()));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int) getResources().getDimension(R.dimen.chance_data_height));
         int margin = (int) convertDpToPixel(5,getActivity().getApplicationContext());
         params.setMargins(margin,margin,margin,margin);
 
@@ -267,10 +304,18 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
                 v.setText("~" + String.format("%.0f",1/chance) + " eggs");
 
 
+
             ImageView firstIcon = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstIcon);
+            //String iconId = "pkmn_big_" + String.format("%03d", list.get(i).firstPokemon.id);
+           // firstIcon.setBackgroundResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
+
+
+
             firstIcon.setBackground(PokemonData.getInstance().getDrawableFromId(list.get(i).firstPokemon.id).getConstantState().newDrawable());
 
             ImageView secondIcon = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondIcon);
+            //iconId = "pkmn_big_" + String.format("%03d", list.get(i).secondPokemon.id);
+           // secondIcon.setBackgroundResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
             secondIcon.setBackground(PokemonData.getInstance().getDrawableFromId(list.get(i).secondPokemon.id).getConstantState().newDrawable());
 
             ImageView firstIVs[] = new ImageView[6];
@@ -310,9 +355,25 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
                 shiny.setVisibility(View.VISIBLE);
             }
 
-        }
-        int targetHeight = (int) (interfaceChanceList.size()*convertDpToPixel(66,getActivity().getApplicationContext()));
+            if(mListener.careAboutNatures()) {
+                ImageView firstItem = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstItem);
+                ImageView secondItem = (ImageView) interfaceChanceList.get(i).findViewById(imageDynamicChanceSecondItem);
+                if (list.get(i).firstPokemon.nature == mListener.getGoal().nature)
+                    firstItem.setBackgroundResource(R.drawable.ic_everstone_active);
+                else if (list.get(i).secondPokemon.nature == mListener.getGoal().nature)
+                    secondItem.setBackgroundResource(R.drawable.ic_everstone_active);
+            }
 
+            TextView firstNature = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceFirstNature);
+            firstNature.setText(list.get(i).firstPokemon.nature.toString());
+
+            TextView secondNature = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceSecondNature);
+            secondNature.setText(list.get(i).secondPokemon.nature.toString());
+
+        }
+//        int targetHeight = (int) (interfaceChanceList.size()*convertDpToPixel(200,getActivity().getApplicationContext()));
+        int targetHeight = (int) (interfaceChanceList.size()*getResources().getDimension(R.dimen.chance_data_height));
+        targetHeight += interfaceChanceList.size()*convertDpToPixel(11, getActivity().getApplicationContext());
         ResizeAnimation r = new ResizeAnimation(layoutChances,targetHeight);
         r.setDuration(300);
         layoutChances.startAnimation(r);

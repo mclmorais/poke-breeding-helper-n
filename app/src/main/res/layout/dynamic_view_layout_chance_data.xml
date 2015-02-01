@@ -6,7 +6,7 @@
     android:baselineAligned="false">
 <RelativeLayout
     android:orientation="vertical" android:layout_width="0dp"
-    android:layout_height="56dp"
+    android:layout_height="72dp"
     android:layout_weight="70">
 
     <FrameLayout
@@ -42,13 +42,13 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="28dp"
+        android:layout_height="36dp"
         android:id="@+id/linearLayout2"
         android:gravity="center|center_vertical"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentTop="false"
         android:layout_toRightOf="@+id/frameLayout"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="false">
 
         <TextView
             android:layout_width="18dp"
@@ -69,55 +69,87 @@
             android:background="@drawable/symbol_male"
             android:layout_marginRight="4dp" />
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:id="@+id/imageDynamicChanceFirstIcon"
-            android:background="@drawable/pkmn_051"
-            android:layout_marginRight="4dp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="72dp"
+        <FrameLayout
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal">
+            android:layout_marginRight="4dp">
 
             <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:id="@+id/imageDynamicChanceFirstHP"
-                android:background="@drawable/iv_circle_clear" />
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:id="@+id/imageDynamicChanceFirstIcon"
+                android:background="@drawable/pkmn_051"
+                android:layout_gravity="center" />
 
             <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:id="@+id/imageDynamicChanceFirstATK"
-                android:background="@drawable/iv_triangle_clear" />
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:id="@+id/imageDynamicChanceFirstItem"
+                android:layout_gravity="right|bottom"
+                android:focusableInTouchMode="true" />
+        </FrameLayout>
 
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:id="@+id/imageDynamicChanceFirstDEF"
-                android:background="@drawable/iv_square_clear" />
+        <FrameLayout
+            android:layout_width="72dp"
+            android:layout_height="fill_parent">
 
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:id="@+id/imageDynamicChanceFirstSATK"
-                android:background="@drawable/iv_circle_clear" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_marginTop="4dp">
 
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:id="@+id/imageDynamicChanceFirstSDEF"
-                android:background="@drawable/iv_circle_clear" />
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/imageDynamicChanceFirstHP"
+                    android:background="@drawable/iv_circle_clear" />
 
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:id="@+id/imageDynamicChanceFirstSPD"
-                android:background="@drawable/iv_circle_clear" />
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/imageDynamicChanceFirstATK"
+                    android:background="@drawable/iv_triangle_clear" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/imageDynamicChanceFirstDEF"
+                    android:background="@drawable/iv_square_clear" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/imageDynamicChanceFirstSATK"
+                    android:background="@drawable/iv_circle_clear" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/imageDynamicChanceFirstSDEF"
+                    android:background="@drawable/iv_circle_clear" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/imageDynamicChanceFirstSPD"
+                    android:background="@drawable/iv_circle_clear" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="ADAMANT"
+                android:id="@+id/textDynamicChanceFirstNature"
+                android:textSize="11sp"
+                android:textColor="@color/secondary_text"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="4dp" />
+        </FrameLayout>
+
     </LinearLayout>
 
     <View android:layout_width="128dp"
@@ -134,13 +166,14 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="28dp"
+        android:layout_height="36dp"
         android:gravity="center|center_vertical"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentBottom="false"
         android:layout_toRightOf="@+id/frameLayout"
         android:id="@+id/linearLayout3"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentRight="false"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/linearLayout2">
 
         <TextView
             android:layout_width="18dp"
@@ -158,57 +191,88 @@
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:id="@+id/imageDynamicChanceSecondGender"
-            android:layout_marginRight="4dp" />
+            android:layout_marginRight="4dp"
+            android:background="@drawable/symbol_male" />
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:id="@+id/imageDynamicChanceSecondIcon"
-            android:background="@drawable/pkmn_687"
-            android:layout_marginRight="4dp" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp">
 
-        <LinearLayout
-            android:orientation="horizontal"
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:id="@+id/imageDynamicChanceSecondIcon"
+                android:background="@drawable/pkmn_687"
+                android:layout_gravity="center" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:id="@+id/imageDynamicChanceSecondItem"
+                android:layout_gravity="right|bottom"
+                android:focusableInTouchMode="false" />
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="72dp"
-            android:layout_height="fill_parent"
-            android:gravity="center_vertical|center_horizontal">
+            android:layout_height="fill_parent">
 
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:id="@+id/imageDynamicChanceSecondHP"
-                android:background="@drawable/iv_circle_clear" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginTop="4dp">
 
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:id="@+id/imageDynamicChanceSecondATK"
-                android:background="@drawable/iv_circle_clear" />
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/imageDynamicChanceSecondHP"
+                    android:background="@drawable/iv_circle_clear" />
 
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:id="@+id/imageDynamicChanceSecondDEF"
-                android:background="@drawable/iv_circle_clear" />
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/imageDynamicChanceSecondATK"
+                    android:background="@drawable/iv_circle_clear" />
 
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:id="@+id/imageDynamicChanceSecondSATK"
-                android:background="@drawable/iv_circle_clear" />
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/imageDynamicChanceSecondDEF"
+                    android:background="@drawable/iv_circle_clear" />
 
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:id="@+id/imageDynamicChanceSecondSDEF"
-                android:background="@drawable/iv_circle_clear" />
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/imageDynamicChanceSecondSATK"
+                    android:background="@drawable/iv_circle_clear" />
 
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:id="@+id/imageDynamicChanceSecondSPD"
-                android:background="@drawable/iv_circle_clear" />
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/imageDynamicChanceSecondSDEF"
+                    android:background="@drawable/iv_circle_clear" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:id="@+id/imageDynamicChanceSecondSPD"
+                    android:background="@drawable/iv_circle_clear" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="ADAMANT"
+                android:id="@+id/textDynamicChanceSecondNature"
+                android:textSize="11sp"
+                android:textColor="@color/secondary_text"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="4dp" />
+        </FrameLayout>
 
     </LinearLayout>
 

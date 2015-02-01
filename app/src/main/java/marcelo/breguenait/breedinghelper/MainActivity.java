@@ -484,6 +484,12 @@ public class MainActivity extends ActionBarActivity
         jsonString = gson.toJson(ivManager.getStoredPokemonList());
         prefEditor.putString("jsonPokemonList", jsonString);
 
+        jsonString = gson.toJson(ivManager.hasEverstone());
+        prefEditor.putString("jsonHasEverstone", jsonString);
+
+        jsonString = gson.toJson(ivManager.considerNature());
+        prefEditor.putString("jsonConsiderNature", jsonString);
+
         jsonString = gson.toJson(ivManager.getGoalPokemon());
         prefEditor.putString("jsonCurrentGoal",jsonString);
 
@@ -507,6 +513,21 @@ public class MainActivity extends ActionBarActivity
             Type type = new TypeToken<List<PokemonInfo>>(){}.getType();
             List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
             ivManager.setStoredPokemonList(eggList);
+        }
+
+        jsonString = sharedPref.getString("jsonHasEverstone",null);
+        if(jsonString != null) {
+            ivManager.setEverstone(gson.fromJson(jsonString, Boolean.class));
+        }
+
+        jsonString = sharedPref.getString("jsonConsiderNature",null);
+        if(jsonString != null) {
+            ivManager.setConsiderNature(gson.fromJson(jsonString, Boolean.class));
+        }
+
+        jsonString = sharedPref.getString("jsonCurrentGoal",null);
+        if(jsonString != null) {
+            ivManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
         }
 
         jsonString = sharedPref.getString("jsonCurrentGoal",null);
@@ -621,5 +642,32 @@ public class MainActivity extends ActionBarActivity
     public void editPokemon(PokemonInfo pokemon, int position) {
         ivManager.editPokemon(pokemon,position);
         updateLuckFragment(ivManager.getBestCombinations());
+    }
+
+    @Override
+    public void updateNatureStatus(boolean b) {
+        ivManager.setConsiderNature(b);
+        updateLuckFragment(ivManager.getBestCombinations());
+    }
+
+    @Override
+    public boolean careAboutNatures() {
+        return (ivManager.hasEverstone() && ivManager.considerNature());
+    }
+
+    @Override
+    public void setEverstone(boolean b) {
+        ivManager.setEverstone(b);
+        updateLuckFragment(ivManager.getBestCombinations());
+    }
+
+    @Override
+    public boolean getConsiderNatureStatus() {
+        return ivManager.considerNature();
+    }
+
+    @Override
+    public boolean updateEverstoneStatus() {
+        return ivManager.hasEverstone();
     }
 }

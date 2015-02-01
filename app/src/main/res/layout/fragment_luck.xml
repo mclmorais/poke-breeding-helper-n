@@ -12,7 +12,7 @@
 
         <TextView
             android:id="@+id/luckFragmentHeaderTitle"
-            android:layout_width="match_parent"
+            android:layout_width="50dp"
             android:layout_height="fill_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:fontFamily="sans-serif-condensed"
@@ -21,8 +21,9 @@
             style="@style/card_header_title"
             android:visibility="visible"
             android:singleLine="true"
-            android:layout_toStartOf="@+id/luckFragmentCheckBoxDestinyKnot"
-            android:layout_toLeftOf="@+id/luckFragmentCheckBoxDestinyKnot" />
+            android:layout_toLeftOf="@+id/checkBoxLuckFragmentEverstone"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
 
         <View
             android:id="@+id/luckFragmentSeparator1"
@@ -59,6 +60,15 @@
             android:drawableLeft="@drawable/ic_toggle_destiny_knot_selector"
             android:layout_marginRight="6dp" />
         <View
+            android:id="@+id/luckFragmentSeparator3"
+            android:layout_width="1dp"
+            android:layout_height="32dp"
+            android:background="@color/background_light_gray"
+            android:layout_gravity="center_vertical"
+            android:layout_alignTop="@+id/luckFragmentCheckBoxDestinyKnot"
+            android:layout_toRightOf="@+id/checkBoxLuckFragmentEverstone"
+            android:layout_toEndOf="@+id/checkBoxLuckFragmentEverstone" />
+        <View
             android:id="@+id/luckFragmentSeparator2"
             android:layout_width="1dp"
             android:layout_height="32dp"
@@ -67,6 +77,16 @@
             android:layout_centerVertical="true"
             android:layout_alignRight="@+id/luckFragmentHeaderTitle"
             android:layout_alignEnd="@+id/luckFragmentHeaderTitle" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkBoxLuckFragmentEverstone"
+            android:drawableLeft="@drawable/ic_toggle_everstone_selector"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/luckFragmentCheckBoxDestinyKnot"
+            android:layout_toStartOf="@+id/luckFragmentCheckBoxDestinyKnot"
+            android:layout_marginRight="6dp" />
 
     </RelativeLayout>
     <View android:layout_width="match_parent"

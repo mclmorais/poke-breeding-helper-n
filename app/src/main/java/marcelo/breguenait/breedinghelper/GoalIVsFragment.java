@@ -11,14 +11,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.OnPokemonSelectedListener{
 
     interface OnGoalUpdate {
         void updateGoal(PokemonInfo p);
+        void updateNatureStatus(boolean b);
+        boolean getConsiderNatureStatus();
     }
 
     private OnGoalUpdate mCallback;
@@ -28,6 +32,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     private View buttonPokemonSelector;
     private ImageView selectedIcon;
     private TextView selectedName;
+    private CheckBox checkBoxActivateNatures;
 
     private int selectedPokemonId = 0;
 
@@ -98,7 +103,31 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
             }
         });
 
+        checkBoxActivateNatures = (CheckBox) view.findViewById(R.id.checkBoxGoalIVsActivateNatures);
+        checkBoxActivateNatures.setChecked(mCallback.getConsiderNatureStatus());
+        checkBoxActivateNatures.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mCallback.updateNatureStatus(isChecked);
+                String s = isChecked?"considered":"ignored";
+                Toast.makeText(getActivity().getApplicationContext(),"Nature " + s + ".", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //checkBoxActivateNatures.setChecked(mCallback.getConsiderNatureStatus());
     }
 
     void openSelectPokemonFragment(View view) {
