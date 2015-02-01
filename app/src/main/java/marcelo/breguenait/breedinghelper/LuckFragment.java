@@ -365,10 +365,14 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
             }
 
             TextView firstNature = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceFirstNature);
-            firstNature.setText(list.get(i).firstPokemon.nature.toString());
+            Nature nature = list.get(i).firstPokemon.nature;
+            if(nature == null) nature = Nature.UNSET;
+            firstNature.setText(nature.toString());
 
             TextView secondNature = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceSecondNature);
-            secondNature.setText(list.get(i).secondPokemon.nature.toString());
+            nature = list.get(i).secondPokemon.nature;
+            if(nature == null) nature = Nature.UNSET;
+            secondNature.setText(nature.toString());
 
         }
 //        int targetHeight = (int) (interfaceChanceList.size()*convertDpToPixel(200,getActivity().getApplicationContext()));
