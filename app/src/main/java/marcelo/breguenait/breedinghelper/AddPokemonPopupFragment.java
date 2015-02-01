@@ -118,7 +118,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
                 checkBoxInputIVs[i].setChecked(selectedPokemon.IVs[i]==1);
             }
             if(selectedPokemon.gender != Gender.GENDERLESS)
-                togglePokemonGender.setChecked(selectedPokemon.gender == Gender.MALE?true:false);
+                togglePokemonGender.setChecked(selectedPokemon.gender == Gender.MALE);
         }
 
         setDialogPosition();

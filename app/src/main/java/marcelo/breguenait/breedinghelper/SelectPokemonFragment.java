@@ -177,31 +177,4 @@ public class SelectPokemonFragment extends PopupDialogFragment {
             dialog.getWindow().setLayout(screenWidth-margin, screenHeight-margin);
         }
     }
-
-    @Override
-    protected void setDialogPosition() {
-//        if(getArguments() == null) {
-//            return;
-//        }
-//
-//        int sourceX = getArguments().getInt("x");
-//        int sourceY = getArguments().getInt("y");
-//
-//        Window window = getDialog().getWindow();
-//
-//        // set "origin" to top left corner
-//        window.setGravity(Gravity.TOP|Gravity.LEFT);
-//
-//        WindowManager.LayoutParams params = window.getAttributes();
-//
-//        DisplayMetrics metrics = new DisplayMetrics();
-//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-//        int screenWidth = (int) convertPixelsToDp(metrics.widthPixels,getActivity().getApplicationContext());
-//
-//        params.x = sourceX - dpToPx(192); // about half of confirm button size left of source view
-//        params.y = sourceY -  dpToPx(24); // above source view
-//
-//        window.setAttributes(params);
-    }
-
 }
