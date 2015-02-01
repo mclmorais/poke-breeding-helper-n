@@ -226,10 +226,41 @@
 
         </GridLayout>
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="56dp">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Nature:"
+                android:id="@+id/textView6"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:textAllCaps="true"
+                android:layout_alignBottom="@+id/spinnerGoalIVsNatures"
+                android:layout_alignLeft="@+id/imageViewSelectedPokemonIcon"
+                android:layout_alignStart="@+id/imageViewSelectedPokemonIcon"
+                android:layout_toLeftOf="@+id/spinnerGoalIVsNatures"
+                android:layout_toStartOf="@+id/spinnerGoalIVsNatures"
+                android:layout_alignTop="@+id/spinnerGoalIVsNatures"
+                android:gravity="center" />
+
+            <Spinner
+                android:layout_width="108dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerAddPokemonNature"
+                android:layout_below="@+id/linearLayout"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_marginBottom="4dp" />
+        </LinearLayout>
+
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:gravity="center">

@@ -271,7 +271,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
 
         if(selectedPokemon.nature != null) {
             String nature = selectedPokemon.nature.toString();
-            if (nature.equals("UNKNOWN")) nature = "Nature not set";
+            if (nature.equals("UNSET")) nature = "Nature not set";
             textNature.setText(nature);
         }
 

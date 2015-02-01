@@ -20,10 +20,32 @@ enum Item {
 }
 
 enum Nature {
-    UNKNOWN,
+    UNSET,
+    ADAMANT,
+    BASHFUL,
+    BOLD,
+    BRAVE,
+    CALM,
+    CAREFUL,
     DOCILE,
+    GENTLE,
+    HARDY,
+    HASTY,
+    IMPISH,
     JOLLY,
-    BOLD
+    LAX,
+    LONELY,
+    MILD,
+    MODEST,
+    NAIVE,
+    NAUGHTY,
+    QUIET,
+    QUIRKY,
+    RASH,
+    RELAXED,
+    SASSY,
+    SERIOUS,
+    TIMID
 }
 
 enum EggGroup {
@@ -115,14 +137,14 @@ class PokemonInfo {
         private int                     id = 0;          //The national dex number of the pokemon
         private Gender                  gender = Gender.MALE;
         private int[]                   IVs = {0,0,0,0,0,0};
-        private Nature                  nature = Nature.UNKNOWN;
+        private Nature                  nature = Nature.UNSET;
         private EggGroup                eggGroup1 = EggGroup.UNKNOWN;
         private EggGroup                eggGroup2 = EggGroup.UNKNOWN;
 
         public Builder() {
             id = 0;
             gender = Gender.MALE;
-            nature = Nature.UNKNOWN;
+            nature = Nature.UNSET;
         }
 
         public Builder id(int id) {

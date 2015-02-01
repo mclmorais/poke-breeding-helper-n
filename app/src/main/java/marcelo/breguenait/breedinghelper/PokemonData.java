@@ -146,13 +146,13 @@ class PokemonJsonDeserializer implements JsonDeserializer<SparseArray<PokemonDat
             if(jObject.has("egg_group_1"))
                 eggGroup1 = jObject.get("egg_group_1").getAsString();
             else
-             eggGroup1 = "UNKNOWN";
+             eggGroup1 = "UNSET";
 
             String eggGroup2;
             if(jObject.has("egg_group_2"))
                 eggGroup2 = jObject.get("egg_group_2").getAsString();
             else
-                eggGroup2 = "UNKNOWN";
+                eggGroup2 = "UNSET";
 
             //int id = i+1; //USAR APENAS PARA DEBUG COM PKMN_TEST!!!
             int id = jObject.get("id").getAsInt();

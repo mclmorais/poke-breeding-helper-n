@@ -3,17 +3,21 @@ package marcelo.breguenait.breedinghelper;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -46,12 +50,12 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
     private boolean showOnlyCompatible;
 
+    private Spinner spinnerNature;
+
     void updateInterfacePokemon(int id) {
         selectedPokemonId = id;
         String text = PokemonData.getInstance().getName(id);
         selectedName.setText(text);
-//        if(id > 0)
-//            selectedIcon.setBackground(PokemonData.getInstance().getDrawableFromId(id).getConstantState().newDrawable());
 
         String iconId = "pkmn_big_" + String.format("%03d", id);
         selectedIcon.setBackgroundResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
@@ -82,7 +86,12 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
-        View view = inflater.inflate(R.layout.fragment_add_pokemon, container, false);
+
+        final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.AppTheme);
+
+        // clone the inflater using the ContextThemeWrapper
+        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
+        View view =  localInflater.inflate(R.layout.fragment_add_pokemon, container, false);
 
         buttonPokemonSelector = view.findViewById(R.id.buttonSelectPokemon);
 
@@ -100,6 +109,8 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         checkBoxInputIVs[3]       = (CheckBox) view.findViewById(R.id.checkBoxInputSATK);
         checkBoxInputIVs[4]       = (CheckBox) view.findViewById(R.id.checkBoxInputSDEF);
         checkBoxInputIVs[5]       = (CheckBox) view.findViewById(R.id.checkBoxInputSPD);
+
+        spinnerNature = (Spinner) view.findViewById(R.id.spinnerAddPokemonNature);
 
         showOnlyCompatible = getArguments().getBoolean("showOnlyCompatible", false);
         setGenderDisplay();
@@ -120,6 +131,8 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
             if(selectedPokemon.gender != Gender.GENDERLESS)
                 togglePokemonGender.setChecked(selectedPokemon.gender == Gender.MALE);
         }
+
+        spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, Nature.values()));
 
         setDialogPosition();
         return view;
@@ -263,6 +276,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
                 .id(selectedPokemonId)
                 .gender(pokemonGender)
                 .IVs(pokemonIVs)
+                .nature(Nature.valueOf(spinnerNature.getSelectedItem().toString()))
                 .build();
     }
 

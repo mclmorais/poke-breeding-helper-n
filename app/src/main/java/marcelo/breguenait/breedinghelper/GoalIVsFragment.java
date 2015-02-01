@@ -8,8 +8,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.OnPokemonSelectedListener{
@@ -21,6 +24,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     private OnGoalUpdate mCallback;
 
     private final CheckBox[] goalIVs = new CheckBox[6];
+    private Spinner spinnerNature;
     private View buttonPokemonSelector;
     private ImageView selectedIcon;
     private TextView selectedName;
@@ -79,6 +83,21 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
 
         selectedName = (TextView) view.findViewById(R.id.textViewPokemonName);
 
+        spinnerNature = (Spinner) view.findViewById(R.id.spinnerGoalIVsNatures);
+        spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, Nature.values()));
+
+        spinnerNature.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mCallback.updateGoal(updateGoalPokemon());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         return view;
     }
 
@@ -104,7 +123,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         if(goal == null) return;
         if(goal.id <= 0) return;
         selectedPokemonId = goal.id;
-        updateInterfacePokemon(goal.id);
+        updateInterfacePokemon(goal);
         for(int i = 0; i < 6; i++) {
             goalIVs[i].setChecked(goal.IVs[i] == 1);
         }
@@ -121,6 +140,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
                 .id(selectedPokemonId)
                 .gender(Gender.MALE) //TODO: Depois fazer ele poder escolher?
                 .IVs(IVs)
+                .nature(Nature.valueOf(spinnerNature.getSelectedItem().toString()))
                 .build();
         //TODO: fazer nao ficar recriando toda vez
     }
@@ -128,17 +148,20 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     @Override
     public void onPokemonSelected(int id) {
         selectedPokemonId = id;
-        mCallback.updateGoal(updateGoalPokemon());
-        updateInterfacePokemon(id);
+        PokemonInfo newGoal = updateGoalPokemon();
+        mCallback.updateGoal(newGoal);
+        updateInterfacePokemon(newGoal);
     }
 
-    void updateInterfacePokemon(int id) {
-        selectedPokemonId = id;
-        String name = PokemonData.getInstance().getName(id);
+    void updateInterfacePokemon(PokemonInfo goal) {
+        String name = PokemonData.getInstance().getName(goal.id);
         selectedName.setText(name);
-        String iconId = "pkmn_big_" + String.format("%03d", id);
+        String iconId = "pkmn_big_" + String.format("%03d", goal.id);
         selectedIcon.setBackgroundResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
-       // selectedIcon.setBackground(PokemonData.getInstance().getDrawableFromId(id).getConstantState().newDrawable());
+
+        Nature nature = goal.nature;
+        if(nature == null) nature = Nature.UNSET;
+        spinnerNature.setSelection(getIndex(spinnerNature,nature.toString()));
     }
 
     @Override
@@ -151,6 +174,17 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         return true;
     }
 
+    private int getIndex(Spinner spinner, String myString){
+
+        int index = 0;
+
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equals(myString)){
+                index = i;
+            }
+        }
+        return index;
+    }
 
     @Override
     public PokemonInfo getGoal() {
