@@ -6,7 +6,8 @@
       "egg_group_1": "MONSTER",
       "egg_group_2": "GRASS",
       "restricted_gender": "NONE",
-      "breeds": 1
+      "breeds": 1,
+      "ability_1":72
     },
     {
       "id": 2,

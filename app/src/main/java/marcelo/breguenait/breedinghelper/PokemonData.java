@@ -25,10 +25,17 @@ class PokemonData {
 
     private static PokemonData instance;
 
-    private SparseArray<PokemonDataBlock> tabledData;
+    private SparseArray<PokemonDataBlock> tabledPokemonData;
+    private SparseArray<AbilityDataBlock> tabledAbilityData;
 
     private PokemonData(Context c) {
+        readPokemonData(c);
+        readAbilityData(c);
+    }
+
+    void readPokemonData(Context c) {
         GsonBuilder gsonBuilder = new GsonBuilder();
+
         /*Teaches gson how to deal with Maps of that type*/
         Type typeOfHashMap = new TypeToken<SparseArray<PokemonDataBlock>>(){}.getType();
         gsonBuilder.registerTypeAdapter(typeOfHashMap, new PokemonJsonDeserializer(c));
@@ -38,7 +45,27 @@ class PokemonData {
         try {
             assetFile = c.getResources().getAssets().open("pkmn.json");
             Reader reader = new InputStreamReader(assetFile, "UTF-8");
-            tabledData = gson.fromJson(reader, typeOfHashMap);
+            tabledPokemonData = gson.fromJson(reader, typeOfHashMap);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void readAbilityData(Context c) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        Type typeOfHashMap = new TypeToken<SparseArray<AbilityDataBlock>>(){}.getType();
+        gsonBuilder.registerTypeAdapter(typeOfHashMap, new AbilityJsonDeserializer(c));
+        Gson gson = gsonBuilder.create();
+
+        final InputStream assetFile;
+        try {
+            assetFile = c.getResources().getAssets().open("abilities.json");
+            Reader reader = new InputStreamReader(assetFile, "UTF-8");
+            tabledAbilityData = gson.fromJson(reader, typeOfHashMap);
+
+            int x = 2;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -62,7 +89,7 @@ class PokemonData {
     }
 
     ArrayList<PokemonDataBlock> getOrderedData() {
-        ArrayList<PokemonDataBlock> a = asList(tabledData);
+        ArrayList<PokemonDataBlock> a = asList(tabledPokemonData);
         PokemonDataBlock ditto = a.get(Constants.DITTO_ID-1);
         a.remove(Constants.DITTO_ID-1);
         a.add(0,ditto);
@@ -70,42 +97,42 @@ class PokemonData {
     }
 
     int getDataCount() {
-        return tabledData.size();
+        return tabledPokemonData.size();
     }
 
     Drawable getDrawableFromId(int id) {
         if(id > 0)
-            return tabledData.get(id).drawable;
+            return tabledPokemonData.get(id).drawable;
         else {
             throw new IllegalArgumentException("Invalid Pokemon number when requesting it's drawable from PokemonData! (Should be 1-714)");
         }
     }
 
     String getName(int id) {
-        return tabledData.get(id).name;
+        return tabledPokemonData.get(id).name;
     }
+
     EggGroup getFirstEggGroup(int id) {
         if(id > 0)
-            return tabledData.get(id).eggGroup1;
+            return tabledPokemonData.get(id).eggGroup1;
         else
             return EggGroup.UNDISCOVERED;
     }
 
-
     EggGroup getSecondEggGroup(int id) {
         if(id > 0)
-            return tabledData.get(id).eggGroup2;
+            return tabledPokemonData.get(id).eggGroup2;
         else
             return EggGroup.UNDISCOVERED;
     }
 
     GenderRestriction getGenderRestriction(int id) {
-        return tabledData.get(id).genderRestriction;
+        return tabledPokemonData.get(id).genderRestriction;
     }
 
     int getBasicPokemon(int id) {
         if(id > 0)
-            return tabledData.get(id).breeds;
+            return tabledPokemonData.get(id).breeds;
         else
             return 0;
     }
@@ -179,6 +206,51 @@ class PokemonJsonDeserializer implements JsonDeserializer<SparseArray<PokemonDat
     }
 }
 
+class AbilityJsonDeserializer implements JsonDeserializer<SparseArray<AbilityDataBlock>> {
+
+    final Context mContext;
+
+    AbilityJsonDeserializer(Context mContext) {
+        this.mContext = mContext;
+        
+    }
+
+    @Override
+    public SparseArray<AbilityDataBlock> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        JsonArray jArray;
+        jArray = json.getAsJsonObject().get("abilities").getAsJsonArray();
+        
+        SparseArray<AbilityDataBlock> abilities = new SparseArray<>();
+        
+        for(int i = 0; i < jArray.size(); i++){
+            JsonObject jObject = (JsonObject) jArray.get(i);
+            String name;
+            if(jObject.has("name"))
+                name = jObject.get("name").getAsString();
+            else
+                name = "ERROR";
+
+            String description;
+            if(jObject.has("description"))
+                description = jObject.get("description").getAsString();
+            else
+                description = "ERROR";
+
+            int id = jObject.get("id").getAsInt();
+
+            AbilityDataBlock dataBlock = new AbilityDataBlock(
+                    id,
+                    name,
+                    description
+            );
+
+            abilities.put(id,dataBlock);
+        }
+        
+        return abilities;
+    }
+}
+
 class PokemonDataBlock {
     final String name;
     final EggGroup eggGroup1;
@@ -197,5 +269,17 @@ class PokemonDataBlock {
         this.drawable = c.getResources().getDrawable(c.getResources().getIdentifier(iconId, "drawable", c.getPackageName()));
         this.genderRestriction = genderRestriction;
         this.breeds = breeds;
+    }
+}
+
+class AbilityDataBlock {
+    final int id;
+    final String name;
+    final String description;
+
+    AbilityDataBlock(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
     }
 }
