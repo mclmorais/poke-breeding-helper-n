@@ -490,6 +490,9 @@ public class MainActivity extends ActionBarActivity
         jsonString = gson.toJson(ivManager.considerNature());
         prefEditor.putString("jsonConsiderNature", jsonString);
 
+        jsonString = gson.toJson(ivManager.considerAbility());
+        prefEditor.putString("jsonConsiderAbility", jsonString);
+
         jsonString = gson.toJson(ivManager.getGoalPokemon());
         prefEditor.putString("jsonCurrentGoal",jsonString);
 
@@ -515,6 +518,8 @@ public class MainActivity extends ActionBarActivity
             ivManager.setStoredPokemonList(eggList);
         }
 
+
+
         jsonString = sharedPref.getString("jsonHasEverstone",null);
         if(jsonString != null) {
             ivManager.setEverstone(gson.fromJson(jsonString, Boolean.class));
@@ -523,6 +528,11 @@ public class MainActivity extends ActionBarActivity
         jsonString = sharedPref.getString("jsonConsiderNature",null);
         if(jsonString != null) {
             ivManager.setConsiderNature(gson.fromJson(jsonString, Boolean.class));
+        }
+
+        jsonString = sharedPref.getString("jsonConsiderAbility",null);
+        if(jsonString != null) {
+            ivManager.setConsiderAbility(gson.fromJson(jsonString, Boolean.class));
         }
 
         jsonString = sharedPref.getString("jsonCurrentGoal",null);
@@ -669,5 +679,16 @@ public class MainActivity extends ActionBarActivity
     @Override
     public boolean updateEverstoneStatus() {
         return ivManager.hasEverstone();
+    }
+
+    @Override
+    public void updateAbilityStatus(boolean b) {
+        ivManager.setConsiderAbility(b);
+        updateLuckFragment(ivManager.getBestCombinations());
+    }
+
+    @Override
+    public boolean getConsiderAbilityStatus() {
+        return ivManager.considerAbility();
     }
 }

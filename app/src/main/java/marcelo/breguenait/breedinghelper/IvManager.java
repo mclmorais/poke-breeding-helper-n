@@ -124,6 +124,10 @@ class EquippedItems {
 
 }
 
+enum AbilitySlot {
+    FIRST, SECOND, HIDDEN, ERROR
+}
+
 class PokemonInfo {
     /*Relevant variables for the future*/
     final int               id;             //The national dex number of the pokemon
@@ -132,6 +136,8 @@ class PokemonInfo {
     final Nature            nature;
     final EggGroup          eggGroup1;
     final EggGroup          eggGroup2;
+    final int               ability;
+
 
     static class Builder {
         private int                     id = 0;          //The national dex number of the pokemon
@@ -140,6 +146,7 @@ class PokemonInfo {
         private Nature                  nature = Nature.UNSET;
         private EggGroup                eggGroup1 = EggGroup.UNKNOWN;
         private EggGroup                eggGroup2 = EggGroup.UNKNOWN;
+        private int                     ability;
 
         public Builder() {
             id = 0;
@@ -171,6 +178,11 @@ class PokemonInfo {
             return this;
         }
 
+        public Builder ability(int a) {
+            this.ability = a;
+            return this;
+        }
+
         PokemonInfo build() {
             return new PokemonInfo(this);
         }
@@ -183,6 +195,7 @@ class PokemonInfo {
         this.nature = b.nature;
         this.eggGroup1 = b.eggGroup1;
         this.eggGroup2 = b.eggGroup2;
+        this.ability = b.ability;
     }
 }
 
@@ -220,7 +233,7 @@ public class IvManager {
     }
 
     private boolean considerNature = false;
-    private boolean considerAbility = true; //TODO: mudar
+    private boolean considerAbility = false;
 
     boolean considerNature() {
         return considerNature;
@@ -228,6 +241,15 @@ public class IvManager {
 
     void setConsiderNature(boolean b) {
         considerNature = b;
+        updateBestCombination();
+    }
+
+    public boolean considerAbility() {
+        return considerAbility;
+    }
+
+    public void setConsiderAbility(boolean considerAbility) {
+        this.considerAbility = considerAbility;
         updateBestCombination();
     }
 
@@ -305,7 +327,7 @@ public class IvManager {
                 if (checkCompatibility(firstPokemon, secondPokemon)) {
                     double chance = getChance(firstPokemon.IVs, secondPokemon.IVs, goalPokemon.IVs);
                     chance = checkNatureChance(firstPokemon.nature,secondPokemon.nature,chance);
-                    chance = checkAbilityChance(firstPokemon.id, secondPokemon.id, chance);
+                    chance = checkAbilityChance(firstPokemon, secondPokemon, chance);
                     chances.add(new ChanceData(storedPokemonList.get(i), storedPokemonList.get(j),i, j, chance));
                 }
             }
@@ -322,7 +344,7 @@ public class IvManager {
             Collections.sort(chances, new ChanceComparator());
             Collections.reverse(chances);
 
-            for(int i = 0; i < chances.size(); i++) {
+            for(int i = chances.size()-1; i >= 0; i--) {
                 if(Double.compare(chances.get(i).chance,1e-5) < 0) {
                     chances.remove(i);
                 }
@@ -345,9 +367,67 @@ public class IvManager {
         return chance;
     }
 
-    private double checkAbilityChance(int firstPokemon, int secondPokemon, double chance) {
+    private double checkAbilityChance(PokemonInfo firstPokemon, PokemonInfo secondPokemon, double chance) {
 
-        return chance; //todo: fazer
+        AbilitySlot goalSlot, firstPokemonSlot, secondPokemonSlot;
+
+        if(considerAbility /*&& goalPokemon.ability > 0*/) { //TODO: fazer botao funcionar
+
+            goalSlot = checkAbilitySlot(goalPokemon.ability, goalPokemon.id);
+            firstPokemonSlot = checkAbilitySlot(firstPokemon.ability, firstPokemon.id);
+            secondPokemonSlot = checkAbilitySlot(secondPokemon.ability, secondPokemon.id);
+
+
+
+            if(firstPokemonSlot == goalSlot) {
+                if(firstPokemon.gender == Gender.FEMALE) {
+                    //If the first pokemon has the same nature and is female, chance is 80%
+                    return chance * 0.8;
+                }
+                else if ((firstPokemon.gender == Gender.MALE || firstPokemon.gender == Gender.GENDERLESS)
+                        && secondPokemon.gender == Gender.DITTO) {
+                    //If the first pokemon is male/genderless, has the nature and is with a ditto, chance is 80%
+                    return chance * 0.8;
+                }
+            }
+
+            if(secondPokemonSlot == goalSlot) {
+                if(secondPokemon.gender == Gender.FEMALE) {
+                    //If the second pokemon has the nature and is female, chance is 80%
+                    return chance * 0.8;
+                }
+                else if ((secondPokemon.gender == Gender.MALE || secondPokemon.gender == Gender.GENDERLESS)
+                        && firstPokemon.gender == Gender.DITTO) {
+                    //If the second pokemon has the nature and is male/genderless with a ditto, chance is 80%
+                    return chance * 0.8;
+                }
+            }
+
+            //If none of the appropriate conditions applied, chance is 20% for non-hidden or 0% for hidden
+            if(goalSlot != AbilitySlot.HIDDEN) {
+                return chance * 0.2;
+            }
+
+            return 0.0;
+
+        }
+        else {
+            return chance;
+        }
+    }
+
+    AbilitySlot checkAbilitySlot(int ability, int id) {
+        if(ability == PokemonData.getInstance().getFirstAbilityId(id)) {
+            return AbilitySlot.FIRST;
+        }
+        else if (ability == PokemonData.getInstance().getSecondAbilityId(id)) {
+            return AbilitySlot.SECOND;
+        }
+        else if (ability == PokemonData.getInstance().getHiddenAbilityId(id)) {
+            return AbilitySlot.HIDDEN;
+        }
+        else
+            return AbilitySlot.ERROR;
     }
 
     /**

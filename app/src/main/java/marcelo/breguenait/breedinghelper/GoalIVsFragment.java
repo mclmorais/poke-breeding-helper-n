@@ -24,7 +24,9 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     interface OnGoalUpdate {
         void updateGoal(PokemonInfo p);
         void updateNatureStatus(boolean b);
+        void updateAbilityStatus(boolean b);
         boolean getConsiderNatureStatus();
+        boolean getConsiderAbilityStatus();
     }
 
     private OnGoalUpdate mCallback;
@@ -36,6 +38,9 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     private TextView selectedName;
     private CheckBox checkBoxActivateNatures;
     private CheckBox checkBoxActivateAbilities;
+
+    ArrayList<String> abilityStrings;
+    ArrayList<Integer> abilityIds;
 
     private int selectedPokemonId = 0;
 
@@ -94,10 +99,18 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         spinnerNature = (Spinner) view.findViewById(R.id.spinnerGoalIVsNatures);
         spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, Nature.values()));
 
+
+
+
+        spinnerAbility = (Spinner) view.findViewById(R.id.spinnerGoalIVsAbilities);
+        updateAbilities();
+        spinnerAbility.setSelection(0);
+
         spinnerNature.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mCallback.updateGoal(updateGoalPokemon());
+                if(selectedPokemonId > 0)
+                    mCallback.updateGoal(updateGoalPokemon());
             }
 
             @Override
@@ -106,9 +119,18 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
             }
         });
 
+        spinnerAbility.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(selectedPokemonId > 0)
+                    mCallback.updateGoal(updateGoalPokemon());
+            }
 
-        spinnerAbility = (Spinner) view.findViewById(R.id.spinnerGoalIVsAbilities);
-        updateAbilities();
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         checkBoxActivateNatures = (CheckBox) view.findViewById(R.id.checkBoxGoalIVsActivateNatures);
         checkBoxActivateNatures.setChecked(mCallback.getConsiderNatureStatus());
@@ -121,33 +143,18 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
             }
         });
 
+        checkBoxActivateAbilities = (CheckBox) view.findViewById(R.id.checkBoxGoalIVsActivateAbilities);
+        checkBoxActivateAbilities.setChecked(mCallback.getConsiderAbilityStatus());
+        checkBoxActivateAbilities.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mCallback.updateAbilityStatus(isChecked);
+                String s = isChecked?"considered":"ignored";
+                Toast.makeText(getActivity().getApplicationContext(),"Ability " + s + ".", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return view;
-    }
-
-    void updateAbilities() {
-        if(spinnerAbility == null) return;
-
-        ArrayList<String> abilities = new ArrayList<>();
-
-        if(selectedPokemonId != 0) {
-            abilities.add(PokemonData.getInstance().getFirstAbility(selectedPokemonId));
-
-            String s = PokemonData.getInstance().getSecondAbility(selectedPokemonId);
-            if(!s.equals("NONE") && !s.isEmpty()) {
-                abilities.add(s);
-            }
-            s = PokemonData.getInstance().getHiddenAbility(selectedPokemonId);
-            if(!s.equals("NONE") && !s.isEmpty()) {
-                s += " (Hidden)";
-                abilities.add(s);
-            }
-        }
-
-
-        spinnerAbility.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(),R.layout.spinner_item,abilities));
-
-
     }
 
     @Override
@@ -191,17 +198,66 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         updateAbilities();
     }
 
+    void updateAbilities() {
+        if(spinnerAbility == null) return;
+
+        abilityStrings = new ArrayList<>();
+
+        abilityIds = new ArrayList<>();
+
+        if(selectedPokemonId != 0) {
+            abilityStrings.add(PokemonData.getInstance().getFirstAbility(selectedPokemonId));
+
+            String s = PokemonData.getInstance().getSecondAbility(selectedPokemonId);
+            if(!s.equals("NONE") && !s.isEmpty()) {
+                abilityStrings.add(s);
+            }
+            s = PokemonData.getInstance().getHiddenAbility(selectedPokemonId);
+            if(!s.equals("NONE") && !s.isEmpty()) {
+                s += " (Hidden)";
+                abilityStrings.add(s);
+            }
+        }
+        else {
+            abilityStrings.add("Unset");
+        }
+
+        if(selectedPokemonId != 0) {
+            abilityIds.add(PokemonData.getInstance().getFirstAbilityId(selectedPokemonId));
+
+            int s = PokemonData.getInstance().getSecondAbilityId(selectedPokemonId);
+            if(s > 0)
+                abilityIds.add(s);
+
+            s = PokemonData.getInstance().getHiddenAbilityId(selectedPokemonId);
+            if (s > 0)
+                abilityIds.add(s);
+        }
+        else {
+            abilityIds.add(0);
+        }
+
+
+        spinnerAbility.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(),R.layout.spinner_item, abilityStrings));
+
+
+    }
+
     PokemonInfo updateGoalPokemon() {
+
+
         int[] IVs = new int[6];
         for(int i = 0; i < 6; i++) {
             IVs[i] = goalIVs[i].isChecked()?1:0;
         }
+
 
         return new PokemonInfo.Builder()
                 .id(selectedPokemonId)
                 .gender(Gender.MALE) //TODO: Depois fazer ele poder escolher?
                 .IVs(IVs)
                 .nature(Nature.valueOf(spinnerNature.getSelectedItem().toString()))
+                .ability(abilityIds.get(spinnerAbility.getSelectedItemPosition()))
                 .build();
         //TODO: fazer nao ficar recriando toda vez
     }
@@ -209,10 +265,11 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     @Override
     public void onPokemonSelected(int id) {
         selectedPokemonId = id;
+        updateAbilities();
         PokemonInfo newGoal = updateGoalPokemon();
         mCallback.updateGoal(newGoal);
         updateInterfacePokemon(newGoal);
-        updateAbilities();
+
     }
 
     void updateInterfacePokemon(PokemonInfo goal) {

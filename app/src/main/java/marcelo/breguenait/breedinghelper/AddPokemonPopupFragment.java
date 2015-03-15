@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
+
 public class AddPokemonPopupFragment extends PopupDialogFragment implements SelectPokemonFragment.OnPokemonSelectedListener{
 
     public interface OnBuildPokemon {
@@ -50,7 +52,9 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
     private boolean showOnlyCompatible;
 
-    private Spinner spinnerNature;
+    private Spinner spinnerNature, spinnerAbility;
+
+    private ArrayList<Integer> abilityIds;
 
     void updateInterfacePokemon(int id) {
         selectedPokemonId = id;
@@ -111,8 +115,10 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         checkBoxInputIVs[5]       = (CheckBox) view.findViewById(R.id.checkBoxInputSPD);
 
         spinnerNature = (Spinner) view.findViewById(R.id.spinnerAddPokemonNature);
-
         spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, Nature.values()));
+
+        spinnerAbility = (Spinner) view.findViewById(R.id.spinnerAddPokemonAbility);
+
 
         showOnlyCompatible = getArguments().getBoolean("showOnlyCompatible", false);
         setGenderDisplay();
@@ -138,7 +144,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
             spinnerNature.setSelection(getIndex(spinnerNature,nature.toString()));
         }
 
-
+        updateAbilities(selectedPokemonId);
 
         setDialogPosition();
         return view;
@@ -260,9 +266,48 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         togglePokemonGender.invalidate();
     }
 
+    void updateAbilities(int id) {
+        if(spinnerAbility == null) return;
+
+        abilityIds = new ArrayList<>();
+
+        ArrayList<String> abilityStrings = new ArrayList<>();
+
+        abilityStrings.add("Unset");
+        abilityIds.add(0);
+
+        if(id != 0) {
+
+
+            String s = PokemonData.getInstance().getFirstAbility(id);
+            int d = PokemonData.getInstance().getFirstAbilityId(id);
+
+            abilityStrings.add(s);
+            abilityIds.add(d);
+
+            d = PokemonData.getInstance().getSecondAbilityId(id);
+            if(d != -1) {
+                s = PokemonData.getInstance().getSecondAbility(id);
+                abilityStrings.add(s);
+                abilityIds.add(d);
+            }
+
+            d = PokemonData.getInstance().getHiddenAbilityId(id);
+            if(d != -1) {
+                s = PokemonData.getInstance().getHiddenAbility(id) + " (Hidden)";
+                abilityStrings.add(s);
+                abilityIds.add(d);
+            }
+        }
+
+        spinnerAbility.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(),R.layout.spinner_item, abilityStrings));
+
+    }
+
     @Override
     public void onPokemonSelected(int id) {
         selectedPokemonId = id;
+        updateAbilities(selectedPokemonId);
         updateInterfacePokemon(selectedPokemonId);
         updatePokemonGender(selectedPokemonId);
     }
@@ -277,12 +322,14 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
             pokemonIVs[i] = checkBoxInputIVs[i].isChecked()?1:0;
 
         updatePokemonGender(selectedPokemonId);
+      //  updateAbilities(selectedPokemonId);
 
         return new PokemonInfo.Builder()
                 .id(selectedPokemonId)
                 .gender(pokemonGender)
                 .IVs(pokemonIVs)
                 .nature(Nature.valueOf(spinnerNature.getSelectedItem().toString()))
+                .ability(abilityIds.get(spinnerAbility.getSelectedItemPosition()))
                 .build();
     }
 

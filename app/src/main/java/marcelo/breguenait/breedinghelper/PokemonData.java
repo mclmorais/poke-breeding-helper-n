@@ -138,15 +138,36 @@ class PokemonData {
     }
 
     String getFirstAbility(int id) {
+        if(tabledPokemonData.get(id).ability1 > 0)
+            return tabledAbilityData.get(tabledPokemonData.get(id).ability1).name;
+        else
+            return "";
+    }
+
+    int getFirstAbilityId(int id) {
         return tabledPokemonData.get(id).ability1;
     }
 
-    String getSecondAbility(int id) {
+    int getSecondAbilityId(int id) {
         return tabledPokemonData.get(id).ability2;
     }
 
-    String getHiddenAbility(int id) {
+    int getHiddenAbilityId(int id) {
         return tabledPokemonData.get(id).abilityHidden;
+    }
+
+    String getSecondAbility(int id) {
+        if(tabledPokemonData.get(id).ability2 > 0)
+            return tabledAbilityData.get(tabledPokemonData.get(id).ability2).name;
+        else
+            return "";
+    }
+
+    String getHiddenAbility(int id) {
+        if(tabledPokemonData.get(id).abilityHidden > 0)
+            return tabledAbilityData.get(tabledPokemonData.get(id).abilityHidden).name;
+        else
+            return "";
     }
 
     private static <C> ArrayList<C> asList(SparseArray<C> sparseArray) {
@@ -202,26 +223,23 @@ class PokemonJsonDeserializer implements JsonDeserializer<SparseArray<PokemonDat
 
             int breeds = jObject.get("breeds").getAsInt();
 
-            String ability1;
+            int ability1;
             if(jObject.has("ability_1"))
-                ability1 = jObject.get("ability_1").getAsString();
+                ability1 = jObject.get("ability_1").getAsInt();
             else
-                ability1 = "ERROR";
+                ability1 = 0;
 
-            String ability2;
+            int ability2;
             if(jObject.has("ability_2"))
-                ability2 = jObject.get("ability_2").getAsString();
+                ability2 = jObject.get("ability_2").getAsInt();
             else
-                ability2 = "NONE";
+                ability2 = 0;
 
-            String abilityHidden;
+            int abilityHidden;
             if(jObject.has("ability_hidden"))
-                abilityHidden = jObject.get("ability_hidden").getAsString();
+                abilityHidden = jObject.get("ability_hidden").getAsInt();
             else
-                abilityHidden = "NONE";
-
-
-
+                abilityHidden = 0;
 
             PokemonDataBlock dataBlock = new PokemonDataBlock(
                     id,
@@ -295,11 +313,11 @@ class PokemonDataBlock {
     final Drawable drawable;
     final GenderRestriction genderRestriction;
     final int breeds;
-    final String ability1;
-    final String ability2;
-    final String abilityHidden;
+    final int ability1;
+    final int ability2;
+    final int abilityHidden;
 
-    PokemonDataBlock(int id, String name, String eggGroup1, String eggGroup2, GenderRestriction genderRestriction, int breeds, String a1, String a2, String ah, Context c) {
+    PokemonDataBlock(int id, String name, String eggGroup1, String eggGroup2, GenderRestriction genderRestriction, int breeds, int a1, int a2, int ah, Context c) {
         this.name      = name;
         this.eggGroup1 = EggGroup.valueOf(eggGroup1);
         this.eggGroup2 = EggGroup.valueOf(eggGroup2);

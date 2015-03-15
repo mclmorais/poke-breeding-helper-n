@@ -42,7 +42,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
     private OnPokemonPopupListener mListener;
 
     private ImageView imagePokemonIcon, imageGender;
-    private TextView textPokemonName, textEggGroup1, textEggGroup2, textNature, textNumber;
+    private TextView textPokemonName, textEggGroup1, textEggGroup2, textNature, textNumber, textAbility;
     private Button buttonClose, buttonEdit;
     private ImageView[] IVs = new ImageView[6];
 
@@ -151,7 +151,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
     @Override
     public void onStart() {
         super.onStart();
-        int height = dpToPx(210);
+        int height = dpToPx(300);
         int width = dpToPx(250);
 
         Dialog dialog = getDialog();
@@ -225,6 +225,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
         textNature = (TextView) v.findViewById(R.id.textPokemonPopupNature);
         textNumber = (TextView) v.findViewById(R.id.textPokemonPopupNumber);
         imageGender = (ImageView) v.findViewById(R.id.imagePokemonPopupGender);
+        textAbility = (TextView) v.findViewById(R.id.textViewPokemonPopupAbility);
 
         IVs[0] = (ImageView) v.findViewById(R.id.imagePokemonPopupHP);
         IVs[1] = (ImageView) v.findViewById(R.id.imagePokemonPopupATK);
@@ -289,6 +290,17 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
 
 
         textNumber.setText(String.valueOf(pokemonPos+1));
+
+        if(selectedPokemon.ability == PokemonData.getInstance().getFirstAbilityId(selectedPokemon.id))
+            textAbility.setText(PokemonData.getInstance().getFirstAbility(selectedPokemon.id));
+        else if(selectedPokemon.ability == PokemonData.getInstance().getSecondAbilityId(selectedPokemon.id))
+            textAbility.setText(PokemonData.getInstance().getSecondAbility(selectedPokemon.id));
+        else if(selectedPokemon.ability == PokemonData.getInstance().getHiddenAbilityId(selectedPokemon.id))
+            textAbility.setText(PokemonData.getInstance().getHiddenAbility(selectedPokemon.id));
+        else
+            textAbility.setText("Unset");
+
+
 
 
         Nature nature = selectedPokemon.nature;
