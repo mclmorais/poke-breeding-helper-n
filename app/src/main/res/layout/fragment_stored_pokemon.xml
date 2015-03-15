@@ -32,7 +32,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:id="@+id/linearLayout">
+            android:id="@+id/LayoutIVs">
 
             <ToggleButton
                 android:layout_width="0dp"
@@ -76,8 +76,8 @@
             android:background="@color/background_light_gray"
             android:layout_gravity="center_vertical"
             android:layout_alignTop="@+id/itemGridHeaderTitle"
-            android:layout_toLeftOf="@+id/linearLayout"
-            android:layout_toStartOf="@+id/linearLayout" />
+            android:layout_toLeftOf="@+id/LayoutIVs"
+            android:layout_toStartOf="@+id/LayoutIVs" />
 
     </RelativeLayout>
 

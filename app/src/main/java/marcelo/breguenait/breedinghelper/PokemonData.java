@@ -137,6 +137,18 @@ class PokemonData {
             return 0;
     }
 
+    String getFirstAbility(int id) {
+        return tabledPokemonData.get(id).ability1;
+    }
+
+    String getSecondAbility(int id) {
+        return tabledPokemonData.get(id).ability2;
+    }
+
+    String getHiddenAbility(int id) {
+        return tabledPokemonData.get(id).abilityHidden;
+    }
+
     private static <C> ArrayList<C> asList(SparseArray<C> sparseArray) {
         if (sparseArray == null) return null;
         ArrayList<C> arrayList = new ArrayList<>(sparseArray.size());
@@ -164,11 +176,13 @@ class PokemonJsonDeserializer implements JsonDeserializer<SparseArray<PokemonDat
 
         for (int i = 0; i < jArray.size(); i++) {
             JsonObject jObject = (JsonObject) jArray.get(i);
+
             String name;
             if(jObject.has("name"))
                     name = jObject.get("name").getAsString();
             else
                 name = "ERROR";
+
             String eggGroup1;
             if(jObject.has("egg_group_1"))
                 eggGroup1 = jObject.get("egg_group_1").getAsString();
@@ -188,6 +202,25 @@ class PokemonJsonDeserializer implements JsonDeserializer<SparseArray<PokemonDat
 
             int breeds = jObject.get("breeds").getAsInt();
 
+            String ability1;
+            if(jObject.has("ability_1"))
+                ability1 = jObject.get("ability_1").getAsString();
+            else
+                ability1 = "ERROR";
+
+            String ability2;
+            if(jObject.has("ability_2"))
+                ability2 = jObject.get("ability_2").getAsString();
+            else
+                ability2 = "NONE";
+
+            String abilityHidden;
+            if(jObject.has("ability_hidden"))
+                abilityHidden = jObject.get("ability_hidden").getAsString();
+            else
+                abilityHidden = "NONE";
+
+
 
 
             PokemonDataBlock dataBlock = new PokemonDataBlock(
@@ -197,6 +230,9 @@ class PokemonJsonDeserializer implements JsonDeserializer<SparseArray<PokemonDat
                     eggGroup2,
                     genderRestriction,
                     breeds,
+                    ability1,
+                    ability2,
+                    abilityHidden,
                     mContext);
 
             pokemons.put(id, dataBlock);
@@ -259,8 +295,11 @@ class PokemonDataBlock {
     final Drawable drawable;
     final GenderRestriction genderRestriction;
     final int breeds;
+    final String ability1;
+    final String ability2;
+    final String abilityHidden;
 
-    PokemonDataBlock(int id, String name, String eggGroup1, String eggGroup2, GenderRestriction genderRestriction, int breeds,Context c) {
+    PokemonDataBlock(int id, String name, String eggGroup1, String eggGroup2, GenderRestriction genderRestriction, int breeds, String a1, String a2, String ah, Context c) {
         this.name      = name;
         this.eggGroup1 = EggGroup.valueOf(eggGroup1);
         this.eggGroup2 = EggGroup.valueOf(eggGroup2);
@@ -269,6 +308,9 @@ class PokemonDataBlock {
         this.drawable = c.getResources().getDrawable(c.getResources().getIdentifier(iconId, "drawable", c.getPackageName()));
         this.genderRestriction = genderRestriction;
         this.breeds = breeds;
+        this.ability1 = a1;
+        this.ability2 = a2;
+        this.abilityHidden = ah;
     }
 }
 

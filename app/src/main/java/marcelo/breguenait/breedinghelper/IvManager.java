@@ -220,6 +220,7 @@ public class IvManager {
     }
 
     private boolean considerNature = false;
+    private boolean considerAbility = true; //TODO: mudar
 
     boolean considerNature() {
         return considerNature;
@@ -304,6 +305,7 @@ public class IvManager {
                 if (checkCompatibility(firstPokemon, secondPokemon)) {
                     double chance = getChance(firstPokemon.IVs, secondPokemon.IVs, goalPokemon.IVs);
                     chance = checkNatureChance(firstPokemon.nature,secondPokemon.nature,chance);
+                    chance = checkAbilityChance(firstPokemon.id, secondPokemon.id, chance);
                     chances.add(new ChanceData(storedPokemonList.get(i), storedPokemonList.get(j),i, j, chance));
                 }
             }
@@ -330,7 +332,7 @@ public class IvManager {
         }
     }
 
-    double checkNatureChance(Nature firstNature, Nature secondNature, double chance) {
+    private double checkNatureChance(Nature firstNature, Nature secondNature, double chance) {
 
         if(considerNature && goalPokemon.nature != Nature.UNSET) {
             if (hasEverstone) {
@@ -341,6 +343,11 @@ public class IvManager {
         }
 
         return chance;
+    }
+
+    private double checkAbilityChance(int firstPokemon, int secondPokemon, double chance) {
+
+        return chance; //todo: fazer
     }
 
     /**
@@ -425,6 +432,8 @@ public class IvManager {
 
         return valid;
     }
+
+
     private double getChance(int[] maleIVs, int[] femaleIVs, int[] goalIVs) {
         double chance = 0.0d;
 

@@ -252,7 +252,7 @@
                 android:layout_width="108dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/spinnerAddPokemonNature"
-                android:layout_below="@+id/linearLayout"
+                android:layout_below="@+id/LayoutIVs"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:layout_marginBottom="4dp" />
