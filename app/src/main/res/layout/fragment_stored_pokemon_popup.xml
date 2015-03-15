@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Hariyama"
+        android:text="Scizor"
         android:id="@+id/textPokemonPopupName"
         style="@style/CapsLabel"
         android:textIsSelectable="false"
@@ -95,7 +95,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:id="@+id/imagePokemonPopupIcon"
-            android:background="@drawable/pkmn_big_040"
+            android:background="@drawable/pkmn_big_212"
             android:layout_alignTop="@+id/textView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -128,7 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Unset"
+                    android:text="Adamant"
                     android:textAllCaps="true"
                     android:id="@+id/textPokemonPopupNature"
                     android:textIsSelectable="false"
@@ -152,7 +152,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Overgrow"
+                    android:text="SHEER FORCE"
                     android:id="@+id/textViewPokemonPopupAbility"
                     android:layout_gravity="center_horizontal"
                     android:textSize="12sp" />
@@ -170,7 +170,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="WATER 2"
+                    android:text="MINERAL"
                     android:id="@+id/textPokemonPopupEggGroup1"
                     android:textSize="12sp" />
 
@@ -178,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="FIELD"
+                    android:text="BUG"
                     android:id="@+id/textPokemonPopupEggGroup2"
                     android:textSize="12sp" />
 

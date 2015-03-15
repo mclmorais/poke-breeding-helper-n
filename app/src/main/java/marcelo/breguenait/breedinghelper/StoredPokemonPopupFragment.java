@@ -19,6 +19,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.melnykov.fab.FloatingActionButton;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,9 +45,11 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
 
     private OnPokemonPopupListener mListener;
 
-    private ImageView imagePokemonIcon, imageGender;
+    private ImageView imageGender;
+    private CircleImageView imagePokemonIcon;
     private TextView textPokemonName, textEggGroup1, textEggGroup2, textNature, textNumber, textAbility;
-    private Button buttonClose, buttonEdit;
+    private Button buttonClose;
+    private FloatingActionButton buttonEdit;
     private ImageView[] IVs = new ImageView[6];
 
     private class PreloadedDrawables {
@@ -140,7 +146,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
 
         // clone the inflater using the ContextThemeWrapper
         LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-        View thisFragment =  localInflater.inflate(R.layout.fragment_stored_pokemon_popup, container, false);
+        View thisFragment =  localInflater.inflate(R.layout.fragment_stored_pokemon_popup2, container, false);
 
         setListeners(thisFragment);
         updateInterface();
@@ -151,7 +157,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
     @Override
     public void onStart() {
         super.onStart();
-        int height = dpToPx(300);
+        int height = dpToPx(232);
         int width = dpToPx(250);
 
         Dialog dialog = getDialog();
@@ -216,16 +222,16 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
     private void setListeners(View v) {
 
         preloadedDrawables = new PreloadedDrawables(getActivity().getApplicationContext());
-        imagePokemonIcon = (ImageView) v.findViewById(R.id.imagePokemonPopupIcon);
+        imagePokemonIcon = (CircleImageView) v.findViewById(R.id.imagePokemonPopupIcon);
         textPokemonName = (TextView) v.findViewById(R.id.textPokemonPopupName);
         buttonClose = (Button) v.findViewById(R.id.buttonPokemonPopupClose);
-        buttonEdit = (Button) v.findViewById(R.id.buttonPokemonPopupEdit);
+        buttonEdit = (FloatingActionButton) v.findViewById(R.id.buttonPokemonPopupEdit);
         textEggGroup1 = (TextView) v.findViewById(R.id.textPokemonPopupEggGroup1);
         textEggGroup2 = (TextView) v.findViewById(R.id.textPokemonPopupEggGroup2);
         textNature = (TextView) v.findViewById(R.id.textPokemonPopupNature);
         textNumber = (TextView) v.findViewById(R.id.textPokemonPopupNumber);
         imageGender = (ImageView) v.findViewById(R.id.imagePokemonPopupGender);
-        textAbility = (TextView) v.findViewById(R.id.textViewPokemonPopupAbility);
+        textAbility = (TextView) v.findViewById(R.id.textPokemonPopupAbility);
 
         IVs[0] = (ImageView) v.findViewById(R.id.imagePokemonPopupHP);
         IVs[1] = (ImageView) v.findViewById(R.id.imagePokemonPopupATK);
@@ -255,7 +261,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
 
         Drawable icon = PokemonData.getInstance().getDrawableFromId(id).getConstantState().newDrawable();
         String iconId = "pkmn_big_" + String.format("%03d", id);
-        imagePokemonIcon.setBackgroundResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
+        imagePokemonIcon.setImageResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
 
         String name = PokemonData.getInstance().getName(id);
         textPokemonName.setText(name);
@@ -289,7 +295,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
             imageGender.setBackgroundResource(R.drawable.symbol_genderless);
 
 
-        textNumber.setText(String.valueOf(pokemonPos+1));
+        textNumber.setText("#" + String.valueOf(pokemonPos+1));
 
         if(selectedPokemon.ability == PokemonData.getInstance().getFirstAbilityId(selectedPokemon.id))
             textAbility.setText(PokemonData.getInstance().getFirstAbility(selectedPokemon.id));
