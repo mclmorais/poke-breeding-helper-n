@@ -27,10 +27,12 @@ class PokemonData {
 
     private SparseArray<PokemonDataBlock> tabledPokemonData;
     private SparseArray<AbilityDataBlock> tabledAbilityData;
+    private SparseArray<NatureDataBlock>  tabledNatureData;
 
     private PokemonData(Context c) {
         readPokemonData(c);
         readAbilityData(c);
+        readNatureData(c);
     }
 
     void readPokemonData(Context c) {
@@ -66,6 +68,24 @@ class PokemonData {
             tabledAbilityData = gson.fromJson(reader, typeOfHashMap);
 
             int x = 2;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void readNatureData(Context c) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        Type typeOfHashMap = new TypeToken<SparseArray<AbilityDataBlock>>(){}.getType();
+        gsonBuilder.registerTypeAdapter(typeOfHashMap, new NatureJsonDeserializer());
+        Gson gson = gsonBuilder.create();
+
+        final InputStream assetFile;
+        try {
+            assetFile = c.getResources().getAssets().open("natures.json");
+            Reader reader = new InputStreamReader(assetFile, "UTF-8");
+            tabledNatureData = gson.fromJson(reader, typeOfHashMap);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -170,6 +190,17 @@ class PokemonData {
             return "";
     }
 
+    ArrayList<String> getListOfNatures() {
+        ArrayList<String> s = new ArrayList<>();
+        for(int i = 0; i < tabledNatureData.size(); i++)
+            s.add(tabledNatureData.get(i).name);
+
+        return s;
+    }
+
+    String getNatureName(int id) {
+        return tabledNatureData.get(id).name;
+    }
     private static <C> ArrayList<C> asList(SparseArray<C> sparseArray) {
         if (sparseArray == null) return null;
         ArrayList<C> arrayList = new ArrayList<>(sparseArray.size());
@@ -266,16 +297,16 @@ class AbilityJsonDeserializer implements JsonDeserializer<SparseArray<AbilityDat
 
     AbilityJsonDeserializer(Context mContext) {
         this.mContext = mContext;
-        
+
     }
 
     @Override
     public SparseArray<AbilityDataBlock> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonArray jArray;
         jArray = json.getAsJsonObject().get("abilities").getAsJsonArray();
-        
+
         SparseArray<AbilityDataBlock> abilities = new SparseArray<>();
-        
+
         for(int i = 0; i < jArray.size(); i++){
             JsonObject jObject = (JsonObject) jArray.get(i);
             String name;
@@ -300,8 +331,62 @@ class AbilityJsonDeserializer implements JsonDeserializer<SparseArray<AbilityDat
 
             abilities.put(id,dataBlock);
         }
-        
+
         return abilities;
+    }
+}
+
+class NatureJsonDeserializer implements JsonDeserializer<SparseArray<NatureDataBlock>> {
+
+
+
+    NatureJsonDeserializer() {
+    }
+
+    @Override
+    public SparseArray<NatureDataBlock> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        JsonArray jArray;
+        jArray = json.getAsJsonObject().get("natures").getAsJsonArray();
+
+        SparseArray<NatureDataBlock> natures = new SparseArray<>();
+
+        for(int i = 0; i < jArray.size(); i++){
+            
+            JsonObject jObject = (JsonObject) jArray.get(i);
+            
+            int id = jObject.get("id").getAsInt();
+            
+            String name;
+            if(jObject.has("name"))
+                name = jObject.get("name").getAsString();
+            else
+                name = "ERROR";
+
+            int increasedStat;
+            if(jObject.has("increased_stat"))
+                increasedStat = jObject.get("increased_stat").getAsInt();
+            else
+                increasedStat = -1;
+
+            int decreasedStat;
+            if(jObject.has("decreased_stat"))
+                decreasedStat = jObject.get("decreased_stat").getAsInt();
+            else
+                decreasedStat = -1;
+
+            
+
+            NatureDataBlock dataBlock = new NatureDataBlock(
+                    id,
+                    name,
+                    increasedStat,
+                    decreasedStat
+            );
+
+            natures.put(id,dataBlock);
+        }
+
+        return natures;
     }
 }
 
@@ -341,5 +426,19 @@ class AbilityDataBlock {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+}
+
+class NatureDataBlock {
+    final int id;
+    final String name;
+    final int increasedStat;
+    final int decreasedStat;
+
+    NatureDataBlock(int id, String name, int increasedStat, int decreasedStat) {
+        this.id = id;
+        this.name = name;
+        this.increasedStat = increasedStat;
+        this.decreasedStat = decreasedStat;
     }
 }

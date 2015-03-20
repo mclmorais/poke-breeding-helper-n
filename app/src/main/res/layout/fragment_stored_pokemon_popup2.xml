@@ -21,7 +21,7 @@
             android:id="@+id/backgroundTop"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_alignBottom="@+id/horizontalSeparator2"
+            android:layout_alignBottom="@+id/horizontalSeparator333"
             android:visibility="visible" />
         <View
             android:layout_width="fill_parent"
@@ -36,7 +36,7 @@
             android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:background="@color/accent"
-            android:id="@+id/horizontalSeparator2"
+            android:id="@+id/horizontalSeparator333"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="80dp" />
         <ImageView

@@ -96,8 +96,10 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
 
         selectedName = (TextView) view.findViewById(R.id.textViewPokemonName);
 
+
+        ArrayList<String> natureNames = PokemonData.getInstance().getListOfNatures();
         spinnerNature = (Spinner) view.findViewById(R.id.spinnerGoalIVsNatures);
-        spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, Nature.values()));
+        spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, natureNames));
 
 
 
@@ -256,7 +258,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
                 .id(selectedPokemonId)
                 .gender(Gender.MALE) //TODO: Depois fazer ele poder escolher?
                 .IVs(IVs)
-                .nature(Nature.valueOf(spinnerNature.getSelectedItem().toString()))
+                .nature(Nature.values()[spinnerNature.getSelectedItemPosition()])
                 .ability(abilityIds.get(spinnerAbility.getSelectedItemPosition()))
                 .build();
         //TODO: fazer nao ficar recriando toda vez

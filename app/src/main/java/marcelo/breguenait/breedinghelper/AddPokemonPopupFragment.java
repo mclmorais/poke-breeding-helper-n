@@ -62,7 +62,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         selectedName.setText(text);
 
         String iconId = "pkmn_big_" + String.format("%03d", id);
-        selectedIcon.setBackgroundResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
+        selectedIcon.setImageResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
     }
 
     public void setSelectedPokemon(PokemonInfo selectedPokemon) {
@@ -95,7 +95,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
         // clone the inflater using the ContextThemeWrapper
         LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-        View view =  localInflater.inflate(R.layout.fragment_add_pokemon, container, false);
+        View view =  localInflater.inflate(R.layout.fragment_add_pokemon_2, container, false);
 
         buttonPokemonSelector = view.findViewById(R.id.buttonSelectPokemon);
 
@@ -114,8 +114,9 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         checkBoxInputIVs[4]       = (CheckBox) view.findViewById(R.id.checkBoxInputSDEF);
         checkBoxInputIVs[5]       = (CheckBox) view.findViewById(R.id.checkBoxInputSPD);
 
+        ArrayList<String> natureNames = PokemonData.getInstance().getListOfNatures();
         spinnerNature = (Spinner) view.findViewById(R.id.spinnerAddPokemonNature);
-        spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, Nature.values()));
+        spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, natureNames));
 
         spinnerAbility = (Spinner) view.findViewById(R.id.spinnerAddPokemonAbility);
 
@@ -328,7 +329,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
                 .id(selectedPokemonId)
                 .gender(pokemonGender)
                 .IVs(pokemonIVs)
-                .nature(Nature.valueOf(spinnerNature.getSelectedItem().toString()))
+                .nature(Nature.values()[spinnerNature.getSelectedItemPosition()])
                 .ability(abilityIds.get(spinnerAbility.getSelectedItemPosition()))
                 .build();
     }
