@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <changelog>
-    <release version="3.5a" versioncode="18">
+    <release version="3.6" versioncode="19">
         <change>
             Abilities included! You can now select the nature for each Pokémon and breed for hidden abilities!
         </change>
         <change>
             Updated the interface when adding and checking Pokémon to a more modern design.
+        </change>
+        <change>
+            Ads have been removed! Thanks for the continuous support!
         </change>
     </release>
 

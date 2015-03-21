@@ -248,7 +248,7 @@ public class MainActivity extends ActionBarActivity
     protected void onResume() {
         super.onResume();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        setAdVisibility(sharedPref.getBoolean("adDisabled",false));
+        setAdVisibility(true);
     }
 
     @Override
