@@ -150,9 +150,12 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
                         int id = currentPokemonData.id;
                         int breeds = currentPokemonData.breeds;
 
+                        if(id == Constants.DITTO_ID)
+                            continue;
+
                         if(id != breeds) {
                             if(id != 32 && id != 314) //Excludes nidoranM and Illumise because they're special cases
-                            continue;
+                                continue;
                         }
 
 

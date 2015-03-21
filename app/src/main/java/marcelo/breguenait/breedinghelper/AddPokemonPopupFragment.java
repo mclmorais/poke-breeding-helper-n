@@ -22,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.melnykov.fab.FloatingActionButton;
+
 import java.util.ArrayList;
 
 public class AddPokemonPopupFragment extends PopupDialogFragment implements SelectPokemonFragment.OnPokemonSelectedListener{
@@ -43,6 +45,8 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
     private Button confirmButton;
     private Button cancelButton;
+
+    private FloatingActionButton buttonEdit;
 
     private final CheckBox[] checkBoxInputIVs = new CheckBox[6];
 
@@ -120,6 +124,8 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
         spinnerAbility = (Spinner) view.findViewById(R.id.spinnerAddPokemonAbility);
 
+        buttonEdit = (FloatingActionButton) view.findViewById(R.id.buttonAddPokemonEdit);
+
 
         showOnlyCompatible = getArguments().getBoolean("showOnlyCompatible", false);
         setGenderDisplay();
@@ -142,13 +148,43 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
             Nature nature = selectedPokemon.nature;
             if(nature == null) nature = Nature.UNSET;
-            spinnerNature.setSelection(getIndex(spinnerNature,nature.toString()));
+            spinnerNature.setSelection(getIndex(spinnerNature,PokemonData.getInstance().getNatureName(nature.ordinal())));
+
+            updateAbilities(selectedPokemonId);
+            int ability = selectedPokemon.ability;
+
+            String textAbility;
+
+            if(selectedPokemon.ability == PokemonData.getInstance().getFirstAbilityId(selectedPokemon.id))
+                textAbility = (PokemonData.getInstance().getFirstAbility(selectedPokemon.id));
+            else if(selectedPokemon.ability == PokemonData.getInstance().getSecondAbilityId(selectedPokemon.id))
+                textAbility = (PokemonData.getInstance().getSecondAbility(selectedPokemon.id));
+            else if(selectedPokemon.ability == PokemonData.getInstance().getHiddenAbilityId(selectedPokemon.id))
+                textAbility = (PokemonData.getInstance().getHiddenAbility(selectedPokemon.id)) + " (Hidden)";
+            else
+                textAbility = ("Unset");
+
+            spinnerAbility.setSelection(getIndex(spinnerAbility,textAbility));
         }
 
-        updateAbilities(selectedPokemonId);
+
+        updateNameButton();
 
         setDialogPosition();
         return view;
+    }
+
+    void updateNameButton() {
+        if(selectedPokemonId > 0) {
+           buttonPokemonSelector.setVisibility(View.INVISIBLE);
+           selectedName.setVisibility(View.VISIBLE);
+           buttonEdit.setVisibility(View.VISIBLE);
+        }
+        else {
+            buttonPokemonSelector.setVisibility(View.VISIBLE);
+            selectedName.setVisibility(View.INVISIBLE);
+            buttonEdit.setVisibility(View.INVISIBLE);
+        }
     }
 
     void setListeners() {
@@ -157,6 +193,13 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
             @Override
             public void onClick(View view) {
             openSelectPokemonFragment(view);
+            }
+        });
+
+        buttonEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSelectPokemonFragment(view);
             }
         });
 
@@ -311,6 +354,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         updateAbilities(selectedPokemonId);
         updateInterfacePokemon(selectedPokemonId);
         updatePokemonGender(selectedPokemonId);
+        updateNameButton();
     }
 
     void showToast(String string) {

@@ -282,7 +282,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
 
         Nature nature = goal.nature;
         if(nature == null) nature = Nature.UNSET;
-        spinnerNature.setSelection(getIndex(spinnerNature,nature.toString()));
+        spinnerNature.setSelection(getIndex(spinnerNature,PokemonData.getInstance().getNatureName(nature.ordinal())));
     }
 
     @Override

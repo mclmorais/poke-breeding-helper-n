@@ -51,6 +51,14 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true">
 
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:id="@+id/imageViewSelectedPokemonIcon"
+                    android:background="@drawable/pkmn_big_000"
+                    android:layout_gravity="center"
+                    android:layout_alignParentTop="false"
+                    android:layout_alignEnd="@+id/frameLayoutPokemonSelectorButton" />
             </FrameLayout>
 
             <TextView
@@ -115,15 +123,6 @@
                     android:id="@+id/checkBoxGoalSPD"
                     android:button="@drawable/ic_iv_diamond_selector" />
             </LinearLayout>
-
-            <ImageView
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:id="@+id/imageViewSelectedPokemonIcon"
-                android:background="@drawable/pkmn_big_000"
-                android:layout_gravity="center"
-                android:layout_alignParentTop="false"
-                android:layout_alignEnd="@+id/frameLayoutPokemonSelectorButton" />
 
             <LinearLayout
                 android:orientation="horizontal"

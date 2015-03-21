@@ -367,12 +367,92 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
             TextView firstNature = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceFirstNature);
             Nature nature = list.get(i).firstPokemon.nature;
             if(nature == null) nature = Nature.UNSET;
-            firstNature.setText(nature.toString());
+
+            String natureName = "Unset";
+            for(int j = 0; j < Nature.values().length; j++) {//TODO: fazer isso em tudo q eh lugar
+                if (Nature.values()[j] == nature) {
+                    natureName = PokemonData.getInstance().getNatureName(j);
+                    break;
+                }
+            }
+            String abilityName;
+            if(list.get(i).firstPokemon.ability == PokemonData.getInstance().getFirstAbilityId(list.get(i).firstPokemon.id))
+                abilityName = (PokemonData.getInstance().getFirstAbility(list.get(i).firstPokemon.id));
+            else if(list.get(i).firstPokemon.ability == PokemonData.getInstance().getSecondAbilityId(list.get(i).firstPokemon.id))
+                abilityName = (PokemonData.getInstance().getSecondAbility(list.get(i).firstPokemon.id));
+            else if(list.get(i).firstPokemon.ability == PokemonData.getInstance().getHiddenAbilityId(list.get(i).firstPokemon.id))
+                abilityName = (PokemonData.getInstance().getHiddenAbility(list.get(i).firstPokemon.id));
+            else
+                abilityName = ("Unset");
+
+            if(natureName.equals("Unset") && abilityName.equals("Unset")) {
+                firstNature.setText("Nat. & Abl. unset");
+            }
+            else if (!natureName.equals("Unset")) {
+                String text = natureName;
+                if(!abilityName.equals("Unset")) {
+                    text += " | ";
+                    text += abilityName;
+
+                }
+                firstNature.setText(text);
+            }
+            else {
+                firstNature.setText(abilityName);
+            }
 
             TextView secondNature = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceSecondNature);
             nature = list.get(i).secondPokemon.nature;
             if(nature == null) nature = Nature.UNSET;
-            secondNature.setText(nature.toString());
+
+            natureName = "Unset";
+            for(int j = 0; j < Nature.values().length; j++) {//TODO: fazer isso em tudo q eh lugar
+                if (Nature.values()[j] == nature) {
+                    natureName = PokemonData.getInstance().getNatureName(j);
+                    break;
+                }
+            }
+            if(list.get(i).secondPokemon.ability == PokemonData.getInstance().getFirstAbilityId(list.get(i).secondPokemon.id))
+                abilityName = (PokemonData.getInstance().getFirstAbility(list.get(i).secondPokemon.id));
+            else if(list.get(i).secondPokemon.ability == PokemonData.getInstance().getSecondAbilityId(list.get(i).secondPokemon.id))
+                abilityName = (PokemonData.getInstance().getSecondAbility(list.get(i).secondPokemon.id));
+            else if(list.get(i).secondPokemon.ability == PokemonData.getInstance().getHiddenAbilityId(list.get(i).secondPokemon.id))
+                abilityName = (PokemonData.getInstance().getHiddenAbility(list.get(i).secondPokemon.id));
+            else
+                abilityName = ("Unset");
+
+            if(natureName.equals("Unset") && abilityName.equals("Unset")) {
+                secondNature.setText("Nat. & Abl. unset");
+            }
+            else if (!natureName.equals("Unset")) {
+                String text = natureName;
+                if(!abilityName.equals("Unset")) {
+                    text += " | ";
+                    text += abilityName;
+
+                }
+                secondNature.setText(text);
+            }
+            else {
+                secondNature.setText(abilityName);
+            }
+
+
+
+
+//            TextView secondNature = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceSecondNature);
+//            nature = list.get(i).secondPokemon.nature;
+//            if(nature == null) nature = Nature.UNSET;
+//            for(int j = 0; j < Nature.values().length; j++) //TODO: fazer isso em tudo q eh lugar
+//                if(Nature.values()[j] == nature) {
+//                    String name = PokemonData.getInstance().getNatureName(j);
+//                    if(!name.equals("Unset"))
+//                        secondNature.setText(name);
+//                    else
+//                        secondNature.setText("");
+//                    break;
+//                }
+
 
         }
 //        int targetHeight = (int) (interfaceChanceList.size()*convertDpToPixel(200,getActivity().getApplicationContext()));
