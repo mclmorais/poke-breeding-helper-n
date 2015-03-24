@@ -151,7 +151,7 @@
             <CheckBox
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:id="@+id/checkBoxInputDEF"
+                android:id="@+id/checkBoxInputATK"
                 android:checked="false"
                 android:background="@drawable/ic_iv_triangle_selector"
                 android:button="@android:color/transparent"

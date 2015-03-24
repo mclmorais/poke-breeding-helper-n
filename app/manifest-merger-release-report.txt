@@ -31,6 +31,10 @@ MERGED from com.android.support:cardview-v7:21.0.3:16:5
 MERGED from com.android.support:support-v4:21.0.3:16:5
 MERGED from de.cketti.library.changelog:ckchangelog:1.2.1:10:5
 MERGED from com.nhaarman.supertooltips:library:3.0.0:4:5
+MERGED from de.hdodenhof:circleimageview:1.2.2:9:5
+MERGED from com.melnykov:floatingactionbutton:1.2.0:12:5
+MERGED from com.android.support:recyclerview-v7:21.0.2:17:5
+MERGED from com.android.support:support-v4:21.0.3:16:5
 	android:label
 		ADDED from AndroidManifest.xml:11:9
 	android:allowBackup
@@ -81,6 +85,10 @@ MERGED from com.android.support:cardview-v7:21.0.3:15:5
 MERGED from com.android.support:support-v4:21.0.3:15:5
 MERGED from de.cketti.library.changelog:ckchangelog:1.2.1:6:5
 MERGED from com.nhaarman.supertooltips:library:3.0.0:2:5
+MERGED from de.hdodenhof:circleimageview:1.2.2:5:5
+MERGED from com.melnykov:floatingactionbutton:1.2.0:8:5
+MERGED from com.android.support:recyclerview-v7:21.0.2:15:5
+MERGED from com.android.support:support-v4:21.0.3:15:5
 	android:targetSdkVersion
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
@@ -93,3 +101,9 @@ ADDED from com.google.android.gms:play-services:6.5.87:21:9
 		ADDED from com.google.android.gms:play-services:6.5.87:22:13
 	android:value
 		ADDED from com.google.android.gms:play-services:6.5.87:23:13
+activity#android.support.v7.widget.TestActivity
+ADDED from com.android.support:recyclerview-v7:21.0.2:18:9
+	android:label
+		ADDED from com.android.support:recyclerview-v7:21.0.2:18:19
+	android:name
+		ADDED from com.android.support:recyclerview-v7:21.0.2:18:60

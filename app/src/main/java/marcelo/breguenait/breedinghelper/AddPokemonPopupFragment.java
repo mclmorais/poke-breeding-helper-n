@@ -135,6 +135,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         if(receivedId != 0) {
             updateInterfacePokemon(receivedId);
             updatePokemonGender(receivedId);
+            updateAbilities(receivedId);
         }
 
         if(selectedPokemon != null) {
