@@ -198,6 +198,20 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
             goalIVs[i].setChecked(goal.IVs[i] == 1);
         }
         updateAbilities();
+
+        String abilityName;
+
+        if(goal.ability == PokemonData.getInstance().getFirstAbilityId(goal.id))
+            abilityName = PokemonData.getInstance().getFirstAbility(goal.id);
+        else if(goal.ability == PokemonData.getInstance().getSecondAbilityId(goal.id))
+            abilityName = PokemonData.getInstance().getSecondAbility(goal.id);
+        else if(goal.ability == PokemonData.getInstance().getHiddenAbilityId(goal.id))
+            abilityName = PokemonData.getInstance().getHiddenAbility(goal.id) + " (Hidden)";
+        else
+            abilityName = "";
+
+        if(!abilityName.equals(""))
+            spinnerAbility.setSelection(getIndex(spinnerAbility,abilityName));
     }
 
     void updateAbilities() {

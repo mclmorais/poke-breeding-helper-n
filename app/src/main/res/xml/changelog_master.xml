@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <changelog>
+
+    <release version="3.6c" versioncode="21">
+        <change>
+            Fixed a bug where the current goal ability would be incorrectly displayed after reloading the app.
+        </change>
+        <change>
+            Fixed an issue where the abilities list would not repopulate after adding another Pokémon and would cause the app to crash.
+        </change>
+    </release>
+
     <release version="3.6b" versioncode="20">
         <change>
             Fixed an issue where the abilities list would not repopulate after adding another Pokémon and would cause the app to crash.
