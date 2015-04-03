@@ -368,7 +368,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
             pokemonIVs[i] = checkBoxInputIVs[i].isChecked()?1:0;
 
         updatePokemonGender(selectedPokemonId);
-      //  updateAbilities(selectedPokemonId);
+      //  populateAbilitySpinner(selectedPokemonId);
 
         return new PokemonInfo.Builder()
                 .id(selectedPokemonId)

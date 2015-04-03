@@ -110,8 +110,8 @@ class PokemonData {
 
     ArrayList<PokemonDataBlock> getOrderedData() {
         ArrayList<PokemonDataBlock> a = asList(tabledPokemonData);
-        PokemonDataBlock ditto = a.get(Constants.DITTO_ID-1);
-        a.remove(Constants.DITTO_ID-1);
+        PokemonDataBlock ditto = a.get(Constants.DITTO_ID);
+        a.remove(Constants.DITTO_ID);
         a.add(0,ditto);
         return a;
     }
@@ -188,6 +188,10 @@ class PokemonData {
             return tabledAbilityData.get(tabledPokemonData.get(id).abilityHidden).name;
         else
             return "";
+    }
+
+    String getAbilityName(int id) {
+        return tabledAbilityData.get(id).name;
     }
 
     ArrayList<String> getListOfNatures() {
@@ -408,7 +412,10 @@ class PokemonDataBlock {
         this.eggGroup2 = EggGroup.valueOf(eggGroup2);
         this.id = id;
         String iconId = "pkmn_" + String.format("%03d", id);
-        this.drawable = c.getResources().getDrawable(c.getResources().getIdentifier(iconId, "drawable", c.getPackageName()));
+        if(id != 0)
+            this.drawable = c.getResources().getDrawable(c.getResources().getIdentifier(iconId, "drawable", c.getPackageName()));
+        else
+            this.drawable = c.getResources().getDrawable(R.drawable.pkmn_big_000);
         this.genderRestriction = genderRestriction;
         this.breeds = breeds;
         this.ability1 = a1;

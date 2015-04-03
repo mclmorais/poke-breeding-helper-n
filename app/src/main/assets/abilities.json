@@ -1,6 +1,11 @@
 {
   "abilities": [
     {
+      "id": 0,
+      "name": "None",
+      "description": "This Pokémon has no ability."
+    },
+    {
       "id": 1,
       "name": "Stench",
       "description": "The stench may cause the target to flinch."

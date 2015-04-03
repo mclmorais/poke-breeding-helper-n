@@ -109,7 +109,11 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
                 for (int i = 0; i < pokemonList.size(); i++) {
 
 
+
                     PokemonDataBlock currentPokemonData = pokemonList.get(i);
+
+
+                    if(currentPokemonData.id == 0) continue;
 
                     /*If only compatible pokemons should be shown, ignores pokemons that don't have
                     * at least one egg group compatible with the current goal pokemon.*/

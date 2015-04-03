@@ -266,6 +266,19 @@ public class IvManager {
 
     public final List<ChanceData> getBestCombinations() {return bestCombinationsList;}
 
+    public void setEmptyGoalPokemon() {
+
+        int[] IVs = new int[6];
+        this.goalPokemon = new PokemonInfo.Builder()
+                .id(0)
+                .gender(Gender.MALE)
+                .ability(0)
+                .nature(Nature.UNSET)
+                .IVs(IVs)
+                .build();
+
+    }
+
     public void setGoalPokemon(PokemonInfo goalPokemon) {
         this.goalPokemon = goalPokemon;
         if(goalPokemon != null)

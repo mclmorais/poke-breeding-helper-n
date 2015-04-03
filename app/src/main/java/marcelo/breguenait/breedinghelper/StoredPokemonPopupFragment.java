@@ -353,8 +353,8 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
      */
     public interface OnPokemonPopupListener {
         // TODO: Update argument type and name
-        public void onPokemonAltered(PokemonInfo alteredPokemon, int position);
-        public PokemonInfo getGoal();
+        void onPokemonAltered(PokemonInfo alteredPokemon, int position);
+        PokemonInfo getGoal();
     }
 
 

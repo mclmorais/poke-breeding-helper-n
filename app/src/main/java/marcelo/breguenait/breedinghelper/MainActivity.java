@@ -1,7 +1,5 @@
 package marcelo.breguenait.breedinghelper;
 
-//TODO: "x item is hindering your chance!"
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -232,7 +230,6 @@ public class MainActivity extends ActionBarActivity
         fragList.setHatchAdapter(ivManager.getStoredPokemonList(), getApplicationContext());
         fragList.updateGridView();
 
-        updateGoalIVsFragment();
         updateLuckFragment(ivManager.getBestCombinations());
 
         setTooltips();
@@ -454,12 +451,6 @@ public class MainActivity extends ActionBarActivity
         frag.updateCurrentChances(c);
 
     }
-    void updateGoalIVsFragment() {
-        GoalIVsFragment frag = (GoalIVsFragment) getFragmentManager().findFragmentById(R.id.frameGoalIVsFragmentContainer);
-
-        frag.refreshGoal(ivManager.getGoalPokemon());
-    }
-
 
     public void addPokemonToList(PokemonInfo pokemon) {
         ivManager.storePokemon(pokemon);
@@ -543,6 +534,9 @@ public class MainActivity extends ActionBarActivity
         jsonString = sharedPref.getString("jsonCurrentGoal",null);
         if(jsonString != null) {
             ivManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
+        }
+        else {
+            ivManager.setEmptyGoalPokemon();
         }
 
         jsonString = sharedPref.getString("jsonMaleItem",null);

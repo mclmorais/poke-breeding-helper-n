@@ -24,7 +24,7 @@ import android.widget.GridView;
 public class SelectPokemonFragment extends PopupDialogFragment {
     //MainActivity baseActivity;
     public interface OnPokemonSelectedListener {
-        public void onPokemonSelected(int id);
+        void onPokemonSelected(int id);
         boolean showEggGroupFilter();
         boolean showOnlyBasic();
         PokemonInfo getGoal();
@@ -158,6 +158,9 @@ public class SelectPokemonFragment extends PopupDialogFragment {
         boolean showEggGroupFilter = mCallback.showEggGroupFilter();
 
         checkBoxCompatible.setEnabled(showEggGroupFilter);
+
+
+
 
         return view;
     }

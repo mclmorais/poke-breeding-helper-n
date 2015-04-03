@@ -1,6 +1,17 @@
 {
   "pokemons": [
     {
+      "id": 0,
+      "name": "Unselected",
+      "egg_group_1": "NONE",
+      "egg_group_2": "NONE",
+      "restricted_gender": "NONE",
+      "breeds": 0,
+      "ability_1": 0,
+      "ability_2": -1,
+      "ability_hidden": -1
+    },
+    {
       "id": 1,
       "name": "Bulbasaur",
       "egg_group_1": "MONSTER",
