@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 class PokemonData {
 
@@ -28,11 +29,14 @@ class PokemonData {
     private SparseArray<PokemonDataBlock> tabledPokemonData;
     private SparseArray<AbilityDataBlock> tabledAbilityData;
     private SparseArray<NatureDataBlock>  tabledNatureData;
+    private SparseArray<NatureDataBlock>  tabledApiPokemonData;
 
     private PokemonData(Context c) {
         readPokemonData(c);
         readAbilityData(c);
         readNatureData(c);
+        readPokemonApiData(c);
+
     }
 
     void readPokemonData(Context c) {
@@ -40,6 +44,7 @@ class PokemonData {
 
         /*Teaches gson how to deal with Maps of that type*/
         Type typeOfHashMap = new TypeToken<SparseArray<PokemonDataBlock>>(){}.getType();
+
         gsonBuilder.registerTypeAdapter(typeOfHashMap, new PokemonJsonDeserializer(c));
         Gson gson = gsonBuilder.create();
 
@@ -86,6 +91,23 @@ class PokemonData {
             Reader reader = new InputStreamReader(assetFile, "UTF-8");
             tabledNatureData = gson.fromJson(reader, typeOfHashMap);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void readPokemonApiData(Context c) {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        Type typeofHashMap = new TypeToken<SparseArray<PokemonApiDataBlock>>(){}.getType();
+        gsonBuilder.registerTypeAdapter(typeofHashMap, new PokemonApiJsonDeserializer());
+        Gson gson = gsonBuilder.create();
+
+        final InputStream assetFile;
+        try {
+            assetFile = c.getResources().getAssets().open("pkmn_api.json");
+            Reader reader = new InputStreamReader(assetFile, "UTF-8");
+            tabledApiPokemonData = gson.fromJson(reader,typeofHashMap);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -394,6 +416,72 @@ class NatureJsonDeserializer implements JsonDeserializer<SparseArray<NatureDataB
     }
 }
 
+class PokemonApiJsonDeserializer implements  JsonDeserializer<SparseArray<PokemonApiDataBlock>> {
+
+    PokemonApiJsonDeserializer() {}
+
+    @Override
+    public SparseArray<PokemonApiDataBlock> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+
+        JsonArray jArray = json.getAsJsonArray();
+
+        SparseArray<PokemonApiDataBlock> pokemons = new SparseArray<>(jArray.size());
+
+        for(int i = 0; i < jArray.size(); i++) {
+            JsonObject jObject = jArray.get(i).getAsJsonObject();
+
+            String name;
+            if(jObject.has("name"))
+                name = jObject.get("name").getAsString();
+            else
+                name = "MissingJsonName";
+
+            int dexID;
+            if(jObject.has("pkdx_id"))
+                dexID = jObject.get("pkdx_id").getAsInt();
+            else
+                dexID = -1;
+
+            String[] eggGroups = new String[2];
+
+
+            if(jObject.has("egg_groups") && jObject.get("egg_groups").getAsJsonArray().size() > 0) {
+                eggGroups[0] = jObject.get("egg_groups").getAsJsonArray().get(0).getAsJsonObject().get("name").getAsString();
+                if(jObject.get("egg_groups").getAsJsonArray().size() >= 2)
+                    eggGroups[1] = jObject.get("egg_groups").getAsJsonArray().get(1).getAsJsonObject().get("name").getAsString();
+            }
+
+            String[] types = new String[2];
+
+            if(jObject.has("types") && jObject.get("types").getAsJsonArray().size() > 0) {
+                types[0] = jObject.get("types").getAsJsonArray().get(0).getAsJsonObject().get("name").getAsString();
+                if(jObject.get("types").getAsJsonArray().size() >= 2) {
+                    types[1] = jObject.get("types").getAsJsonArray().get(1).getAsJsonObject().get("name").getAsString();
+                }
+            }
+
+            PokemonAttributes attributes;
+
+            attributes = new PokemonAttributes(
+                    jObject.has("hp") ? jObject.get("hp").getAsInt() : -1,
+                    jObject.has("attack") ? jObject.get("attack").getAsInt() : -1,
+                    jObject.has("defense") ? jObject.get("defense").getAsInt() : -1,
+                    jObject.has("sp_atk") ? jObject.get("sp_atk").getAsInt() : -1,
+                    jObject.has("sp_def") ? jObject.get("sp_def").getAsInt() : -1,
+                    jObject.has("speed") ? jObject.get("speed").getAsInt() : -1);
+
+
+
+            PokemonApiDataBlock pokemonApiDataBlock = new PokemonApiDataBlock(
+                    name,eggGroups,dexID,types, attributes);
+
+            pokemons.put(dexID, pokemonApiDataBlock);
+        }
+
+        return pokemons;
+    }
+}
+
 class PokemonDataBlock {
     final String name;
     final EggGroup eggGroup1;
@@ -421,6 +509,48 @@ class PokemonDataBlock {
         this.ability1 = a1;
         this.ability2 = a2;
         this.abilityHidden = ah;
+    }
+}
+
+class PokemonApiDataBlock {
+    final String name;
+    final String[] eggGroups;
+    final int dexId;
+    final String[] types;
+    final PokemonAttributes attributes;
+
+    public PokemonApiDataBlock(String name,
+                               String[] eggGroups,
+                               int dexId,
+                               String[] types,
+                               PokemonAttributes attributes) {
+        this.name = name;
+        this.eggGroups = eggGroups;
+        this.dexId = dexId;
+        this.types = types;
+        this.attributes = attributes;
+    }
+
+
+
+
+}
+
+class PokemonAttributes {
+    int hp;
+    int atk;
+    int def;
+    int satk;
+    int sdef;
+    int spd;
+
+    public PokemonAttributes(int hp, int atk, int def, int satk, int sdef, int spd) {
+        this.hp = hp;
+        this.atk = atk;
+        this.def = def;
+        this.satk = satk;
+        this.sdef = sdef;
+        this.spd = spd;
     }
 }
 
