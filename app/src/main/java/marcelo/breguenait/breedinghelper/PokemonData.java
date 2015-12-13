@@ -21,6 +21,7 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 class PokemonData {
 
@@ -29,7 +30,7 @@ class PokemonData {
     private SparseArray<PokemonDataBlock> tabledPokemonData;
     private SparseArray<AbilityDataBlock> tabledAbilityData;
     private SparseArray<NatureDataBlock>  tabledNatureData;
-    private SparseArray<NatureDataBlock>  tabledApiPokemonData;
+    private SparseArray<PokemonApiDataBlock>  tabledApiPokemonData;
 
     private PokemonData(Context c) {
         readPokemonData(c);
@@ -112,6 +113,8 @@ class PokemonData {
             e.printStackTrace();
         }
     }
+
+    SparseArray<PokemonApiDataBlock> getApiData() {return tabledApiPokemonData;}
 
     public static void initialize(Context c) {
 
@@ -470,10 +473,27 @@ class PokemonApiJsonDeserializer implements  JsonDeserializer<SparseArray<Pokemo
                     jObject.has("sp_def") ? jObject.get("sp_def").getAsInt() : -1,
                     jObject.has("speed") ? jObject.get("speed").getAsInt() : -1);
 
+            List<PokemonMove> moves = new ArrayList<>();
+
+            if(jObject.has("moves") && jObject.get("moves").getAsJsonArray().size() > 0) {
+                for(int j = 0; j < jObject.get("moves").getAsJsonArray().size(); j++) {
+                    JsonObject moveObject = jObject.get("moves").getAsJsonArray().get(j).getAsJsonObject();
+
+
+                    PokemonMove move = new PokemonMove(
+                            moveObject.get("name").getAsString(),
+                            moveObject.get("learn_type").getAsString(),
+                            moveObject.has("level") ? moveObject.get("level").getAsInt() : -1
+                    );
+                    moves.add(move);
+
+                }
+            }
+
 
 
             PokemonApiDataBlock pokemonApiDataBlock = new PokemonApiDataBlock(
-                    name,eggGroups,dexID,types, attributes);
+                    name,eggGroups,dexID,types, attributes,moves);
 
             pokemons.put(dexID, pokemonApiDataBlock);
         }
@@ -518,21 +538,28 @@ class PokemonApiDataBlock {
     final int dexId;
     final String[] types;
     final PokemonAttributes attributes;
+    List<PokemonMove> moves;
 
-    public PokemonApiDataBlock(String name,
-                               String[] eggGroups,
-                               int dexId,
-                               String[] types,
-                               PokemonAttributes attributes) {
+    public PokemonApiDataBlock(String name, String[] eggGroups, int dexId, String[] types, PokemonAttributes attributes, List<PokemonMove> moves) {
         this.name = name;
         this.eggGroups = eggGroups;
         this.dexId = dexId;
         this.types = types;
         this.attributes = attributes;
+        this.moves = moves;
     }
+}
 
+class PokemonMove {
+    String name;
+    String learnType;
+    int    level;
 
-
+    public PokemonMove(String name, String learnType, int level) {
+        this.name = name;
+        this.learnType = learnType;
+        this.level = level;
+    }
 
 }
 

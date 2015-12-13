@@ -101,4 +101,5 @@
         <item>Normal</item>
         <item>Shiny</item>
     </array>
+    <string name="title_activity_move_dex">MoveDexActivity</string>
 </resources>

@@ -221,6 +221,18 @@ public class MainActivity extends ActionBarActivity
         if (cl.isFirstRun()) {
             cl.getLogDialog().show();
         }
+
+        Button debugButton = (Button) findViewById(R.id.button_to_activity);
+        debugButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(MainActivity.this, MoveDexActivity.class);
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
+
+        MovesManager movesManager = new MovesManager(MainActivity.this);
+
     }
     @Override
     protected void onStart() {

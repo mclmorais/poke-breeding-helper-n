@@ -30,4 +30,5 @@ dependencies {
     compile 'com.nhaarman.supertooltips:library:3.0.0'
     compile 'de.hdodenhof:circleimageview:1.2.2'
     compile 'com.melnykov:floatingactionbutton:1.2.0'
+    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
 }
