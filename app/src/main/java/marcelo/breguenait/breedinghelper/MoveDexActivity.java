@@ -20,6 +20,7 @@ public class MoveDexActivity extends ActionBarActivity implements SelectPokemonF
 
     ImageView icon;
     TextView movesText;
+    MovesManager movesManager;
 
     private Cursor bulbasaurMoves;
     private MyDatabase db;
@@ -29,6 +30,8 @@ public class MoveDexActivity extends ActionBarActivity implements SelectPokemonF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_move_dex);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        movesManager = new MovesManager(getApplicationContext());
 
         Button debugButton = (Button) findViewById(R.id.button_debug);
 
@@ -159,7 +162,10 @@ public class MoveDexActivity extends ActionBarActivity implements SelectPokemonF
         String iconId = "pkmn_big_" + String.format("%03d", id);
         icon.setImageResource(getResources().getIdentifier(iconId, "drawable", MoveDexActivity.this.getPackageName()));
         //showMoves(id);
-        showMovesDB(id);
+        //showMovesDB(id);
+        //movesManager.showMoves(id);
+        movesManager.showMovesAsync(id);
+        //new MyAsyncTask().execute(movesManager, id);
     }
 
     @Override
