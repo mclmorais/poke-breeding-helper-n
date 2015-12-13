@@ -45,29 +45,31 @@ public class MoveDexActivity extends ActionBarActivity implements SelectPokemonF
         movesText.setMovementMethod(new ScrollingMovementMethod());
 
         db = new MyDatabase(this);
-        //employees = db.getQualquerCoisa(); // you would not typically call this on the main thread
-        //employees.getString(0);
+//        //employees = db.getQualquerCoisa(); // you would not typically call this on the main thread
+//        //employees.getString(0);
+//
+//        bulbasaurMoves = db.getPokemonMoves(1,16);
+//
+//        List<int[]> moves = new ArrayList<>();
+//
+//        while(!bulbasaurMoves.isAfterLast()) {
+//            int[] move = new int[2];
+//            move[0] = bulbasaurMoves.getInt(0);
+//            move[1] = bulbasaurMoves.getInt(1);
+//            moves.add(move);
+//            bulbasaurMoves.moveToNext();
+//        }
+//
+//        SparseArray<String> listOfMoves = db.getListOfMoves();
+//
+//        for(int i = 0; i < moves.size(); i++) {
+//            String s = listOfMoves.get(moves.get(i)[0]);
+//            System.out.println(s);
+//        }
+//
+//        int x= 3;
 
-        bulbasaurMoves = db.getPokemonMoves(1,16);
-
-        List<int[]> moves = new ArrayList<>();
-
-        while(!bulbasaurMoves.isAfterLast()) {
-            int[] move = new int[2];
-            move[0] = bulbasaurMoves.getInt(0);
-            move[1] = bulbasaurMoves.getInt(1);
-            moves.add(move);
-            bulbasaurMoves.moveToNext();
-        }
-
-        SparseArray<String> listOfMoves = db.getListOfMoves();
-
-        for(int i = 0; i < moves.size(); i++) {
-            String s = listOfMoves.get(moves.get(i)[0]);
-            System.out.println(s);
-        }
-
-        int x= 3;
+        //showmove
 
 
     }
@@ -129,11 +131,35 @@ public class MoveDexActivity extends ActionBarActivity implements SelectPokemonF
         return b;
     }
 
+    private void showMovesDB(int id) {
+
+        String tutorMoveString = "Tutor moves: \n";
+        Cursor pokemonMoves = db.getPokemonMoves(id, 15);
+
+        List<Integer> moves = db.getPokemonEggMoves(id,15);
+
+        String s = "";
+        for(Integer move : moves) {
+            s += db.getMoveName(move,15,9);
+            s += "\n";
+
+            List<String> parents = db.getParentsEggMoveNames(id, move);
+            for(String parent : parents) {
+                s += "-->"+parent;
+                s += "\n";
+            }
+
+        }
+
+        System.out.println(s);
+    }
+
     @Override
     public void onPokemonSelected(int id) {
         String iconId = "pkmn_big_" + String.format("%03d", id);
         icon.setImageResource(getResources().getIdentifier(iconId, "drawable", MoveDexActivity.this.getPackageName()));
-        showMoves(id);
+        //showMoves(id);
+        showMovesDB(id);
     }
 
     @Override

@@ -17,9 +17,9 @@ public class MovesManager {
     TreeMap<Integer, ArrayList<PokemonMoveDB>> pokemonList;
 
     MovesManager(Context context) {
-        pokemonDatabase = new MyDatabase(context);
-        movesList = pokemonDatabase.getListOfMoves();
-        pokemonList = pokemonDatabase.getAllPokemonMoves(15);
+ //       pokemonDatabase = new MyDatabase(context);
+ //       movesList = pokemonDatabase.getListOfMoves();
+//        pokemonList = pokemonDatabase.getAllPokemonMoves(15);
 
     }
 
