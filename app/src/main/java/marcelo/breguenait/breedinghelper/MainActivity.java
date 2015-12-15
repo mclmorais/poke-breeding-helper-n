@@ -447,6 +447,7 @@ public class MainActivity extends ActionBarActivity
         StoredPokemonFragment frag = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         frag.updateGridView();
     }
+
     void updateLuckFragment(List<ChanceData> c) {
 
         if(c == null) return;

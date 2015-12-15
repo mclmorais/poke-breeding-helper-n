@@ -3,35 +3,46 @@ package marcelo.breguenait.breedinghelper;
 import android.app.FragmentManager;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 
-public class MoveDexActivity extends ActionBarActivity implements SelectPokemonFragment.OnPokemonSelectedListener {
+public class MoveDexActivity extends AppCompatActivity implements SelectPokemonFragment.OnPokemonSelectedListener,AppBarLayout.OnOffsetChangedListener {
 
     ImageView icon;
-    TextView movesText;
     MovesManager movesManager;
 
-    private Cursor bulbasaurMoves;
+    private List<String>parentHeaderInformation;
+
     private MyDatabase db;
+
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_move_dex);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+//        setSupportActionBar((Toolbar) findViewById(R.id.main_activity_toolbar));
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        mToolbar = (Toolbar) findViewById(R.id.TOOLBAR);
+        setSupportActionBar(mToolbar);
         movesManager = new MovesManager(getApplicationContext());
+
 
         Button debugButton = (Button) findViewById(R.id.button_debug);
 
@@ -44,35 +55,14 @@ public class MoveDexActivity extends ActionBarActivity implements SelectPokemonF
 
         icon = (ImageView) findViewById(R.id.imageViewIcon);
 
-        movesText = (TextView) findViewById(R.id.textViewMoves);
-        movesText.setMovementMethod(new ScrollingMovementMethod());
 
         db = new MyDatabase(this);
-//        //employees = db.getQualquerCoisa(); // you would not typically call this on the main thread
-//        //employees.getString(0);
-//
-//        bulbasaurMoves = db.getPokemonMoves(1,16);
-//
-//        List<int[]> moves = new ArrayList<>();
-//
-//        while(!bulbasaurMoves.isAfterLast()) {
-//            int[] move = new int[2];
-//            move[0] = bulbasaurMoves.getInt(0);
-//            move[1] = bulbasaurMoves.getInt(1);
-//            moves.add(move);
-//            bulbasaurMoves.moveToNext();
-//        }
-//
-//        SparseArray<String> listOfMoves = db.getListOfMoves();
-//
-//        for(int i = 0; i < moves.size(); i++) {
-//            String s = listOfMoves.get(moves.get(i)[0]);
-//            System.out.println(s);
-//        }
-//
-//        int x= 3;
 
-        //showmove
+        parentHeaderInformation = new ArrayList<String>();
+        parentHeaderInformation.add("Cars");
+        parentHeaderInformation.add("Houses");
+        parentHeaderInformation.add("Football Clubs");
+        HashMap<String, List<String>> allChildItems = returnGroupedChildItems();
 
 
     }
@@ -81,39 +71,29 @@ public class MoveDexActivity extends ActionBarActivity implements SelectPokemonF
     protected void onDestroy() {
         super.onDestroy();
         db.close();
-        bulbasaurMoves.close();
     }
 
-    private void showMoves(int id) {
-
-        String s = PokemonData.getInstance().getApiData().get(id).name;
-        Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
-        String title = "Tutor moves: \n";
-        String tutorMoveString = title;
-        String eggMoveString = "Egg Moves: \n";
-        String levelupString = "Level up: \n";
-        List<PokemonMove> moves = PokemonData.getInstance().getApiData().get(id).moves;
-
-        TreeMap<Integer, String> levelMoves = new TreeMap<>();
-
-        for(PokemonMove m : moves) {
-            if(m.learnType.equals("tutor"))
-                tutorMoveString += (m.name + "\n");
-            if(m.learnType.equals("egg move"))
-                eggMoveString += (m.name + "\n");
-
-
-            if(m.learnType.equals("level up")) {
-                levelMoves.put(m.level,m.name);
-            }
-        }
-
-        for(TreeMap.Entry<Integer, String> entry : levelMoves.entrySet()) {
-            levelupString += Integer.toString(entry.getKey()) + " " + entry.getValue() + "\n";
-        }
-
-
-        movesText.setText(tutorMoveString + "\n" + eggMoveString + "\n" + levelupString);
+    private HashMap<String, List<String>> returnGroupedChildItems(){
+        HashMap<String, List<String>> childContent = new HashMap<String, List<String>>();
+        List<String> cars = new ArrayList<String>();
+        cars.add("Volvo");
+        cars.add("BMW");
+        cars.add("Toyota");
+        cars.add("Nissan");
+        List<String> houses = new ArrayList<String>();
+        houses.add("Duplex");
+        houses.add("Twin Duplex");
+        houses.add("Bungalow");
+        houses.add("Two Storey");
+        List<String> footballClubs = new ArrayList<String>();
+        footballClubs.add("Liverpool");
+        footballClubs.add("Arsenal");
+        footballClubs.add("Stoke City");
+        footballClubs.add("West Ham");
+        childContent.put(parentHeaderInformation.get(0), cars);
+        childContent.put(parentHeaderInformation.get(1), houses);
+        childContent.put(parentHeaderInformation.get(2), footballClubs);
+        return childContent;
     }
 
 
@@ -147,8 +127,8 @@ public class MoveDexActivity extends ActionBarActivity implements SelectPokemonF
             s += "\n";
 
             List<String> parents = db.getParentsEggMoveNames(id, move);
-            for(String parent : parents) {
-                s += "-->"+parent;
+            for (String parent : parents) {
+                s += "-->" + parent;
                 s += "\n";
             }
 
@@ -182,4 +162,10 @@ public class MoveDexActivity extends ActionBarActivity implements SelectPokemonF
     public PokemonInfo getGoal() {
         return null;
     }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+    }
 }
+

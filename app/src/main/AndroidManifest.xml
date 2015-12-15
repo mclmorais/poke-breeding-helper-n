@@ -26,7 +26,7 @@
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/placeholder_number_2"></activity>
+            android:label="@string/placeholder_number_2" />
         <activity
             android:name=".MoveDexActivity"
             android:label="@string/title_activity_move_dex"
@@ -35,6 +35,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="marcelo.breguenait.breedinghelper.MainActivity" />
         </activity>
+        <activity
+            android:name=".TabbedActivity"
+            android:label="@string/title_activity_tabbed" />
     </application>
 
 </manifest>

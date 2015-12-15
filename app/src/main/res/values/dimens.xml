@@ -12,5 +12,11 @@
     <dimen name="card_header_button_size">40dp</dimen>
     <dimen name="card_contextual_button_size">32dp</dimen>
     <dimen name="chance_data_height">72dp</dimen>
+    <!-- dimensions -->
+    <dimen name="image_width">120dp</dimen>
+    <dimen name="image_final_width">32dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
+
+    <dimen name="abc_action_bar_content_inset_material">16dp</dimen>
 
 </resources>

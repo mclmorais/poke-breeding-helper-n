@@ -102,4 +102,7 @@
         <item>Shiny</item>
     </array>
     <string name="title_activity_move_dex">MoveDexActivity</string>
+    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam bibendum ante dolor, id venenatis nunc maximus at. Suspendisse imperdiet, nibh eleifend euismod porta, nibh arcu laoreet mauris, eget laoreet odio risus eget dui. Nunc semper nec neque vel auctor. Cras consectetur tortor ex, eu auctor tortor vulputate in. Duis venenatis interdum nulla ac tincidunt. Suspendisse sit amet ex ipsum. Sed pulvinar turpis et mauris dapibus, eu porttitor velit malesuada. Donec id auctor metus. Vestibulum aliquet hendrerit neque, in ornare orci consectetur quis. Praesent malesuada, est eget viverra finibus, erat elit convallis felis, ac lobortis neque augue in nunc. Nullam enim elit, interdum at vehicula non, venenatis nec diam. Vestibulum dictum sagittis augue, vel facilisis nibh finibus in. Nulla consequat lorem eu quam tempus ullamcorper. Sed vehicula, ex vel porttitor semper, enim arcu fringilla diam, quis efficitur augue lectus a eros.</string>
+    <string name="title_activity_with_pages">WithPagesActivity</string>
 </resources>

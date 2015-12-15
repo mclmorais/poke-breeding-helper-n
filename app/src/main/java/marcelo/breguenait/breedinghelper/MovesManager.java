@@ -14,14 +14,9 @@ import java.util.TreeMap;
 public class MovesManager {
 
     MyDatabase db;
-    SparseArray<String> movesList;
-    TreeMap<Integer, ArrayList<PokemonMoveDB>> pokemonList;
 
     MovesManager(Context context) {
         db = new MyDatabase(context);
- //       movesList = pokemonDatabase.getListOfMoves();
-//        pokemonList = pokemonDatabase.getAllPokemonMoves(15);
-
     }
 
 
@@ -56,18 +51,3 @@ public class MovesManager {
     }
 
 }
-
-
-
-class PokemonMoveDB {
-    int id;
-    int method_id;
-    int level;
-
-    public PokemonMoveDB(int id, int method_id, int level) {
-        this.id = id;
-        this.method_id = method_id;
-        this.level = level;
-    }
-}
-

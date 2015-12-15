@@ -68,35 +68,6 @@ public class MyDatabase extends SQLiteAssetHelper {
         return list;
     }
 
-    public TreeMap<Integer, ArrayList<PokemonMoveDB>> getAllPokemonMoves(int pokemonVersion) {
-
-        SQLiteDatabase database= getReadableDatabase();
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-
-        String [] sqlSelect = {"pokemon_id","move_id", "pokemon_move_method_id","level"};
-        String sqlTables = "pokemon_moves";
-        String selection = "version_group_id=" + Integer.toString(pokemonVersion);
-
-        queryBuilder.setTables(sqlTables);
-
-        Cursor c = queryBuilder.query(database, sqlSelect, selection,null,null,null,null,null,null);
-        c.moveToFirst();
-
-        TreeMap<Integer, ArrayList<PokemonMoveDB>> map = new TreeMap<>();
-
-        while(!c.isAfterLast()) {
-
-            if (!map.containsKey(c.getInt(0)))
-                map.put(c.getInt(0), new ArrayList<PokemonMoveDB>());
-
-            PokemonMoveDB move = new PokemonMoveDB(c.getInt(1), c.getInt(2), c.getInt(3));
-
-            map.get(c.getInt(0)).add(move);
-            c.moveToNext();
-        }
-
-        return map;
-    }
 
     public String getMoveName(int id, int pokemonVersionId, int languageId) {
         SQLiteDatabase database= getReadableDatabase();
