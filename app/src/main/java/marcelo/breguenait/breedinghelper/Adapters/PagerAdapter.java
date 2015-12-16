@@ -2,6 +2,7 @@ package marcelo.breguenait.breedinghelper.Adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import marcelo.breguenait.breedinghelper.LevelMovesListFragment;
@@ -9,9 +10,9 @@ import marcelo.breguenait.breedinghelper.LevelMovesListFragment;
 /**
  * Created by Marcelo on 13/12/2015.
  */
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class PagerAdapter extends FragmentPagerAdapter {
     int mNumOfTabs;
-
+    LevelMovesListFragment tab1, tab2, tab3;
     public PagerAdapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
         this.mNumOfTabs = NumOfTabs;
@@ -19,7 +20,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         tab2 = new LevelMovesListFragment();
         tab3 = new LevelMovesListFragment();
     }
-    LevelMovesListFragment tab1, tab2, tab3;
+
 
     @Override
     public Fragment getItem(int position) {

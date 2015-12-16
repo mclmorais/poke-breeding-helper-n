@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 public class LevelMovesListFragment extends Fragment {
     RecyclerView mRecyclerView;
-    ArrayList<MoveInfo> moveInfoList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,7 +34,8 @@ public class LevelMovesListFragment extends Fragment {
     }
 
     public void switchData(ArrayList<MoveInfo> moveInfoList) {
-        mRecyclerView.swapAdapter(new LevelMoveAdapter(getContext(),moveInfoList), true);
+        if(mRecyclerView != null)
+            mRecyclerView.swapAdapter(new LevelMoveAdapter(getContext(),moveInfoList), true);
     }
 }
 

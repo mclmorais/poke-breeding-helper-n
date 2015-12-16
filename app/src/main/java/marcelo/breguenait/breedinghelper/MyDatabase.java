@@ -52,6 +52,10 @@ public class MyDatabase extends SQLiteAssetHelper {
 
         for (int move = 0; move < pokemonMovesCursor.getCount(); move++) {
 
+            if(methodId == 1 && pokemonMovesCursor.getInt(1)<=1) {
+                pokemonMovesCursor.moveToNext();
+                continue;
+            }
 
             String s = getMoveName(pokemonMovesCursor.getInt(0), pokemonVersionId, languageId);
 

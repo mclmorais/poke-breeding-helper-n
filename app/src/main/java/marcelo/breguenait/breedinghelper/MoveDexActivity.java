@@ -79,6 +79,7 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
 
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.setOffscreenPageLimit(tabLayout.getTabCount());
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -163,7 +164,20 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
     public void updateListofMoves(ArrayList<MoveInfo> list) {
         movesList = list;
         LevelMovesListFragment page = (LevelMovesListFragment) pagerAdapter.getItem(0);
-        page.switchData(list);
+        if(page != null)
+            page.switchData(list);
+
+        page = (LevelMovesListFragment) pagerAdapter.getItem(1);
+        if(page != null)
+            page.switchData(list);
+
+        page = (LevelMovesListFragment) pagerAdapter.getItem(2);
+        if(page != null)
+            page.switchData(list);
+
+        page = (LevelMovesListFragment) pagerAdapter.getItem(3);
+        if(page != null)
+            page.switchData(list);
 
     }
 
@@ -196,7 +210,6 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
 
             return 0;
         }
-
 
 
         @Override
