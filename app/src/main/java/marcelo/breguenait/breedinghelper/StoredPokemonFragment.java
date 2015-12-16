@@ -92,7 +92,7 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
                 }
                 else {
                     textHintRemove.setVisibility(View.GONE);
-                    buttonRemove.setTextColor(getResources().getColor(R.color.primary));
+                    buttonRemove.setTextColor(getResources().getColor(R.color.colorPrimary));
                     storedPokemonAdapter.setDeleteMode(false);
                 }
                 updateGridView();

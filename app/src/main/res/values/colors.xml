@@ -10,15 +10,19 @@
     <!--<color name="icons">#FFFFFF</color>-->
     <!--<color name="divider">#B6B6B6</color>-->
 
-    <color name="primary">#009688</color>
-    <color name="primary_dark">#00796B</color>
-    <color name="primary_light">#B2DFDB</color>
+    <!--<color name="primary">#009688</color>-->
+    <!--<color name="primary_dark">#00796B</color>-->
+    <!--<color name="primary_light">#B2DFDB</color>-->
     <!--<color name="accent">#607D8B</color>-->
     <color name="accent">#FF5252</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#727272</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <!--<color name="accent">#607D8B</color>-->
+    <color name="colorAccent">#FF5252</color>
 
     <color name="white">#ffffff</color>
 
@@ -27,4 +31,28 @@
     <color name="divider_light">#FFECECEC</color>
     <color name="divider_medium">#FFB1B1B1</color>
     <color name="light_red">#FFFFBBBB</color>
+
+
+    <array name="type_colors">
+        <item>#A8A878</item>
+        <item>#C03028</item>
+        <item>#A890F0</item>
+        <item>#A040A0</item>
+        <item>#E0C068</item>
+        <item>#B8A038</item>
+        <item>#A8B820</item>
+        <item>#705898</item>
+        <item>#B8B8D0</item>
+        <item>#F08030</item>
+        <item>#6890F0</item>
+        <item>#78C850</item>
+        <item>#F8D030</item>
+        <item>#F85888</item>
+        <item>#98D8D8</item>
+        <item>#7038F8</item>
+        <item>#705848</item>
+        <item>#EE99AC</item>
+        <item>#705848</item>
+        <item>#68A090</item>
+    </array>
 </resources>

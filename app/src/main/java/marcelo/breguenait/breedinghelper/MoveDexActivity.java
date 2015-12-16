@@ -1,68 +1,101 @@
 package marcelo.breguenait.breedinghelper;
 
 import android.app.FragmentManager;
-import android.database.Cursor;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.ScrollingMovementMethod;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
+
+import marcelo.breguenait.breedinghelper.Adapters.PagerAdapter;
 
 public class MoveDexActivity extends AppCompatActivity implements SelectPokemonFragment.OnPokemonSelectedListener,AppBarLayout.OnOffsetChangedListener {
 
-    ImageView icon;
-    MovesManager movesManager;
-
-    private List<String>parentHeaderInformation;
+    ImageView floatingIcon;
+    CollapsingToolbarLayout collapsingToolbarLayout;
 
     private MyDatabase db;
 
     Toolbar mToolbar;
+    Button buttonSelectPokemon;
+    TabLayout tabLayout;
+    private PagerAdapter pagerAdapter;
+    List<MoveInfo> movesList;
+    private ViewPager viewPager;
+
+    void bindActivity() {
+        buttonSelectPokemon = (Button) findViewById(R.id.moveDex_buttonSelectPokemon);
+        floatingIcon = (ImageView) findViewById(R.id.moveDex_floatingIcon);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.moveDex_collapsingToolbar);
+        tabLayout = (TabLayout) findViewById(R.id.moveDex_tabLayout);
+        viewPager = (ViewPager) findViewById(R.id.moveDex_viewPager);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_move_dex);
 
-//        setSupportActionBar((Toolbar) findViewById(R.id.main_activity_toolbar));
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        mToolbar = (Toolbar) findViewById(R.id.TOOLBAR);
+        movesList = new ArrayList<>();
+
+        bindActivity();
+
+        if(Build.VERSION.SDK_INT >= 23)
+            floatingIcon.setElevation(100);
+
+        mToolbar = (Toolbar) findViewById(R.id.moveDex_toolbar);
         setSupportActionBar(mToolbar);
-        movesManager = new MovesManager(getApplicationContext());
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-        Button debugButton = (Button) findViewById(R.id.button_debug);
-
-        debugButton.setOnClickListener(new View.OnClickListener() {
+        buttonSelectPokemon.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                openSelectPokemonFragment(view);
+            public void onClick(View v) {
+                openSelectPokemonFragment(v);
             }
         });
-
-        icon = (ImageView) findViewById(R.id.imageViewIcon);
 
 
         db = new MyDatabase(this);
 
-        parentHeaderInformation = new ArrayList<String>();
-        parentHeaderInformation.add("Cars");
-        parentHeaderInformation.add("Houses");
-        parentHeaderInformation.add("Football Clubs");
-        HashMap<String, List<String>> allChildItems = returnGroupedChildItems();
+        tabLayout.addTab(tabLayout.newTab().setText("Level Up"));
+        tabLayout.addTab(tabLayout.newTab().setText("TM/HM"));
+        tabLayout.addTab(tabLayout.newTab().setText("Egg Moves"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        pagerAdapter = new PagerAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
 
     }
@@ -71,29 +104,6 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
     protected void onDestroy() {
         super.onDestroy();
         db.close();
-    }
-
-    private HashMap<String, List<String>> returnGroupedChildItems(){
-        HashMap<String, List<String>> childContent = new HashMap<String, List<String>>();
-        List<String> cars = new ArrayList<String>();
-        cars.add("Volvo");
-        cars.add("BMW");
-        cars.add("Toyota");
-        cars.add("Nissan");
-        List<String> houses = new ArrayList<String>();
-        houses.add("Duplex");
-        houses.add("Twin Duplex");
-        houses.add("Bungalow");
-        houses.add("Two Storey");
-        List<String> footballClubs = new ArrayList<String>();
-        footballClubs.add("Liverpool");
-        footballClubs.add("Arsenal");
-        footballClubs.add("Stoke City");
-        footballClubs.add("West Ham");
-        childContent.put(parentHeaderInformation.get(0), cars);
-        childContent.put(parentHeaderInformation.get(1), houses);
-        childContent.put(parentHeaderInformation.get(2), footballClubs);
-        return childContent;
     }
 
 
@@ -114,37 +124,20 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         return b;
     }
 
-    private void showMovesDB(int id) {
-
-        String tutorMoveString = "Tutor moves: \n";
-        Cursor pokemonMoves = db.getPokemonMoves(id, 15);
-
-        List<Integer> moves = db.getPokemonEggMoves(id,15);
-
-        String s = "";
-        for(Integer move : moves) {
-            s += db.getMoveName(move,15,9);
-            s += "\n";
-
-            List<String> parents = db.getParentsEggMoveNames(id, move);
-            for (String parent : parents) {
-                s += "-->" + parent;
-                s += "\n";
-            }
-
-        }
-
-        System.out.println(s);
-    }
-
     @Override
     public void onPokemonSelected(int id) {
         String iconId = "pkmn_big_" + String.format("%03d", id);
-        icon.setImageResource(getResources().getIdentifier(iconId, "drawable", MoveDexActivity.this.getPackageName()));
+        floatingIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", MoveDexActivity.this.getPackageName()));
+
+        collapsingToolbarLayout.setTitle(db.getPokemonName(id));
+
+        new LoadMovesAsync().execute(MoveDexActivity.this, db, id, 16, 1, 9);
+
         //showMoves(id);
         //showMovesDB(id);
         //movesManager.showMoves(id);
-        movesManager.showMovesAsync(id);
+
+        //movesManager.showMovesAsync(id);
         //new MyAsyncTask().execute(movesManager, id);
     }
 
@@ -165,7 +158,58 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+    }
+
+    public void updateListofMoves(ArrayList<MoveInfo> list) {
+        movesList = list;
+        LevelMovesListFragment page = (LevelMovesListFragment) pagerAdapter.getItem(0);
+        page.switchData(list);
 
     }
+
+
+    private class LoadMovesAsync extends AsyncTask {
+
+        MoveDexActivity moveDexActivity;
+        MyDatabase database;
+        ArrayList<MoveInfo> moves;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            System.out.println("STARTING!");
+
+        }
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            moves = new ArrayList<>();
+            this.moveDexActivity = (MoveDexActivity) params[0];
+            database = (MyDatabase) params[1];
+            int id = (int) params[2];
+            int gameId = (int) params[3];
+            int methodId = (int) params[4];
+            int languageId = (int) params[5];
+
+            moves = (ArrayList<MoveInfo>) database.getPokemonMovesInfo(id,gameId,methodId,languageId);
+
+
+            return 0;
+        }
+
+
+
+        @Override
+        @SuppressWarnings("unchecked")
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            System.out.println("DONEZO!");
+            moveDexActivity.updateListofMoves(moves);
+        }
+
+    }
+
+
+
 }
 

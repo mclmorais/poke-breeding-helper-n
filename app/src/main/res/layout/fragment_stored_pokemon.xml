@@ -42,7 +42,7 @@
                 android:textOff="REMOVE"
                 android:id="@+id/buttonFragmentPokemonListRemove"
                 android:background="@drawable/button_press_white_lightgray_selector"
-                android:textColor="@color/primary"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:textSize="15sp"
@@ -63,7 +63,7 @@
                 android:text="@string/label_add"
                 android:id="@+id/buttonFragmentPokemonListAdd"
                 android:background="@drawable/button_press_white_lightgray_selector"
-                android:textColor="@color/primary"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:textSize="15sp" />

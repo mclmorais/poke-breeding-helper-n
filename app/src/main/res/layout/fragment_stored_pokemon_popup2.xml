@@ -18,7 +18,7 @@
         <View
             android:layout_width="fill_parent"
             android:layout_height="100dp"
-            android:background="@color/primary"
+            android:background="@color/colorPrimary"
             android:id="@+id/backgroundTop"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -291,7 +291,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             fab:fab_colorNormal="@color/accent"
-            fab:fab_colorPressed="@color/primary"
+            fab:fab_colorPressed="@color/colorPrimary"
             class="com.melnykov.fab.FloatingActionButton"
             android:id="@+id/buttonPokemonPopupEdit"
             android:src="@drawable/ic_action_edit"
@@ -302,7 +302,7 @@
         <Button
             android:textSize="16sp"
             android:textAllCaps="true"
-            android:textColor="@color/primary"
+            android:textColor="@color/colorPrimary"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/label_close"
