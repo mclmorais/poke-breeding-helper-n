@@ -10,16 +10,23 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import marcelo.breguenait.breedinghelper.Adapters.PagerAdapter;
 
 public class MoveDexActivity extends AppCompatActivity implements SelectPokemonFragment.OnPokemonSelectedListener,AppBarLayout.OnOffsetChangedListener {
+
+    private static final String TAG = MoveDexActivity.class.getSimpleName();
 
     ImageView floatingIcon;
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -32,6 +39,9 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
     private PagerAdapter pagerAdapter;
     List<MoveInfo> movesList;
     private ViewPager viewPager;
+    Button buttonDebugRB, buttonDebugORAS;
+    int debugVersion = 16;
+    private int currentPoceymanId;
 
     void bindActivity() {
         buttonSelectPokemon = (Button) findViewById(R.id.moveDex_buttonSelectPokemon);
@@ -39,7 +49,8 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.moveDex_collapsingToolbar);
         tabLayout = (TabLayout) findViewById(R.id.moveDex_tabLayout);
         viewPager = (ViewPager) findViewById(R.id.moveDex_viewPager);
-
+        buttonDebugRB = ((Button) findViewById(R.id.buttonRB));
+        buttonDebugORAS = ((Button) findViewById(R.id.buttonORAS));
     }
 
     @Override
@@ -66,6 +77,24 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
             }
         });
 
+
+        buttonDebugRB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                debugVersion = 1;
+
+                new LoadMovesAsync().execute(MoveDexActivity.this, db, currentPoceymanId, debugVersion, 1, 9);
+                new LoadMovesAsync().execute(MoveDexActivity.this, db, currentPoceymanId, debugVersion, 4, 9);
+            }
+        });
+        buttonDebugORAS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                debugVersion = 16;
+                new LoadMovesAsync().execute(MoveDexActivity.this, db, currentPoceymanId, debugVersion, 1, 9);
+                new LoadMovesAsync().execute(MoveDexActivity.this, db, currentPoceymanId, debugVersion, 4, 9);
+            }
+        });
 
         db = new MyDatabase(this);
 
@@ -127,12 +156,17 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
 
     @Override
     public void onPokemonSelected(int id) {
+        currentPoceymanId = id;
         String iconId = "pkmn_big_" + String.format("%03d", id);
         floatingIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", MoveDexActivity.this.getPackageName()));
 
         collapsingToolbarLayout.setTitle(db.getPokemonName(id));
 
-        new LoadMovesAsync().execute(MoveDexActivity.this, db, id, 16, 1, 9);
+//        LoadMovesNoThread(id, debugVersion,1,9);
+//        LoadMovesNoThread(id,debugVersion,4,9);
+
+       new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 1, 9);
+       new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 4, 9);
 
         //showMoves(id);
         //showMovesDB(id);
@@ -141,6 +175,7 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         //movesManager.showMovesAsync(id);
         //new MyAsyncTask().execute(movesManager, id);
     }
+
 
     @Override
     public boolean showEggGroupFilter() {
@@ -161,24 +196,29 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
     }
 
-    public void updateListofMoves(ArrayList<MoveInfo> list) {
+    public void updateListofMoves(ArrayList<MoveInfo> list, int methodId) {
         movesList = list;
-        LevelMovesListFragment page = (LevelMovesListFragment) pagerAdapter.getItem(0);
-        if(page != null)
-            page.switchData(list);
 
-        page = (LevelMovesListFragment) pagerAdapter.getItem(1);
-        if(page != null)
-            page.switchData(list);
 
-        page = (LevelMovesListFragment) pagerAdapter.getItem(2);
-        if(page != null)
-            page.switchData(list);
+        if(methodId == 1) {
+            LevelMovesListFragment page = (LevelMovesListFragment) pagerAdapter.getItem(0);
+            if (page != null)
+                page.switchData(list);
+        }
+        else if (methodId == 4) {
+            MachineMovesListFragment page = (MachineMovesListFragment) pagerAdapter.getItem(1);
 
-        page = (LevelMovesListFragment) pagerAdapter.getItem(3);
-        if(page != null)
-            page.switchData(list);
-
+                class CustomComparator implements Comparator<MoveInfo> {
+                    @Override
+                    public int compare(MoveInfo o1, MoveInfo o2) {
+                        return Integer.compare(o1.getMachineNumber(), o2.getMachineNumber());
+                    }
+                }
+            if (page != null) {
+                Collections.sort(list, new CustomComparator());
+                page.switchData(list);
+            }
+        }
     }
 
 
@@ -187,11 +227,13 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         MoveDexActivity moveDexActivity;
         MyDatabase database;
         ArrayList<MoveInfo> moves;
+        private int methodId;
+
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            System.out.println("STARTING!");
+            Log.d(TAG,"Starting!");
 
         }
 
@@ -202,11 +244,10 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
             database = (MyDatabase) params[1];
             int id = (int) params[2];
             int gameId = (int) params[3];
-            int methodId = (int) params[4];
+            methodId = (int) params[4];
             int languageId = (int) params[5];
 
             moves = (ArrayList<MoveInfo>) database.getPokemonMovesInfo(id,gameId,methodId,languageId);
-
 
             return 0;
         }
@@ -216,8 +257,8 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         @SuppressWarnings("unchecked")
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            System.out.println("DONEZO!");
-            moveDexActivity.updateListofMoves(moves);
+            Log.d(TAG,"Finished!");
+            moveDexActivity.updateListofMoves(moves, methodId);
         }
 
     }

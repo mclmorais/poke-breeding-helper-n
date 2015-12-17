@@ -4,36 +4,38 @@
     android:layout_height="64dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:id="@+id/dynMoveLvl_mainLayout">
+    android:id="@+id/dynMoveMch_mainLayout">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="15"
-        android:id="@+id/dynMoveLvl_levelLayout"
-        android:gravity="center_vertical">
+        android:id="@+id/dynMoveMch_levelLayout">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Lv"
-            android:id="@+id/dynMoveLvl_labelLevel"
+            android:text="TM"
+            android:id="@+id/dynMoveMch_textMachineType"
             android:fontFamily="sans-serif-light"
             android:textSize="12dp"
+            android:gravity="center"
             android:layout_marginRight="2dp" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="68"
-            android:id="@+id/dynMoveLvl_textLevel"
+            android:text="100"
+            android:id="@+id/dynMoveMch_textMachineNumber"
             android:fontFamily="sans-serif-light"
             android:textSize="14dp"
+            android:gravity="center"
             android:typeface="normal"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:singleLine="true" />
     </LinearLayout>
 
     <LinearLayout
@@ -41,16 +43,16 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="8dp"
+        android:gravity="center_vertical"
         android:layout_weight="40"
-        android:id="@+id/dynMoveLvl_nameLayout"
-        android:gravity="center_vertical">
+        android:id="@+id/dynMoveMch_nameLayout">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Razor Leaf"
-            android:id="@+id/dynMoveLvl_textName"
+            android:text="Poison Sludge"
+            android:id="@+id/dynMoveMch_textName"
             android:fontFamily="sans-serif-condensed"
             android:textSize="17dp"
             android:layout_weight="20" />
@@ -60,31 +62,29 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="28"
-        android:id="@+id/dynMoveLvl_attribLayout">
+        android:id="@+id/dynMoveMch_attribLayout">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Physical"
-            android:id="@+id/dynMoveLvl_textEffect"
+            android:id="@+id/dynMoveMch_textEffect"
             android:textAllCaps="true"
             android:fontFamily="sans-serif-condensed"
             android:textSize="12dp"
+            android:layout_below="@+id/dynMoveMch_textType"
             android:layout_alignParentRight="false"
             android:layout_alignParentEnd="false"
-            android:layout_marginRight="0dp"
             android:textIsSelectable="false"
-            android:layout_marginLeft="12dp"
-            android:layout_below="@+id/dynMoveLvl_textType"
             android:layout_centerHorizontal="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Fighting"
-            android:id="@+id/dynMoveLvl_textType"
+            android:text="Ice"
+            android:id="@+id/dynMoveMch_textType"
             android:layout_alignParentLeft="false"
             android:layout_alignParentStart="false"
             android:textAllCaps="true"
@@ -101,20 +101,20 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="20"
-        android:id="@+id/dynMoveLvl_valuesLayout">
+        android:id="@+id/dynMoveMch_valuesLayout">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="55%"
-            android:id="@+id/dynMoveLvl_textAccuracy"
+            android:id="@+id/dynMoveMch_textAccuracy"
             android:textAllCaps="true"
             android:fontFamily="sans-serif-thin"
             android:textSize="14dp"
-            android:layout_below="@+id/dynMoveLvl_textPower"
-            android:layout_alignLeft="@+id/dynMoveLvl_textPower"
-            android:layout_alignStart="@+id/dynMoveLvl_textPower"
+            android:layout_below="@+id/dynMoveMch_textPower"
+            android:layout_alignLeft="@+id/dynMoveMch_textPower"
+            android:layout_alignStart="@+id/dynMoveMch_textPower"
             android:layout_marginLeft="12dp"
             android:typeface="normal" />
 
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="120"
-            android:id="@+id/dynMoveLvl_textPower"
+            android:id="@+id/dynMoveMch_textPower"
             android:layout_alignParentLeft="false"
             android:layout_alignParentStart="false"
             android:textAllCaps="true"

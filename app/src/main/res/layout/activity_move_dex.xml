@@ -45,6 +45,24 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/moveDex_buttonSelectPokemon"
                     android:text="Choose"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ORAS"
+                    android:id="@+id/buttonORAS"
+                    android:layout_below="@+id/moveDex_buttonSelectPokemon"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RB"
+                    android:id="@+id/buttonRB"
+                    android:layout_alignTop="@+id/buttonORAS"
+                    android:layout_toLeftOf="@+id/buttonORAS"
+                    android:layout_toStartOf="@+id/buttonORAS" />
             </RelativeLayout>
 
 

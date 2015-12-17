@@ -33,7 +33,8 @@ public class MachineMovesListFragment extends Fragment {
     }
 
     public void switchData(ArrayList<MoveInfo> moveInfoList) {
-        mRecyclerView.swapAdapter(new LevelMoveAdapter(getContext(),moveInfoList), true);
+        mRecyclerView.swapAdapter(new MachineMoveAdapter(getContext(),moveInfoList), true);
+        mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 }
 

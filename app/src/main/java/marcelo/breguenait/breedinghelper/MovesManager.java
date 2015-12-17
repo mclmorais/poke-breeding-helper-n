@@ -12,7 +12,7 @@ public class MovesManager {
     MyDatabase db;
 
     MovesManager(Context context) {
-        db = new MyDatabase(context);
+        //db = new MyDatabase(context);
     }
 
 

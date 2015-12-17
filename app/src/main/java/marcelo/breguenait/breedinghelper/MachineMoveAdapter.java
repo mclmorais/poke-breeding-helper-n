@@ -13,9 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Marcelo on 15/12/2015.
+ * Created by Marcelo on 16/12/2015.
  */
-public class LevelMoveAdapter extends RecyclerView.Adapter<LevelMoveAdapter.ViewHolder> {
+
+public class MachineMoveAdapter extends RecyclerView.Adapter<MachineMoveAdapter.ViewHolder> {
+
 
 
     Context context;
@@ -28,22 +30,23 @@ public class LevelMoveAdapter extends RecyclerView.Adapter<LevelMoveAdapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView level, name, effect, type, accuracy, power;
+        TextView machineNumber, machineType,  name, effect, type, accuracy, power;
         LinearLayout layout;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            layout = (LinearLayout) itemView;
-            level       = (TextView) itemView.findViewById(R.id.dynMoveLvl_textLevel);
-            name        = (TextView) itemView.findViewById(R.id.dynMoveLvl_textName);
-            effect      = (TextView) itemView.findViewById(R.id.dynMoveLvl_textEffect);
-            type        = (TextView) itemView.findViewById(R.id.dynMoveLvl_textType);
-            accuracy    = (TextView) itemView.findViewById(R.id.dynMoveLvl_textAccuracy);
-            power       = (TextView) itemView.findViewById(R.id.dynMoveLvl_textPower);
+            layout          = (LinearLayout) itemView;
+            machineNumber   = (TextView) itemView.findViewById(R.id.dynMoveMch_textMachineNumber);
+            machineType     = (TextView) itemView.findViewById(R.id.dynMoveMch_textMachineType);
+            name            = (TextView) itemView.findViewById(R.id.dynMoveMch_textName);
+            effect          = (TextView) itemView.findViewById(R.id.dynMoveMch_textEffect);
+            type            = (TextView) itemView.findViewById(R.id.dynMoveMch_textType);
+            accuracy        = (TextView) itemView.findViewById(R.id.dynMoveMch_textAccuracy);
+            power           = (TextView) itemView.findViewById(R.id.dynMoveMch_textPower);
         }
     }
 
-    public LevelMoveAdapter(Context context, ArrayList<MoveInfo> moves) {
+    public MachineMoveAdapter(Context context, ArrayList<MoveInfo> moves) {
         this.context = context;
 
         if(moves != null)
@@ -56,7 +59,7 @@ public class LevelMoveAdapter extends RecyclerView.Adapter<LevelMoveAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dynamic_layout_move_levelup,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dynamic_layout_move_machine,parent,false);
 
 
         return new ViewHolder(v);
@@ -65,12 +68,11 @@ public class LevelMoveAdapter extends RecyclerView.Adapter<LevelMoveAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
-        int level = moves.get(position).getLevel();
-        if(level == 1)
-            holder.level.setText("―");
-        else
-            holder.level.setText(Integer.toString(level));
+        int machineNumber = moves.get(position).getMachineNumber();
+        if(machineNumber>100)
+            machineNumber -= 100;
+        String machineNumberString = String.format("%02d",machineNumber);
+        holder.machineNumber.setText(machineNumberString);
         holder.name.setText(moves.get(position).getName());
         holder.effect.setText(moves.get(position).getMoveClass());
         holder.type.setText(moves.get(position).getType());
@@ -78,12 +80,17 @@ public class LevelMoveAdapter extends RecyclerView.Adapter<LevelMoveAdapter.View
         if(accuracy <= 0)
             holder.accuracy.setText("100%");
         else
-            holder.accuracy.setText(Integer.toString(moves.get(position).getAccuracy())+"%");
+            holder.accuracy.setText(Integer.toString(accuracy)+"%");
         int power = moves.get(position).getPower();
         if(power <= 0)
             holder.power.setText("―");
         else
-            holder.power.setText(Integer.toString(moves.get(position).getPower()));
+            holder.power.setText(Integer.toString(power));
+
+        if(moves.get(position).isHiddenMachine())
+            holder.machineType.setText("HM");
+        else
+            holder.machineType.setText("TM");
 
         TypedArray ids = context.getResources().obtainTypedArray(R.array.type_colors);
 
@@ -98,5 +105,6 @@ public class LevelMoveAdapter extends RecyclerView.Adapter<LevelMoveAdapter.View
     public int getItemCount() {
         return moves.size();
     }
+
 }
 

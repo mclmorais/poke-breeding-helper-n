@@ -4,121 +4,101 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
-import android.util.SparseArray;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Marcelo on 12/12/2015.
  */
-public class MyDatabase extends SQLiteAssetHelper {
+public class MyDatabase extends SQLiteAssetHelper  {
 
     private static final String DATABASE_NAME = "pkmnsql.db";
     private static final int DATABASE_VERSION = 1;
 
     public MyDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        database = getReadableDatabase();
 
     }
 
-//    public Cursor getPokemonMoves(int pokemonId, int pokemonVersion) {
-//        SQLiteDatabase database= getReadableDatabase();
-//        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-//
-//        String [] sqlSelect = {"move_id", "pokemon_move_method_id", "level"};
-//        String sqlTables = "pokemon_moves";
-//        String selection = "pokemon_id=" + Integer.toString(pokemonId)+ " and version_group_id=" + Integer.toString(pokemonVersion);
-//
-//        queryBuilder.setTables(sqlTables);
-//
-//        Cursor c = queryBuilder.query(database, sqlSelect, selection,null,null,null,null,null,null);
-//        c.moveToFirst();
-//        return c;
-//    }
+    SQLiteDatabase database;
+
+
 
     public List<MoveInfo> getPokemonMovesInfo(int pokemonId, int pokemonVersionId, int methodId, int languageId) {
-
-
-
-        //SQLiteDatabase database= getReadableDatabase();
 
         //move, level
         Cursor pokemonMovesCursor = getPokemonMoves(pokemonId, pokemonVersionId, methodId);
         List<MoveInfo> moveInfoList = new ArrayList<>(pokemonMovesCursor.getCount());
-        pokemonMovesCursor.moveToFirst();
 
         for (int move = 0; move < pokemonMovesCursor.getCount(); move++) {
 
-            if(methodId == 1 && pokemonMovesCursor.getInt(1)<=1) {
-                pokemonMovesCursor.moveToNext();
-                continue;
+            MoveInfoBuilder moveInfoBuilder = new MoveInfoBuilder();
+
+            if(methodId == 1) //If its from leveling up
+                moveInfoBuilder.setLevel(pokemonMovesCursor.getInt(1));
+            else if (methodId == 4) { //If its from a machine
+                Cursor moveMachineNumberCursor = getMoveMachineNumberCursor(
+                        pokemonMovesCursor.getInt(0),pokemonVersionId);
+                int machineNumber = moveMachineNumberCursor.getInt(0);
+                moveInfoBuilder.setMachineNumber(machineNumber);
+                if(machineNumber > 100)
+                    moveInfoBuilder.isHiddenMachine(true);
+                moveMachineNumberCursor.close();
             }
 
             String s = getMoveName(pokemonMovesCursor.getInt(0), pokemonVersionId, languageId);
+            moveInfoBuilder.setName(s);
 
             //type, power, acc, class
             Cursor moveInfoCursor = getMoveInfo(pokemonMovesCursor.getInt(0));
-            moveInfoCursor.moveToFirst();
+            moveInfoBuilder.setTypeId(moveInfoCursor.getInt(0));
+            moveInfoBuilder.setPower(moveInfoCursor.getInt(1));
+            moveInfoBuilder.setAccuracy(moveInfoCursor.getInt(2));
 
             //typename
             Cursor typeNameCursor = getTypeName(moveInfoCursor.getInt(0), languageId);
-            typeNameCursor.moveToFirst();
+            moveInfoBuilder.setType(typeNameCursor.getString(0));
 
             //classname
             Cursor classNameCursor = getClassName(moveInfoCursor.getInt(3), languageId);
+            moveInfoBuilder.setMoveClass(classNameCursor.getString(0));
 
-            moveInfoList.add(new MoveInfo(
-                    pokemonMovesCursor.getInt(1),
-                    moveInfoCursor.getInt(2),
-                    moveInfoCursor.getInt(1),
-                    s,
-                    classNameCursor.getString(0),
-                    typeNameCursor.getString(0),
-                    moveInfoCursor.getInt(0))
-            );
+            moveInfoList.add(moveInfoBuilder.createMoveInfo());
+
+
 
             pokemonMovesCursor.moveToNext();
+            moveInfoCursor.close();
+            typeNameCursor.close();
+            classNameCursor.close();
         }
+        pokemonMovesCursor.close();
+
 
     return moveInfoList;
 
 
     }
 
-    public List<Integer> getPokemonMovesId2(int pokemonId, int pokemonVersionId, int methodId) {
-        SQLiteDatabase database= getReadableDatabase();
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-
-        String [] sqlSelect = {"move_id"};
-        String sqlTables = "pokemon_moves";
-        String selection = "pokemon_id="
-                + Integer.toString(pokemonId)
-                + " and version_group_id="
+    private Cursor getMoveMachineNumberCursor(int moveId, int pokemonVersionId) {
+        database= getReadableDatabase();
+        String s = "SELECT machine_number FROM machines WHERE version_group_id="
                 + Integer.toString(pokemonVersionId)
-                + " and pokemon_move_method_id="
-                + Integer.toString(methodId);
+                + " AND move_id="
+                + Integer.toString(moveId);
 
-
-        queryBuilder.setTables(sqlTables);
-
-        Cursor c = queryBuilder.query(database, sqlSelect, selection,null,null,null,null,null,null);
+        Cursor c = database.rawQuery(s,null);
         c.moveToFirst();
-
-
-        List<Integer> list = new ArrayList<>();
-        while(!c.isAfterLast()) {
-            list.add(c.getInt(0));
-            c.moveToNext();
-        }
-
-        return list;
+        return c;
     }
 
-    public Cursor getPokemonMoves(int pokemonId, int pokemonVersionId, int methodId) {
-        SQLiteDatabase database= getReadableDatabase();
+    private Cursor getPokemonMoves(int pokemonId, int pokemonVersionId, int methodId) {
+        database= getReadableDatabase();
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
         String [] sqlSelect = {"move_id","level"};
@@ -133,15 +113,14 @@ public class MyDatabase extends SQLiteAssetHelper {
 
         queryBuilder.setTables(sqlTables);
 
-        Cursor c = queryBuilder.query(database, sqlSelect, selection,null,null,null,"level",null,null);
+        Cursor c = queryBuilder.query(database, sqlSelect, selection, null, null, null, "level", null, null);
         c.moveToFirst();
 
         return c;
     }
 
-    public Cursor getClassName(int classId, int languageId) {
-        SQLiteDatabase database= getReadableDatabase();
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+    private Cursor getClassName(int classId, int languageId) {
+        database= getReadableDatabase();
 
 
         String s = "SELECT name FROM move_damage_class_prose WHERE move_damage_class_id="
@@ -156,8 +135,8 @@ public class MyDatabase extends SQLiteAssetHelper {
         return c;
     }
 
-    public Cursor getTypeName(int typeId, int languageId) {
-        SQLiteDatabase database= getReadableDatabase();
+    private Cursor getTypeName(int typeId, int languageId) {
+        database= getReadableDatabase();
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
 
@@ -173,8 +152,8 @@ public class MyDatabase extends SQLiteAssetHelper {
         return c;
     }
 
-    public String getMoveName(int id, int pokemonVersionId, int languageId) {
-        SQLiteDatabase database= getReadableDatabase();
+    private String getMoveName(int id, int pokemonVersionId, int languageId) {
+        database= getReadableDatabase();
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
         String [] sqlSelect = {"name"};
@@ -188,13 +167,14 @@ public class MyDatabase extends SQLiteAssetHelper {
         c = queryBuilder.query(database, sqlSelect, selection, null, null, null, null, null, null);
 
         c.moveToFirst();
-
-        return c.getString(0);
+        String s = c.getString(0);
+        c.close();
+        return s;
 
     }
 
-    public Cursor getMoveInfo(int moveId) {
-        SQLiteDatabase database= getReadableDatabase();
+    private Cursor getMoveInfo(int moveId) {
+        database= getReadableDatabase();
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
         String [] sqlSelect = {"type_id", "power", "accuracy", "damage_class_id"};
@@ -209,32 +189,8 @@ public class MyDatabase extends SQLiteAssetHelper {
 
     }
 
-    public SparseArray<String> getListOfMoves() {
-        SQLiteDatabase database = getReadableDatabase();
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-
-        String[] selectedColumns = {"move_id", "name"};
-        String queriedTables = "move_names";
-        String selection = "local_language_id=9";
-        queryBuilder.setTables(queriedTables);
-
-        Cursor c = queryBuilder.query(database,selectedColumns,selection,null,null,null,null,null,null);
-        c.moveToFirst();
-
-        SparseArray<String> list = new SparseArray<>();
-        while(!c.isAfterLast()) {
-            list.append(c.getInt(0),c.getString(1));
-            c.moveToNext();
-        }
-        int x = 3;
-        return list;
-
-
-
-    }
-
-    public List<String> getParentsEggMoveNames(int pokemonId, int moveId) {
-        SQLiteDatabase database= getReadableDatabase();
+    private List<String> getParentsEggMoveNames(int pokemonId, int moveId) {
+        database= getReadableDatabase();
 
 
         String initialPokemonEggGroups =
@@ -266,7 +222,7 @@ public class MyDatabase extends SQLiteAssetHelper {
     }
 
     public String getPokemonName(int pokemonId) {
-        SQLiteDatabase database= getReadableDatabase();
+        database= getReadableDatabase();
         String s = "SELECT name FROM pokemon_species_names where local_language_id=9 and pokemon_species_id="+Integer.toString(pokemonId);
 
         Cursor c = database.rawQuery(s,null);

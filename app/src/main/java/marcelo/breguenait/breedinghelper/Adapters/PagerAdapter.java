@@ -6,18 +6,20 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import marcelo.breguenait.breedinghelper.LevelMovesListFragment;
+import marcelo.breguenait.breedinghelper.MachineMovesListFragment;
 
 /**
  * Created by Marcelo on 13/12/2015.
  */
 public class PagerAdapter extends FragmentPagerAdapter {
     int mNumOfTabs;
-    LevelMovesListFragment tab1, tab2, tab3;
+    LevelMovesListFragment tab1, tab3;
+    MachineMovesListFragment tab2;
     public PagerAdapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
         this.mNumOfTabs = NumOfTabs;
         tab1 = new LevelMovesListFragment();
-        tab2 = new LevelMovesListFragment();
+        tab2 = new MachineMovesListFragment();
         tab3 = new LevelMovesListFragment();
     }
 
