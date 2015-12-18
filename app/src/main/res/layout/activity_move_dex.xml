@@ -44,25 +44,10 @@
                     android:layout_width="96dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/moveDex_buttonSelectPokemon"
-                    android:text="Choose"/>
+                    android:text="Choose"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ORAS"
-                    android:id="@+id/buttonORAS"
-                    android:layout_below="@+id/moveDex_buttonSelectPokemon"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="RB"
-                    android:id="@+id/buttonRB"
-                    android:layout_alignTop="@+id/buttonORAS"
-                    android:layout_toLeftOf="@+id/buttonORAS"
-                    android:layout_toStartOf="@+id/buttonORAS" />
             </RelativeLayout>
 
 
@@ -89,6 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_margin="10dp"
         card_view:cardCornerRadius="3dp"
+        android:background="#FFFFFF"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
         <android.support.v4.view.ViewPager

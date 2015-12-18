@@ -45,8 +45,7 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.moveDex_collapsingToolbar);
         tabLayout = (TabLayout) findViewById(R.id.moveDex_tabLayout);
         viewPager = (ViewPager) findViewById(R.id.moveDex_viewPager);
-        buttonDebugRB = ((Button) findViewById(R.id.buttonRB));
-        buttonDebugORAS = ((Button) findViewById(R.id.buttonORAS));
+
     }
 
     @Override
@@ -58,7 +57,7 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
 
         bindActivity();
 
-        if(Build.VERSION.SDK_INT >= 23)
+        if(Build.VERSION.SDK_INT >= 21)
             floatingIcon.setElevation(100);
 
         mToolbar = (Toolbar) findViewById(R.id.moveDex_toolbar);
@@ -74,23 +73,6 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         });
 
 
-        buttonDebugRB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                debugVersion = 1;
-
-                new LoadMovesAsync().execute(MoveDexActivity.this, db, currentPoceymanId, debugVersion, 1, 9);
-                new LoadMovesAsync().execute(MoveDexActivity.this, db, currentPoceymanId, debugVersion, 4, 9);
-            }
-        });
-        buttonDebugORAS.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                debugVersion = 16;
-                new LoadMovesAsync().execute(MoveDexActivity.this, db, currentPoceymanId, debugVersion, 1, 9);
-                new LoadMovesAsync().execute(MoveDexActivity.this, db, currentPoceymanId, debugVersion, 4, 9);
-            }
-        });
 
         db = new MyDatabase(this);
 
