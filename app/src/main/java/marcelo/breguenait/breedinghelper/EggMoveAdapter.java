@@ -3,6 +3,8 @@ package marcelo.breguenait.breedinghelper;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ public class EggMoveAdapter extends RecyclerView.Adapter<EggMoveAdapter.ViewHold
         LinearLayout layout;
         AutofitRecyclerView parentsRecyclerView;
 
+
         public ViewHolder(View itemView) {
             super(itemView);
             layout              = (LinearLayout) itemView;
@@ -38,12 +41,14 @@ public class EggMoveAdapter extends RecyclerView.Adapter<EggMoveAdapter.ViewHold
         }
     }
 
-
+    RecyclerView itself;
     Context context;
     List<MoveInfo> moves;
 
-    public EggMoveAdapter(Context context, ArrayList<MoveInfo> moves) {
+    public EggMoveAdapter(Context context, ArrayList<MoveInfo> moves, RecyclerView itself) {
         this.context = context;
+
+        this.itself = itself;
 
         if(moves != null)
             this.moves = moves;
@@ -58,17 +63,19 @@ public class EggMoveAdapter extends RecyclerView.Adapter<EggMoveAdapter.ViewHold
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dynamic_layout_move_egg,parent,false);
         return new ViewHolder(v);
     }
-
+    public int dpToPx(float valueInDp) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
+    }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        ArrayList<String> TEMPORARIO = new ArrayList<>(3);
-        TEMPORARIO.add("");
-        TEMPORARIO.add("");
-        TEMPORARIO.add("");
 
 
-        holder.parentsRecyclerView.setAdapter(new EggMoveParentAdapter(context,TEMPORARIO));
+        int x = Math.max(1, itself.getMeasuredWidth() / dpToPx(45));
+
+        holder.parentsRecyclerView.setLayoutManager(new WrappableGridLayoutManager(context, x));
+        holder.parentsRecyclerView.setAdapter(new EggMoveParentAdapter(context, moves.get(position).getParentIds()));
 //        notifyDataSetChanged();
 
 

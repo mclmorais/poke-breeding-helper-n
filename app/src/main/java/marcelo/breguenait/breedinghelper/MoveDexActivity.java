@@ -161,8 +161,9 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
 //        LoadMovesNoThread(id, debugVersion,1,9);
 //        LoadMovesNoThread(id,debugVersion,4,9);
 
-       new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 1, 9);
-       new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 4, 9);
+        new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 1, 9);
+        new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 4, 9);
+        new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 2, 9);
 
         //showMoves(id);
         //showMovesDB(id);
@@ -203,7 +204,7 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         }
         else if (methodId == 4) {
             MachineMovesListFragment page = (MachineMovesListFragment) pagerAdapter.getItem(1);
-            EggMovesListFragment pageTemp = (EggMovesListFragment) pagerAdapter.getItem(2);
+
 
                 class CustomComparator implements Comparator<MoveInfo> {
                     @Override
@@ -214,10 +215,26 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
             if (page != null) {
                 Collections.sort(list, new CustomComparator());
                 page.switchData(list);
-                pageTemp.switchData(list);
+
 
             }
 
+        }
+        else if (methodId == 2) {
+            EggMovesListFragment page = (EggMovesListFragment) pagerAdapter.getItem(2);
+
+
+            class CustomComparator implements Comparator<MoveInfo> {
+                @Override
+                public int compare(MoveInfo o1, MoveInfo o2) {
+                    return (o1.getName().compareTo(o2.getName()));
+                }
+            }
+
+            if(page != null) {
+                Collections.sort(list, new CustomComparator());
+                page.switchData(list);
+            }
         }
     }
 

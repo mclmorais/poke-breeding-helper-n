@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,11 +29,18 @@ public class EggMoveParentAdapter extends RecyclerView.Adapter<EggMoveParentAdap
 
 
     private Context context;
-    List<String> list;
+    ArrayList<Integer> list;
 
-    public EggMoveParentAdapter(Context context, List<String> list) {
+    public EggMoveParentAdapter(Context context, ArrayList<Integer> list) {
+        if(list == null)
+            this.list = new ArrayList<>(0);
+        else
+            this.list = list;
+
+
+
         this.context = context;
-        this.list = list;
+
     }
 
     @Override
@@ -43,12 +51,17 @@ public class EggMoveParentAdapter extends RecyclerView.Adapter<EggMoveParentAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.pkmn_076));
+
+        String iconId = "pkmn_" + String.format("%03d", list.get(position));
+
+        //context.getResources().getIdentifier(iconId, "drawable", context.getPackageName());
+        holder.icon.setImageDrawable(PokemonData.getInstance().getDrawableFromId(list.get(position)));
+        //holder.icon.setImageDrawable(ContextCompat.getDrawable(context, context.getResources().getIdentifier(iconId,"drawable",context.getPackageName())));
     }
 
     @Override
     public int getItemCount() {
-        return 20;
+        return list.size();
     }
 }
 

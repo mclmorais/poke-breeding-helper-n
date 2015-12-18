@@ -18,6 +18,7 @@ public class WrappableGridLayoutManager extends GridLayoutManager {
     }
 
     public int www, hhh, currentSpanNumber;
+    boolean hasmeasured = false;
 
     void remeasure(int spanNumber) {
 
@@ -29,6 +30,13 @@ public class WrappableGridLayoutManager extends GridLayoutManager {
 
     }
 
+    void remeasure2(int span) {
+        if(!hasmeasured) {
+            setMeasuredDimension(www,hhh/span);
+        }
+
+        hasmeasured = true;
+    }
     private int[] mMeasuredDimension = new int[2];
 
     @Override
@@ -114,6 +122,7 @@ public class WrappableGridLayoutManager extends GridLayoutManager {
             measuredDimension[1] = view.getMeasuredHeight() + p.bottomMargin + p.topMargin;
 
             recycler.recycleView(view);
+
         }
     }
 

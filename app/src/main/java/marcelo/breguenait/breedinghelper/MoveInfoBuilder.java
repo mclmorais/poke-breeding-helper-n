@@ -1,5 +1,7 @@
 package marcelo.breguenait.breedinghelper;
 
+import java.util.ArrayList;
+
 public class MoveInfoBuilder {
     private String name = "";
     private String type = "";
@@ -10,6 +12,14 @@ public class MoveInfoBuilder {
     private int level = 1;
     private int machineNumber = 1;
     private boolean isHiddenMachine = false;
+    private ArrayList<Integer> parentIds = null;
+
+
+
+    public MoveInfoBuilder setParents(ArrayList<Integer> parentIds) {
+        this.parentIds = parentIds;
+        return this;
+    }
 
     public MoveInfoBuilder setName(String name) {
         this.name = name;
@@ -57,6 +67,6 @@ public class MoveInfoBuilder {
     }
 
     public MoveInfo createMoveInfo() {
-        return new MoveInfo(name, type, typeId, power, accuracy, moveClass, level, machineNumber, isHiddenMachine);
+        return new MoveInfo(name, type, typeId, power, accuracy, moveClass, level, machineNumber, isHiddenMachine, parentIds);
     }
 }

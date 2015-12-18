@@ -36,31 +36,31 @@ public class AutofitRecyclerView extends RecyclerView {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        if (attrs != null) {
-            int[] attrsArray = {
-                    android.R.attr.columnWidth
-            };
-            TypedArray array = context.obtainStyledAttributes(attrs, attrsArray);
-            columnWidth = array.getDimensionPixelSize(0, -1);
-            array.recycle();
-        }
-
-        manager = new WrappableGridLayoutManager(getContext(), 1);
-        setLayoutManager(manager);
+//        if (attrs != null) {
+//            int[] attrsArray = {
+//                    android.R.attr.columnWidth
+//            };
+//            TypedArray array = context.obtainStyledAttributes(attrs, attrsArray);
+//            columnWidth = array.getDimensionPixelSize(0, -1);
+//            array.recycle();
+//        }
+//
+//        manager = new WrappableGridLayoutManager(getContext(), 1);
+//        setLayoutManager(manager);
     }
 
     @Override
     protected void onMeasure(int widthSpec, int heightSpec) {
         super.onMeasure(widthSpec, heightSpec);
-        if (columnWidth > 0) {
-            int spanCount = Math.max(1, getMeasuredWidth() / columnWidth);
-            manager.setSpanCount(spanCount);
-            WrappableGridLayoutManager lm = (WrappableGridLayoutManager) getLayoutManager();
-
-            lm.remeasure(spanCount);
-
-
-
-        }
+//        if (columnWidth > 0) {
+//            int spanCount = Math.max(1, getMeasuredWidth() / columnWidth);
+//            manager.setSpanCount(spanCount);
+//            WrappableGridLayoutManager lm = (WrappableGridLayoutManager) getLayoutManager();
+//            lm.remeasure2(spanCount);
+//            setLayoutManager(new WrappableGridLayoutManager(getContext(), spanCount));
+//            //lm.remeasure(spanCount);
+//
+//            postInvalidate();
+//        }
     }
 }

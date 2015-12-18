@@ -141,6 +141,10 @@ class PokemonData {
         return a;
     }
 
+    ArrayList<PokemonDataBlock> getOrderedDataSansDitto() {
+        return asList(tabledPokemonData);
+    }
+
     int getDataCount() {
         return tabledPokemonData.size();
     }

@@ -50,6 +50,18 @@ public class MyDatabase extends SQLiteAssetHelper  {
                     moveInfoBuilder.isHiddenMachine(true);
                 moveMachineNumberCursor.close();
             }
+            else if (methodId == 2){
+                Cursor parentIdCursor = getEggMoveParentsId(pokemonId,pokemonMovesCursor.getInt(0));
+
+                ArrayList<Integer> parentIds = new ArrayList<>();
+                for (int i = 0; i < parentIdCursor.getCount(); i++) {
+                    parentIds.add(parentIdCursor.getInt(0));
+                    parentIdCursor.moveToNext();
+                }
+                moveInfoBuilder.setParents(parentIds);
+                parentIdCursor.close();
+                //get parent info here
+            }
 
             String s = getMoveName(pokemonMovesCursor.getInt(0), pokemonVersionId, languageId);
             moveInfoBuilder.setName(s);
@@ -130,7 +142,7 @@ public class MyDatabase extends SQLiteAssetHelper  {
 
 
 
-        Cursor c = database.rawQuery(s,null);
+        Cursor c = database.rawQuery(s, null);
         c.moveToFirst();
         return c;
     }
@@ -147,7 +159,7 @@ public class MyDatabase extends SQLiteAssetHelper  {
 
 
 
-        Cursor c = database.rawQuery(s,null);
+        Cursor c = database.rawQuery(s, null);
         c.moveToFirst();
         return c;
     }
@@ -184,6 +196,38 @@ public class MyDatabase extends SQLiteAssetHelper  {
         queryBuilder.setTables(sqlTables);
 
         Cursor c = queryBuilder.query(database, sqlSelect, selection, null, null, null, null, null, null);
+        c.moveToFirst();
+        return c;
+
+    }
+
+    private Cursor getEggMoveParentsId(int pokemonId, int moveId) {
+        database= getReadableDatabase();
+
+
+        String initialPokemonEggGroups =
+                "SELECT egg_group_id FROM pokemon_egg_groups WHERE species_id="+Integer.toString(pokemonId);
+        String pokemonsWithSameEggGroup =
+                "SELECT DISTINCT species_id FROM pokemon_egg_groups WHERE egg_group_id in("+initialPokemonEggGroups + ")";
+        String pokemonsWithMove =
+                "SELECT pokemon_id FROM pokemon_moves WHERE move_id="+Integer.toString(moveId)+" AND version_group_id=15 AND pokemon_id<>"+Integer.toString(pokemonId)
+                + " AND pokemon_move_method_id=1";
+
+        String pokemonsWithMoveFromSameEggGroup =
+                pokemonsWithSameEggGroup+" INTERSECT "+pokemonsWithMove;
+
+        Cursor c = database.rawQuery(pokemonsWithMoveFromSameEggGroup, null);
+
+        if(c.getCount() == 0) {
+             pokemonsWithMove =
+              "SELECT pokemon_id FROM pokemon_moves WHERE move_id="+Integer.toString(moveId)+" AND version_group_id=15 AND pokemon_id<>"+Integer.toString(pokemonId)
+                      + " AND pokemon_move_method_id=2";
+
+             pokemonsWithMoveFromSameEggGroup =
+                    pokemonsWithSameEggGroup+" INTERSECT "+pokemonsWithMove;
+            c = database.rawQuery(pokemonsWithMoveFromSameEggGroup, null);
+        }
+
         c.moveToFirst();
         return c;
 

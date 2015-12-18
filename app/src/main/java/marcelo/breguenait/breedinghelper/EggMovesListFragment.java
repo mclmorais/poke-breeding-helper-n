@@ -25,7 +25,7 @@ public class EggMovesListFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mRecyclerView.setAdapter(new EggMoveAdapter(getContext(),null));
+        mRecyclerView.setAdapter(new EggMoveAdapter(getContext(),null, mRecyclerView));
 
 
 
@@ -33,7 +33,7 @@ public class EggMovesListFragment extends Fragment {
     }
 
     public void switchData(ArrayList<MoveInfo> moveInfoList) {
-        mRecyclerView.swapAdapter(new EggMoveAdapter(getContext(), moveInfoList), true);
+        mRecyclerView.swapAdapter(new EggMoveAdapter(getContext(), moveInfoList, mRecyclerView), true);
         mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 }
