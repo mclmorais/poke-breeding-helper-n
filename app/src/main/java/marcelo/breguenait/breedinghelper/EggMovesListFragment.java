@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-public class MachineMovesListFragment extends Fragment {
+public class EggMovesListFragment extends Fragment {
     RecyclerView mRecyclerView;
     ArrayList<MoveInfo> moveInfoList;
 
@@ -25,7 +25,7 @@ public class MachineMovesListFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mRecyclerView.setAdapter(new MachineMoveAdapter(getContext(),null));
+        mRecyclerView.setAdapter(new EggMoveAdapter(getContext(),null));
 
 
 
@@ -33,7 +33,8 @@ public class MachineMovesListFragment extends Fragment {
     }
 
     public void switchData(ArrayList<MoveInfo> moveInfoList) {
-        mRecyclerView.swapAdapter(new MachineMoveAdapter(getContext(), moveInfoList), true);
+        mRecyclerView.swapAdapter(new EggMoveAdapter(getContext(), moveInfoList), true);
+        mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 }
 

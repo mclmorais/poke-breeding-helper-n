@@ -2,8 +2,9 @@
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#7be9eb">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="64dp"
@@ -11,145 +12,145 @@
         android:paddingRight="16dp"
         android:id="@+id/dynMoveEgg_mainLayout">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="15"
-            android:id="@+id/dynMoveEgg_levelLayout">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="TM"
-                android:id="@+id/dynMoveEgg_textMachineType"
-                android:fontFamily="sans-serif-light"
-                android:textSize="12dp"
-                android:gravity="center"
-                android:layout_marginRight="2dp" />
+                android:layout_weight="15"
+                android:id="@+id/dynMoveEgg_levelLayout">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="TM"
+                    android:id="@+id/dynMoveEgg_textMachineType"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="12dp"
+                    android:gravity="center"
+                    android:layout_marginRight="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="100"
+                    android:id="@+id/dynMoveEgg_textMachineNumber"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="14dp"
+                    android:gravity="center"
+                    android:typeface="normal"
+                    android:textStyle="bold"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="100"
-                android:id="@+id/dynMoveEgg_textMachineNumber"
-                android:fontFamily="sans-serif-light"
-                android:textSize="14dp"
-                android:gravity="center"
-                android:typeface="normal"
-                android:textStyle="bold"
-                android:singleLine="true" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:gravity="center_vertical"
-            android:layout_weight="40"
-            android:id="@+id/dynMoveEgg_nameLayout">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Poison Sludge"
-                android:id="@+id/dynMoveEgg_textName"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="17dp"
-                android:layout_weight="20" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="28"
-            android:id="@+id/dynMoveEgg_attribLayout">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Physical"
-                android:id="@+id/dynMoveEgg_textEffect"
-                android:textAllCaps="true"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="12dp"
-                android:layout_below="@+id/dynMoveEgg_textType"
-                android:layout_alignParentRight="false"
-                android:layout_alignParentEnd="false"
-                android:textIsSelectable="false"
-                android:layout_centerHorizontal="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Ice"
-                android:id="@+id/dynMoveEgg_textType"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentStart="false"
-                android:textAllCaps="true"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="14dp"
-                android:layout_marginTop="12dp"
-                android:textStyle="bold"
-                android:textColor="#A890F0"
-                android:textIsSelectable="false"
-                android:layout_centerHorizontal="true" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="20"
-            android:id="@+id/dynMoveEgg_valuesLayout">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="55%"
-                android:id="@+id/dynMoveEgg_textAccuracy"
-                android:textAllCaps="true"
-                android:fontFamily="sans-serif-thin"
-                android:textSize="14dp"
-                android:layout_below="@+id/dynMoveEgg_textPower"
-                android:layout_alignLeft="@+id/dynMoveEgg_textPower"
-                android:layout_alignStart="@+id/dynMoveEgg_textPower"
-                android:layout_marginLeft="12dp"
-                android:typeface="normal" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="120"
-                android:id="@+id/dynMoveEgg_textPower"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentStart="false"
-                android:textAllCaps="true"
-                android:fontFamily="sans-serif-light"
-                android:textSize="14dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="12dp" />
+                android:gravity="center_vertical"
+                android:layout_weight="40"
+                android:id="@+id/dynMoveEgg_nameLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Poison Sludge"
+                    android:id="@+id/dynMoveEgg_textName"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="17dp"
+                    android:layout_weight="20" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="28"
+                android:id="@+id/dynMoveEgg_attribLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Physical"
+                    android:id="@+id/dynMoveEgg_textEffect"
+                    android:textAllCaps="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="12dp"
+                    android:layout_below="@+id/dynMoveEgg_textType"
+                    android:layout_alignParentRight="false"
+                    android:layout_alignParentEnd="false"
+                    android:textIsSelectable="false"
+                    android:layout_centerHorizontal="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Ice"
+                    android:id="@+id/dynMoveEgg_textType"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentStart="false"
+                    android:textAllCaps="true"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="14dp"
+                    android:layout_marginTop="12dp"
+                    android:textStyle="bold"
+                    android:textColor="#A890F0"
+                    android:textIsSelectable="false"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="20"
+                android:id="@+id/dynMoveEgg_valuesLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="55%"
+                    android:id="@+id/dynMoveEgg_textAccuracy"
+                    android:textAllCaps="true"
+                    android:fontFamily="sans-serif-thin"
+                    android:textSize="14dp"
+                    android:layout_below="@+id/dynMoveEgg_textPower"
+                    android:layout_alignLeft="@+id/dynMoveEgg_textPower"
+                    android:layout_alignStart="@+id/dynMoveEgg_textPower"
+                    android:layout_marginLeft="12dp"
+                    android:typeface="normal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="120"
+                    android:id="@+id/dynMoveEgg_textPower"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentStart="false"
+                    android:textAllCaps="true"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="14dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="12dp" />
 
 
-        </RelativeLayout>
+            </RelativeLayout>
 
-</LinearLayout>
+    </LinearLayout>
 
-    <GridLayout
+    <marcelo.breguenait.breedinghelper.AutofitRecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/dynMoveEgg_parentsGrid">
-
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:id="@+id/imageView" />
-    </GridLayout>
+        android:layout_height="wrap_content"
+        android:id="@+id/dynMoveEgg_parentsRecyclerView"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
+        android:background="#FFFFFF"
+        android:columnWidth="48dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginBottom="10dp" />
 </LinearLayout>

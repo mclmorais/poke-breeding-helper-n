@@ -15,14 +15,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import marcelo.breguenait.breedinghelper.Adapters.PagerAdapter;
 
 public class MoveDexActivity extends AppCompatActivity implements SelectPokemonFragment.OnPokemonSelectedListener,AppBarLayout.OnOffsetChangedListener {
 
@@ -207,6 +203,7 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         }
         else if (methodId == 4) {
             MachineMovesListFragment page = (MachineMovesListFragment) pagerAdapter.getItem(1);
+            EggMovesListFragment pageTemp = (EggMovesListFragment) pagerAdapter.getItem(2);
 
                 class CustomComparator implements Comparator<MoveInfo> {
                     @Override
@@ -217,7 +214,10 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
             if (page != null) {
                 Collections.sort(list, new CustomComparator());
                 page.switchData(list);
+                pageTemp.switchData(list);
+
             }
+
         }
     }
 

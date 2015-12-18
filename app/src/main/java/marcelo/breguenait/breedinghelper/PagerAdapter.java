@@ -1,4 +1,4 @@
-package marcelo.breguenait.breedinghelper.Adapters;
+package marcelo.breguenait.breedinghelper;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,14 +13,15 @@ import marcelo.breguenait.breedinghelper.MachineMovesListFragment;
  */
 public class PagerAdapter extends FragmentPagerAdapter {
     int mNumOfTabs;
-    LevelMovesListFragment tab1, tab3;
+    LevelMovesListFragment tab1;
     MachineMovesListFragment tab2;
+    EggMovesListFragment tab3;
     public PagerAdapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
         this.mNumOfTabs = NumOfTabs;
         tab1 = new LevelMovesListFragment();
         tab2 = new MachineMovesListFragment();
-        tab3 = new LevelMovesListFragment();
+        tab3 = new EggMovesListFragment();
     }
 
 

@@ -13,40 +13,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Marcelo on 16/12/2015.
+ * Created by Marcelo on 17/12/2015.
  */
+public class EggMoveAdapter extends RecyclerView.Adapter<EggMoveAdapter.ViewHolder> {
 
-public class MachineMoveAdapter extends RecyclerView.Adapter<MachineMoveAdapter.ViewHolder> {
-
-
-
-    Context context;
-
-    List<MoveInfo> moves;
-
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
 
         TextView machineNumber, machineType,  name, effect, type, accuracy, power;
         LinearLayout layout;
+        AutofitRecyclerView parentsRecyclerView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            layout          = (LinearLayout) itemView;
-            machineNumber   = (TextView) itemView.findViewById(R.id.dynMoveMch_textMachineNumber);
-            machineType     = (TextView) itemView.findViewById(R.id.dynMoveMch_textMachineType);
-            name            = (TextView) itemView.findViewById(R.id.dynMoveMch_textName);
-            effect          = (TextView) itemView.findViewById(R.id.dynMoveMch_textEffect);
-            type            = (TextView) itemView.findViewById(R.id.dynMoveMch_textType);
-            accuracy        = (TextView) itemView.findViewById(R.id.dynMoveMch_textAccuracy);
-            power           = (TextView) itemView.findViewById(R.id.dynMoveMch_textPower);
+            layout              = (LinearLayout) itemView;
+            machineNumber       = (TextView) itemView.findViewById(R.id.dynMoveEgg_textMachineNumber);
+            machineType         = (TextView) itemView.findViewById(R.id.dynMoveEgg_textMachineType);
+            name                = (TextView) itemView.findViewById(R.id.dynMoveEgg_textName);
+            effect              = (TextView) itemView.findViewById(R.id.dynMoveEgg_textEffect);
+            type                = (TextView) itemView.findViewById(R.id.dynMoveEgg_textType);
+            accuracy            = (TextView) itemView.findViewById(R.id.dynMoveEgg_textAccuracy);
+            power               = (TextView) itemView.findViewById(R.id.dynMoveEgg_textPower);
+            parentsRecyclerView = (AutofitRecyclerView) itemView.findViewById(R.id.dynMoveEgg_parentsRecyclerView);
         }
     }
 
-    public MachineMoveAdapter(Context context, ArrayList<MoveInfo> moves) {
+
+    Context context;
+    List<MoveInfo> moves;
+
+    public EggMoveAdapter(Context context, ArrayList<MoveInfo> moves) {
         this.context = context;
 
         if(moves != null)
@@ -59,13 +55,24 @@ public class MachineMoveAdapter extends RecyclerView.Adapter<MachineMoveAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dynamic_layout_move_machine,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dynamic_layout_move_egg,parent,false);
         return new ViewHolder(v);
-
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
+        ArrayList<String> TEMPORARIO = new ArrayList<>(3);
+        TEMPORARIO.add("");
+        TEMPORARIO.add("");
+        TEMPORARIO.add("");
+
+
+        holder.parentsRecyclerView.setAdapter(new EggMoveParentAdapter(context,TEMPORARIO));
+//        notifyDataSetChanged();
+
+
+        //TODO: to be modified into the egg moves adapter
         int machineNumber = moves.get(position).getMachineNumber();
         if(machineNumber>100)
             machineNumber -= 100;
@@ -103,6 +110,4 @@ public class MachineMoveAdapter extends RecyclerView.Adapter<MachineMoveAdapter.
     public int getItemCount() {
         return moves.size();
     }
-
 }
-
