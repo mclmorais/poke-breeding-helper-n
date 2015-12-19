@@ -68,12 +68,6 @@
                 android:layout_marginTop="@dimen/distance_between_cards"
                 android:animateLayoutChanges="true"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="newactivitydebug"
-                android:id="@+id/button_to_activity" />
-
         </LinearLayout>
     </ScrollView>
 

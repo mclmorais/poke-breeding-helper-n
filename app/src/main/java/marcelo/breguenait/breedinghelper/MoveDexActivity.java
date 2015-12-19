@@ -1,6 +1,7 @@
 package marcelo.breguenait.breedinghelper;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,6 +53,8 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_move_dex);
 
+        Intent mIntent = getIntent();
+        int intValue = mIntent.getIntExtra("intVariableName", 0);
         movesList = new ArrayList<>();
 
         bindActivity();
@@ -108,6 +111,8 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         });
 
 
+
+
     }
 
     @Override
@@ -116,6 +121,11 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         db.close();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        onPokemonSelected(getIntent().getIntExtra("goalPokemon",0));
+    }
 
     void openSelectPokemonFragment(View view) {
         FragmentManager fm = getFragmentManager();
@@ -136,6 +146,10 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
 
     @Override
     public void onPokemonSelected(int id) {
+
+        if(id == 0)
+            return;
+
         currentPoceymanId = id;
         String iconId = "pkmn_big_" + String.format("%03d", id);
         floatingIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", MoveDexActivity.this.getPackageName()));
@@ -143,10 +157,14 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         collapsingToolbarLayout.setTitle(db.getPokemonName(id));
 
         EggMovesListFragment page = (EggMovesListFragment) pagerAdapter.getItem(2);
-        page.mRecyclerView.removeAllViews();
-        page.mRecyclerView.setAdapter(new EggMoveAdapter(this,null,page.mRecyclerView));
-        page.loadingIcon.setVisibility(View.VISIBLE);
-        page.noMovesText.setVisibility(View.GONE);
+        if(page.mRecyclerView != null) {
+            page.mRecyclerView.removeAllViews();
+            page.mRecyclerView.setAdapter(new EggMoveAdapter(this, null, page.mRecyclerView));
+        }
+        if(page.loadingIcon != null)
+            page.loadingIcon.setVisibility(View.VISIBLE);
+        if(page.noMovesText != null)
+            page.noMovesText.setVisibility(View.GONE);
 
 
         new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 1, 9);

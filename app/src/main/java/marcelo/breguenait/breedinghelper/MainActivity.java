@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -36,7 +37,7 @@ class Constants {
     public static final int DITTO_ID = 132;
 }
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends AppCompatActivity
         implements
         StoredPokemonFragment.OnPokemonListChanged,
         LuckFragment.UpdateLuckInterface,
@@ -93,7 +94,7 @@ public class MainActivity extends ActionBarActivity
         }
 
         if(ivManager.getBestCombinations() != null && ivManager.getBestCombinations().size() > 0) {
-            saveBoolean("hasSeenTooltipAddPokemons",true);
+            saveBoolean("hasSeenTooltipAddPokemons", true);
             if(viewAddPokemonsTooltip != null) {
                 viewAddPokemonsTooltip.remove();
                 viewAddPokemonsTooltip = null;
@@ -222,17 +223,6 @@ public class MainActivity extends ActionBarActivity
             cl.getLogDialog().show();
         }
 
-        Button debugButton = (Button) findViewById(R.id.button_to_activity);
-        debugButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(MainActivity.this, MoveDexActivity.class);
-                MainActivity.this.startActivity(myIntent);
-            }
-        });
-
-        MovesManager movesManager = new MovesManager(MainActivity.this);
-
     }
     @Override
     protected void onStart() {
@@ -276,9 +266,17 @@ public class MainActivity extends ActionBarActivity
             case R.id.action_report_bug:
                 sendBugReport();
                 return true;
+            case R.id.action_open_movedex:
+                openMoveDex();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    void openMoveDex() {
+        Intent myIntent = new Intent(MainActivity.this, MoveDexActivity.class);
+        myIntent.putExtra("goalPokemon",(getGoal() != null)?getGoal().id:0);
+        MainActivity.this.startActivity(myIntent);
     }
     void openSettings() {
         Intent intent = new Intent(this,SettingsActivity.class);

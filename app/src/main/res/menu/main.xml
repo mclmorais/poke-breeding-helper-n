@@ -8,6 +8,11 @@
           android:orderInCategory="1"
           app:showAsAction="never"/>
 
+    <item android:title="Move Dex"
+        android:id="@+id/action_open_movedex"
+        android:orderInCategory="1"
+        app:showAsAction="always"/>
+
     <!--<item android:title="@string/action_settings"-->
         <!--android:id="@+id/action_settings"-->
         <!--android:orderInCategory="100"-->
