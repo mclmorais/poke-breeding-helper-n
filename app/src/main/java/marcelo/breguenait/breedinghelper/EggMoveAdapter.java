@@ -71,7 +71,6 @@ public class EggMoveAdapter extends RecyclerView.Adapter<EggMoveAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
 
 
-
         int x = Math.max(1, itself.getMeasuredWidth() / dpToPx(45));
 
         holder.parentsRecyclerView.setLayoutManager(new WrappableGridLayoutManager(context, x));

@@ -35,7 +35,6 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
     private PagerAdapter pagerAdapter;
     List<MoveInfo> movesList;
     private ViewPager viewPager;
-    Button buttonDebugRB, buttonDebugORAS;
     int debugVersion = 16;
     private int currentPoceymanId;
 
@@ -64,6 +63,7 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         setSupportActionBar(mToolbar);
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
 
         buttonSelectPokemon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +71,8 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
                 openSelectPokemonFragment(v);
             }
         });
+
+
 
 
 
@@ -140,8 +142,12 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
 
         collapsingToolbarLayout.setTitle(db.getPokemonName(id));
 
-//        LoadMovesNoThread(id, debugVersion,1,9);
-//        LoadMovesNoThread(id,debugVersion,4,9);
+        EggMovesListFragment page = (EggMovesListFragment) pagerAdapter.getItem(2);
+        page.mRecyclerView.removeAllViews();
+        page.mRecyclerView.setAdapter(new EggMoveAdapter(this,null,page.mRecyclerView));
+        page.loadingIcon.setVisibility(View.VISIBLE);
+        page.noMovesText.setVisibility(View.GONE);
+
 
         new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 1, 9);
         new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 4, 9);
