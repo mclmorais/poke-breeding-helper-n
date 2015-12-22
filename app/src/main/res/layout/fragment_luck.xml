@@ -57,7 +57,7 @@
             android:layout_alignBottom="@+id/luckFragmentHeaderTitle"
             android:layout_alignRight="@+id/luckFragmentSeparator1"
             android:layout_alignEnd="@+id/luckFragmentSeparator1"
-            android:drawableLeft="@drawable/ic_toggle_destiny_knot_selector"
+            android:drawableRight="@drawable/ic_toggle_destiny_knot_selector"
             android:layout_marginRight="6dp" />
         <View
             android:id="@+id/luckFragmentSeparator3"
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/checkBoxLuckFragmentEverstone"
-            android:drawableLeft="@drawable/ic_toggle_everstone_selector"
+            android:drawableRight="@drawable/ic_toggle_everstone_selector"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/luckFragmentCheckBoxDestinyKnot"
             android:layout_toStartOf="@+id/luckFragmentCheckBoxDestinyKnot"

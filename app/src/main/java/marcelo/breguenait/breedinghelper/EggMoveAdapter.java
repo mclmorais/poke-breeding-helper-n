@@ -24,7 +24,7 @@ public class EggMoveAdapter extends RecyclerView.Adapter<EggMoveAdapter.ViewHold
 
         TextView machineNumber, machineType,  name, effect, type, accuracy, power;
         LinearLayout layout;
-        AutofitRecyclerView parentsRecyclerView;
+        RecyclerView parentsRecyclerView;
 
 
         public ViewHolder(View itemView) {
@@ -37,7 +37,7 @@ public class EggMoveAdapter extends RecyclerView.Adapter<EggMoveAdapter.ViewHold
             type                = (TextView) itemView.findViewById(R.id.dynMoveEgg_textType);
             accuracy            = (TextView) itemView.findViewById(R.id.dynMoveEgg_textAccuracy);
             power               = (TextView) itemView.findViewById(R.id.dynMoveEgg_textPower);
-            parentsRecyclerView = (AutofitRecyclerView) itemView.findViewById(R.id.dynMoveEgg_parentsRecyclerView);
+            parentsRecyclerView = (RecyclerView) itemView.findViewById(R.id.dynMoveEgg_parentsRecyclerView);
         }
     }
 
@@ -75,10 +75,7 @@ public class EggMoveAdapter extends RecyclerView.Adapter<EggMoveAdapter.ViewHold
 
         holder.parentsRecyclerView.setLayoutManager(new WrappableGridLayoutManager(context, x));
         holder.parentsRecyclerView.setAdapter(new EggMoveParentAdapter(context, moves.get(position).getParentIds()));
-//        notifyDataSetChanged();
 
-
-        //TODO: to be modified into the egg moves adapter
         int machineNumber = moves.get(position).getMachineNumber();
         if(machineNumber>100)
             machineNumber -= 100;

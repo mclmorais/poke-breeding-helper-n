@@ -259,7 +259,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
     private void updateInterface() {
         int id = selectedPokemon.id;
 
-        Drawable icon = PokemonData.getInstance().getDrawableFromId(id).getConstantState().newDrawable();
+
         String iconId = "pkmn_big_" + String.format("%03d", id);
         imagePokemonIcon.setImageResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
 
@@ -352,7 +352,6 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnPokemonPopupListener {
-        // TODO: Update argument type and name
         void onPokemonAltered(PokemonInfo alteredPokemon, int position);
         PokemonInfo getGoal();
     }

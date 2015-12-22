@@ -151,6 +151,7 @@
             android:layout_below="@+id/linearLayout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="13dp"
+            android:baselineAligned="false"
             android:id="@+id/linearLayout8">
 
             <LinearLayout

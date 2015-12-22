@@ -53,8 +53,6 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_move_dex);
 
-        Intent mIntent = getIntent();
-        int intValue = mIntent.getIntExtra("intVariableName", 0);
         movesList = new ArrayList<>();
 
         bindActivity();
@@ -215,7 +213,7 @@ public class MoveDexActivity extends AppCompatActivity implements SelectPokemonF
                 class CustomComparator implements Comparator<MoveInfo> {
                     @Override
                     public int compare(MoveInfo o1, MoveInfo o2) {
-                        return Integer.compare(o1.getMachineNumber(), o2.getMachineNumber());
+                        return o1.getMachineNumber() < o2.getMachineNumber() ? -1 : 1;//Integer.compare(o1.getMachineNumber(), o2.getMachineNumber());
                     }
                 }
             if (page != null) {

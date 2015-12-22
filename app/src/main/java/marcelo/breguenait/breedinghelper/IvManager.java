@@ -384,7 +384,7 @@ public class IvManager {
 
         AbilitySlot goalSlot, firstPokemonSlot, secondPokemonSlot;
 
-        if(considerAbility /*&& goalPokemon.ability > 0*/) { //TODO: fazer botao funcionar
+        if(considerAbility /*&& goalPokemon.ability > 0*/) {
 
             goalSlot = checkAbilitySlot(goalPokemon.ability, goalPokemon.id);
             firstPokemonSlot = checkAbilitySlot(firstPokemon.ability, firstPokemon.id);

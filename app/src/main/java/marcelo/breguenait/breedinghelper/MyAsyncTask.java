@@ -1,7 +1,6 @@
 package marcelo.breguenait.breedinghelper;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 /**
  * Created by Marcelo on 13/12/2015.

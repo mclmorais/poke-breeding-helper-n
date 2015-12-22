@@ -4,6 +4,7 @@
     android:layout_height="64dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
+    android:baselineAligned="false"
     android:id="@+id/dynMoveLvl_mainLayout">
 
     <LinearLayout
@@ -49,11 +50,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Razor Leaf"
             android:id="@+id/dynMoveLvl_textName"
             android:fontFamily="sans-serif-condensed"
             android:textSize="17dp"
-            android:layout_weight="20" />
+            android:text="@string/example_movename" />
     </LinearLayout>
 
     <RelativeLayout

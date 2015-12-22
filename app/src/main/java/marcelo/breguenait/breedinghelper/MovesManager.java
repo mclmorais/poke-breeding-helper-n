@@ -2,8 +2,6 @@ package marcelo.breguenait.breedinghelper;
 
 import android.content.Context;
 
-import java.util.List;
-
 /**
  * Created by Marcelo on 13/12/2015.
  */

@@ -177,7 +177,7 @@ public class MyDatabase extends SQLiteAssetHelper  {
     }
 
     private Cursor getClassName(int classId, int languageId) {
-        database= getReadableDatabase();
+        database = getReadableDatabase();
 
 
         String s = "SELECT name FROM move_damage_class_prose WHERE move_damage_class_id="
@@ -194,7 +194,6 @@ public class MyDatabase extends SQLiteAssetHelper  {
 
     private Cursor getTypeName(int typeId, int languageId) {
         database= getReadableDatabase();
-        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
 
         String s = "SELECT name FROM type_names WHERE type_id="
@@ -219,9 +218,7 @@ public class MyDatabase extends SQLiteAssetHelper  {
 
         queryBuilder.setTables(sqlTables);
 
-        Cursor c = null;
-
-        c = queryBuilder.query(database, sqlSelect, selection, null, null, null, null, null, null);
+        Cursor c = queryBuilder.query(database, sqlSelect, selection, null, null, null, null, null, null);
 
         c.moveToFirst();
         String s = c.getString(0);
@@ -250,7 +247,6 @@ public class MyDatabase extends SQLiteAssetHelper  {
         database= getReadableDatabase();
 
         Cursor c = getEggMoveParentsIdLevel(pokemonId, moveId);
-        ArrayList<Integer> deepness = new ArrayList<>();
         if(c.getCount() == 0) { //If no compatible pokemon learn the move through level up, it means they also learn it through breeding
             c = getEggMoveParentsIdChained(pokemonId, moveId);
 
@@ -260,36 +256,6 @@ public class MyDatabase extends SQLiteAssetHelper  {
         return c;
 
     }
-
-    int itera_pais(int pokemonId, int moveId, int iteration) {
-
-        Cursor initial = getEggMoveParentsIdLevel(pokemonId,moveId);
-
-        int x = iteration;
-        if(initial.getCount() > 0) {
-            x = iteration;
-        }
-        else {
-            iteration++;
-            Cursor c = getEggMoveParentsIdLevel(pokemonId, moveId);
-            if(c.getCount() > 0) {
-                x = iteration;
-            }
-            else {
-                c.close();
-                c = getEggMoveParentsIdChained(pokemonId, moveId);
-                ArrayList<Integer> a = new ArrayList<>(c.getCount());
-                while (!c.isAfterLast()) {
-                    a.add(itera_pais(pokemonId,moveId,iteration));
-                }
-                x = Collections.max(a);
-
-            }
-
-        }
-    return x;
-    }
-
 
 
 

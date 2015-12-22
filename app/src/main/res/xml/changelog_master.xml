@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <changelog>
-
+    <release version="3.7" versioncode="22">
+        <change>
+            In an unexpected turn of events, a new update: MOVE DEX!
+        </change>
+        <change>
+            Click the button on the toolbar to be able to see all the moves any Pokémon can learn!
+        </change>
+        <change>
+            You can also check for all possible matches for a desired Egg-move! This is the first step on the integration of egg-moves into the main app.
+        </change>
+        <change>
+            Also fixed some performance and interface bugs in some versions of Android.
+        </change>
+    </release>
     <release version="3.6c" versioncode="21">
         <change>
             Fixed a bug where the current goal ability would be incorrectly displayed after reloading the app.

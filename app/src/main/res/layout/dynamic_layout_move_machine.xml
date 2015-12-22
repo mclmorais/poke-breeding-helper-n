@@ -4,6 +4,7 @@
     android:layout_height="64dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
+    android:baselineAligned="false"
     android:id="@+id/dynMoveMch_mainLayout">
 
     <LinearLayout
@@ -48,14 +49,13 @@
         android:id="@+id/dynMoveMch_nameLayout">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Poison Sludge"
             android:id="@+id/dynMoveMch_textName"
             android:fontFamily="sans-serif-condensed"
-            android:textSize="17dp"
-            android:layout_weight="20" />
+            android:textSize="17sp" />
     </LinearLayout>
 
     <RelativeLayout

@@ -10,6 +10,7 @@
         android:layout_height="64dp"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
+        android:baselineAligned="false"
         android:id="@+id/dynMoveEgg_mainLayout">
 
             <LinearLayout
@@ -62,7 +63,7 @@
                     android:id="@+id/dynMoveEgg_textName"
                     android:fontFamily="sans-serif-condensed"
                     android:textSize="17dp"
-                    android:layout_weight="20"
+
                     android:gravity="center_horizontal" />
             </LinearLayout>
 
@@ -97,7 +98,7 @@
                     android:layout_alignParentStart="false"
                     android:textAllCaps="true"
                     android:fontFamily="sans-serif-condensed"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:layout_marginTop="12dp"
                     android:textStyle="bold"
                     android:textColor="#A890F0"
@@ -145,7 +146,7 @@
 
     </LinearLayout>
 
-    <marcelo.breguenait.breedinghelper.AutofitRecyclerView
+    <android.support.v7.widget.RecyclerView
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

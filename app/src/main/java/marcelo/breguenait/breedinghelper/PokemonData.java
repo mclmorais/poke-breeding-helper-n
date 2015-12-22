@@ -20,7 +20,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 class PokemonData {
@@ -73,7 +72,6 @@ class PokemonData {
             Reader reader = new InputStreamReader(assetFile, "UTF-8");
             tabledAbilityData = gson.fromJson(reader, typeOfHashMap);
 
-            int x = 2;
         } catch (IOException e) {
             e.printStackTrace();
         }

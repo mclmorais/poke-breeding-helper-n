@@ -3,10 +3,6 @@ package marcelo.breguenait.breedinghelper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
-
-import marcelo.breguenait.breedinghelper.LevelMovesListFragment;
-import marcelo.breguenait.breedinghelper.MachineMovesListFragment;
 
 /**
  * Created by Marcelo on 13/12/2015.

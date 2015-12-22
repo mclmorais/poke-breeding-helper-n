@@ -20,23 +20,6 @@ public class WrappableGridLayoutManager extends GridLayoutManager {
     public int www, hhh, currentSpanNumber;
     boolean hasmeasured = false;
 
-    void remeasure(int spanNumber) {
-
-        int newHeight = hhh * currentSpanNumber / spanNumber;
-        setMeasuredDimension(www,newHeight);
-
-        currentSpanNumber = spanNumber;
-
-
-    }
-
-    void remeasure2(int span) {
-        if(!hasmeasured) {
-            setMeasuredDimension(www,hhh/span);
-        }
-
-        hasmeasured = true;
-    }
     private int[] mMeasuredDimension = new int[2];
 
     @Override
