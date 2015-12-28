@@ -54,7 +54,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     private final AdapterView.OnItemSelectedListener updateGoalOnSelection = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+            mCallback.updateGoal(buildGoalPokemon(mCallback.getGoal().id));
         }
 
         @Override
