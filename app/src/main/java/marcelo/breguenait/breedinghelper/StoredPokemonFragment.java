@@ -32,6 +32,8 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
         void removePokemon(int position);
         PokemonInfo getGoalData();
         PokemonInfo getSelectedPokemonData(int position);
+        List<PokemonInfo> getStoredPokemonList();
+
     }
 
     private StoredPokemonAdapter storedPokemonAdapter;
@@ -153,6 +155,13 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
             textHintStore.setVisibility(View.VISIBLE);
         }
         storedPokemonAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setHatchAdapter(mCallback.getStoredPokemonList(), getContext());
+        updateGridView();
     }
 
     @Override

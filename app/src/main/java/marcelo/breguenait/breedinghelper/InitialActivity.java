@@ -75,7 +75,7 @@ public class InitialActivity extends AppCompatActivity {
                 fragmentClass = MoveDexActivity.class;
                 break;
             case R.id.nav_second_fragment:
-                fragmentClass = MoveDexActivity.class;
+                fragmentClass = IvCalculatorFragment.class;
                 break;
             default:
                 fragmentClass = MoveDexActivity.class;

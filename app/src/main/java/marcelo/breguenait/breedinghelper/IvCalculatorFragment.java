@@ -6,11 +6,15 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,54 +34,55 @@ import com.nhaarman.supertooltips.ToolTipView;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import de.cketti.library.changelog.ChangeLog;
 
 class Constants {
     public static final int DITTO_ID = 132;
 }
 
-public class MainActivity extends AppCompatActivity
+public class IvCalculatorFragment extends Fragment
         implements
         StoredPokemonFragment.OnPokemonListChanged,
         LuckFragment.UpdateLuckInterface,
         GoalIVsFragment.OnGoalUpdate,
-        ToolTipView.OnToolTipViewClickedListener{
+        ToolTipView.OnToolTipViewClickedListener {
 
-    private View cardAd;
-    private AdView adView;
-
-    private IvManager ivManager;
     private final Gson gson = new Gson();
-
+    @Bind(R.id.main_activity_toolbar)
+    Toolbar toolbar;
+    ActionBarDrawerToggle drawerToggle;
     ToolTipView viewGoalIVsTooltip;
     ToolTipView viewAddPokemonsTooltip;
     ToolTipView viewEditPokemonTooltip;
-
     ToolTipRelativeLayout toolTipRelativeLayout;
+    InitialActivity initialActivity;
+    private View cardAd;
+    private AdView adView;
+    private IvManager ivManager;
 
     @Override
     public void onToolTipViewClicked(ToolTipView toolTipView) {
-        if(toolTipView == viewGoalIVsTooltip) {
+        if (toolTipView == viewGoalIVsTooltip) {
             saveBoolean("hasSeenTooltipGoalIVs", true);
             tooltipAddPokemons();
-        }
-        else if (toolTipView == viewAddPokemonsTooltip) {
+        } else if (toolTipView == viewAddPokemonsTooltip) {
             saveBoolean("hasSeenTooltipAddPokemons", true);
             tooltipEditPokemon();
-        }
-        else if (toolTipView == viewEditPokemonTooltip)
-            saveBoolean("hasSeenTooltipEditPokemon",true);
+        } else if (toolTipView == viewEditPokemonTooltip)
+            saveBoolean("hasSeenTooltipEditPokemon", true);
 
     }
 
     void setTooltips() {
-        toolTipRelativeLayout = (ToolTipRelativeLayout) findViewById(R.id.tooltipLayout);
+        toolTipRelativeLayout = (ToolTipRelativeLayout) getActivity().findViewById(R.id.tooltipLayout);
         tooltipGoalIVs();
 
-        if(ivManager.getStoredPokemonList().size() > 0)
+        if (ivManager.getStoredPokemonList().size() > 0)
             tooltipEditPokemon();
 
-        if(ivManager.getGoalPokemon() != null) {
+        if (ivManager.getGoalPokemon() != null) {
             int counter = 0;
             for (int i = 0; i < 6; i++) {
                 counter += ivManager.getGoalPokemon().IVs[i];
@@ -92,9 +97,9 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        if(ivManager.getBestCombinations() != null && ivManager.getBestCombinations().size() > 0) {
+        if (ivManager.getBestCombinations() != null && ivManager.getBestCombinations().size() > 0) {
             saveBoolean("hasSeenTooltipAddPokemons", true);
-            if(viewAddPokemonsTooltip != null) {
+            if (viewAddPokemonsTooltip != null) {
                 viewAddPokemonsTooltip.remove();
                 viewAddPokemonsTooltip = null;
             }
@@ -105,12 +110,12 @@ public class MainActivity extends AppCompatActivity
 
     void tooltipGoalIVs() {
 
-        if(readBoolean("hasSeenTooltipGoalIVs",false)){
+        if (readBoolean("hasSeenTooltipGoalIVs", false)) {
             tooltipAddPokemons();
             return;
         }
 
-        if(viewGoalIVsTooltip != null)
+        if (viewGoalIVsTooltip != null)
             return;
 
         ToolTip toolTip = new ToolTip()
@@ -121,11 +126,11 @@ public class MainActivity extends AppCompatActivity
                 .withAnimationType(ToolTip.AnimationType.FROM_TOP);
 
 
-        GoalIVsFragment f = (GoalIVsFragment) getSupportFragmentManager().findFragmentById(R.id.frameGoalIVsFragmentContainer);
+        GoalIVsFragment f = (GoalIVsFragment) getFragmentManager().findFragmentById(R.id.frameGoalIVsFragmentContainer);
 
 
         View v = f.getView();
-        if(v != null) {
+        if (v != null) {
             CardView c = (CardView) v.findViewById(R.id.goalCardView);
 
             viewGoalIVsTooltip = toolTipRelativeLayout.showToolTipForView(toolTip, c);
@@ -134,12 +139,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     void tooltipAddPokemons() {
-        if(readBoolean("hasSeenTooltipAddPokemons",false)) {
+        if (readBoolean("hasSeenTooltipAddPokemons", false)) {
             tooltipEditPokemon();
             return;
         }
 
-        if(viewAddPokemonsTooltip != null) return;
+        if (viewAddPokemonsTooltip != null) return;
 
         ToolTip toolTip = new ToolTip()
                 .withText("Add potential parents here and" + System.getProperty("line.separator") + "the app will tell you when" + System.getProperty("line.separator") + "a match is found")
@@ -148,11 +153,11 @@ public class MainActivity extends AppCompatActivity
                 .withTextColor(Color.WHITE)
                 .withAnimationType(ToolTip.AnimationType.FROM_TOP);
 
-        StoredPokemonFragment f = (StoredPokemonFragment) getSupportFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        StoredPokemonFragment f = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         View v = f.getView();
-        if(v != null) {
+        if (v != null) {
             Button b = (Button) v.findViewById(R.id.buttonFragmentPokemonListAdd);
-            viewAddPokemonsTooltip = toolTipRelativeLayout.showToolTipForView(toolTip,b);
+            viewAddPokemonsTooltip = toolTipRelativeLayout.showToolTipForView(toolTip, b);
             viewAddPokemonsTooltip.setOnToolTipViewClickedListener(this);
 
 
@@ -160,13 +165,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     void tooltipEditPokemon() {
-        if(readBoolean("hasSeenTooltipEditPokemon",false)) {
+        if (readBoolean("hasSeenTooltipEditPokemon", false)) {
             return;
         }
 
-        if(viewEditPokemonTooltip != null) return;
+        if (viewEditPokemonTooltip != null) return;
 
-        if(ivManager.getStoredPokemonList().isEmpty()) return;
+        if (ivManager.getStoredPokemonList().isEmpty()) return;
 
         ToolTip toolTip = new ToolTip()
                 .withText("Click on your stored Pokémon" + System.getProperty("line.separator") + "to see or edit its information")
@@ -175,36 +180,42 @@ public class MainActivity extends AppCompatActivity
                 .withTextColor(Color.WHITE)
                 .withAnimationType(ToolTip.AnimationType.FROM_TOP);
 
-        StoredPokemonFragment f = (StoredPokemonFragment) getSupportFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        StoredPokemonFragment f = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         View v = f.getView();
-        if(v != null) {
+        if (v != null) {
             ExpandableGridView b = (ExpandableGridView) v.findViewById(R.id.gridViewPokemonsList);
-            viewEditPokemonTooltip = toolTipRelativeLayout.showToolTipForView(toolTip,b);
+            viewEditPokemonTooltip = toolTipRelativeLayout.showToolTipForView(toolTip, b);
             viewEditPokemonTooltip.setOnToolTipViewClickedListener(this);
 
 
         }
     }
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        View v = inflater.inflate(R.layout.activity_main, container, false);
+
+        initialActivity = (InitialActivity) getActivity();
+
+        ButterKnife.bind(this, v);
         ivManager = new IvManager();
 
-        setSupportActionBar((Toolbar) findViewById(R.id.main_activity_toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        drawerToggle = setupDrawerToggle();
+        initialActivity.mDrawer.setDrawerListener(drawerToggle);
+
+
+        toolbar.setTitle("EIAOIEO");
 
         readData();
 
 
-
         ivManager.updateBestCombination();
 
-        createGoalIVsFragment(savedInstanceState);
-        createPokemonListFragment(savedInstanceState);
-        createChanceFragment(savedInstanceState);
-
+        createGoalIVsFragment(savedInstanceState, v);
+        createPokemonListFragment(savedInstanceState, v);
+        createChanceFragment(savedInstanceState, v);
 
 
 //        cardMainIVs.refreshInterface();
@@ -212,49 +223,62 @@ public class MainActivity extends AppCompatActivity
 //        cardChance.updateItems();
 //        cardPokemonGrid.refreshItemsInterface();
 
-        cardAd = findViewById(R.id.cardAd);
+        cardAd = v.findViewById(R.id.cardAd);
 //        if(!sharedPref.getBoolean("hasSeenDittoTutorial",false)) {
 //            dittoTutorial();
 //        }
 
-        ChangeLog cl = new ChangeLog(this);
+        ChangeLog cl = new ChangeLog(getContext());
         if (cl.isFirstRun()) {
             cl.getLogDialog().show();
         }
 
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        StoredPokemonFragment fragList = (StoredPokemonFragment) getSupportFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
-        //fragList.setHatchAdapter(ivManager.getHatchesList(), getApplicationContext());
-        fragList.setHatchAdapter(ivManager.getStoredPokemonList(), getApplicationContext());
-        fragList.updateGridView();
+        return v;
 
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         updateLuckFragment(ivManager.getBestCombinations());
 
         setTooltips();
 
 
     }
+
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         saveData();
     }
+
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         setAdVisibility(true);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
     }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(getActivity(),
+                initialActivity.getDrawer(), toolbar,
+                R.string.drawer_open,
+                R.string.drawer_close);
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -273,34 +297,34 @@ public class MainActivity extends AppCompatActivity
     }
 
     void openMoveDex() {
-        Intent myIntent = new Intent(MainActivity.this, MoveDexActivity.class);
-        myIntent.putExtra("goalPokemon",(getGoal() != null)?getGoal().id:0);
-        MainActivity.this.startActivity(myIntent);
+        Intent myIntent = new Intent(getContext(), MoveDexActivity.class);
+        myIntent.putExtra("goalPokemon", (getGoal() != null) ? getGoal().id : 0);
+        IvCalculatorFragment.this.startActivity(myIntent);
     }
+
     void openSettings() {
-        Intent intent = new Intent(this,SettingsActivity.class);
+        Intent intent = new Intent(getContext(), SettingsActivity.class);
         startActivity(intent);
     }
 
     void createAd() {
-        adView = new AdView(this);
+        adView = new AdView(getContext());
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId("ca-app-pub-9350161103739995/6628696664");
-        LinearLayout adListLayout = (LinearLayout) findViewById(R.id.cardLayoutAd);
+        LinearLayout adListLayout = (LinearLayout) getActivity().findViewById(R.id.cardLayoutAd);
         adListLayout.addView(adView);
 
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
 
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
-        if(dpWidth < (320+32))
-        {
+        if (dpWidth < (320 + 32)) {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
             LinearLayout.LayoutParams currentMargin = (LinearLayout.LayoutParams) cardAd.getLayoutParams();
-            params.setMargins(0,currentMargin.topMargin,0,currentMargin.bottomMargin);
+            params.setMargins(0, currentMargin.topMargin, 0, currentMargin.bottomMargin);
             cardAd.setLayoutParams(params);
         }
 
@@ -323,17 +347,17 @@ public class MainActivity extends AppCompatActivity
         adView.loadAd(adRequest);
 
     }
+
     void setAdVisibility(boolean disabled) {
-        if(disabled) {
+        if (disabled) {
             cardAd.setVisibility(View.GONE);
-            if(adView != null) {
+            if (adView != null) {
                 adView.setEnabled(false);
                 adView.setVisibility(View.GONE);
             }
 
-        }
-        else {
-            if(adView == null)
+        } else {
+            if (adView == null)
                 createAd();
             cardAd.setVisibility(View.VISIBLE);
             adView.setEnabled(true);
@@ -344,32 +368,35 @@ public class MainActivity extends AppCompatActivity
     void sendBugReport() {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"marcelofernandesmorais+bhbug@gmail.com"});
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"marcelofernandesmorais+bhbug@gmail.com"});
         i.putExtra(Intent.EXTRA_SUBJECT, "[Breeding Helper Bug Report]");
 
-        String body = "Android version: " + Build.VERSION.RELEASE + " (" + Integer.toString(Build.VERSION.SDK_INT) + ") " + Build.PRODUCT + System.getProperty("line.separator") ;
-        body += "Phone Model: " + Build.BRAND + " " +  Build.MODEL + System.getProperty("line.separator");
+        String body = "Android version: " + Build.VERSION.RELEASE + " (" + Integer.toString(Build.VERSION.SDK_INT) + ") " + Build.PRODUCT + System.getProperty("line.separator");
+        body += "Phone Model: " + Build.BRAND + " " + Build.MODEL + System.getProperty("line.separator");
         body += "Bug Description: ";
 
-        i.putExtra(Intent.EXTRA_TEXT   , body);
+        i.putExtra(Intent.EXTRA_TEXT, body);
         try {
             startActivity(Intent.createChooser(i, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
 
     }
 
 
-    public PokemonInfo         getGoal() {
+    public PokemonInfo getGoal() {
         return ivManager.getGoalPokemon();
     }
-    public boolean goalExists() {return ivManager.getGoalPokemon() != null;}
 
-    void createGoalIVsFragment(Bundle savedInstanceState) {
+    public boolean goalExists() {
+        return ivManager.getGoalPokemon() != null;
+    }
+
+    void createGoalIVsFragment(Bundle savedInstanceState, View v) {
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
-        if(findViewById(R.id.frameGoalIVsFragmentContainer) != null) {
+        if (v.findViewById(R.id.frameGoalIVsFragmentContainer) != null) {
 
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
@@ -383,19 +410,20 @@ public class MainActivity extends AppCompatActivity
 
             // In case this activity was started with special instructions from an
             // Intent, pass the Intent's extras to the fragment as arguments
-            firstFragment.setArguments(getIntent().getExtras());
+            firstFragment.setArguments(getActivity().getIntent().getExtras());
+            firstFragment.setTargetFragment(this, 0);
 
             // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .add(R.id.frameGoalIVsFragmentContainer, firstFragment).commit();
-
 
 
         }
 
 
     }
-    void createPokemonListFragment(Bundle savedInstanceState) {
+
+    void createPokemonListFragment(Bundle savedInstanceState, View v) {
         // However, if we're being restored from a previous state,
         // then we don't need to do anything and should return or else
         // we could end up with overlapping fragments.
@@ -406,17 +434,18 @@ public class MainActivity extends AppCompatActivity
 
         // In case this activity was started with special instructions from an
         // Intent, pass the Intent's extras to the fragment as arguments
-        storedPokemonFragment.setArguments(getIntent().getExtras());
+        storedPokemonFragment.setArguments(getActivity().getIntent().getExtras());
 
-
+        storedPokemonFragment.setTargetFragment(this, 0);
 
         // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                 .add(R.id.framePokemonListFragmentContainer, storedPokemonFragment).commit();
 
 
     }
-    void createChanceFragment(Bundle savedInstanceState) {
+
+    void createChanceFragment(Bundle savedInstanceState, View v) {
         // However, if we're being restored from a previous state,
         // then we don't need to do anything and should return or else
         // we could end up with overlapping fragments.
@@ -427,37 +456,37 @@ public class MainActivity extends AppCompatActivity
 
         // In case this activity was started with special instructions from an
         // Intent, pass the Intent's extras to the fragment as arguments
-        luckFragment.setArguments(getIntent().getExtras());
-
+        luckFragment.setArguments(getActivity().getIntent().getExtras());
+        luckFragment.setTargetFragment(this, 0);
 
 
         // Add the fragment to the 'fragment_container' FrameLayout
-        getSupportFragmentManager().beginTransaction()
+        getFragmentManager().beginTransaction()
                 .add(R.id.frameLuckFragmentContainer, luckFragment).commit();
 
     }
 
-       // cardChance.updateGoalIvChance();
-       // cardChance.updateEggChance();
+    // cardChance.updateGoalIvChance();
+    // cardChance.updateEggChance();
 
     void updatePokemonListFragment() {
-        StoredPokemonFragment frag = (StoredPokemonFragment) getSupportFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        StoredPokemonFragment frag = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         frag.updateGridView();
     }
 
     void updateLuckFragment(List<ChanceData> c) {
 
-        if(c == null) return;
+        if (c == null) return;
 
-        if(c.size() > 0) {
-            saveBoolean("hasSeenTooltipAddPokemons",true);
-            if(viewAddPokemonsTooltip != null) {
+        if (c.size() > 0) {
+            saveBoolean("hasSeenTooltipAddPokemons", true);
+            if (viewAddPokemonsTooltip != null) {
                 viewAddPokemonsTooltip.remove();
                 viewAddPokemonsTooltip = null;
             }
         }
 
-        LuckFragment frag = (LuckFragment) getSupportFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
+        LuckFragment frag = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
         frag.updateCurrentChances(c);
 
     }
@@ -477,7 +506,7 @@ public class MainActivity extends AppCompatActivity
 
     void saveData() {
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor prefEditor = sharedPreferences.edit();
 
         String jsonString;
@@ -495,70 +524,71 @@ public class MainActivity extends AppCompatActivity
         prefEditor.putString("jsonConsiderAbility", jsonString);
 
         jsonString = gson.toJson(ivManager.getGoalPokemon());
-        prefEditor.putString("jsonCurrentGoal",jsonString);
+        prefEditor.putString("jsonCurrentGoal", jsonString);
 
         jsonString = gson.toJson(ivManager.getMaleItem());
-        prefEditor.putString("jsonMaleItem",jsonString);
+        prefEditor.putString("jsonMaleItem", jsonString);
 
-        LuckFragment l = (LuckFragment) getSupportFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
+        LuckFragment l = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
         jsonString = gson.toJson(l.getShinyOptions());
-        prefEditor.putString("jsonShinyOptions",jsonString);
+        prefEditor.putString("jsonShinyOptions", jsonString);
 
         prefEditor.apply();
 
 
     }
+
     void readData() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         String jsonString;
 
-        jsonString = sharedPref.getString("jsonPokemonList",null);
-        if(jsonString != null) {
-            Type type = new TypeToken<List<PokemonInfo>>(){}.getType();
+        jsonString = sharedPref.getString("jsonPokemonList", null);
+        if (jsonString != null) {
+            Type type = new TypeToken<List<PokemonInfo>>() {
+            }.getType();
             List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
             ivManager.setStoredPokemonList(eggList);
         }
 
 
-
-        jsonString = sharedPref.getString("jsonHasEverstone",null);
-        if(jsonString != null) {
+        jsonString = sharedPref.getString("jsonHasEverstone", null);
+        if (jsonString != null) {
             ivManager.setEverstone(gson.fromJson(jsonString, Boolean.class));
         }
 
-        jsonString = sharedPref.getString("jsonConsiderNature",null);
-        if(jsonString != null) {
+        jsonString = sharedPref.getString("jsonConsiderNature", null);
+        if (jsonString != null) {
             ivManager.setConsiderNature(gson.fromJson(jsonString, Boolean.class));
         }
 
-        jsonString = sharedPref.getString("jsonConsiderAbility",null);
-        if(jsonString != null) {
+        jsonString = sharedPref.getString("jsonConsiderAbility", null);
+        if (jsonString != null) {
             ivManager.setConsiderAbility(gson.fromJson(jsonString, Boolean.class));
         }
 
-        jsonString = sharedPref.getString("jsonCurrentGoal",null);
-        if(jsonString != null) {
+        jsonString = sharedPref.getString("jsonCurrentGoal", null);
+        if (jsonString != null) {
             ivManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
         }
 
-        jsonString = sharedPref.getString("jsonCurrentGoal",null);
-        if(jsonString != null) {
+        jsonString = sharedPref.getString("jsonCurrentGoal", null);
+        if (jsonString != null) {
             ivManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
-        }
-        else {
+        } else {
             ivManager.setEmptyGoalPokemon();
         }
 
-        jsonString = sharedPref.getString("jsonMaleItem",null);
-        if(jsonString != null) {
+        jsonString = sharedPref.getString("jsonMaleItem", null);
+        if (jsonString != null) {
             ivManager.setMaleItem(gson.fromJson(jsonString, Item.class));
         }
 
-        jsonString = sharedPref.getString("jsonDittoList",null);
-        if(jsonString != null) {
-            Type type = new TypeToken<List<PokemonInfo>>(){}.getType();
+        jsonString = sharedPref.getString("jsonDittoList", null);
+        if (jsonString != null) {
+            Type type = new TypeToken<List<PokemonInfo>>() {
+            }.getType();
             List<PokemonInfo> dittoList = gson.fromJson(jsonString, type);
-            for(int i = 0; i < dittoList.size(); i++) {
+            for (int i = 0; i < dittoList.size(); i++) {
                 PokemonInfo p = new PokemonInfo.Builder()
                         .id(Constants.DITTO_ID)
                         .gender(Gender.DITTO)
@@ -569,11 +599,12 @@ public class MainActivity extends AppCompatActivity
             sharedPref.edit().remove("jsonDittoList").apply();
         }
 
-        jsonString = sharedPref.getString("jsonEggList",null);
-        if(jsonString != null) {
-            Type type = new TypeToken<List<PokemonInfo>>(){}.getType();
+        jsonString = sharedPref.getString("jsonEggList", null);
+        if (jsonString != null) {
+            Type type = new TypeToken<List<PokemonInfo>>() {
+            }.getType();
             List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
-            for(int i = 0; i < eggList.size(); i++) {
+            for (int i = 0; i < eggList.size(); i++) {
                 PokemonInfo p = new PokemonInfo.Builder()
                         .id(0)
                         .gender(eggList.get(i).gender)
@@ -591,16 +622,16 @@ public class MainActivity extends AppCompatActivity
         ivManager.setGoalPokemon(p);
 
         int counter = 0;
-        for(int i = 0; i < 6; i++) {
+        for (int i = 0; i < 6; i++) {
             counter += p.IVs[i];
         }
-        if(counter > 0 && p.id > 0) {
-            if(viewGoalIVsTooltip != null) {
+        if (counter > 0 && p.id > 0) {
+            if (viewGoalIVsTooltip != null) {
                 viewGoalIVsTooltip.remove();
                 viewGoalIVsTooltip = null;
             }
             tooltipAddPokemons();
-            saveBoolean("hasSeenTooltipGoalIVs",true);
+            saveBoolean("hasSeenTooltipGoalIVs", true);
         }
         updateLuckFragment(ivManager.getBestCombinations());
     }
@@ -608,25 +639,24 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void setDestinyKnot(boolean b) {
-        ivManager.setMaleItem(b?Item.DESTINY_KNOT:Item.NO_ITEM);
+        ivManager.setMaleItem(b ? Item.DESTINY_KNOT : Item.NO_ITEM);
         updateLuckFragment(ivManager.getBestCombinations());
     }
 
     @Override
     public boolean updateDestinyKnotChance() {
-        return ivManager.getMaleItem()==Item.DESTINY_KNOT;
+        return ivManager.getMaleItem() == Item.DESTINY_KNOT;
     }
 
     @Override
     public int loadShinyOptions() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         String jsonString;
 
-        jsonString = sharedPref.getString("jsonShinyOptions",null);
-        if(jsonString != null) {
+        jsonString = sharedPref.getString("jsonShinyOptions", null);
+        if (jsonString != null) {
             return (gson.fromJson(jsonString, Integer.class));
-        }
-        else return 0;
+        } else return 0;
     }
 
 
@@ -635,14 +665,15 @@ public class MainActivity extends AppCompatActivity
         return getGoal();
     }
 
-    void    saveBoolean(String key, Boolean value) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+    void saveBoolean(String key, Boolean value) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor prefEditor = sharedPref.edit();
-        prefEditor.putBoolean(key,value);
+        prefEditor.putBoolean(key, value);
         prefEditor.apply();
     }
+
     Boolean readBoolean(String key, Boolean assumedValue) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         return sharedPref.getBoolean(key, assumedValue);
 
     }
@@ -654,7 +685,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void editPokemon(PokemonInfo pokemon, int position) {
-        ivManager.editPokemon(pokemon,position);
+        ivManager.editPokemon(pokemon, position);
         updateLuckFragment(ivManager.getBestCombinations());
     }
 
@@ -694,5 +725,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean getConsiderAbilityStatus() {
         return ivManager.considerAbility();
+    }
+
+
+    @Override
+    public List<PokemonInfo> getStoredPokemonList() {
+        return ivManager.getStoredPokemonList();
     }
 }

@@ -265,6 +265,21 @@ public class MoveDexActivity extends Fragment implements SelectPokemonFragment.O
         }
     }
 
+    private void cleanOldFragments() {
+        List<Fragment> fragments = getFragmentManager().getFragments();
+        if (fragments != null) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            for (Fragment f : fragments) {
+                if (f instanceof LevelMovesListFragment ||
+                        f instanceof MachineMovesListFragment ||
+                        f instanceof EggMovesListFragment
+                        ) {
+                    ft.remove(f);
+                }
+            }
+            ft.commit();
+        }
+    }
 
     private class LoadMovesAsync extends AsyncTask {
 
@@ -305,23 +320,6 @@ public class MoveDexActivity extends Fragment implements SelectPokemonFragment.O
             moveDexActivity.updateListofMoves(moves, methodId);
         }
 
-    }
-
-
-    private void cleanOldFragments() {
-        List<Fragment> fragments = getFragmentManager().getFragments();
-        if (fragments != null) {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            for (Fragment f : fragments) {
-                if (f instanceof LevelMovesListFragment ||
-                        f instanceof MachineMovesListFragment ||
-                        f instanceof EggMovesListFragment
-                        ) {
-                    ft.remove(f);
-                }
-            }
-            ft.commit();
-        }
     }
 
 }

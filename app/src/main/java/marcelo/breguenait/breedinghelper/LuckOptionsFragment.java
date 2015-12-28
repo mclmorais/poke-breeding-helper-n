@@ -27,7 +27,7 @@ public class LuckOptionsFragment extends PopupDialogFragment {
 
 
 
-    MainActivity baseActivity;
+    IvCalculatorFragment baseActivity;
 
     private TypedArray shinyOptionsDrawables;
     private String[] shinyOptionsStrings;

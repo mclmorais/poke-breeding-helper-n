@@ -22,7 +22,7 @@ import android.widget.GridView;
 
 
 public class SelectPokemonFragment extends PopupDialogFragment {
-    //MainActivity baseActivity;
+    //IvCalculatorFragment baseActivity;
     public interface OnPokemonSelectedListener {
         void onPokemonSelected(int id);
         boolean showEggGroupFilter();
