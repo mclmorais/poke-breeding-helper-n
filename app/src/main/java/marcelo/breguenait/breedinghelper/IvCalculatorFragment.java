@@ -97,6 +97,8 @@ public class IvCalculatorFragment extends Fragment
             }
         }
 
+
+
         if (ivManager.getBestCombinations() != null && ivManager.getBestCombinations().size() > 0) {
             saveBoolean("hasSeenTooltipAddPokemons", true);
             if (viewAddPokemonsTooltip != null) {
@@ -206,7 +208,7 @@ public class IvCalculatorFragment extends Fragment
         initialActivity.mDrawer.setDrawerListener(drawerToggle);
 
 
-        toolbar.setTitle("EIAOIEO");
+        toolbar.setTitle("Breeding Helper");
 
         readData();
 
@@ -232,6 +234,8 @@ public class IvCalculatorFragment extends Fragment
         if (cl.isFirstRun()) {
             cl.getLogDialog().show();
         }
+
+
 
         return v;
 
@@ -268,7 +272,7 @@ public class IvCalculatorFragment extends Fragment
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main,menu);
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
