@@ -39,7 +39,14 @@
     <string name="placeholder_percentage_total_and_increase" formatted="false">&#43;XX.X&#37; &#40;&#43;YY.Y%&#41;</string>
 
     <string name="save_file_name">iv_data.dat</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
+    <string name="movedex_name">MoveDex</string>
+    <string name="iv_calculator_name">Iv Calculator</string>
+    <string name="moveDex_tabLevel">Level Up</string>
+    <string name="moveDex_tabMachine">TM/HM</string>
+    <string name="moveDex_tabEgg">Egg Moves</string>
 
     <string name="app_name">Breeding Helper</string>
     <string name="hello_world">Hello world!</string>

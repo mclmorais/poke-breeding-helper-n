@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity
                 .withAnimationType(ToolTip.AnimationType.FROM_TOP);
 
 
-        GoalIVsFragment f = (GoalIVsFragment) getFragmentManager().findFragmentById(R.id.frameGoalIVsFragmentContainer);
+        GoalIVsFragment f = (GoalIVsFragment) getSupportFragmentManager().findFragmentById(R.id.frameGoalIVsFragmentContainer);
 
 
         View v = f.getView();
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity
                 .withTextColor(Color.WHITE)
                 .withAnimationType(ToolTip.AnimationType.FROM_TOP);
 
-        StoredPokemonFragment f = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        StoredPokemonFragment f = (StoredPokemonFragment) getSupportFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         View v = f.getView();
         if(v != null) {
             Button b = (Button) v.findViewById(R.id.buttonFragmentPokemonListAdd);
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity
                 .withTextColor(Color.WHITE)
                 .withAnimationType(ToolTip.AnimationType.FROM_TOP);
 
-        StoredPokemonFragment f = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        StoredPokemonFragment f = (StoredPokemonFragment) getSupportFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         View v = f.getView();
         if(v != null) {
             ExpandableGridView b = (ExpandableGridView) v.findViewById(R.id.gridViewPokemonsList);
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        StoredPokemonFragment fragList = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        StoredPokemonFragment fragList = (StoredPokemonFragment) getSupportFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         //fragList.setHatchAdapter(ivManager.getHatchesList(), getApplicationContext());
         fragList.setHatchAdapter(ivManager.getStoredPokemonList(), getApplicationContext());
         fragList.updateGridView();
@@ -386,7 +386,7 @@ public class MainActivity extends AppCompatActivity
             firstFragment.setArguments(getIntent().getExtras());
 
             // Add the fragment to the 'fragment_container' FrameLayout
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.frameGoalIVsFragmentContainer, firstFragment).commit();
 
 
@@ -402,17 +402,17 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState != null) {
             return;
         }
-        StoredPokemonFragment storedStoredPokemonFragment = new StoredPokemonFragment();
+        StoredPokemonFragment storedPokemonFragment = new StoredPokemonFragment();
 
         // In case this activity was started with special instructions from an
         // Intent, pass the Intent's extras to the fragment as arguments
-        storedStoredPokemonFragment.setArguments(getIntent().getExtras());
+        storedPokemonFragment.setArguments(getIntent().getExtras());
 
 
 
         // Add the fragment to the 'fragment_container' FrameLayout
-            getFragmentManager().beginTransaction()
-                .add(R.id.framePokemonListFragmentContainer, storedStoredPokemonFragment).commit();
+            getSupportFragmentManager().beginTransaction()
+                .add(R.id.framePokemonListFragmentContainer, storedPokemonFragment).commit();
 
 
     }
@@ -432,7 +432,7 @@ public class MainActivity extends AppCompatActivity
 
 
         // Add the fragment to the 'fragment_container' FrameLayout
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
                 .add(R.id.frameLuckFragmentContainer, luckFragment).commit();
 
     }
@@ -441,7 +441,7 @@ public class MainActivity extends AppCompatActivity
        // cardChance.updateEggChance();
 
     void updatePokemonListFragment() {
-        StoredPokemonFragment frag = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        StoredPokemonFragment frag = (StoredPokemonFragment) getSupportFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         frag.updateGridView();
     }
 
@@ -457,7 +457,7 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        LuckFragment frag = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
+        LuckFragment frag = (LuckFragment) getSupportFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
         frag.updateCurrentChances(c);
 
     }
@@ -500,7 +500,7 @@ public class MainActivity extends AppCompatActivity
         jsonString = gson.toJson(ivManager.getMaleItem());
         prefEditor.putString("jsonMaleItem",jsonString);
 
-        LuckFragment l = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
+        LuckFragment l = (LuckFragment) getSupportFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
         jsonString = gson.toJson(l.getShinyOptions());
         prefEditor.putString("jsonShinyOptions",jsonString);
 

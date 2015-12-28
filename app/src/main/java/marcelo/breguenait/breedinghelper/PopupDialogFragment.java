@@ -1,19 +1,16 @@
 package marcelo.breguenait.breedinghelper;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 
-/**
- * Created by Marcelo on 08/12/2014.
- */
 public class PopupDialogFragment extends DialogFragment {
 
 
@@ -59,7 +56,7 @@ public class PopupDialogFragment extends DialogFragment {
 
         DisplayMetrics metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int screenWidth = (int) convertPixelsToDp(metrics.widthPixels,getActivity().getApplicationContext());
+        int screenWidth = (int) convertPixelsToDp(metrics.widthPixels,getContext());
         if(sourceX < (screenWidth/2)) {
             params.x = sourceX + dpToPx(32); // about half of confirm button size left of source view
             params.y = sourceY -  dpToPx(32); // above source view
@@ -95,7 +92,7 @@ public class PopupDialogFragment extends DialogFragment {
 
     void closeFragment()
     {
-        getActivity().getFragmentManager().beginTransaction().remove(this).commit();
+        getFragmentManager().beginTransaction().remove(this).commit();
     }
 
 }
