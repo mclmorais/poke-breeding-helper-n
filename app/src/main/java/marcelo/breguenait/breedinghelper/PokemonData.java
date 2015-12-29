@@ -36,7 +36,6 @@ class PokemonData {
         readAbilityData(c);
         readNatureData(c);
         readPokemonApiData(c);
-
     }
 
     void readPokemonData(Context c) {

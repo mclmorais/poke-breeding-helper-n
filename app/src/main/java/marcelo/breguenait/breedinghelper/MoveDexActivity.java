@@ -86,7 +86,7 @@ public class MoveDexActivity extends Fragment implements SelectPokemonFragment.O
         });
 
 
-        db = new MyDatabase(getContext());
+        db = MyDatabase.getInstance();// new MyDatabase(getContext());
 
         tabLayout.addTab(tabLayout.newTab().setText("Level Up"));
         tabLayout.addTab(tabLayout.newTab().setText("TM/HM"));

@@ -1,5 +1,7 @@
 package marcelo.breguenait.breedinghelper;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,6 +10,8 @@ import java.util.Comparator;
  * Created by Marcelo on 28/12/2015.
  */
 public class BreedingManager {
+
+    MyDatabase database;
 
 
     IvChanceCalculator ivChanceCalculator;
@@ -27,6 +31,7 @@ public class BreedingManager {
         abilityChanceCalculator = new AbilityChanceCalculator();
         breedingCompatibilityChecker = new BreedingCompatibilityChecker();
         goalPokemon = new StoredPokemon.Builder().createStoredPokemon();
+        database = MyDatabase.getInstance();
     }
 
     /**
@@ -180,5 +185,10 @@ public class BreedingManager {
             Collections.sort(pokemonMatchChanceList, new ChanceComparator());
             Collections.reverse(pokemonMatchChanceList);
         }
+    }
+
+    ArrayList<String> getListOfNatures() {
+        return database.getListOfNatures(9); //TODO: Fazer 9 virar user selectable
+        //return PokemonData.getInstance().getListOfNatures();
     }
 }

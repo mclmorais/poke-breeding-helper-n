@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -40,7 +41,8 @@ public class IvCalculatorFragment extends Fragment
         implements
         StoredPokemonFragment.OnPokemonListChanged,
         LuckFragment.UpdateLuckInterface,
-        GoalIVsFragment.OnGoalUpdate {
+        GoalIVsFragment.OnGoalUpdate,
+        GoalIVsFragment.FeedDataGoalIVs {
 
     private final Gson gson = new Gson();
     @Bind(R.id.main_activity_toolbar)
@@ -578,5 +580,10 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public List<PokemonInfo> getStoredPokemonList() {
         return ivManager.getStoredPokemonList();
+    }
+
+    @Override
+    public ArrayList<String> getListOfNatures() {
+        return breedingManager.getListOfNatures();
     }
 }

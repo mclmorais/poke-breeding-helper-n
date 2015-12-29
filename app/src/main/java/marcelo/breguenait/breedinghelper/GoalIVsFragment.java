@@ -47,11 +47,8 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     CheckBox checkBoxActivateAbilities;
     @Bind(R.id.textViewPokemonName)
     TextView selectedName;
-
-
     private OnGoalUpdate mCallback;
-
-
+    private FeedDataGoalIVs feederCallback;
     private ArrayList<String> abilityStrings;
     private ArrayList<Integer> abilityIds;
     private final AdapterView.OnItemSelectedListener updateGoalOnSelection = new AdapterView.OnItemSelectedListener() {
@@ -89,6 +86,18 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
             throw new ClassCastException(getActivity().toString()
                     + " must implement OnGoalUpdate!");
         }
+
+        try {
+            Fragment targetFragment = getTargetFragment();
+            if (targetFragment == null)
+                feederCallback = (FeedDataGoalIVs) getActivity();
+            else
+                feederCallback = (FeedDataGoalIVs) getTargetFragment();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement FeedDataGoalIVs!");
+        }
+
 
     }
 
@@ -210,7 +219,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
      * Populates the Nature spinner with all possible natures.
      */
     private void populateNatureSpinner() {
-        ArrayList<String> natureNames = PokemonData.getInstance().getListOfNatures();
+        ArrayList<String> natureNames = feederCallback.getListOfNatures();
         spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, natureNames));
     }
 
@@ -223,7 +232,6 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         if (spinnerAbility == null) return;
 
         abilityStrings = new ArrayList<>();
-
         abilityIds = new ArrayList<>();
 
         if (pokemonId != 0) {
@@ -366,6 +374,10 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         boolean getConsiderAbilityStatus();
 
         PokemonInfo getGoal();
+    }
+
+    interface FeedDataGoalIVs {
+        ArrayList<String> getListOfNatures();
     }
 
 

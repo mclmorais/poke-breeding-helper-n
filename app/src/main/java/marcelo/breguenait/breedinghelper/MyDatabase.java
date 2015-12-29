@@ -8,26 +8,34 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Marcelo on 12/12/2015.
  */
-public class MyDatabase extends SQLiteAssetHelper  {
+public class MyDatabase extends SQLiteAssetHelper {
+
+    private static MyDatabase instance;
+
+    public static void initialize(Context c) {
+
+        instance = new MyDatabase(c);
+    }
+
+    public static MyDatabase getInstance() {
+        return instance;
+
+    }
 
     private static final String DATABASE_NAME = "pkmnsql.db";
     private static final int DATABASE_VERSION = 1;
+    SQLiteDatabase database;
 
-    public MyDatabase(Context context) {
+    private MyDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         database = getReadableDatabase();
 
     }
-
-    SQLiteDatabase database;
-
-
 
     public List<MoveInfo> getPokemonMovesInfo(int pokemonId, int pokemonVersionId, int methodId, int languageId) {
 
@@ -35,7 +43,7 @@ public class MyDatabase extends SQLiteAssetHelper  {
         Cursor pokemonMovesCursor = getPokemonMoves(pokemonId, pokemonVersionId, methodId);
         List<MoveInfo> moveInfoList = new ArrayList<>(pokemonMovesCursor.getCount());
 
-        if(methodId == 2 && pokemonMovesCursor.getCount() == 0) {
+        if (methodId == 2 && pokemonMovesCursor.getCount() == 0) {
             pokemonMovesCursor.close();
             pokemonMovesCursor = getFirstEvolutionMoves(pokemonMovesCursor, pokemonId, pokemonVersionId, methodId);
         }
@@ -45,20 +53,18 @@ public class MyDatabase extends SQLiteAssetHelper  {
 
             MoveInfoBuilder moveInfoBuilder = new MoveInfoBuilder();
 
-            if(methodId == 1) //If its from leveling up
+            if (methodId == 1) //If its from leveling up
                 moveInfoBuilder.setLevel(pokemonMovesCursor.getInt(1));
             else if (methodId == 4) { //If its from a machine
                 Cursor moveMachineNumberCursor = getMoveMachineNumberCursor(
-                        pokemonMovesCursor.getInt(0),pokemonVersionId);
+                        pokemonMovesCursor.getInt(0), pokemonVersionId);
                 int machineNumber = moveMachineNumberCursor.getInt(0);
                 moveInfoBuilder.setMachineNumber(machineNumber);
-                if(machineNumber > 100)
+                if (machineNumber > 100)
                     moveInfoBuilder.isHiddenMachine(true);
                 moveMachineNumberCursor.close();
-            }
-            else if (methodId == 2)
-            {
-                Cursor parentIdCursor = getEggMoveParentsId(pokemonId,pokemonMovesCursor.getInt(0), 0);
+            } else if (methodId == 2) {
+                Cursor parentIdCursor = getEggMoveParentsId(pokemonId, pokemonMovesCursor.getInt(0), 0);
 
                 ArrayList<Integer> parentIds = new ArrayList<>();
                 for (int i = 0; i < parentIdCursor.getCount(); i++) {
@@ -90,7 +96,6 @@ public class MyDatabase extends SQLiteAssetHelper  {
             moveInfoList.add(moveInfoBuilder.createMoveInfo());
 
 
-
             pokemonMovesCursor.moveToNext();
             moveInfoCursor.close();
             typeNameCursor.close();
@@ -99,41 +104,36 @@ public class MyDatabase extends SQLiteAssetHelper  {
         pokemonMovesCursor.close();
 
 
-    return moveInfoList;
+        return moveInfoList;
 
 
     }
 
-
     private Cursor getFirstEvolutionMoves(Cursor movesCursor, int pokemonId, int pokemonVersionId, int methodId) {
-        if(movesCursor.getCount() == 0) { //If current pokemon doesnt have egg moves
+        if (movesCursor.getCount() == 0) { //If current pokemon doesnt have egg moves
             Cursor preEvolutionCursor = getPreEvolutionId(pokemonId); //gets its pre evolution
 
-            if(preEvolutionCursor.isNull(0)) { //If it doesn't have a preevolution
+            if (preEvolutionCursor.isNull(0)) { //If it doesn't have a preevolution
                 //well tough shit, this is what you get
                 Cursor newMovesCursor = getPokemonMoves(preEvolutionCursor.getInt(0), pokemonVersionId, methodId);
                 preEvolutionCursor.close();
                 return newMovesCursor;
-            }
-            else { //if it has a preevolution
+            } else { //if it has a preevolution
                 int preEvolutionId = preEvolutionCursor.getInt(0);
                 Cursor preEvolutionMovesCursor = getPokemonMoves(preEvolutionId, pokemonVersionId, methodId);
-                if(preEvolutionMovesCursor.getCount() == 0) {//if the preevolution also doesnt have egg moves
+                if (preEvolutionMovesCursor.getCount() == 0) {//if the preevolution also doesnt have egg moves
                     preEvolutionCursor.close();
                     return getFirstEvolutionMoves(preEvolutionMovesCursor, preEvolutionId, pokemonVersionId, methodId);
-                }
-                else //if it has moves
-                preEvolutionCursor.close();
-                    return preEvolutionMovesCursor;
+                } else //if it has moves
+                    preEvolutionCursor.close();
+                return preEvolutionMovesCursor;
 
             }
         }
         return movesCursor; //if it somehow got here shit got fucked
     }
 
-
-
-    public Cursor getPreEvolutionId(int pokemonId) {
+    private Cursor getPreEvolutionId(int pokemonId) {
         String s = "SELECT evolves_from_species_id FROM pokemon_species WHERE id=" +
                 Integer.toString(pokemonId);
 
@@ -143,7 +143,7 @@ public class MyDatabase extends SQLiteAssetHelper  {
     }
 
     private Cursor getMoveMachineNumberCursor(int moveId, int pokemonVersionId) {
-        database= getReadableDatabase();
+        database = getReadableDatabase();
         String s = "SELECT machine_number FROM machines WHERE version_group_id="
                 + Integer.toString(pokemonVersionId)
                 + " AND move_id="
@@ -155,10 +155,10 @@ public class MyDatabase extends SQLiteAssetHelper  {
     }
 
     private Cursor getPokemonMoves(int pokemonId, int pokemonVersionId, int methodId) {
-        database= getReadableDatabase();
+        database = getReadableDatabase();
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
-        String [] sqlSelect = {"move_id","level"};
+        String[] sqlSelect = {"move_id", "level"};
         String sqlTables = "pokemon_moves";
         String selection = "pokemon_id="
                 + Integer.toString(pokemonId)
@@ -186,14 +186,13 @@ public class MyDatabase extends SQLiteAssetHelper  {
                 + Integer.toString(languageId);
 
 
-
         Cursor c = database.rawQuery(s, null);
         c.moveToFirst();
         return c;
     }
 
     private Cursor getTypeName(int typeId, int languageId) {
-        database= getReadableDatabase();
+        database = getReadableDatabase();
 
 
         String s = "SELECT name FROM type_names WHERE type_id="
@@ -202,19 +201,18 @@ public class MyDatabase extends SQLiteAssetHelper  {
                 + Integer.toString(languageId);
 
 
-
         Cursor c = database.rawQuery(s, null);
         c.moveToFirst();
         return c;
     }
 
     private String getMoveName(int id, int pokemonVersionId, int languageId) {
-        database= getReadableDatabase();
+        database = getReadableDatabase();
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
-        String [] sqlSelect = {"name"};
+        String[] sqlSelect = {"name"};
         String sqlTables = "move_names";
-        String selection = "local_language_id="+Integer.toString(languageId) + " and move_id="+Integer.toString(id);
+        String selection = "local_language_id=" + Integer.toString(languageId) + " and move_id=" + Integer.toString(id);
 
         queryBuilder.setTables(sqlTables);
 
@@ -228,12 +226,12 @@ public class MyDatabase extends SQLiteAssetHelper  {
     }
 
     private Cursor getMoveInfo(int moveId) {
-        database= getReadableDatabase();
+        database = getReadableDatabase();
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
-        String [] sqlSelect = {"type_id", "power", "accuracy", "damage_class_id"};
+        String[] sqlSelect = {"type_id", "power", "accuracy", "damage_class_id"};
         String sqlTables = "moves";
-        String selection = "id="+ Integer.toString(moveId);
+        String selection = "id=" + Integer.toString(moveId);
 
         queryBuilder.setTables(sqlTables);
 
@@ -244,10 +242,10 @@ public class MyDatabase extends SQLiteAssetHelper  {
     }
 
     private Cursor getEggMoveParentsId(int pokemonId, int moveId, int chainLevel) {
-        database= getReadableDatabase();
+        database = getReadableDatabase();
 
         Cursor c = getEggMoveParentsIdLevel(pokemonId, moveId);
-        if(c.getCount() == 0) { //If no compatible pokemon learn the move through level up, it means they also learn it through breeding
+        if (c.getCount() == 0) { //If no compatible pokemon learn the move through level up, it means they also learn it through breeding
             c = getEggMoveParentsIdChained(pokemonId, moveId);
 
         }
@@ -257,19 +255,17 @@ public class MyDatabase extends SQLiteAssetHelper  {
 
     }
 
-
-
     private Cursor getEggMoveParentsIdLevel(int pokemonId, int moveId) {
         String initialPokemonEggGroups =
-                "SELECT egg_group_id FROM pokemon_egg_groups WHERE species_id="+Integer.toString(pokemonId);
+                "SELECT egg_group_id FROM pokemon_egg_groups WHERE species_id=" + Integer.toString(pokemonId);
         String pokemonsWithSameEggGroup =
-                "SELECT DISTINCT species_id FROM pokemon_egg_groups WHERE egg_group_id in("+initialPokemonEggGroups + ")";
+                "SELECT DISTINCT species_id FROM pokemon_egg_groups WHERE egg_group_id in(" + initialPokemonEggGroups + ")";
         String pokemonsWithMove =
-                "SELECT pokemon_id FROM pokemon_moves WHERE move_id="+Integer.toString(moveId)+" AND version_group_id=15 AND pokemon_id<>"+Integer.toString(pokemonId)
+                "SELECT pokemon_id FROM pokemon_moves WHERE move_id=" + Integer.toString(moveId) + " AND version_group_id=15 AND pokemon_id<>" + Integer.toString(pokemonId)
                         + " AND pokemon_move_method_id=1";
 
         String pokemonsWithMoveFromSameEggGroup =
-                pokemonsWithSameEggGroup+" INTERSECT "+pokemonsWithMove;
+                pokemonsWithSameEggGroup + " INTERSECT " + pokemonsWithMove;
 
         return database.rawQuery(pokemonsWithMoveFromSameEggGroup, null); //poceymans that learn through level
 
@@ -277,37 +273,35 @@ public class MyDatabase extends SQLiteAssetHelper  {
 
     private Cursor getEggMoveParentsIdChained(int pokemonId, int moveId) {
         String initialPokemonEggGroups =
-                "SELECT egg_group_id FROM pokemon_egg_groups WHERE species_id="+Integer.toString(pokemonId);
+                "SELECT egg_group_id FROM pokemon_egg_groups WHERE species_id=" + Integer.toString(pokemonId);
         String pokemonsWithSameEggGroup =
-                "SELECT DISTINCT species_id FROM pokemon_egg_groups WHERE egg_group_id in("+initialPokemonEggGroups + ")";
+                "SELECT DISTINCT species_id FROM pokemon_egg_groups WHERE egg_group_id in(" + initialPokemonEggGroups + ")";
         String pokemonsWithMove =
-                "SELECT pokemon_id FROM pokemon_moves WHERE move_id="+Integer.toString(moveId)+" AND version_group_id=15 AND pokemon_id<>"+Integer.toString(pokemonId)
+                "SELECT pokemon_id FROM pokemon_moves WHERE move_id=" + Integer.toString(moveId) + " AND version_group_id=15 AND pokemon_id<>" + Integer.toString(pokemonId)
                         + " AND pokemon_move_method_id=2";
 
         String pokemonsWithMoveFromSameEggGroup =
-                pokemonsWithSameEggGroup+" INTERSECT "+pokemonsWithMove;
+                pokemonsWithSameEggGroup + " INTERSECT " + pokemonsWithMove;
 
         return database.rawQuery(pokemonsWithMoveFromSameEggGroup, null); //poceymans that learn through egg
 
     }
 
-
-
     private List<String> getParentsEggMoveNames(int pokemonId, int moveId) {
-        database= getReadableDatabase();
+        database = getReadableDatabase();
 
 
         String initialPokemonEggGroups =
-                "SELECT egg_group_id FROM pokemon_egg_groups WHERE species_id="+Integer.toString(pokemonId);
+                "SELECT egg_group_id FROM pokemon_egg_groups WHERE species_id=" + Integer.toString(pokemonId);
         String pokemonsWithSameEggGroup =
-                "SELECT DISTINCT species_id FROM pokemon_egg_groups WHERE egg_group_id in("+initialPokemonEggGroups + ")";
+                "SELECT DISTINCT species_id FROM pokemon_egg_groups WHERE egg_group_id in(" + initialPokemonEggGroups + ")";
         String pokemonsWithMove =
-                "SELECT pokemon_id FROM pokemon_moves WHERE move_id="+Integer.toString(moveId)+" AND version_group_id=15 AND pokemon_id<>"+Integer.toString(pokemonId);
+                "SELECT pokemon_id FROM pokemon_moves WHERE move_id=" + Integer.toString(moveId) + " AND version_group_id=15 AND pokemon_id<>" + Integer.toString(pokemonId);
 
         String pokemonsWithMoveFromSameEggGroup =
-                pokemonsWithSameEggGroup+" INTERSECT "+pokemonsWithMove;
+                pokemonsWithSameEggGroup + " INTERSECT " + pokemonsWithMove;
         String pokemonNames =
-                "SELECT name FROM pokemon_species_names WHERE local_language_id=9 AND pokemon_species_id in("+pokemonsWithMoveFromSameEggGroup+")";
+                "SELECT name FROM pokemon_species_names WHERE local_language_id=9 AND pokemon_species_id in(" + pokemonsWithMoveFromSameEggGroup + ")";
 
 
         Cursor c = database.rawQuery(pokemonNames, null);
@@ -316,7 +310,7 @@ public class MyDatabase extends SQLiteAssetHelper  {
 
 
         List<String> list = new ArrayList<>();
-        while(!c.isAfterLast()) {
+        while (!c.isAfterLast()) {
             list.add(c.getString(0));
             c.moveToNext();
         }
@@ -326,12 +320,32 @@ public class MyDatabase extends SQLiteAssetHelper  {
     }
 
     public String getPokemonName(int pokemonId) {
-        database= getReadableDatabase();
-        String s = "SELECT name FROM pokemon_species_names where local_language_id=9 and pokemon_species_id="+Integer.toString(pokemonId);
+        database = getReadableDatabase();
+        String s = "SELECT name FROM pokemon_species_names where local_language_id=9 and pokemon_species_id=" + Integer.toString(pokemonId);
 
-        Cursor c = database.rawQuery(s,null);
+        Cursor c = database.rawQuery(s, null);
         c.moveToFirst();
         return c.getString(0);
+    }
+
+    public ArrayList<String> getListOfNatures(int languageId) {
+        database = getReadableDatabase();
+
+        String s = "SELECT name FROM nature_names WHERE local_language_id="
+                + Integer.toString(languageId);
+
+
+        Cursor cursorNatureNames = database.rawQuery(s, null);
+        cursorNatureNames.moveToFirst();
+        ArrayList<String> namesList = new ArrayList<>(cursorNatureNames.getCount());
+        while (!cursorNatureNames.isAfterLast()) {
+            namesList.add(cursorNatureNames.getString(0));
+            cursorNatureNames.moveToNext();
+        }
+
+        cursorNatureNames.close();
+
+        return namesList;
     }
 
 }
