@@ -1,5 +1,6 @@
 package marcelo.breguenait.breedinghelper;
 
+//TODO: Store only abolityslot instead of ID
 
 import java.util.UUID;
 

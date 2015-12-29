@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 
 /**
  * Created by Marcelo on 28/12/2015.
@@ -190,5 +191,9 @@ public class BreedingManager {
     ArrayList<String> getListOfNatures() {
         return database.getListOfNatures(9); //TODO: Fazer 9 virar user selectable
         //return PokemonData.getInstance().getListOfNatures();
+    }
+
+    HashMap<Integer, String> getListOfAbilities() {
+        return database.getListOfAbilities(1, 9); //TODO: fazer pegar 1 do goalpokemon
     }
 }

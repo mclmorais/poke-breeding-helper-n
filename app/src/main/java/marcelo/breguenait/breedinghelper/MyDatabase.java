@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -15,7 +16,15 @@ import java.util.List;
  */
 public class MyDatabase extends SQLiteAssetHelper {
 
+    private static final String DATABASE_NAME = "pkmnsql.db";
+    private static final int DATABASE_VERSION = 1;
     private static MyDatabase instance;
+    SQLiteDatabase database;
+    private MyDatabase(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        database = getReadableDatabase();
+
+    }
 
     public static void initialize(Context c) {
 
@@ -24,16 +33,6 @@ public class MyDatabase extends SQLiteAssetHelper {
 
     public static MyDatabase getInstance() {
         return instance;
-
-    }
-
-    private static final String DATABASE_NAME = "pkmnsql.db";
-    private static final int DATABASE_VERSION = 1;
-    SQLiteDatabase database;
-
-    private MyDatabase(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        database = getReadableDatabase();
 
     }
 
@@ -346,6 +345,40 @@ public class MyDatabase extends SQLiteAssetHelper {
         cursorNatureNames.close();
 
         return namesList;
+    }
+
+    public HashMap<Integer, String> getListOfAbilities(int pokemonId, int languageId) {
+        database = getReadableDatabase();
+
+        String s = "SELECT ability_id, slot FROM pokemon_abilities WHERE pokemon_id="
+                + Integer.toString(pokemonId);
+
+        //ABILITYID, SLOT
+        Cursor cursorAbilitiesIdSlot = database.rawQuery(s, null);
+        cursorAbilitiesIdSlot.moveToFirst();
+
+        HashMap<Integer, String> abilities = new HashMap<>();
+
+        while (!cursorAbilitiesIdSlot.isAfterLast()) {
+            s = "SELECT name FROM ability_names WHERE local_language_id=" +
+                    Integer.toString(languageId) +
+                    " and ability_id=" +
+                    cursorAbilitiesIdSlot.getInt(0);
+
+            //NAME
+            Cursor cursorAbilityNames = database.rawQuery(s, null);
+            cursorAbilityNames.moveToFirst();
+
+            abilities.put(cursorAbilitiesIdSlot.getInt(1), cursorAbilityNames.getString(0));
+            cursorAbilityNames.close();
+
+            cursorAbilitiesIdSlot.moveToNext();
+        }
+
+        cursorAbilitiesIdSlot.close();
+
+        return abilities;
+
     }
 
 }

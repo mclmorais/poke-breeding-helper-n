@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -231,24 +232,37 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     private void populateAbilitySpinner(int pokemonId) {
         if (spinnerAbility == null) return;
 
+        HashMap<Integer, String> abilities =  feederCallback.getListOfAbilities();
+
         abilityStrings = new ArrayList<>();
         abilityIds = new ArrayList<>();
 
-        if (pokemonId != 0) {
-            abilityStrings.add(PokemonData.getInstance().getFirstAbility(pokemonId));
-
-            String s = PokemonData.getInstance().getSecondAbility(pokemonId);
-            if (!s.equals("NONE") && !s.isEmpty()) {
-                abilityStrings.add(s);
-            }
-            s = PokemonData.getInstance().getHiddenAbility(pokemonId);
-            if (!s.equals("NONE") && !s.isEmpty()) {
-                s += " (Hidden)";
-                abilityStrings.add(s);
-            }
-        } else {
-            abilityStrings.add("Unset");
+        if(abilities.containsKey(1)) {
+            abilityStrings.add(abilities.get(1));
         }
+        if(abilities.containsKey(2))
+            abilityStrings.add(abilities.get(2));
+        if(abilities.containsKey(3))
+            abilityStrings.add(abilities.get(3) + " (Hidden)");
+
+        //TODO: use slots instead of IDs for logic
+
+
+//        if (pokemonId != 0) {
+//            abilityStrings.add(PokemonData.getInstance().getFirstAbility(pokemonId));
+//
+//            String s = PokemonData.getInstance().getSecondAbility(pokemonId);
+//            if (!s.equals("NONE") && !s.isEmpty()) {
+//                abilityStrings.add(s);
+//            }
+//            s = PokemonData.getInstance().getHiddenAbility(pokemonId);
+//            if (!s.equals("NONE") && !s.isEmpty()) {
+//                s += " (Hidden)";
+//                abilityStrings.add(s);
+//            }
+//        } else {
+//            abilityStrings.add("Unset");
+//        }
 
         if (pokemonId != 0) {
             abilityIds.add(PokemonData.getInstance().getFirstAbilityId(pokemonId));
@@ -263,11 +277,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         } else {
             abilityIds.add(0);
         }
-
-
         spinnerAbility.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, abilityStrings));
-
-
     }
 
     /**
@@ -378,6 +388,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
 
     interface FeedDataGoalIVs {
         ArrayList<String> getListOfNatures();
+        HashMap<Integer,String> getListOfAbilities();
     }
 
 

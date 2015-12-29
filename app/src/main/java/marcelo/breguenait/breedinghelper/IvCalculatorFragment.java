@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -585,5 +586,10 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public ArrayList<String> getListOfNatures() {
         return breedingManager.getListOfNatures();
+    }
+
+    @Override
+    public HashMap<Integer, String> getListOfAbilities() {
+        return breedingManager.getListOfAbilities();
     }
 }
