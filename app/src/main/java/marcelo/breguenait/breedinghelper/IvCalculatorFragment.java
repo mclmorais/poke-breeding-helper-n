@@ -600,7 +600,12 @@ public class IvCalculatorFragment extends Fragment
     }
 
     @Override
-    public void requestGoalStaticDataUpdate() {
-        breedingManager.requestGoalStaticDataUpdate();
+    public void updateGoalNature(int natureId) {
+        breedingManager.setGoalNature(natureId);
+    }
+
+    @Override
+    public void updateGoalAbilitySlot(int abilitySlot) {
+        breedingManager.setGoalAbilitySlot(abilitySlot);
     }
 }

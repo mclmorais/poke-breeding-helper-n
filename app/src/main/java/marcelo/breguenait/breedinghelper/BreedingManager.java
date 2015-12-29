@@ -52,14 +52,15 @@ public class BreedingManager {
         goalPokemon.setIVs(IVs);
     }
 
+    public void setGoalNature(int natureId) {
+        goalPokemon.setNatureId(natureId);
+    }
 
     public void setGoalAbilitySlot(int abilitySlot) {
         goalPokemon.setAbilitySlot(abilitySlot);
     }
 
-    public void requestGoalStaticDataUpdate() {
-        goalPokemon.requestRefresh();
-    }
+
 
     /**
      * This method should be called when loading a list of stored Pokemon from a previous instance.

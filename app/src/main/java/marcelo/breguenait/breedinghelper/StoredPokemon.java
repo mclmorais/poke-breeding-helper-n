@@ -53,16 +53,6 @@ public class StoredPokemon {
         }
     }
 
-    private void resetStaticData() {
-        eggGroup1Id = -1;
-        eggGroup2Id = -1;
-        evolutionChainId = -1;
-    }
-
-    public void requestRefresh() {
-        refreshStaticData(); //TODO: Talvez mudar pra algo diferente depois?
-    }
-
     public int getAbilitySlot() {
         return abilitySlot;
     }
@@ -77,7 +67,7 @@ public class StoredPokemon {
 
     public void setPokemonId(int pokemonId) {
         this.pokemonId = pokemonId;
-        resetStaticData();
+        refreshStaticData();
     }
 
     public int getGenderId() {
