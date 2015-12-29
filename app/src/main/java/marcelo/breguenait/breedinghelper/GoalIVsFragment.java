@@ -23,6 +23,7 @@ import java.util.HashMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+//TODO: make it request a remake of the data of the goal pokemon after changing something
 
 public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.OnPokemonSelectedListener {
 
@@ -50,6 +51,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     TextView selectedName;
     private OnGoalUpdate mCallback;
     private FeedDataGoalIVs feederCallback;
+    private UpdateGoal      updaterCallback;
     private ArrayList<String> abilityStrings;
     private ArrayList<Integer> abilityIds;
     private final AdapterView.OnItemSelectedListener updateGoalOnSelection = new AdapterView.OnItemSelectedListener() {
@@ -97,6 +99,17 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString()
                     + " must implement FeedDataGoalIVs!");
+        }
+
+        try {
+            Fragment targetFragment = getTargetFragment();
+            if (targetFragment == null)
+                updaterCallback = (UpdateGoal) getActivity();
+            else
+                updaterCallback = (UpdateGoal) getTargetFragment();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement UpdateGoal!");
         }
 
 
@@ -192,7 +205,11 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     @Override
     public void onPokemonSelected(int id) {
 
-        PokemonInfo newGoal = buildGoalPokemon(id);
+        updaterCallback.updateGoalId(id);
+        updaterCallback.requestGoalStaticDataUpdate();
+
+
+        PokemonInfo newGoal = buildGoalPokemon(id); //TODO: remover
         mCallback.updateGoal(newGoal);
         updateInterfacePokemon(newGoal);
 
@@ -247,22 +264,6 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
 
         //TODO: use slots instead of IDs for logic
 
-
-//        if (pokemonId != 0) {
-//            abilityStrings.add(PokemonData.getInstance().getFirstAbility(pokemonId));
-//
-//            String s = PokemonData.getInstance().getSecondAbility(pokemonId);
-//            if (!s.equals("NONE") && !s.isEmpty()) {
-//                abilityStrings.add(s);
-//            }
-//            s = PokemonData.getInstance().getHiddenAbility(pokemonId);
-//            if (!s.equals("NONE") && !s.isEmpty()) {
-//                s += " (Hidden)";
-//                abilityStrings.add(s);
-//            }
-//        } else {
-//            abilityStrings.add("Unset");
-//        }
 
         if (pokemonId != 0) {
             abilityIds.add(PokemonData.getInstance().getFirstAbilityId(pokemonId));
@@ -389,6 +390,11 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     interface FeedDataGoalIVs {
         ArrayList<String> getListOfNatures();
         HashMap<Integer,String> getListOfAbilities();
+    }
+
+    interface UpdateGoal {
+        void updateGoalId(int id);
+        void requestGoalStaticDataUpdate();
     }
 
 

@@ -43,7 +43,8 @@ public class IvCalculatorFragment extends Fragment
         StoredPokemonFragment.OnPokemonListChanged,
         LuckFragment.UpdateLuckInterface,
         GoalIVsFragment.OnGoalUpdate,
-        GoalIVsFragment.FeedDataGoalIVs {
+        GoalIVsFragment.FeedDataGoalIVs,
+        GoalIVsFragment.UpdateGoal {
 
     private final Gson gson = new Gson();
     @Bind(R.id.main_activity_toolbar)
@@ -51,11 +52,10 @@ public class IvCalculatorFragment extends Fragment
     ActionBarDrawerToggle drawerToggle;
 
     InitialActivity initialActivity;
+    BreedingManager breedingManager;
     private View cardAd;
     private AdView adView;
     private IvManager ivManager;
-    BreedingManager breedingManager;
-
 
     @Nullable
     @Override
@@ -591,5 +591,16 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public HashMap<Integer, String> getListOfAbilities() {
         return breedingManager.getListOfAbilities();
+    }
+
+
+    @Override
+    public void updateGoalId(int id) {
+        breedingManager.setGoalId(id);
+    }
+
+    @Override
+    public void requestGoalStaticDataUpdate() {
+        breedingManager.requestGoalStaticDataUpdate();
     }
 }

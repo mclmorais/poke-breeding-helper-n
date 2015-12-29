@@ -2,6 +2,7 @@ package marcelo.breguenait.breedinghelper;
 
 //TODO: Store only abolityslot instead of ID
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class StoredPokemon {
@@ -15,16 +16,15 @@ public class StoredPokemon {
     private int genderId;
     private int[] IVs;
     private int natureId;
-    private int abilityId;
+    private int abilitySlot;
 
     /*Static data - received from the database based on dynamic data*/
     /*These fields should be set automatically*/
     private int eggGroup1Id;
     private int eggGroup2Id;
     private int evolutionChainId;
-    private int abilitySlot;
 
-    private StoredPokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilityId) {
+    private StoredPokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
 
         storedId = UUID.randomUUID();
 
@@ -32,15 +32,36 @@ public class StoredPokemon {
         this.genderId = genderId;
         this.IVs = IVs;
         this.natureId = natureId;
-        this.abilityId = abilityId;
+        this.abilitySlot = abilitySlot;
 
-        /* Calls singleton database here to fill:
-        * eggGroup1Id
-        * eggGroup2Id
-        * isAbilityHidden
-        * */
+        refreshStaticData();
+
+
     }
 
+
+    private void refreshStaticData() {
+
+        if(pokemonId > 0) {
+            ArrayList<Integer> eggGroups = MyDatabase.getInstance().getPokemonEggGroupIds(pokemonId);
+            eggGroup1Id = eggGroups.get(0);
+            if (eggGroups.size() >= 2)
+                eggGroup2Id = eggGroups.get(1);
+
+            evolutionChainId = MyDatabase.getInstance().getEvolutionChainId(pokemonId);
+
+        }
+    }
+
+    private void resetStaticData() {
+        eggGroup1Id = -1;
+        eggGroup2Id = -1;
+        evolutionChainId = -1;
+    }
+
+    public void requestRefresh() {
+        refreshStaticData(); //TODO: Talvez mudar pra algo diferente depois?
+    }
 
     public int getAbilitySlot() {
         return abilitySlot;
@@ -56,6 +77,7 @@ public class StoredPokemon {
 
     public void setPokemonId(int pokemonId) {
         this.pokemonId = pokemonId;
+        resetStaticData();
     }
 
     public int getGenderId() {
@@ -82,14 +104,6 @@ public class StoredPokemon {
         this.natureId = natureId;
     }
 
-    public int getAbilityId() {
-        return abilityId;
-    }
-
-    public void setAbilityId(int abilityId) {
-        this.abilityId = abilityId;
-    }
-
     public int getEggGroup1Id() {
         return eggGroup1Id;
     }
@@ -102,12 +116,16 @@ public class StoredPokemon {
         return evolutionChainId;
     }
 
+    public void setAbilitySlot(int abilitySlot) {
+        this.abilitySlot = abilitySlot;
+    }
+
     static class Builder {
         private int pokemonId = -1;
         private int genderId = -1;
         private int[] iVs = {-1, -1, -1, -1, -1, -1};
         private int natureId = -1;
-        private int abilityId = -1;
+        private int abilitySlot = -1;
 
         public Builder setPokemonId(int pokemonId) {
             this.pokemonId = pokemonId;
@@ -129,13 +147,14 @@ public class StoredPokemon {
             return this;
         }
 
-        public Builder setAbilityId(int abilityId) {
-            this.abilityId = abilityId;
+
+        public Builder setAbilitySlot(int abilitySlot) {
+            this.abilitySlot = abilitySlot;
             return this;
         }
 
         public StoredPokemon createStoredPokemon() {
-            return new StoredPokemon(pokemonId, genderId, iVs, natureId, abilityId);
+            return new StoredPokemon(pokemonId, genderId, iVs, natureId, abilitySlot);
         }
     }
 }

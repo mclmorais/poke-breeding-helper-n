@@ -52,12 +52,13 @@ public class BreedingManager {
         goalPokemon.setIVs(IVs);
     }
 
-    public void setGoalNature(int natureId) {
-        goalPokemon.setNatureId(natureId);
+
+    public void setGoalAbilitySlot(int abilitySlot) {
+        goalPokemon.setAbilitySlot(abilitySlot);
     }
 
-    public void setGoalAbility(int abilityId) {
-        goalPokemon.setAbilityId(abilityId);
+    public void requestGoalStaticDataUpdate() {
+        goalPokemon.requestRefresh();
     }
 
     /**

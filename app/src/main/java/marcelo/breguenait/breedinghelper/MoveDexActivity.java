@@ -86,7 +86,7 @@ public class MoveDexActivity extends Fragment implements SelectPokemonFragment.O
         });
 
 
-        db = MyDatabase.getInstance();// new MyDatabase(getContext());
+        db = MyDatabase.getInstance();
 
         tabLayout.addTab(tabLayout.newTab().setText("Level Up"));
         tabLayout.addTab(tabLayout.newTab().setText("TM/HM"));
@@ -131,7 +131,6 @@ public class MoveDexActivity extends Fragment implements SelectPokemonFragment.O
     @Override
     public void onDestroy() {
         super.onDestroy();
-        db.close();
     }
 
     @Override
