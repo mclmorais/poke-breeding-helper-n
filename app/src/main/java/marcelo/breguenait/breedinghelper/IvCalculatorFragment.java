@@ -2,14 +2,12 @@ package marcelo.breguenait.breedinghelper;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -18,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -27,7 +24,6 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -44,7 +40,7 @@ public class IvCalculatorFragment extends Fragment
         implements
         StoredPokemonFragment.OnPokemonListChanged,
         LuckFragment.UpdateLuckInterface,
-        GoalIVsFragment.OnGoalUpdate{
+        GoalIVsFragment.OnGoalUpdate {
 
     private final Gson gson = new Gson();
     @Bind(R.id.main_activity_toolbar)
@@ -55,8 +51,7 @@ public class IvCalculatorFragment extends Fragment
     private View cardAd;
     private AdView adView;
     private IvManager ivManager;
-
-
+    BreedingManager breedingManager;
 
 
     @Nullable
@@ -69,6 +64,7 @@ public class IvCalculatorFragment extends Fragment
 
         ButterKnife.bind(this, v);
         ivManager = new IvManager();
+        breedingManager = new BreedingManager();
 
         drawerToggle = setupDrawerToggle();
         initialActivity.mDrawer.setDrawerListener(drawerToggle);
@@ -102,7 +98,6 @@ public class IvCalculatorFragment extends Fragment
         }
 
 
-
         return v;
 
     }
@@ -116,8 +111,7 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public void onStart() {
         super.onStart();
-      //  updateLuckFragment(ivManager.getBestCombinations());
-
+        //  updateLuckFragment(ivManager.getBestCombinations());
 
 
     }
@@ -137,7 +131,7 @@ public class IvCalculatorFragment extends Fragment
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main,menu);
+        inflater.inflate(R.menu.main, menu);
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
