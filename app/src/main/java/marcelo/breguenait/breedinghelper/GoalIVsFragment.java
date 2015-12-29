@@ -88,23 +88,11 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         }
     };
 
-    private final AdapterView.OnItemSelectedListener updateGoalOnSelection = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (mCallback.getGoal().id > 0)
-                mCallback.updateGoal(buildGoalPokemon(mCallback.getGoal().id));
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-            if (mCallback.getGoal().id > 0)
-                mCallback.updateGoal(buildGoalPokemon(mCallback.getGoal().id));
-        }
-    };
     private final View.OnClickListener updateGoalOnClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             mCallback.updateGoal(buildGoalPokemon(mCallback.getGoal().id));
+            onInterfaceGoalIVsChanged();
         }
     };
 
@@ -226,6 +214,15 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
 
     }
 
+    private void onInterfaceGoalIVsChanged() {
+
+        int[] IVs = new int[6];
+        for (int i = 0; i < 6; i++) {
+            IVs[i] = goalIVs[i].isChecked() ? 1 : 0;
+        }
+
+        updaterCallback.updateGoalIVs(IVs);
+    }
 
 
 
@@ -265,8 +262,6 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         PokemonInfo newGoal = buildGoalPokemon(id); //TODO: remover
         mCallback.updateGoal(newGoal);
         updateInterfacePokemon(newGoal);
-
-
     }
 
     private void updateInterfacePokemon(PokemonInfo goal) throws IllegalArgumentException {
@@ -324,7 +319,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
 
 
 
-
+        //XXXX TO BE REMOVED
         if (pokemonId != 0) {
             abilityIds.add(PokemonData.getInstance().getFirstAbilityId(pokemonId));
 
@@ -458,6 +453,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         void updateGoalId(int id);
         void updateGoalNature(int natureId);
         void updateGoalAbilitySlot(int abilitySlot);
+        void updateGoalIVs(int[] IVs);
     }
 
 

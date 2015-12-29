@@ -606,4 +606,9 @@ public class IvCalculatorFragment extends Fragment
     public void updateGoalAbilitySlot(int abilitySlot) {
         breedingManager.setGoalAbilitySlot(abilitySlot);
     }
+
+    @Override
+    public void updateGoalIVs(int[] IVs) {
+        breedingManager.setGoalIVs(IVs);
+    }
 }
