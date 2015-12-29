@@ -1,13 +1,18 @@
 package marcelo.breguenait.breedinghelper;
 
+import android.animation.LayoutTransition;
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,13 +25,14 @@ public class InitialActivity extends AppCompatActivity {
     @Bind(R.id.nvView)
     NavigationView nvDrawer;
 
+
+
     Fragment currentFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
-        FragmentManager.enableDebugLogging(true);
 
         ButterKnife.bind(this);
 
@@ -58,9 +64,35 @@ public class InitialActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
+                        final MenuItem item = menuItem;
+
+                        mDrawer.setDrawerListener(new DrawerLayout.DrawerListener() {
+                            @Override
+                            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+                            }
+
+                            @Override
+                            public void onDrawerOpened(View drawerView) {
+
+                            }
+
+                            @Override
+                            public void onDrawerClosed(View drawerView) {
+                                selectDrawerItem(item);
+                            }
+
+                            @Override
+                            public void onDrawerStateChanged(int newState) {
+
+                            }
+                        });
+
+
+                        mDrawer.closeDrawers();
                         return true;
                     }
+
                 });
     }
 
@@ -91,13 +123,12 @@ public class InitialActivity extends AppCompatActivity {
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-
-        fragmentManager.beginTransaction().replace(R.id.flContent, currentFragment).commit();
+        fragmentManager.beginTransaction().setTransition(android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_CLOSE).replace(R.id.flContent, currentFragment).commit();
 
         // Highlight the selected item, update the title, and close the drawer
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
-        mDrawer.closeDrawers();
+//        mDrawer.closeDrawers();
     }
 
     @Override
@@ -110,3 +141,5 @@ public class InitialActivity extends AppCompatActivity {
         return mDrawer;
     }
 }
+
+

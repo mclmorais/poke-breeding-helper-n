@@ -27,9 +27,7 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.nhaarman.supertooltips.ToolTip;
-import com.nhaarman.supertooltips.ToolTipRelativeLayout;
-import com.nhaarman.supertooltips.ToolTipView;
+
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -46,152 +44,20 @@ public class IvCalculatorFragment extends Fragment
         implements
         StoredPokemonFragment.OnPokemonListChanged,
         LuckFragment.UpdateLuckInterface,
-        GoalIVsFragment.OnGoalUpdate,
-        ToolTipView.OnToolTipViewClickedListener {
+        GoalIVsFragment.OnGoalUpdate{
 
     private final Gson gson = new Gson();
     @Bind(R.id.main_activity_toolbar)
     Toolbar toolbar;
     ActionBarDrawerToggle drawerToggle;
-    ToolTipView viewGoalIVsTooltip;
-    ToolTipView viewAddPokemonsTooltip;
-    ToolTipView viewEditPokemonTooltip;
-    ToolTipRelativeLayout toolTipRelativeLayout;
+
     InitialActivity initialActivity;
     private View cardAd;
     private AdView adView;
     private IvManager ivManager;
 
-    @Override
-    public void onToolTipViewClicked(ToolTipView toolTipView) {
-        if (toolTipView == viewGoalIVsTooltip) {
-            saveBoolean("hasSeenTooltipGoalIVs", true);
-            tooltipAddPokemons();
-        } else if (toolTipView == viewAddPokemonsTooltip) {
-            saveBoolean("hasSeenTooltipAddPokemons", true);
-            tooltipEditPokemon();
-        } else if (toolTipView == viewEditPokemonTooltip)
-            saveBoolean("hasSeenTooltipEditPokemon", true);
-
-    }
-
-    void setTooltips() {
-        toolTipRelativeLayout = (ToolTipRelativeLayout) getActivity().findViewById(R.id.tooltipLayout);
-        tooltipGoalIVs();
-
-        if (ivManager.getStoredPokemonList().size() > 0)
-            tooltipEditPokemon();
-
-        if (ivManager.getGoalPokemon() != null) {
-            int counter = 0;
-            for (int i = 0; i < 6; i++) {
-                counter += ivManager.getGoalPokemon().IVs[i];
-            }
-            if (counter > 0 && ivManager.getGoalPokemon().id > 0) {
-                if (viewGoalIVsTooltip != null) {
-                    viewGoalIVsTooltip.remove();
-                    viewGoalIVsTooltip = null;
-                }
-                tooltipAddPokemons();
-                saveBoolean("hasSeenTooltipGoalIVs", true);
-            }
-        }
 
 
-
-        if (ivManager.getBestCombinations() != null && ivManager.getBestCombinations().size() > 0) {
-            saveBoolean("hasSeenTooltipAddPokemons", true);
-            if (viewAddPokemonsTooltip != null) {
-                viewAddPokemonsTooltip.remove();
-                viewAddPokemonsTooltip = null;
-            }
-        }
-
-
-    }
-
-    void tooltipGoalIVs() {
-
-        if (readBoolean("hasSeenTooltipGoalIVs", false)) {
-            tooltipAddPokemons();
-            return;
-        }
-
-        if (viewGoalIVsTooltip != null)
-            return;
-
-        ToolTip toolTip = new ToolTip()
-                .withText("Select the Pokémon and the IVs " + System.getProperty("line.separator") + "you want as a goal below")
-                .withColor(getResources().getColor(R.color.accent))
-                .withShadow()
-                .withTextColor(Color.WHITE)
-                .withAnimationType(ToolTip.AnimationType.FROM_TOP);
-
-
-        GoalIVsFragment f = (GoalIVsFragment) getFragmentManager().findFragmentById(R.id.frameGoalIVsFragmentContainer);
-
-
-        View v = f.getView();
-        if (v != null) {
-            CardView c = (CardView) v.findViewById(R.id.goalCardView);
-
-            viewGoalIVsTooltip = toolTipRelativeLayout.showToolTipForView(toolTip, c);
-            viewGoalIVsTooltip.setOnToolTipViewClickedListener(this);
-        }
-    }
-
-    void tooltipAddPokemons() {
-        if (readBoolean("hasSeenTooltipAddPokemons", false)) {
-            tooltipEditPokemon();
-            return;
-        }
-
-        if (viewAddPokemonsTooltip != null) return;
-
-        ToolTip toolTip = new ToolTip()
-                .withText("Add potential parents here and" + System.getProperty("line.separator") + "the app will tell you when" + System.getProperty("line.separator") + "a match is found")
-                .withColor(getResources().getColor(R.color.accent))
-                .withShadow()
-                .withTextColor(Color.WHITE)
-                .withAnimationType(ToolTip.AnimationType.FROM_TOP);
-
-        StoredPokemonFragment f = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
-        View v = f.getView();
-        if (v != null) {
-            Button b = (Button) v.findViewById(R.id.buttonFragmentPokemonListAdd);
-            viewAddPokemonsTooltip = toolTipRelativeLayout.showToolTipForView(toolTip, b);
-            viewAddPokemonsTooltip.setOnToolTipViewClickedListener(this);
-
-
-        }
-    }
-
-    void tooltipEditPokemon() {
-        if (readBoolean("hasSeenTooltipEditPokemon", false)) {
-            return;
-        }
-
-        if (viewEditPokemonTooltip != null) return;
-
-        if (ivManager.getStoredPokemonList().isEmpty()) return;
-
-        ToolTip toolTip = new ToolTip()
-                .withText("Click on your stored Pokémon" + System.getProperty("line.separator") + "to see or edit its information")
-                .withColor(getResources().getColor(R.color.accent))
-                .withShadow()
-                .withTextColor(Color.WHITE)
-                .withAnimationType(ToolTip.AnimationType.FROM_TOP);
-
-        StoredPokemonFragment f = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
-        View v = f.getView();
-        if (v != null) {
-            ExpandableGridView b = (ExpandableGridView) v.findViewById(R.id.gridViewPokemonsList);
-            viewEditPokemonTooltip = toolTipRelativeLayout.showToolTipForView(toolTip, b);
-            viewEditPokemonTooltip.setOnToolTipViewClickedListener(this);
-
-
-        }
-    }
 
     @Nullable
     @Override
@@ -250,9 +116,8 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public void onStart() {
         super.onStart();
-        updateLuckFragment(ivManager.getBestCombinations());
+      //  updateLuckFragment(ivManager.getBestCombinations());
 
-        setTooltips();
 
 
     }
@@ -482,14 +347,6 @@ public class IvCalculatorFragment extends Fragment
 
         if (c == null) return;
 
-        if (c.size() > 0) {
-            saveBoolean("hasSeenTooltipAddPokemons", true);
-            if (viewAddPokemonsTooltip != null) {
-                viewAddPokemonsTooltip.remove();
-                viewAddPokemonsTooltip = null;
-            }
-        }
-
         LuckFragment frag = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
         frag.updateCurrentChances(c);
 
@@ -497,7 +354,6 @@ public class IvCalculatorFragment extends Fragment
 
     public void addPokemonToList(PokemonInfo pokemon) {
         ivManager.storePokemon(pokemon);
-        tooltipEditPokemon();
         updateLuckFragment(ivManager.getBestCombinations());
         updatePokemonListFragment();
     }
@@ -629,14 +485,7 @@ public class IvCalculatorFragment extends Fragment
         for (int i = 0; i < 6; i++) {
             counter += p.IVs[i];
         }
-        if (counter > 0 && p.id > 0) {
-            if (viewGoalIVsTooltip != null) {
-                viewGoalIVsTooltip.remove();
-                viewGoalIVsTooltip = null;
-            }
-            tooltipAddPokemons();
-            saveBoolean("hasSeenTooltipGoalIVs", true);
-        }
+
         updateLuckFragment(ivManager.getBestCombinations());
     }
 

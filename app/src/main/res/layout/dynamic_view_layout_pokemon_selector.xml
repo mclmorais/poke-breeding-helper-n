@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:background="@drawable/layer_background_round_selector"
+<android.support.v7.widget.CardView
+    android:layout_height="40dp"
     android:layout_width="40dp"
-    android:layout_height="40dp">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/layer_background_round_selector2">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/placeholder_number_3"
-        android:id="@+id/textViewId"
-        android:layout_gravity="left|top"
-        android:layout_marginLeft="2dp"
-        android:textColor="#808080"
-        android:textSize="12sp"
-        android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/placeholder_number_3"
+            android:id="@+id/textViewId"
+            android:layout_gravity="left|top"
+            android:layout_marginLeft="2dp"
+            android:textColor="#808080"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-thin" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageViewIcon"
-        android:layout_gravity="center_horizontal|bottom"
-        android:background="@drawable/pkmn_006"
-        android:layout_marginRight="2dp" />
-</FrameLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageViewIcon"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="@drawable/pkmn_006"
+            android:layout_marginRight="2dp" />
+    </FrameLayout>
+
+</android.support.v7.widget.CardView>
