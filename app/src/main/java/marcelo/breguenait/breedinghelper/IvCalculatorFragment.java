@@ -332,8 +332,6 @@ public class IvCalculatorFragment extends Fragment
 
     }
 
-    // cardChance.updateGoalIvChance();
-    // cardChance.updateEggChance();
 
     void updatePokemonListFragment() {
         StoredPokemonFragment frag = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);

@@ -23,7 +23,7 @@ import java.util.HashMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-//TODO: Make checks on the ability spinner when switching pokemon
+//TODO: Make checks on the ability spinner when switching pokemon (right now OK - switches to the first)
 // (put it always on the same slot or on the first if it doesn't have the previous slot)
 
 public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.OnPokemonSelectedListener {
@@ -265,6 +265,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         PokemonInfo newGoal = buildGoalPokemon(id); //TODO: remover
         mCallback.updateGoal(newGoal);
         updateInterfacePokemon(newGoal);
+
 
     }
 

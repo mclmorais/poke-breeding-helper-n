@@ -196,6 +196,7 @@ public class BreedingManager {
     }
 
     HashMap<Integer, String> getListOfAbilities() {
-        return database.getListOfAbilities(1, 9); //TODO: fazer pegar 1 do goalpokemon
+
+        return database.getListOfAbilities(goalPokemon.getPokemonId() > 0 ? goalPokemon.getPokemonId():1, 9); //TODO: TEMPORARIO - qd nao tem defaulta pro bulbasauro, fazer lidar com não ter depois
     }
 }
