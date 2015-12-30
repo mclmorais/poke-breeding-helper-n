@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 class StoredPokemonAdapter extends BaseAdapter{
@@ -68,7 +67,7 @@ class StoredPokemonAdapter extends BaseAdapter{
 
     private final PreloadedDrawables preloadedDrawables;
 
-    private ArrayList<StoredPokemon> hatchList;
+    private ArrayList<StoredPokemon> storedPokemonList;
     private final LayoutInflater inflater;
 
     private boolean deleteMode = false;
@@ -77,21 +76,21 @@ class StoredPokemonAdapter extends BaseAdapter{
         this.deleteMode = deleteMode;
     }
 
-    public StoredPokemonAdapter(ArrayList<StoredPokemon> hatchList, Context context) {
+    public StoredPokemonAdapter(ArrayList<StoredPokemon> storedPokemonList, Context context) {
         preloadedDrawables = new PreloadedDrawables(context);
-        this.hatchList = hatchList;
+        this.storedPokemonList = storedPokemonList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
     @Override
     public int getCount() {
-        return hatchList.size();
+        return storedPokemonList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return hatchList.get(position);
+        return storedPokemonList.get(position);
     }
 
     @Override
@@ -136,7 +135,7 @@ class StoredPokemonAdapter extends BaseAdapter{
         else {
             holder = (LayoutHolder) convertView.getTag();
         }
-        StoredPokemon storedPokemon = hatchList.get(i);
+        StoredPokemon storedPokemon = storedPokemonList.get(i);
 
         if(deleteMode)
             holder.frame.setBackgroundResource(R.drawable.layer_card_background_round_red);

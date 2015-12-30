@@ -25,10 +25,11 @@ import java.util.HashMap;
  * Created by Marcelo on 21/12/2014.
  */
 public class StoredPokemonFragment extends Fragment implements
-        CreatePokemonPopupFragment.OnBuildPokemon,
+        CreatePokemonFragment.OnBuildPokemon,
         StoredPokemonPopupFragment.OnPokemonPopupListener,
-        CreatePokemonPopupFragment.FeedDataCreatePokemon,
-        CreatePokemonPopupFragment.UpdateStoredPokemonList {
+        CreatePokemonFragment.FeedDataCreatePokemon,
+        CreatePokemonFragment.UpdateStoredPokemonList,
+        StoredPokemonPopupFragment.FeedDataStoredPopup{
 
     private OnPokemonListChanged mCallback;
     private StoredPokemonAdapter storedPokemonAdapter;
@@ -127,7 +128,8 @@ public class StoredPokemonFragment extends Fragment implements
                     mCallback.removePokemon(i);
                     updateGridView();
                 } else {
-                    openStoredPokemonPopupFragment(view, mCallback.getSelectedPokemonData(i), i);
+                    StoredPokemon selectedPokemon = (StoredPokemon) gridViewPokemons.getAdapter().getItem(i);
+                    openStoredPokemonPopupFragment(view, selectedPokemon, i); //TODO: verificar se vai dar certo
                 }
             }
         });
@@ -145,7 +147,7 @@ public class StoredPokemonFragment extends Fragment implements
 
     void openAddPokemonFragment(View callerView) {
         FragmentManager fm = getFragmentManager();
-        CreatePokemonPopupFragment fragment = new CreatePokemonPopupFragment();
+        CreatePokemonFragment fragment = new CreatePokemonFragment();
         Bundle b = addPositionAsArguments(callerView);
         b.putInt("defaultPokemon", lastAddedPokemonId);
         fragment.setArguments(b);
@@ -153,7 +155,7 @@ public class StoredPokemonFragment extends Fragment implements
         fragment.show(fm, "");
     }
 
-    void openStoredPokemonPopupFragment(View callerView, PokemonInfo selectedPokemon, int pokemonPos) { //TODO: passar para StoredPokemon
+    void openStoredPokemonPopupFragment(View callerView, StoredPokemon selectedPokemon, int pokemonPos) {
         FragmentManager fragmentManager = getFragmentManager();
         int callerViewPosition[] = new int[2];
         callerView.getLocationOnScreen(callerViewPosition);
@@ -262,7 +264,7 @@ public class StoredPokemonFragment extends Fragment implements
 
         HashMap<Integer, String> getListOfAbilities(int pokemonId);
 
-        ArrayList<StoredPokemon> getStoredPokemonList();
+        ArrayList<StoredPokemon> getStoredPokemonList(); //TODO: ver se não é uma boa passar uma cópia dessa lista pra evitar merda aqui (ver no final isso)
 
         int getGenderRate(int pokemonId);
 
@@ -277,5 +279,10 @@ public class StoredPokemonFragment extends Fragment implements
 
     interface UpdateStoredPokemonList {
         void storePokemon(StoredPokemon pokemon);
+    }
+
+    @Override
+    public StoredPokemon getTemporaryPokemon() {
+        return null;
     }
 }

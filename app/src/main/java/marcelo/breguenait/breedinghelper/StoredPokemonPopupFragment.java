@@ -2,11 +2,11 @@ package marcelo.breguenait.breedinghelper;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -21,6 +21,9 @@ import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -32,18 +35,25 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Use the {@link StoredPokemonPopupFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StoredPokemonPopupFragment extends PopupDialogFragment implements CreatePokemonPopupFragment.OnBuildPokemon{
+public class StoredPokemonPopupFragment extends PopupDialogFragment implements CreatePokemonFragment.OnBuildPokemon,
+        CreatePokemonFragment.FeedDataCreatePokemon,
+CreatePokemonFragment.UpdateStoredPokemonList{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_POS_X = "x";
     private static final String ARG_POS_Y = "y";
-
+    private static int FEMALE = 1;
+    private static int MALE = 2;
+    private static int GENDERLESS = 3;
     private int mPosX;
     private int mPosY;
 
-    private PokemonInfo selectedPokemon;
+    private StoredPokemon selectedPokemon;
     private int pokemonPos;
 
     private OnPokemonPopupListener mListener;
+
+    private FeedDataStoredPopup feederCallback;
 
     private ImageView imageGender;
     private CircleImageView imagePokemonIcon;
@@ -51,55 +61,11 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements C
     private Button buttonClose;
     private FloatingActionButton buttonEdit;
     private ImageView[] IVs = new ImageView[6];
-
-    private class PreloadedDrawables {
-        Drawable maleIcon;
-        Drawable femaleIcon;
-        Drawable genderlessIcon;
-        Drawable missingno;
-        final Drawable[] IVActive = new Drawable[6];
-        final Drawable[] IVInactive = new Drawable[6];
-
-        private PreloadedDrawables(Context c) {
-
-            maleIcon = c.getResources().getDrawable(R.drawable.symbol_male);
-            femaleIcon = c.getResources().getDrawable(R.drawable.symbol_female);
-            genderlessIcon = c.getResources().getDrawable(R.drawable.symbol_genderless);
-
-            missingno = c.getResources().getDrawable(R.drawable.pkmn_missingno);
-
-            IVActive[0] = c.getResources().getDrawable(R.drawable.iv_circle_checked);
-            IVActive[1] = c.getResources().getDrawable(R.drawable.iv_triangle_checked);
-            IVActive[2] = c.getResources().getDrawable(R.drawable.iv_square_checked);
-            IVActive[3] = c.getResources().getDrawable(R.drawable.iv_heart_checked);
-            IVActive[4] = c.getResources().getDrawable(R.drawable.iv_star_checked);
-            IVActive[5] = c.getResources().getDrawable(R.drawable.iv_diamond_checked);
-
-            IVInactive[0] = c.getResources().getDrawable(R.drawable.iv_circle_clear);
-            IVInactive[1] = c.getResources().getDrawable(R.drawable.iv_triangle_clear);
-            IVInactive[2] = c.getResources().getDrawable(R.drawable.iv_square_clear);
-            IVInactive[3] = c.getResources().getDrawable(R.drawable.iv_heart_clear);
-            IVInactive[4] = c.getResources().getDrawable(R.drawable.iv_star_clear);
-            IVInactive[5] = c.getResources().getDrawable(R.drawable.iv_diamond_clear);
-        }
-
-        Drawable getGenderDrawable(Gender gender) {
-            if (gender == Gender.MALE)          return maleIcon;
-            else if (gender == Gender.FEMALE)   return femaleIcon;
-            else  return genderlessIcon;
-        }
-
-        Drawable getIVDrawable(int position, boolean active) {
-            if(active)
-                return IVActive[position];
-            else
-                return IVInactive[position];
-        }
-
-
-    }
-
     private PreloadedDrawables preloadedDrawables;
+
+    public StoredPokemonPopupFragment() {
+        // Required empty public constructor
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -108,7 +74,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements C
      * @param callerPos Parameter 1.
      * @return A new instance of fragment StoredPokemonPopupFragment.
      */
-    public static StoredPokemonPopupFragment newInstance(int[] callerPos, PokemonInfo pokemonInfo, int pokemonPos) {
+    public static StoredPokemonPopupFragment newInstance(int[] callerPos, StoredPokemon pokemonInfo, int pokemonPos) {
         StoredPokemonPopupFragment fragment = new StoredPokemonPopupFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_POS_X, callerPos[0]);
@@ -119,15 +85,11 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements C
         return fragment;
     }
 
-    public StoredPokemonPopupFragment() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         setRetainInstance(true);
         super.onCreate(savedInstanceState);
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             if (getArguments() != null) {
                 mPosX = getArguments().getInt(ARG_POS_X);
                 mPosY = getArguments().getInt(ARG_POS_Y);
@@ -146,7 +108,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements C
 
         // clone the inflater using the ContextThemeWrapper
         LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-        View thisFragment =  localInflater.inflate(R.layout.fragment_stored_pokemon_popup2, container, false);
+        View thisFragment = localInflater.inflate(R.layout.fragment_stored_pokemon_popup2, container, false);
 
         setListeners(thisFragment);
         updateInterface();
@@ -162,7 +124,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements C
 
         Dialog dialog = getDialog();
         if (dialog != null) {
-            dialog.getWindow().setLayout(width,height);
+            dialog.getWindow().setLayout(width, height);
         }
 
         setDialogPosition();
@@ -173,13 +135,24 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements C
         super.onAttach(activity);
         try {
             Fragment targetFragment = getTargetFragment();
-            if(targetFragment == null)
+            if (targetFragment == null)
                 mListener = (OnPokemonPopupListener) activity;
             else
                 mListener = (OnPokemonPopupListener) getTargetFragment();
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement BuildPokemon");
+                    + " must implement OnPokemonPopupListener");
+        }
+
+        try {
+            Fragment targetFragment = getTargetFragment();
+            if (targetFragment == null)
+                feederCallback = (FeedDataStoredPopup) activity;
+            else
+                feederCallback = (FeedDataStoredPopup) getTargetFragment();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getTargetFragment().toString()
+                    + " must implement FeedDataStoredPopup");
         }
     }
 
@@ -191,29 +164,27 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements C
 
     @Override
     protected void setDialogPosition() {
-        if(getArguments() == null) {
+        if (getArguments() == null) {
             return;
         }
 
         Window window = getDialog().getWindow();
 
         // set "origin" to top left corner
-        window.setGravity(Gravity.TOP|Gravity.LEFT);
+        window.setGravity(Gravity.TOP | Gravity.LEFT);
 
         WindowManager.LayoutParams params = window.getAttributes();
 
         DisplayMetrics metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int screenWidth = (int) convertPixelsToDp(metrics.widthPixels,getActivity().getApplicationContext());
-        if(mPosX < (screenWidth/2)) {
+        int screenWidth = (int) convertPixelsToDp(metrics.widthPixels, getActivity().getApplicationContext());
+        if (mPosX < (screenWidth / 2)) {
             params.x = mPosX + dpToPx(40); // about half of confirm button size left of source view
-            params.y = mPosY -  dpToPx(32+160); // above source view
-        }
-        else {
+            params.y = mPosY - dpToPx(32 + 160); // above source view
+        } else {
             params.x = mPosX + dpToPx(40); // about half of confirm button size left of source view
-            params.y = mPosY -  dpToPx(32+160); // above source view
+            params.y = mPosY - dpToPx(32 + 160); // above source view
         }
-
 
 
         window.setAttributes(params);
@@ -251,69 +222,71 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements C
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openAddPokemonFragment(v);
+                openCreatePokemonFragment(v);
             }
         });
     }
 
     private void updateInterface() {
-        int id = selectedPokemon.id;
+        int id = selectedPokemon.getPokemonId();
 
 
         String iconId = "pkmn_big_" + String.format("%03d", id);
-        imagePokemonIcon.setImageResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
+        imagePokemonIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
 
         String name = PokemonData.getInstance().getName(id);
         textPokemonName.setText(name);
 
         String eggGroup1 = PokemonData.getInstance().getFirstEggGroup(id).toString();
-        eggGroup1 = eggGroup1.replaceAll("_"," ");
+        eggGroup1 = eggGroup1.replaceAll("_", " ");
         textEggGroup1.setText(eggGroup1);
 
 
         String eggGroup2 = PokemonData.getInstance().getSecondEggGroup(id).toString();
-        eggGroup2 = eggGroup2.replaceAll("_"," ");
-        if(eggGroup2.equals("NONE")) eggGroup2 = "";
+        eggGroup2 = eggGroup2.replaceAll("_", " ");
+        if (eggGroup2.equals("NONE")) eggGroup2 = "";
         textEggGroup2.setText(eggGroup2);
 
-        if(selectedPokemon.nature != null) {
-            String nature = selectedPokemon.nature.toString();
-            if (nature.equals("UNSET")) nature = "Nature not set";
-            textNature.setText(nature);
+        int natureId = selectedPokemon.getNatureId();
+        String nature = Integer.toString(natureId); //TODO: fazer pegar da database o nome
+        if (natureId == -1) nature = "Nature not set"; //TODO: fazer pegar do sistema a string
+        textNature.setText(nature);
+
+
+        for (int i = 0; i < 6; i++) {
+            IVs[i].setBackground(preloadedDrawables.getIVDrawable(i, selectedPokemon.getIVs()[i] == 1));
         }
 
-        for(int i = 0; i < 6; i++) {
-            IVs[i].setBackground(preloadedDrawables.getIVDrawable(i,selectedPokemon.IVs[i]==1));
-        }
-
-        Gender gender = selectedPokemon.gender;
-        if(gender == Gender.MALE)
+        int genderId = selectedPokemon.getGenderId();
+        if (genderId == MALE)
             imageGender.setBackgroundResource(R.drawable.symbol_male);
-        else if (gender == Gender.FEMALE)
+        else if (genderId == FEMALE)
             imageGender.setBackgroundResource(R.drawable.symbol_female);
         else
             imageGender.setBackgroundResource(R.drawable.symbol_genderless);
 
 
-        textNumber.setText("#" + String.valueOf(pokemonPos+1));
+        textNumber.setText("#" + String.valueOf(pokemonPos + 1));
 
-        if(selectedPokemon.ability == PokemonData.getInstance().getFirstAbilityId(selectedPokemon.id))
-            textAbility.setText(PokemonData.getInstance().getFirstAbility(selectedPokemon.id));
-        else if(selectedPokemon.ability == PokemonData.getInstance().getSecondAbilityId(selectedPokemon.id))
-            textAbility.setText(PokemonData.getInstance().getSecondAbility(selectedPokemon.id));
-        else if(selectedPokemon.ability == PokemonData.getInstance().getHiddenAbilityId(selectedPokemon.id))
-            textAbility.setText(PokemonData.getInstance().getHiddenAbility(selectedPokemon.id));
-        else
-            textAbility.setText("Unset");
+        int abilitySlot = selectedPokemon.getAbilitySlot();
+
+        textAbility.setText(Integer.toString(abilitySlot)); //TODO: fazer pegar o nome da database
+
+//        if (selectedPokemon.ability == PokemonData.getInstance().getFirstAbilityId(selectedPokemon.id))
+//            textAbility.setText(PokemonData.getInstance().getFirstAbility(selectedPokemon.id));
+//        else if (selectedPokemon.ability == PokemonData.getInstance().getSecondAbilityId(selectedPokemon.id))
+//            textAbility.setText(PokemonData.getInstance().getSecondAbility(selectedPokemon.id));
+//        else if (selectedPokemon.ability == PokemonData.getInstance().getHiddenAbilityId(selectedPokemon.id))
+//            textAbility.setText(PokemonData.getInstance().getHiddenAbility(selectedPokemon.id));
+//        else
+//            textAbility.setText("Unset");
 
 
-
-
-        for(int i = 0; i < Nature.values().length; i++) //TODO: fazer isso em tudo q eh lugar
-            if(Nature.values()[i] == selectedPokemon.nature) {
-                textNature.setText(PokemonData.getInstance().getNatureName(i));
-                break;
-            }
+//        for (int i = 0; i < Nature.values().length; i++)
+//            if (Nature.values()[i] == selectedPokemon.nature) {
+//                textNature.setText(PokemonData.getInstance().getNatureName(i));
+//                break;
+//            }
 
 //        Nature nature = selectedPokemon.nature;
 //        if(nature == null) nature = Nature.UNSET;
@@ -322,9 +295,9 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements C
 
     }
 
-    void openAddPokemonFragment(View callerView){
+    void openCreatePokemonFragment(View callerView) {
         FragmentManager fm = getFragmentManager();
-        CreatePokemonPopupFragment fragment = new CreatePokemonPopupFragment();
+        CreatePokemonFragment fragment = new CreatePokemonFragment();
         Bundle b = addPositionAsArguments(callerView);
         fragment.setArguments(b);
         fragment.setTargetFragment(this, 0);
@@ -335,9 +308,49 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements C
         int callerViewPosition[] = new int[2];
         v.getLocationOnScreen(callerViewPosition);
         Bundle b = new Bundle();
-        b.putInt("x",callerViewPosition[0]);
+        b.putInt("x", callerViewPosition[0]);
         b.putInt("y", callerViewPosition[1]);
         return b;
+    }
+
+    @Override
+    public PokemonInfo getGoal() {
+        return mListener.getGoal();
+    }
+
+    @Override
+    public ArrayList<String> getListOfNatures() {
+        return feederCallback.getListOfNatures();
+    }
+
+    @Override
+    public HashMap<Integer, String> getListOfAbilities(int pokemonId) {
+        return feederCallback.getListOfAbilities(pokemonId);
+    }
+
+    @Override
+    public int getGenderRate(int pokemonId) {
+        return feederCallback.getGenderRate(pokemonId);
+    }
+
+    @Override
+    public StoredPokemon getGoalPokemon() {
+        return feederCallback.getGoalPokemon();
+    }
+
+    @Override
+    public ArrayList<Integer> getCompatiblePokemonList() {
+        return feederCallback.getCompatiblePokemonList();
+    }
+
+    @Override
+    public ArrayList<Integer> getPokemonIds() {
+        return feederCallback.getPokemonIds();
+    }
+
+    @Override
+    public ArrayList<String> getPokemonNames() {
+        return feederCallback.getPokemonNames();
     }
 
     /**
@@ -352,12 +365,82 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements C
      */
     public interface OnPokemonPopupListener {
         void onPokemonAltered(PokemonInfo alteredPokemon, int position);
+
         PokemonInfo getGoal();
     }
 
+    public interface FeedDataStoredPopup {
+
+        ArrayList<String> getListOfNatures();
+
+        HashMap<Integer, String> getListOfAbilities(int pokemonId);
+
+        int getGenderRate(int pokemonId);
+
+        StoredPokemon getGoalPokemon();
+
+        ArrayList<Integer> getCompatiblePokemonList();
+
+        ArrayList<Integer> getPokemonIds();
+
+        ArrayList<String> getPokemonNames();
+
+    }
+
+    private class PreloadedDrawables {
+        final Drawable[] IVActive = new Drawable[6];
+        final Drawable[] IVInactive = new Drawable[6];
+        Drawable maleIcon;
+        Drawable femaleIcon;
+        Drawable genderlessIcon;
+        Drawable missingno;
+
+        private PreloadedDrawables(Context c) {
+
+            maleIcon = c.getResources().getDrawable(R.drawable.symbol_male);
+            femaleIcon = c.getResources().getDrawable(R.drawable.symbol_female);
+            genderlessIcon = c.getResources().getDrawable(R.drawable.symbol_genderless);
+
+            missingno = c.getResources().getDrawable(R.drawable.pkmn_missingno);
+
+            IVActive[0] = c.getResources().getDrawable(R.drawable.iv_circle_checked);
+            IVActive[1] = c.getResources().getDrawable(R.drawable.iv_triangle_checked);
+            IVActive[2] = c.getResources().getDrawable(R.drawable.iv_square_checked);
+            IVActive[3] = c.getResources().getDrawable(R.drawable.iv_heart_checked);
+            IVActive[4] = c.getResources().getDrawable(R.drawable.iv_star_checked);
+            IVActive[5] = c.getResources().getDrawable(R.drawable.iv_diamond_checked);
+
+            IVInactive[0] = c.getResources().getDrawable(R.drawable.iv_circle_clear);
+            IVInactive[1] = c.getResources().getDrawable(R.drawable.iv_triangle_clear);
+            IVInactive[2] = c.getResources().getDrawable(R.drawable.iv_square_clear);
+            IVInactive[3] = c.getResources().getDrawable(R.drawable.iv_heart_clear);
+            IVInactive[4] = c.getResources().getDrawable(R.drawable.iv_star_clear);
+            IVInactive[5] = c.getResources().getDrawable(R.drawable.iv_diamond_clear);
+        }
+
+        Drawable getGenderDrawable(Gender gender) {
+            if (gender == Gender.MALE) return maleIcon;
+            else if (gender == Gender.FEMALE) return femaleIcon;
+            else return genderlessIcon;
+        }
+
+        Drawable getIVDrawable(int position, boolean active) {
+            if (active)
+                return IVActive[position];
+            else
+                return IVInactive[position];
+        }
+
+
+    }
 
     @Override
-    public PokemonInfo getGoal() {
-        return mListener.getGoal();
+    public void storePokemon(StoredPokemon pokemon) {
+        //TODO: voltar pokemon modificado
+    }
+
+    @Override
+    public StoredPokemon getTemporaryPokemon() {
+        return selectedPokemon;
     }
 }

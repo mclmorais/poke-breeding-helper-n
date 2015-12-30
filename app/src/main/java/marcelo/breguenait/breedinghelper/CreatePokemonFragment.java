@@ -30,7 +30,7 @@ import java.util.HashMap;
 
 //TODO: this fragment should return a StoredPokemon to be added on BreedingManager's list.
 
-public class CreatePokemonPopupFragment extends PopupDialogFragment implements
+public class CreatePokemonFragment extends PopupDialogFragment implements
         SelectPokemonFragment.OnPokemonSelectedListener,
         SelectPokemonFragment.FeedDataSelectPokemon {
 
@@ -44,7 +44,7 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
     //-----------
     private final CheckBox[] checkBoxInputIVs = new CheckBox[6];
     private int genderId = -1;
-    private int selectedPokemonId = 0;
+    //private int selectedPokemonId = 0;
 
     private TextView selectedName;
     private ImageView selectedIcon;
@@ -67,6 +67,8 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
     private FeedDataCreatePokemon feederCallback;
     private UpdateStoredPokemonList updaterCallback;
 
+    private StoredPokemon temporaryPokemon;
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -80,7 +82,7 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
             else
                 mCallback = (OnBuildPokemon) getTargetFragment();
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(getTargetFragment().toString()
                     + " must implement BuildPokemon");
         }
 
@@ -91,7 +93,7 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
             else
                 feederCallback = (FeedDataCreatePokemon) getTargetFragment();
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(getTargetFragment().toString()
                     + " must implement FeedDataCreatePokemon");
         }
 
@@ -102,7 +104,7 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
             else
                 updaterCallback = (UpdateStoredPokemonList) getTargetFragment();
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(getTargetFragment().toString()
                     + " must implement UpdateStoredPokemonList");
         }
 
@@ -112,13 +114,12 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
-
-
         final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.AppTheme);
 
         // clone the inflater using the ContextThemeWrapper
         LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
         View view = localInflater.inflate(R.layout.fragment_add_pokemon_2, container, false);
+
 
         buttonPokemonSelector = view.findViewById(R.id.buttonSelectPokemon);
 
@@ -137,9 +138,7 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
         checkBoxInputIVs[4] = (CheckBox) view.findViewById(R.id.checkBoxInputSDEF);
         checkBoxInputIVs[5] = (CheckBox) view.findViewById(R.id.checkBoxInputSPD);
 
-        ArrayList<String> natureNames = PokemonData.getInstance().getListOfNatures();
         spinnerNature = (Spinner) view.findViewById(R.id.spinnerAddPokemonNature);
-        //      spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, natureNames));
 
         spinnerAbility = (Spinner) view.findViewById(R.id.spinnerAddPokemonAbility);
 
@@ -150,18 +149,25 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
         setGenderDisplay();
         setListeners();
 
-        int receivedId = getArguments().getInt("defaultPokemon", 0);
-        if (receivedId != 0) {
-            updateInterfacePokemon(receivedId);
-            updateInterfaceGender(receivedId);
-            updateAbilities(receivedId);
-        }
+//        int receivedId = getArguments().getInt("defaultPokemon", 0);
+//        if (receivedId != 0) {
+//            updateInterfacePokemon(receivedId);
+//            updateInterfaceGender(receivedId);
+//            updateAbilities(receivedId);
+//        }
+
+
+
+        temporaryPokemon = feederCallback.getTemporaryPokemon();
+        if (temporaryPokemon == null)
+            temporaryPokemon = new StoredPokemon.Builder().createStoredPokemon();
 
         updateNameButton();
 
         setDialogPosition();
 
         initialize();
+        updateInterface();
         return view;
     }
 
@@ -193,11 +199,10 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
                     showToast("Select at least one IV.");
                     return;
                 }
-                if (selectedPokemonId == 0) {
+                if (temporaryPokemon.getPokemonId() <= 0) {
                     showToast("Select a Pokemon.");
                     return;
                 }
-
                 updaterCallback.storePokemon(createPokemon());
                 closeFragment();
             }
@@ -326,12 +331,18 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
 
     @Override
     public void onPokemonSelected(int id) {
-        selectedPokemonId = id;
-        updateAbilities(selectedPokemonId);
-        updateInterfacePokemon(selectedPokemonId);
-        updateInterfaceGender(selectedPokemonId);
-        updateNameButton();
+        temporaryPokemon.setPokemonId(id);
+        updateInterface();
     }
+
+    void updateInterface() {
+        updateAbilities(temporaryPokemon.getPokemonId()); //TODO: fazer pegar o slot de temporaryPokemon e botar o spinner na posiçao certa
+        updateInterfacePokemon(temporaryPokemon.getPokemonId());//TODO: fazer pegar o slot de temporaryPokemon e botar o spinner na posiçao certa
+        updateInterfaceGender(temporaryPokemon.getPokemonId());
+        updateNameButton();
+
+    }
+
 
     void updateAbilities(int id) {
         if (spinnerAbility == null) return;
@@ -356,32 +367,36 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
         }
 
 
-        if (id != 0) {
-
-            String s = PokemonData.getInstance().getFirstAbility(id);
-            int d = PokemonData.getInstance().getFirstAbilityId(id);
-
-            abilityIds.add(d);
-
-            d = PokemonData.getInstance().getSecondAbilityId(id);
-            if (d != -1) {
-                s = PokemonData.getInstance().getSecondAbility(id);
-                abilityIds.add(d);
-            }
-
-            d = PokemonData.getInstance().getHiddenAbilityId(id);
-            if (d != -1) {
-                s = PokemonData.getInstance().getHiddenAbility(id) + " (Hidden)";
-                abilityIds.add(d);
-            }
-        }
+//        if (id != 0) {
+//
+//            String s = PokemonData.getInstance().getFirstAbility(id);
+//            int d = PokemonData.getInstance().getFirstAbilityId(id);
+//
+//            abilityIds.add(d);
+//
+//            d = PokemonData.getInstance().getSecondAbilityId(id);
+//            if (d != -1) {
+//                s = PokemonData.getInstance().getSecondAbility(id);
+//                abilityIds.add(d);
+//            }
+//
+//            d = PokemonData.getInstance().getHiddenAbilityId(id);
+//            if (d != -1) {
+//                s = PokemonData.getInstance().getHiddenAbility(id) + " (Hidden)";
+//                abilityIds.add(d);
+//            }
+//        }
 
         spinnerAbility.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, abilityStrings));
 
     }
 
     void updateInterfaceGender(int pokemonId) {
+        if (temporaryPokemon.getGenderId() <= 0)
+            return;
+
         int genderRate = feederCallback.getGenderRate(pokemonId);
+
 
         if (genderRate == GENDERLESS_ONLY) {
             togglePokemonGender.setBackgroundResource(R.drawable.symbol_genderless);
@@ -404,16 +419,16 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
     }
 
     void updateInterfacePokemon(int id) {
-        selectedPokemonId = id;
-        String text = PokemonData.getInstance().getName(id);
-        selectedName.setText(text);
+        //selectedPokemonId = id;
+//        String text = PokemonData.getInstance().getName(id);
+ //       selectedName.setText(text);
 
         String iconId = "pkmn_big_" + String.format("%03d", id);
         selectedIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
     }
 
     void updateNameButton() {
-        if (selectedPokemonId > 0) {
+        if (temporaryPokemon.getPokemonId() > 0) {
             buttonPokemonSelector.setVisibility(View.INVISIBLE);
             selectedName.setVisibility(View.VISIBLE);
             buttonEdit.setVisibility(View.VISIBLE);
@@ -435,24 +450,25 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
         int natureId = spinnerNature.getSelectedItemPosition() + 1;
 
 
-        return new StoredPokemon.Builder()
-                .setPokemonId(selectedPokemonId)
-                .setIVs(pokemonIVs)
-                .setGenderId(genderId)
-                .setNatureId(natureId)
-                .setAbilitySlot(abilitySlot)
-                .createStoredPokemon();
+        temporaryPokemon.setIVs(pokemonIVs);
+        temporaryPokemon.setNatureId(natureId);
+        temporaryPokemon.setAbilitySlot(abilitySlot);
+
+        return temporaryPokemon;
+
+//        return new StoredPokemon.Builder()
+//                .setPokemonId(selectedPokemonId)
+//                .setIVs(pokemonIVs)
+//                .setGenderId(genderId)
+//                .setNatureId(natureId)
+//                .setAbilitySlot(abilitySlot)
+//                .createStoredPokemon();
 
     }
 
     @Override
     public ArrayList<Integer> getCompatiblePokemonList() {
         return feederCallback.getCompatiblePokemonList();
-    }
-
-    @Deprecated
-    public interface OnBuildPokemon {
-        PokemonInfo getGoal();
     }
 
     @Override
@@ -463,6 +479,11 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
     @Override
     public ArrayList<String> getPokemonNames() {
         return feederCallback.getPokemonNames();
+    }
+
+    @Deprecated
+    public interface OnBuildPokemon {
+        PokemonInfo getGoal();
     }
 
     public interface UpdateStoredPokemonList {
@@ -484,6 +505,8 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
         ArrayList<Integer> getPokemonIds();
 
         ArrayList<String> getPokemonNames();
+
+        StoredPokemon getTemporaryPokemon();
 
     }
 }

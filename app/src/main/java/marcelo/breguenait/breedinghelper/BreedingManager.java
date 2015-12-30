@@ -35,15 +35,6 @@ public class BreedingManager {
         database = MyDatabase.getInstance();
     }
 
-    /**
-     * This method should be called when the user has selected a new Pokemon as a goal.
-     *
-     * @param goalId The ID of the new goal Pokemon.
-     */
-    public void setGoalId(int goalId) {
-        goalPokemon.setPokemonId(goalId);
-    }
-
     public void setGoalGender(int genderId) {
         goalPokemon.setGenderId(genderId);
     }
@@ -64,7 +55,14 @@ public class BreedingManager {
         return goalPokemon.getPokemonId();
     }
 
-
+    /**
+     * This method should be called when the user has selected a new Pokemon as a goal.
+     *
+     * @param goalId The ID of the new goal Pokemon.
+     */
+    public void setGoalId(int goalId) {
+        goalPokemon.setPokemonId(goalId);
+    }
 
     /**
      * This method should be called when loading a list of stored Pokemon from a previous instance.
@@ -215,13 +213,14 @@ public class BreedingManager {
         return storedPokemonList;
     }
 
-    @Deprecated //TODO: nao usar isso!
+    @Deprecated
+        //TODO: nao usar isso!
     StoredPokemon getGoalPokemon() {
         return goalPokemon;
     }
 
     ArrayList<Integer> getCompatiblePokemonList(int pokemonId) {
-        if(goalPokemon.getPokemonId() > 0) //Only returns something if a goal is set
+        if (goalPokemon.getPokemonId() > 0) //Only returns something if a goal is set
             return database.getCompatiblePokemonList(pokemonId);
         else
             return new ArrayList<>(0);
@@ -233,5 +232,9 @@ public class BreedingManager {
 
     ArrayList<Integer> getPokemonIds() {
         return database.getPokemonIds();
+    }
+
+    StoredPokemon getStoredPokemon(int position) {
+        return storedPokemonList.get(position);
     }
 }
