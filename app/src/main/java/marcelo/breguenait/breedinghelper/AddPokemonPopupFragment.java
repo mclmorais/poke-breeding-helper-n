@@ -25,17 +25,16 @@ import android.widget.ToggleButton;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 //TODO: this fragment should return a StoredPokemon to be added on BreedingManager's list.
 
 public class AddPokemonPopupFragment extends PopupDialogFragment implements SelectPokemonFragment.OnPokemonSelectedListener {
 
 
-
-
-    private int pokemonGenderId;
     //-----------
     private final CheckBox[] checkBoxInputIVs = new CheckBox[6];
+    private int pokemonGenderId;
     private int selectedPokemonId = 0;
     private Gender pokemonGender;
 
@@ -55,6 +54,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
     private boolean showOnlyCompatible;
     private Spinner spinnerNature, spinnerAbility;
     private ArrayList<Integer> abilityIds;
+    private ArrayList<Integer> abilitySlots;
 
     private FeedDataCreatePokemon feederCallback;
 
@@ -122,7 +122,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
         ArrayList<String> natureNames = PokemonData.getInstance().getListOfNatures();
         spinnerNature = (Spinner) view.findViewById(R.id.spinnerAddPokemonNature);
-  //      spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, natureNames));
+        //      spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, natureNames));
 
         spinnerAbility = (Spinner) view.findViewById(R.id.spinnerAddPokemonAbility);
 
@@ -231,9 +231,11 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
     void populateNatureSpinner() {
         ArrayList<String> natureNames = feederCallback.getListOfNatures();
-        spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, natureNames));
+        spinnerNature.setAdapter(new ArrayAdapter<>(
+                getActivity().getApplicationContext(),
+                R.layout.spinner_item,
+                natureNames));
     }
-
 
 
 
@@ -346,33 +348,42 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
     void updateAbilities(int id) {
         if (spinnerAbility == null) return;
 
+        HashMap<Integer, String> abilities = feederCallback.getListOfAbilities(id);
         abilityIds = new ArrayList<>();
+        abilitySlots = new ArrayList<>();
 
         ArrayList<String> abilityStrings = new ArrayList<>();
 
-        abilityStrings.add("Unset");
-        abilityIds.add(0);
+        if(abilities.containsKey(1)) {
+            abilityStrings.add(abilities.get(1));
+            abilitySlots.add(1);
+        }
+        if(abilities.containsKey(2)) {
+            abilityStrings.add(abilities.get(2));
+            abilitySlots.add(2);
+        }
+        if(abilities.containsKey(3)) {
+            abilityStrings.add(abilities.get(3) + " (Hidden)");
+            abilitySlots.add(3);
+        }
+
 
         if (id != 0) {
-
 
             String s = PokemonData.getInstance().getFirstAbility(id);
             int d = PokemonData.getInstance().getFirstAbilityId(id);
 
-            abilityStrings.add(s);
             abilityIds.add(d);
 
             d = PokemonData.getInstance().getSecondAbilityId(id);
             if (d != -1) {
                 s = PokemonData.getInstance().getSecondAbility(id);
-                abilityStrings.add(s);
                 abilityIds.add(d);
             }
 
             d = PokemonData.getInstance().getHiddenAbilityId(id);
             if (d != -1) {
                 s = PokemonData.getInstance().getHiddenAbility(id) + " (Hidden)";
-                abilityStrings.add(s);
                 abilityIds.add(d);
             }
         }
@@ -448,7 +459,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
                 .build();
     }
 
-    StoredPokemon buildStoredPokemon() {
+    StoredPokemon createPokemon() {
         int[] pokemonIVs = new int[6];
         for (int i = 0; i < 6; i++)
             pokemonIVs[i] = checkBoxInputIVs[i].isChecked() ? 1 : 0;
@@ -473,6 +484,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
     public interface FeedDataCreatePokemon {
         ArrayList<String> getListOfNatures();
+        HashMap<Integer,String> getListOfAbilities(int pokemonId);
     }
 
 }

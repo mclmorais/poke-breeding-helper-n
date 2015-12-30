@@ -225,8 +225,6 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     }
 
 
-
-
     private void openSelectPokemonFragment(View view) {
         FragmentManager fm = getFragmentManager();
         SelectPokemonFragment selectPokemonFragment = new SelectPokemonFragment();
@@ -298,7 +296,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     private void populateAbilitySpinner(int pokemonId) {
         if (spinnerAbility == null) return;
 
-        HashMap<Integer, String> abilities = feederCallback.getListOfAbilities();
+        HashMap<Integer, String> abilities = feederCallback.getListOfGoalAbilities();
 
         ArrayList<String> abilityStrings = new ArrayList<>();
         abilityIds = new ArrayList<>(); //TODO: remove
@@ -446,7 +444,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
 
     interface FeedDataGoalIVs {
         ArrayList<String> getListOfNatures();
-        HashMap<Integer,String> getListOfAbilities();
+        HashMap<Integer,String> getListOfGoalAbilities();
     }
 
     interface UpdateGoal {

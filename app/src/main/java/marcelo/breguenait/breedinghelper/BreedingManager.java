@@ -195,8 +195,11 @@ public class BreedingManager {
         //return PokemonData.getInstance().getListOfNatures();
     }
 
-    HashMap<Integer, String> getListOfAbilities() {
+    HashMap<Integer, String> getListOfGoalAbilities() {
+        return database.getListOfAbilities(goalPokemon.getPokemonId() > 0 ? goalPokemon.getPokemonId() : 1, 9); //TODO: TEMPORARIO - qd nao tem defaulta pro bulbasauro, fazer lidar com não ter depois
+    }
 
-        return database.getListOfAbilities(goalPokemon.getPokemonId() > 0 ? goalPokemon.getPokemonId():1, 9); //TODO: TEMPORARIO - qd nao tem defaulta pro bulbasauro, fazer lidar com não ter depois
+    HashMap<Integer, String> getListOfAbilities(int pokemonId) {
+        return database.getListOfAbilities(pokemonId, 9);
     }
 }

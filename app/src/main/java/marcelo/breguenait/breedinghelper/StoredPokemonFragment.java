@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -209,11 +210,17 @@ AddPokemonPopupFragment.FeedDataCreatePokemon{
 
     interface FeedDataStoredPokemon {
         ArrayList<String> getListOfNatures();
+        HashMap<Integer,String> getListOfAbilities(int pokemonId);
     }
 
 
     @Override
     public ArrayList<String> getListOfNatures() {
         return feederCallback.getListOfNatures();
+    }
+
+    @Override
+    public HashMap<Integer, String> getListOfAbilities(int pokemonId) {
+        return feederCallback.getListOfAbilities(pokemonId);
     }
 }

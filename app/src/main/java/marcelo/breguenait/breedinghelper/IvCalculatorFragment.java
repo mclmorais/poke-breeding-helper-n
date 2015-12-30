@@ -588,8 +588,8 @@ public class IvCalculatorFragment extends Fragment
     }
 
     @Override
-    public HashMap<Integer, String> getListOfAbilities() {
-        return breedingManager.getListOfAbilities();
+    public HashMap<Integer, String> getListOfGoalAbilities() {
+        return breedingManager.getListOfGoalAbilities();
     }
 
 
@@ -611,5 +611,11 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public void updateGoalIVs(int[] IVs) {
         breedingManager.setGoalIVs(IVs);
+    }
+
+
+    @Override
+    public HashMap<Integer, String> getListOfAbilities(int pokemonId) {
+        return breedingManager.getListOfAbilities(pokemonId);
     }
 }
