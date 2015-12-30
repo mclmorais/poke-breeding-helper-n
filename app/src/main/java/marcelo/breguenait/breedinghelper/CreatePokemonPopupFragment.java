@@ -455,6 +455,16 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
         PokemonInfo getGoal();
     }
 
+    @Override
+    public ArrayList<Integer> getPokemonIds() {
+        return feederCallback.getPokemonIds();
+    }
+
+    @Override
+    public ArrayList<String> getPokemonNames() {
+        return feederCallback.getPokemonNames();
+    }
+
     public interface UpdateStoredPokemonList {
         void storePokemon(StoredPokemon pokemon);
     }
@@ -470,6 +480,10 @@ public class CreatePokemonPopupFragment extends PopupDialogFragment implements
         StoredPokemon getGoalPokemon();
 
         ArrayList<Integer> getCompatiblePokemonList();
+
+        ArrayList<Integer> getPokemonIds();
+
+        ArrayList<String> getPokemonNames();
 
     }
 }

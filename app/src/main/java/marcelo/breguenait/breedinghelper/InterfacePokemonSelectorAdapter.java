@@ -14,18 +14,27 @@ import java.util.ArrayList;
 
 public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filterable {
 
-    private final ArrayList<PokemonDataBlock> pokemonList;
+
     private final LayoutInflater inflater;
-    private ArrayList<PokemonDataBlock> filteredPokemonList;
-    private StoredPokemon goalPokemon;
+
+
     private boolean showOnlyCompatible = false;
     private boolean showOnlyBasic = false;
     private ArrayList<Integer> compatiblePokemonList;
 
-    InterfacePokemonSelectorAdapter(Context mContext) {
-        this.pokemonList = PokemonData.getInstance().getOrderedData();
-        this.filteredPokemonList = this.pokemonList;
+    private ArrayList<Integer> pokemonIds;
+    private ArrayList<String> pokemonNames;
+
+    private ArrayList<Integer> filteredPokemonIds;
+
+    InterfacePokemonSelectorAdapter(Context mContext, ArrayList<Integer> pokemonIds, ArrayList<String> pokemonNames) {
+
         compatiblePokemonList = new ArrayList<>();
+
+        this.pokemonIds = pokemonIds;
+        this.filteredPokemonIds = pokemonIds; //TODO: ver se precisa mesmo
+        this.pokemonNames = pokemonNames;
+
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -37,14 +46,6 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
         showOnlyBasic = b;
     }
 
-    @Deprecated
-    public void setGoal(StoredPokemon hatchInfo) {
-        goalPokemon = hatchInfo;
-//        goalEggGroup1 = hatchInfo.eggGroup1;
-//        goalEggGroup2 = hatchInfo.eggGroup2;
-//        goalGenderRestriction = PokemonData.getInstance().getGenderRestriction(hatchInfo.id);
-
-    }
 
     public void setCompatiblePokemonList(ArrayList<Integer> compatiblePokemonList) {
         this.compatiblePokemonList = compatiblePokemonList;
@@ -52,12 +53,12 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
 
     @Override
     public int getCount() {
-        return filteredPokemonList.size();
+        return filteredPokemonIds.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return filteredPokemonList.get(position);
+        return filteredPokemonIds.get(position);
     }
 
     @Override
@@ -82,9 +83,11 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
         } else {
             holder = (LayoutHolder) convertView.getTag();
         }
-        holder.id.setText(String.format("%03d", filteredPokemonList.get(position).id));
-        holder.icon.setBackground(filteredPokemonList.get(position).drawable);
-        //holder.icon.setBackground(PokemonData.getInstance().getDrawableFromId(filteredPokemonList.get(position).id)); //TODO: do something like this instead
+
+        int pokemonId = filteredPokemonIds.get(position);
+
+        holder.id.setText(String.format("%03d", pokemonId));
+        holder.icon.setBackground(CachedPokemonIcons.getInstance().getIcon(pokemonId)); //TODO HMMMMMM
 
         return pokemonDynamicLayout;
 
@@ -93,12 +96,11 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
     @Override
     public Filter getFilter() {
         return new Filter() {
-//FILTERED POKEMON NAMES DOESNT HAVE NAMES!!!!
             @SuppressWarnings("unchecked")
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                filteredPokemonList = (ArrayList<PokemonDataBlock>) results.values;
-                if (filteredPokemonList == null) filteredPokemonList = new ArrayList<>();
+                filteredPokemonIds = (ArrayList<Integer>) results.values;
+                if (filteredPokemonIds == null) filteredPokemonIds = new ArrayList<>();
                 notifyDataSetChanged();
             }
 
@@ -106,82 +108,52 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
             protected FilterResults performFiltering(CharSequence constraint) {
 
                 FilterResults results = new FilterResults();
-                ArrayList<PokemonDataBlock> FilteredArrayNames = new ArrayList<>();
+                ArrayList<Integer> FilteredArray = new ArrayList<>();
 
                 constraint = constraint.toString().toLowerCase();
 
-                for (int i = 0; i < pokemonList.size(); i++) {
+                for (int i = 0; i < pokemonIds.size(); i++) {
 
-                    PokemonDataBlock currentPokemonData = pokemonList.get(i);
-//TODO: instead of getting goal, just gets list of compatible poceymans
-                    //TODO: get the goal -> get ids compatible with goal -> filter ids that arent
-                    if (currentPokemonData.id == 0) continue;
+                    int currentId = pokemonIds.get(i);
+
+                    if (currentId <= 0) continue; //TODO: ver se precisa tambem
 
                     /*If only compatible pokemons should be shown, ignores pokemons that don't have
                     * at least one egg group compatible with the current goal pokemon.*/
                     if (showOnlyCompatible) {
-
-
-                        if(!compatiblePokemonList.contains(currentPokemonData.id))
+                        if (!compatiblePokemonList.contains(currentId))
                             continue;
-
-//                        boolean group1Compatible = false, group2Compatible = false;
-//                        EggGroup eggGroup1 = currentPokemonData.eggGroup1;
-//                        EggGroup eggGroup2 = currentPokemonData.eggGroup2;
-//
-//                        if (eggGroup1 == EggGroup.DITTO) {
-//                            group1Compatible = true;
-//                        } else if (eggGroup1 == goalPokemon.eggGroup1 || eggGroup1 == goalPokemon.eggGroup2) {
-//                            group1Compatible = true;
-//                        }
-//
-//                        if (eggGroup2 != EggGroup.NONE) {
-//                            if (eggGroup2 == goalPokemon.eggGroup1 || eggGroup2 == goalPokemon.eggGroup2) {
-//                                group2Compatible = true;
-//                            }
-//                        }
-//
-//                        if (!group1Compatible && !group2Compatible) continue;
-//
-//                        //-------
-//
-//                        if (PokemonData.getInstance().getGenderRestriction(goalPokemon.id) == GenderRestriction.GENDERLESS) {
-//                            if (currentPokemonData.breeds != PokemonData.getInstance().getBasicPokemon(goalPokemon.id)) {
-//                                if (currentPokemonData.eggGroup1 != EggGroup.DITTO)
-//                                    continue;
-//                            }
-//                        }
                     }
 
-                    if (showOnlyBasic) {
-                        int id = currentPokemonData.id;
-                        int breeds = currentPokemonData.breeds;
+//                    if (showOnlyBasic) { //TODO: REDO IT ALL, DISABLED BY NOW
+//                        int id = currentPokemonData.id;
+//                        int breeds = currentPokemonData.breeds;
+//
+//                        if (id == Constants.DITTO_ID)
+//                            continue;
+//
+//                        if (id != breeds) {
+//                            if (id != 32 && id != 314) //Excludes nidoranM and Illumise because they're special cases
+//                                continue;
+//                        }
+//
+//
+//                    }
 
-                        if (id == Constants.DITTO_ID)
-                            continue;
 
-                        if (id != breeds) {
-                            if (id != 32 && id != 314) //Excludes nidoranM and Illumise because they're special cases
-                                continue;
-                        }
+                    String nameToBeCompared = pokemonNames.get(i);
 
-
-                    }
-
-
-                    String dataNames = currentPokemonData.name;
-                    if (dataNames.toLowerCase().startsWith(constraint.toString())) {
+                    //IF CONSTRAINT IS EMPTY, ADDS ALL
+                    if (nameToBeCompared.toLowerCase().startsWith(constraint.toString())) {
 //                        if (showOnlyCompatible && currentPokemonData.breeds == PokemonData.getInstance().getBasicPokemon(goalPokemon.getPokemonId()))
-//                            FilteredArrayNames.add(0, currentPokemonData); //TODO: isso eh oq faz colocar na frente, fazer do jeito novo depois
+//                            FilteredArray.add(0, currentPokemonData); //TODO: isso eh oq faz colocar na frente, fazer do jeito novo depois
 //                        else
-                            FilteredArrayNames.add(currentPokemonData);
+                        FilteredArray.add(currentId);
                     }
-
                 }
 
-
-                results.count = FilteredArrayNames.size();
-                results.values = FilteredArrayNames;
+                results.count = FilteredArray.size();
+                results.values = FilteredArray;
 
                 return results;
             }

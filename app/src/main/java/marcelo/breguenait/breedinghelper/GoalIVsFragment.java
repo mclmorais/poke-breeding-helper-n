@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 // (put it always on the same slot or on the first if it doesn't have the previous slot)
 
 public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.OnPokemonSelectedListener,
-SelectPokemonFragment.FeedDataSelectPokemon{
+        SelectPokemonFragment.FeedDataSelectPokemon {
 
     @Bind({R.id.checkBoxGoalHP,
             R.id.checkBoxGoalATK,
@@ -53,7 +53,7 @@ SelectPokemonFragment.FeedDataSelectPokemon{
     TextView selectedName;
     private OnGoalUpdate mCallback;
     private FeedDataGoalIVs feederCallback;
-    private UpdateGoal      updaterCallback;
+    private UpdateGoal updaterCallback;
     private ArrayList<Integer> abilitySlots;
     private ArrayList<Integer> abilityIds;
 
@@ -200,7 +200,7 @@ SelectPokemonFragment.FeedDataSelectPokemon{
 
     private void onInterfaceGoalNatureChanged() {
 
-        int natureId = spinnerNature.getSelectedItemPosition()+1;
+        int natureId = spinnerNature.getSelectedItemPosition() + 1;
 
         updaterCallback.updateGoalNature(natureId);
     }
@@ -303,19 +303,18 @@ SelectPokemonFragment.FeedDataSelectPokemon{
         abilityIds = new ArrayList<>(); //TODO: remove
         abilitySlots = new ArrayList<>();
 
-        if(abilities.containsKey(1)) {
+        if (abilities.containsKey(1)) {
             abilityStrings.add(abilities.get(1));
             abilitySlots.add(1);
         }
-        if(abilities.containsKey(2)) {
+        if (abilities.containsKey(2)) {
             abilityStrings.add(abilities.get(2));
             abilitySlots.add(2);
         }
-        if(abilities.containsKey(3)) {
+        if (abilities.containsKey(3)) {
             abilityStrings.add(abilities.get(3) + " (Hidden)");
             abilitySlots.add(3);
         }
-
 
 
         //XXXX TO BE REMOVED
@@ -425,6 +424,22 @@ SelectPokemonFragment.FeedDataSelectPokemon{
         return b;
     }
 
+    @Override
+    public ArrayList<Integer> getCompatiblePokemonList() {
+        return new ArrayList<>(0);
+    }
+
+    @Override
+    public ArrayList<Integer> getPokemonIds() {
+        return feederCallback.getPokemonIds();
+    }
+
+    @Override
+    public ArrayList<String> getPokemonNames() {
+        return feederCallback.getPokemonNames();
+    }
+
+
     interface OnGoalUpdate {
         void updateGoal(PokemonInfo p);
 
@@ -441,19 +456,21 @@ SelectPokemonFragment.FeedDataSelectPokemon{
 
     interface FeedDataGoalIVs {
         ArrayList<String> getListOfNatures();
-        HashMap<Integer,String> getListOfGoalAbilities();
+
+        HashMap<Integer, String> getListOfGoalAbilities();
+
+        ArrayList<Integer> getPokemonIds();
+
+        ArrayList<String> getPokemonNames();
     }
 
     interface UpdateGoal {
         void updateGoalId(int id);
+
         void updateGoalNature(int natureId);
+
         void updateGoalAbilitySlot(int abilitySlot);
+
         void updateGoalIVs(int[] IVs);
-    }
-
-
-    @Override
-    public ArrayList<Integer> getCompatiblePokemonList() {
-        return new ArrayList<>(0);
     }
 }

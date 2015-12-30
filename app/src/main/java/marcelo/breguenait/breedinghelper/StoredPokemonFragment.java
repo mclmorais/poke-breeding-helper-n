@@ -233,6 +233,16 @@ public class StoredPokemonFragment extends Fragment implements
         return feederCallback.getCompatiblePokemonList();
     }
 
+    @Override
+    public ArrayList<Integer> getPokemonIds() {
+        return feederCallback.getPokemonIds();
+    }
+
+    @Override
+    public ArrayList<String> getPokemonNames() {
+        return feederCallback.getPokemonNames();
+    }
+
     interface OnPokemonListChanged {
         void addPokemonToList(PokemonInfo pokemon);
 
@@ -259,6 +269,10 @@ public class StoredPokemonFragment extends Fragment implements
         StoredPokemon getGoalPokemon();
 
         ArrayList<Integer> getCompatiblePokemonList();
+
+        ArrayList<Integer> getPokemonIds();
+
+        ArrayList<String> getPokemonNames();
     }
 
     interface UpdateStoredPokemonList {

@@ -12,6 +12,8 @@ public class BreedingManager {
 
     MyDatabase database;
 
+    int languageId = 9;//TODO: Fazer virar user selectable
+
 
     IvChanceCalculator ivChanceCalculator;
     NatureChanceCalculator natureChanceCalculator;
@@ -193,7 +195,7 @@ public class BreedingManager {
     }
 
     ArrayList<String> getListOfNatures() {
-        return database.getListOfNatures(9); //TODO: Fazer 9 virar user selectable
+        return database.getListOfNatures(languageId);
         //return PokemonData.getInstance().getListOfNatures();
     }
 
@@ -223,5 +225,13 @@ public class BreedingManager {
             return database.getCompatiblePokemonList(pokemonId);
         else
             return new ArrayList<>(0);
+    }
+
+    ArrayList<String> getPokemonNames() {
+        return database.getPokemonNames(languageId);
+    }
+
+    ArrayList<Integer> getPokemonIds() {
+        return database.getPokemonIds();
     }
 }

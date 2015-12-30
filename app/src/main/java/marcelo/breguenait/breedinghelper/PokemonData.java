@@ -504,6 +504,7 @@ class PokemonApiJsonDeserializer implements  JsonDeserializer<SparseArray<Pokemo
     }
 }
 
+@Deprecated
 class PokemonDataBlock {
     final String name;
     final EggGroup eggGroup1;

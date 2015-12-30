@@ -46,15 +46,15 @@ public class SelectPokemonCardFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_card_select_pokemon, container, false);
         ButterKnife.bind(this,v);
 
-        InterfacePokemonSelectorAdapter interfaceSelectorAdapter = new InterfacePokemonSelectorAdapter(getActivity().getApplicationContext());
+//        InterfacePokemonSelectorAdapter interfaceSelectorAdapter = new InterfacePokemonSelectorAdapter(getActivity().getApplicationContext());
 
-        testeGridView.setAdapter(interfaceSelectorAdapter);
-        testeGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mCallback.closeSelectPokemonFragment();
-            }
-        });
+    //    testeGridView.setAdapter(interfaceSelectorAdapter);
+//        testeGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                mCallback.closeSelectPokemonFragment();
+//            }
+//        });
         return v;
     }
 

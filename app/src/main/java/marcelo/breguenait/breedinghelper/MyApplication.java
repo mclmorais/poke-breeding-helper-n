@@ -12,5 +12,6 @@ public class MyApplication extends Application {
         super.onCreate();
         PokemonData.initialize(getApplicationContext());
         MyDatabase.initialize(getApplicationContext());
+        CachedPokemonIcons.initialize(getApplicationContext());
     }
 }

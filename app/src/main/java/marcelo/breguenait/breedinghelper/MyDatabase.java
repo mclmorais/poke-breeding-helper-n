@@ -482,8 +482,57 @@ public class MyDatabase extends SQLiteAssetHelper {
         cursorCompatible.close();
         return compatiblePokemonList;
 
+    }
 
+
+    ArrayList<Integer> getPokemonIds() {
+
+        String s = "SELECT id FROM pokemon_species ORDER BY id ASC";
+
+        Cursor cursorIds = database.rawQuery(s, null);
+        cursorIds.moveToFirst();
+
+        ArrayList<Integer> ids = new ArrayList<>(cursorIds.getCount());
+
+
+        while (!cursorIds.isAfterLast()) {
+
+            ids.add(cursorIds.getInt(0));
+
+            cursorIds.moveToNext();
+        }
+
+        cursorIds.close();
+
+        return ids;
 
     }
+
+    ArrayList<String> getPokemonNames(int languageId) {
+
+        String s = "SELECT " +
+                "name " +
+                "FROM " +
+                "pokemon_species_names " +
+                "WHERE " +
+                "local_language_id=" +
+                Integer.toString(languageId);
+
+        Cursor cursorIds = database.rawQuery(s, null);
+        cursorIds.moveToFirst();
+
+        ArrayList<String> names = new ArrayList<>(cursorIds.getCount());
+
+        while (!cursorIds.isAfterLast()) {
+
+            names.add(cursorIds.getString(0));
+
+            cursorIds.moveToNext();
+        }
+
+        return names;
+
+    }
+
 
 }
