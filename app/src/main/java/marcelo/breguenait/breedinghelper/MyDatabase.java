@@ -425,4 +425,65 @@ public class MyDatabase extends SQLiteAssetHelper {
         return genderRate;
     }
 
+    public ArrayList<Integer> getCompatiblePokemonList(int pokemonId) {
+
+        int genderRate = getGenderRate(pokemonId);
+
+        String s;
+        if(genderRate == -1) {
+            //Family and ditto
+            s = "SELECT " +
+                    "id " +
+                    "FROM " +
+                    "pokemon_species " +
+                    "WHERE " +
+                    "evolution_chain_id " +
+                    "IN(" +
+                    "SELECT " +
+                    "evolution_chain_id " +
+                    "FROM " +
+                    "pokemon_species " +
+                    "WHERE " +
+                    "id=" +
+                    Integer.toString(pokemonId) +
+                    ") OR " +
+                    "evolution_chain_id=66"; //Ditto
+        }
+        else {
+            //EggGroup and ditto
+            s = "SELECT DISTINCT " +
+                    "species_id " +
+                    "FROM " +
+                    "pokemon_egg_groups " +
+                    "WHERE " +
+                    "egg_group_id " +
+                    "in(" +
+                    "SELECT " +
+                    "egg_group_id " +
+                    "FROM " +
+                    "pokemon_egg_groups " +
+                    "WHERE " +
+                    "species_id=" +
+                    Integer.toString(pokemonId) +
+                    ") OR " +
+                    "egg_group_id=13"; //Ditto
+
+        }
+
+        Cursor cursorCompatible = database.rawQuery(s, null);
+        cursorCompatible.moveToFirst();
+
+        ArrayList<Integer> compatiblePokemonList = new ArrayList<>(cursorCompatible.getCount());
+
+        while(!cursorCompatible.isAfterLast()) {
+            compatiblePokemonList.add(cursorCompatible.getInt(0));
+            cursorCompatible.moveToNext();
+        }
+        cursorCompatible.close();
+        return compatiblePokemonList;
+
+
+
+    }
+
 }

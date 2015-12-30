@@ -22,6 +22,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
 
+import java.util.ArrayList;
+
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
@@ -34,7 +36,8 @@ public class SelectPokemonFragment extends PopupDialogFragment {
     private InterfacePokemonSelectorAdapter interfaceSelectorAdapter;
     private CheckBox checkBoxCompatible;
     private Button buttonCancel;
-    private PokemonInfo goalPokemon;
+
+    private FeedDataSelectPokemon feederCallback;
 
     @Override
     public void onAttach(Activity activity) {
@@ -51,6 +54,18 @@ public class SelectPokemonFragment extends PopupDialogFragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnPokemonSelectedListener");
+        }
+
+        try {
+
+            Fragment targetFragment = getTargetFragment();
+            if (targetFragment == null)
+                feederCallback = (FeedDataSelectPokemon) activity;
+            else
+                feederCallback = (FeedDataSelectPokemon) getTargetFragment();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getTargetFragment().toString()
+                    + " must implement FeedDataSelectPokemon");
         }
 
     }
@@ -72,11 +87,14 @@ public class SelectPokemonFragment extends PopupDialogFragment {
 
         interfaceSelectorAdapter = new InterfacePokemonSelectorAdapter(getActivity().getApplicationContext());
 
-        goalPokemon = mCallback.getGoal();
+//        //XXXX
+//        goalPokemon = mCallback.getGoal();
+//
+//        //XXXX
+//        if (goalPokemon != null)
+//            interfaceSelectorAdapter.setGoal(mCallback.getGoal());
 
-
-        if (goalPokemon != null)
-            interfaceSelectorAdapter.setGoal(mCallback.getGoal());
+            interfaceSelectorAdapter.setCompatiblePokemonList(feederCallback.getCompatiblePokemonList());
 
         gridViewSelector = (GridView) view.findViewById(R.id.gridViewSelectPokemon);
         gridViewSelector.setAdapter(interfaceSelectorAdapter);
@@ -111,11 +129,11 @@ public class SelectPokemonFragment extends PopupDialogFragment {
 
 
         if (getArguments().getBoolean("showOnlyCompatible", false)) {
-            if (goalPokemon != null) {
+          //  if (goalPokemon != null) {
                 checkBoxCompatible.setChecked(true);
                 checkBoxCompatible.setEnabled(false);
                 interfaceSelectorAdapter.showOnlyCompatible(true);
-            }
+         //   }
         }
 
         if (mCallback.showOnlyBasic()) {
@@ -127,10 +145,10 @@ public class SelectPokemonFragment extends PopupDialogFragment {
         checkBoxCompatible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (goalPokemon != null) {
+            //    if (goalPokemon != null) {
                     interfaceSelectorAdapter.showOnlyCompatible(b);
                     interfaceSelectorAdapter.getFilter().filter(editTextFilter.getText());
-                }
+            //    }
             }
         });
 
@@ -213,7 +231,12 @@ public class SelectPokemonFragment extends PopupDialogFragment {
 
         boolean showOnlyBasic();
 
-        PokemonInfo getGoal();
+    }
+
+    public interface FeedDataSelectPokemon {
+
+        ArrayList<Integer> getCompatiblePokemonList();
+
     }
 
 }

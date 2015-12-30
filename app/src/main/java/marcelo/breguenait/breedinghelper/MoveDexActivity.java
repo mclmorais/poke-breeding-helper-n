@@ -212,10 +212,6 @@ public class MoveDexActivity extends Fragment implements SelectPokemonFragment.O
         return false;
     }
 
-    @Override
-    public PokemonInfo getGoal() {
-        return null;
-    }
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {

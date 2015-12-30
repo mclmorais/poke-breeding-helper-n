@@ -18,7 +18,6 @@ import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 //TODO: Fazer o adapter pegar os novos poceymans ao invés dos velhos
 
@@ -26,10 +25,10 @@ import java.util.List;
  * Created by Marcelo on 21/12/2014.
  */
 public class StoredPokemonFragment extends Fragment implements
-        AddPokemonPopupFragment.OnBuildPokemon,
+        CreatePokemonPopupFragment.OnBuildPokemon,
         StoredPokemonPopupFragment.OnPokemonPopupListener,
-        AddPokemonPopupFragment.FeedDataCreatePokemon,
-        AddPokemonPopupFragment.UpdateStoredPokemonList {
+        CreatePokemonPopupFragment.FeedDataCreatePokemon,
+        CreatePokemonPopupFragment.UpdateStoredPokemonList {
 
     private OnPokemonListChanged mCallback;
     private StoredPokemonAdapter storedPokemonAdapter;
@@ -146,7 +145,7 @@ public class StoredPokemonFragment extends Fragment implements
 
     void openAddPokemonFragment(View callerView) {
         FragmentManager fm = getFragmentManager();
-        AddPokemonPopupFragment fragment = new AddPokemonPopupFragment();
+        CreatePokemonPopupFragment fragment = new CreatePokemonPopupFragment();
         Bundle b = addPositionAsArguments(callerView);
         b.putInt("defaultPokemon", lastAddedPokemonId);
         fragment.setArguments(b);
@@ -180,12 +179,6 @@ public class StoredPokemonFragment extends Fragment implements
         super.onStart();
         setHatchAdapter(feederCallback.getStoredPokemonList(), getContext());
         updateGridView();
-    }
-
-    @Override
-    public void onBuildPokemon(PokemonInfo pokemon) {
-        lastAddedPokemonId = pokemon.id;
-        mCallback.addPokemonToList(pokemon);
     }
 
     Bundle addPositionAsArguments(View v) {
@@ -224,6 +217,22 @@ public class StoredPokemonFragment extends Fragment implements
         return feederCallback.getGenderRate(pokemonId);
     }
 
+    @Override
+    public void storePokemon(StoredPokemon pokemon) {
+        lastAddedPokemonId = pokemon.getPokemonId();
+        updaterCallback.storePokemon(pokemon);
+    }
+
+    @Override
+    public StoredPokemon getGoalPokemon() {
+        return feederCallback.getGoalPokemon();
+    }
+
+    @Override
+    public ArrayList<Integer> getCompatiblePokemonList() {
+        return feederCallback.getCompatiblePokemonList();
+    }
+
     interface OnPokemonListChanged {
         void addPokemonToList(PokemonInfo pokemon);
 
@@ -246,14 +255,13 @@ public class StoredPokemonFragment extends Fragment implements
         ArrayList<StoredPokemon> getStoredPokemonList();
 
         int getGenderRate(int pokemonId);
+
+        StoredPokemon getGoalPokemon();
+
+        ArrayList<Integer> getCompatiblePokemonList();
     }
 
     interface UpdateStoredPokemonList {
         void storePokemon(StoredPokemon pokemon);
-    }
-
-    @Override
-    public void storePokemon(StoredPokemon pokemon) {
-        updaterCallback.storePokemon(pokemon);
     }
 }

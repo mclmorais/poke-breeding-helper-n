@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Use the {@link StoredPokemonPopupFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class StoredPokemonPopupFragment extends PopupDialogFragment implements AddPokemonPopupFragment.OnBuildPokemon{
+public class StoredPokemonPopupFragment extends PopupDialogFragment implements CreatePokemonPopupFragment.OnBuildPokemon{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_POS_X = "x";
     private static final String ARG_POS_Y = "y";
@@ -324,11 +324,10 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
 
     void openAddPokemonFragment(View callerView){
         FragmentManager fm = getFragmentManager();
-        AddPokemonPopupFragment fragment = new AddPokemonPopupFragment();
+        CreatePokemonPopupFragment fragment = new CreatePokemonPopupFragment();
         Bundle b = addPositionAsArguments(callerView);
-        fragment.setSelectedPokemon(selectedPokemon);
         fragment.setArguments(b);
-        fragment.setTargetFragment(this,0);
+        fragment.setTargetFragment(this, 0);
         fragment.show(fm, "");
     }
 
@@ -337,7 +336,7 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
         v.getLocationOnScreen(callerViewPosition);
         Bundle b = new Bundle();
         b.putInt("x",callerViewPosition[0]);
-        b.putInt("y",callerViewPosition[1]);
+        b.putInt("y", callerViewPosition[1]);
         return b;
     }
 
@@ -356,13 +355,6 @@ public class StoredPokemonPopupFragment extends PopupDialogFragment implements A
         PokemonInfo getGoal();
     }
 
-
-    @Override
-    public void onBuildPokemon(PokemonInfo pokemon) {
-        mListener.onPokemonAltered(pokemon,pokemonPos);
-        selectedPokemon = pokemon;
-        updateInterface();
-    }
 
     @Override
     public PokemonInfo getGoal() {

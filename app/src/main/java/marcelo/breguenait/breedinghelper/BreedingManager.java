@@ -1,7 +1,5 @@
 package marcelo.breguenait.breedinghelper;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -58,6 +56,10 @@ public class BreedingManager {
 
     public void setGoalAbilitySlot(int abilitySlot) {
         goalPokemon.setAbilitySlot(abilitySlot);
+    }
+
+    public int getGoalId() {
+        return goalPokemon.getPokemonId();
     }
 
 
@@ -209,5 +211,17 @@ public class BreedingManager {
 
     ArrayList<StoredPokemon> getStoredPokemonList() {
         return storedPokemonList;
+    }
+
+    @Deprecated //TODO: nao usar isso!
+    StoredPokemon getGoalPokemon() {
+        return goalPokemon;
+    }
+
+    ArrayList<Integer> getCompatiblePokemonList(int pokemonId) {
+        if(goalPokemon.getPokemonId() > 0) //Only returns something if a goal is set
+            return database.getCompatiblePokemonList(pokemonId);
+        else
+            return new ArrayList<>(0);
     }
 }

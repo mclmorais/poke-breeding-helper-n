@@ -30,7 +30,9 @@ import java.util.HashMap;
 
 //TODO: this fragment should return a StoredPokemon to be added on BreedingManager's list.
 
-public class AddPokemonPopupFragment extends PopupDialogFragment implements SelectPokemonFragment.OnPokemonSelectedListener {
+public class CreatePokemonPopupFragment extends PopupDialogFragment implements
+        SelectPokemonFragment.OnPokemonSelectedListener,
+        SelectPokemonFragment.FeedDataSelectPokemon {
 
     public static int FEMALE = 1;
     public static int MALE = 2;
@@ -42,11 +44,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
     //-----------
     private final CheckBox[] checkBoxInputIVs = new CheckBox[6];
     private int genderId = -1;
-    private int pokemonGenderId;
     private int selectedPokemonId = 0;
-    private Gender pokemonGender;
-
-    private PokemonInfo selectedPokemon;
 
     private TextView selectedName;
     private ImageView selectedIcon;
@@ -58,6 +56,8 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
     private FloatingActionButton buttonEdit;
     private View buttonPokemonSelector;
+
+    @Deprecated
     private OnBuildPokemon mCallback;
     private boolean showOnlyCompatible;
     private Spinner spinnerNature, spinnerAbility;
@@ -67,10 +67,6 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
     private FeedDataCreatePokemon feederCallback;
     private UpdateStoredPokemonList updaterCallback;
 
-
-    public void setSelectedPokemon(PokemonInfo selectedPokemon) {
-        this.selectedPokemon = selectedPokemon;
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -158,40 +154,8 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         if (receivedId != 0) {
             updateInterfacePokemon(receivedId);
             updateInterfaceGender(receivedId);
-            updatePokemonGender(receivedId);
             updateAbilities(receivedId);
         }
-
-        if (selectedPokemon != null) {
-            updateInterfacePokemon(selectedPokemon.id);
-            updatePokemonGender(selectedPokemon.id);
-            for (int i = 0; i < 6; i++) {
-                checkBoxInputIVs[i].setChecked(selectedPokemon.IVs[i] == 1);
-            }
-            if (selectedPokemon.gender != Gender.GENDERLESS)
-                togglePokemonGender.setChecked(selectedPokemon.gender == Gender.MALE);
-
-            Nature nature = selectedPokemon.nature;
-            if (nature == null) nature = Nature.UNSET;
-            spinnerNature.setSelection(getIndex(spinnerNature, PokemonData.getInstance().getNatureName(nature.ordinal())));
-
-            updateAbilities(selectedPokemonId);
-            int ability = selectedPokemon.ability;
-
-            String textAbility;
-
-            if (selectedPokemon.ability == PokemonData.getInstance().getFirstAbilityId(selectedPokemon.id))
-                textAbility = (PokemonData.getInstance().getFirstAbility(selectedPokemon.id));
-            else if (selectedPokemon.ability == PokemonData.getInstance().getSecondAbilityId(selectedPokemon.id))
-                textAbility = (PokemonData.getInstance().getSecondAbility(selectedPokemon.id));
-            else if (selectedPokemon.ability == PokemonData.getInstance().getHiddenAbilityId(selectedPokemon.id))
-                textAbility = (PokemonData.getInstance().getHiddenAbility(selectedPokemon.id)) + " (Hidden)";
-            else
-                textAbility = ("Unset");
-
-            spinnerAbility.setSelection(getIndex(spinnerAbility, textAbility));
-        }
-
 
         updateNameButton();
 
@@ -234,7 +198,6 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
                     return;
                 }
 
-                mCallback.onBuildPokemon(buildPokemon());
                 updaterCallback.storePokemon(createPokemon());
                 closeFragment();
             }
@@ -348,10 +311,6 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         return false;
     }
 
-    @Override
-    public PokemonInfo getGoal() {
-        return mCallback.getGoal();
-    }
 
     private int getIndex(Spinner spinner, String myString) {
 
@@ -370,7 +329,6 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         selectedPokemonId = id;
         updateAbilities(selectedPokemonId);
         updateInterfacePokemon(selectedPokemonId);
-        updatePokemonGender(selectedPokemonId);
         updateInterfaceGender(selectedPokemonId);
         updateNameButton();
     }
@@ -445,35 +403,6 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         togglePokemonGender.invalidate();
     }
 
-    @Deprecated
-    void updatePokemonGender(int id) {
-        if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.NONE) {
-//            if (!togglePokemonGender.isClickable()) {
-//                togglePokemonGender.setBackgroundResource(R.drawable.ic_toggle_gender_selector);
-//                togglePokemonGender.setClickable(true);
-//            }
-            pokemonGender = togglePokemonGender.isChecked() ? Gender.MALE : Gender.FEMALE;
-        } else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.GENDERLESS) {
-//            togglePokemonGender.setBackgroundResource(R.drawable.symbol_genderless);
-//            togglePokemonGender.setClickable(false);
-            pokemonGender = Gender.GENDERLESS;
-        } else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.DITTO) {
-//            togglePokemonGender.setBackgroundResource(R.drawable.symbol_genderless);
-//            togglePokemonGender.setClickable(false);
-            pokemonGender = Gender.DITTO;
-        } else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.MALE_ONLY) {
-//            togglePokemonGender.setBackgroundResource(R.drawable.symbol_male);
-//            togglePokemonGender.setClickable(false);
-            pokemonGender = Gender.MALE;
-        } else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.FEMALE_ONLY) {
-//            togglePokemonGender.setBackgroundResource(R.drawable.symbol_female);
-//            togglePokemonGender.setClickable(false);
-            pokemonGender = Gender.FEMALE;
-        }
-
-        togglePokemonGender.invalidate();
-    }
-
     void updateInterfacePokemon(int id) {
         selectedPokemonId = id;
         String text = PokemonData.getInstance().getName(id);
@@ -495,30 +424,10 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         }
     }
 
-    @Deprecated
-    PokemonInfo buildPokemon() {
-        int[] pokemonIVs = new int[6];
-        for (int i = 0; i < 6; i++)
-            pokemonIVs[i] = checkBoxInputIVs[i].isChecked() ? 1 : 0;
-
-        updatePokemonGender(selectedPokemonId);
-        //  populateAbilitySpinner(selectedPokemonId);
-
-        return new PokemonInfo.Builder()
-                .id(selectedPokemonId)
-                .gender(pokemonGender)
-                .IVs(pokemonIVs)
-                .nature(Nature.values()[spinnerNature.getSelectedItemPosition()])
-                .ability(abilityIds.get(spinnerAbility.getSelectedItemPosition()))
-                .build();
-    }
-
     StoredPokemon createPokemon() {
         int[] pokemonIVs = new int[6];
         for (int i = 0; i < 6; i++)
             pokemonIVs[i] = checkBoxInputIVs[i].isChecked() ? 1 : 0;
-
-        updatePokemonGender(selectedPokemonId); //XXXX REMOVER
 
         int spinnerPosition = spinnerAbility.getSelectedItemPosition();
         int abilitySlot = abilitySlots.get(spinnerPosition);
@@ -536,9 +445,13 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
     }
 
-    public interface OnBuildPokemon {
-        void onBuildPokemon(PokemonInfo pokemon);
+    @Override
+    public ArrayList<Integer> getCompatiblePokemonList() {
+        return feederCallback.getCompatiblePokemonList();
+    }
 
+    @Deprecated
+    public interface OnBuildPokemon {
         PokemonInfo getGoal();
     }
 
@@ -546,12 +459,17 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         void storePokemon(StoredPokemon pokemon);
     }
 
+
     public interface FeedDataCreatePokemon {
         ArrayList<String> getListOfNatures();
 
         HashMap<Integer, String> getListOfAbilities(int pokemonId);
 
         int getGenderRate(int pokemonId);
-    }
 
+        StoredPokemon getGoalPokemon();
+
+        ArrayList<Integer> getCompatiblePokemonList();
+
+    }
 }

@@ -26,7 +26,8 @@ import butterknife.ButterKnife;
 //TODO: Make checks on the ability spinner when switching pokemon (right now OK - switches to the first)
 // (put it always on the same slot or on the first if it doesn't have the previous slot)
 
-public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.OnPokemonSelectedListener {
+public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.OnPokemonSelectedListener,
+SelectPokemonFragment.FeedDataSelectPokemon{
 
     @Bind({R.id.checkBoxGoalHP,
             R.id.checkBoxGoalATK,
@@ -414,10 +415,6 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         return index;
     }
 
-    @Override
-    public PokemonInfo getGoal() {
-        return mCallback.getGoal();
-    }
 
     private Bundle addPositionAsArguments(View v) {
         int callerViewPosition[] = new int[2];
@@ -455,4 +452,8 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     }
 
 
+    @Override
+    public ArrayList<Integer> getCompatiblePokemonList() {
+        return new ArrayList<>(0);
+    }
 }

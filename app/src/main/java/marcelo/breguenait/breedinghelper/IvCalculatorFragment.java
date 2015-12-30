@@ -632,4 +632,14 @@ public class IvCalculatorFragment extends Fragment
     public ArrayList<StoredPokemon> getStoredPokemonList() {
         return breedingManager.getStoredPokemonList();
     }
+
+    @Override
+    public StoredPokemon getGoalPokemon() {
+        return breedingManager.getGoalPokemon();
+    }
+
+    @Override
+    public ArrayList<Integer> getCompatiblePokemonList() {
+        return breedingManager.getCompatiblePokemonList(breedingManager.getGoalId());
+    }
 }
