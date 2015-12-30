@@ -578,10 +578,7 @@ public class IvCalculatorFragment extends Fragment
     }
 
 
-    @Override
-    public List<PokemonInfo> getStoredPokemonList() {
-        return ivManager.getStoredPokemonList();
-    }
+
 
     @Override
     public ArrayList<String> getListOfNatures() {
@@ -628,5 +625,11 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public void storePokemon(StoredPokemon pokemon) {
         breedingManager.storePokemon(pokemon);
+        updatePokemonListFragment(); //TODO: remover daqui
+    }
+
+    @Override
+    public ArrayList<StoredPokemon> getStoredPokemonList() {
+        return breedingManager.getStoredPokemonList();
     }
 }

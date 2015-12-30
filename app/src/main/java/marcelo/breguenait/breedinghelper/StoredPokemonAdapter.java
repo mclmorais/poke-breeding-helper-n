@@ -9,10 +9,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 class StoredPokemonAdapter extends BaseAdapter{
+
+    public static int FEMALE = 1;
+    public static int MALE = 2;
+    public static int GENDERLESS = 3;
 
     private class PreloadedDrawables {
         Drawable maleIcon;
@@ -45,9 +50,9 @@ class StoredPokemonAdapter extends BaseAdapter{
             IVInactive[5] = c.getResources().getDrawable(R.drawable.iv_diamond_clear);
         }
 
-        Drawable getGenderDrawable(Gender gender) {
-            if (gender == Gender.MALE)          return maleIcon;
-            else if (gender == Gender.FEMALE)   return femaleIcon;
+        Drawable getGenderDrawable(int genderId) {
+            if (genderId == MALE)          return maleIcon;
+            else if (genderId == FEMALE)   return femaleIcon;
             else  return genderlessIcon;
         }
 
@@ -63,7 +68,7 @@ class StoredPokemonAdapter extends BaseAdapter{
 
     private final PreloadedDrawables preloadedDrawables;
 
-    private List<PokemonInfo> hatchList;
+    private ArrayList<StoredPokemon> hatchList;
     private final LayoutInflater inflater;
 
     private boolean deleteMode = false;
@@ -72,7 +77,7 @@ class StoredPokemonAdapter extends BaseAdapter{
         this.deleteMode = deleteMode;
     }
 
-    public StoredPokemonAdapter(List<PokemonInfo> hatchList, Context context) {
+    public StoredPokemonAdapter(ArrayList<StoredPokemon> hatchList, Context context) {
         preloadedDrawables = new PreloadedDrawables(context);
         this.hatchList = hatchList;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -131,20 +136,20 @@ class StoredPokemonAdapter extends BaseAdapter{
         else {
             holder = (LayoutHolder) convertView.getTag();
         }
-        PokemonInfo pokemonInfo = hatchList.get(i);
+        StoredPokemon storedPokemon = hatchList.get(i);
 
         if(deleteMode)
             holder.frame.setBackgroundResource(R.drawable.layer_card_background_round_red);
         else
             holder.frame.setBackgroundResource(R.drawable.layer_background_round_selector);
 
-        if(pokemonInfo.id > 0)
-            holder.icon.setBackground(data.getDrawableFromId(pokemonInfo.id).getConstantState().newDrawable());
+        if(storedPokemon.getPokemonId() > 0)
+            holder.icon.setBackground(data.getDrawableFromId(storedPokemon.getPokemonId()).getConstantState().newDrawable());
         else
             holder.icon.setBackground(preloadedDrawables.missingno);
-        holder.gender.setBackground(preloadedDrawables.getGenderDrawable(pokemonInfo.gender));
+        holder.gender.setBackground(preloadedDrawables.getGenderDrawable(storedPokemon.getGenderId()));
         for(int j = 0; j < 6; j++)
-            holder.IVs[j].setBackground(preloadedDrawables.getIVDrawable(j,(pokemonInfo.IVs[j] == 1)));
+            holder.IVs[j].setBackground(preloadedDrawables.getIVDrawable(j,(storedPokemon.getIVs()[j] == 1)));
         holder.number.setText(String.valueOf(i+1));
 
         return hatch;

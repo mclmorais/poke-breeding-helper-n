@@ -137,7 +137,7 @@ public class StoredPokemonFragment extends Fragment implements
         return view;
     }
 
-    void setHatchAdapter(List<PokemonInfo> list, Context context) {
+    void setHatchAdapter(ArrayList<StoredPokemon> list, Context context) {
         storedPokemonAdapter = new StoredPokemonAdapter(list, context);
         gridViewPokemons.setAdapter(storedPokemonAdapter);
         updateGridView();
@@ -154,7 +154,7 @@ public class StoredPokemonFragment extends Fragment implements
         fragment.show(fm, "");
     }
 
-    void openStoredPokemonPopupFragment(View callerView, PokemonInfo selectedPokemon, int pokemonPos) {
+    void openStoredPokemonPopupFragment(View callerView, PokemonInfo selectedPokemon, int pokemonPos) { //TODO: passar para StoredPokemon
         FragmentManager fragmentManager = getFragmentManager();
         int callerViewPosition[] = new int[2];
         callerView.getLocationOnScreen(callerViewPosition);
@@ -178,7 +178,7 @@ public class StoredPokemonFragment extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
-        setHatchAdapter(mCallback.getStoredPokemonList(), getContext());
+        setHatchAdapter(feederCallback.getStoredPokemonList(), getContext());
         updateGridView();
     }
 
@@ -235,7 +235,6 @@ public class StoredPokemonFragment extends Fragment implements
 
         PokemonInfo getSelectedPokemonData(int position);
 
-        List<PokemonInfo> getStoredPokemonList();
 
     }
 
@@ -243,6 +242,8 @@ public class StoredPokemonFragment extends Fragment implements
         ArrayList<String> getListOfNatures();
 
         HashMap<Integer, String> getListOfAbilities(int pokemonId);
+
+        ArrayList<StoredPokemon> getStoredPokemonList();
 
         int getGenderRate(int pokemonId);
     }

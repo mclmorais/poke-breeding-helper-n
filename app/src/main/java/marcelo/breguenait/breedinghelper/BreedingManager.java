@@ -206,4 +206,8 @@ public class BreedingManager {
     int getGenderRate(int pokemonId) {
         return database.getGenderRate(pokemonId);
     }
+
+    ArrayList<StoredPokemon> getStoredPokemonList() {
+        return storedPokemonList;
+    }
 }
