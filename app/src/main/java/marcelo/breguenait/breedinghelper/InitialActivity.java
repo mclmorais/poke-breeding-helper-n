@@ -45,7 +45,7 @@ public class InitialActivity extends AppCompatActivity {
             Fragment fragment = null;
             Class fragmentClass;
 
-            fragmentClass = MoveDexActivity.class;
+            fragmentClass = IvCalculatorFragment.class;
 
             try {
                 fragment = (Fragment) fragmentClass.newInstance();

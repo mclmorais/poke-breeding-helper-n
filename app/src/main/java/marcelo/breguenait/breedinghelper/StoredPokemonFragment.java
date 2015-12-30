@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+//TODO: Fazer o adapter pegar os novos poceymans ao invés dos velhos
+
 /**
  * Created by Marcelo on 21/12/2014.
  */
