@@ -41,6 +41,7 @@ class Constants {
 public class IvCalculatorFragment extends Fragment
         implements
         StoredPokemonFragment.OnPokemonListChanged,
+        StoredPokemonFragment.FeedDataStoredPokemon,
         LuckFragment.UpdateLuckInterface,
         GoalIVsFragment.OnGoalUpdate,
         GoalIVsFragment.FeedDataGoalIVs,

@@ -1,11 +1,11 @@
 package marcelo.breguenait.breedinghelper;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,33 +16,26 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Marcelo on 21/12/2014.
  */
 public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFragment.OnBuildPokemon,
-        StoredPokemonPopupFragment.OnPokemonPopupListener {
+        StoredPokemonPopupFragment.OnPokemonPopupListener,
+AddPokemonPopupFragment.FeedDataCreatePokemon{
 
     private OnPokemonListChanged mCallback;
-
-    interface OnPokemonListChanged {
-        void addPokemonToList(PokemonInfo pokemon);
-        void editPokemon(PokemonInfo pokemon, int position);
-        void removePokemon(int position);
-        PokemonInfo getGoalData();
-        PokemonInfo getSelectedPokemonData(int position);
-        List<PokemonInfo> getStoredPokemonList();
-
-    }
-
     private StoredPokemonAdapter storedPokemonAdapter;
-    private GridView        gridViewPokemons;
-    private Button          buttonAdd;
-    private ToggleButton    buttonRemove;
-    private int             lastAddedPokemonId = 0;
-    private TextView        textHintStore;
-    private TextView        textHintRemove;
+    private GridView gridViewPokemons;
+    private Button buttonAdd;
+    private ToggleButton buttonRemove;
+    private int lastAddedPokemonId = 0;
+    private TextView textHintStore;
+    private TextView textHintRemove;
+
+    private FeedDataStoredPokemon feederCallback;
 
     @Override
     public void onAttach(Activity activity) {
@@ -51,13 +44,24 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
         // the callback interface. If not, it throws an exception
         try {
             Fragment targetFragment = getTargetFragment();
-            if(targetFragment == null)
+            if (targetFragment == null)
                 mCallback = (OnPokemonListChanged) activity;
             else
                 mCallback = (OnPokemonListChanged) getTargetFragment();
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement TempInterface");
+        }
+
+        try {
+            Fragment targetFragment = getTargetFragment();
+            if (targetFragment == null)
+                feederCallback = (FeedDataStoredPokemon) activity;
+            else
+                feederCallback = (FeedDataStoredPokemon) getTargetFragment();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement FeedDataStoredPokemon!");
         }
     }
 
@@ -68,10 +72,10 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
         View view = inflater.inflate(R.layout.fragment_stored_pokemon, container, false);
 
         gridViewPokemons = (GridView) view.findViewById(R.id.gridViewPokemonsList);
-        buttonAdd        = (Button) view.findViewById(R.id.buttonFragmentPokemonListAdd);
-        buttonRemove     = (ToggleButton) view.findViewById(R.id.buttonFragmentPokemonListRemove);
-        textHintStore    = (TextView) view.findViewById(R.id.textViewHintStore);
-        textHintRemove   = (TextView) view.findViewById(R.id.textViewHintDelete);
+        buttonAdd = (Button) view.findViewById(R.id.buttonFragmentPokemonListAdd);
+        buttonRemove = (ToggleButton) view.findViewById(R.id.buttonFragmentPokemonListRemove);
+        textHintStore = (TextView) view.findViewById(R.id.textViewHintStore);
+        textHintRemove = (TextView) view.findViewById(R.id.textViewHintDelete);
 
         textHintRemove.setVisibility(View.GONE);
 
@@ -86,13 +90,12 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
         buttonRemove.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b && storedPokemonAdapter.getCount() > 0) {
+                if (b && storedPokemonAdapter.getCount() > 0) {
                     textHintRemove.setVisibility(View.VISIBLE);
                     buttonRemove.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
                     storedPokemonAdapter.setDeleteMode(true);
 
-                }
-                else {
+                } else {
                     textHintRemove.setVisibility(View.GONE);
                     buttonRemove.setTextColor(getResources().getColor(R.color.colorPrimary));
                     storedPokemonAdapter.setDeleteMode(false);
@@ -104,11 +107,10 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
         gridViewPokemons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(buttonRemove.isChecked()) {
+                if (buttonRemove.isChecked()) {
                     mCallback.removePokemon(i);
                     updateGridView();
-                }
-                else {
+                } else {
                     openStoredPokemonPopupFragment(view, mCallback.getSelectedPokemonData(i), i);
                 }
             }
@@ -125,13 +127,13 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
 
     }
 
-    void openAddPokemonFragment(View callerView){
+    void openAddPokemonFragment(View callerView) {
         FragmentManager fm = getFragmentManager();
         AddPokemonPopupFragment fragment = new AddPokemonPopupFragment();
         Bundle b = addPositionAsArguments(callerView);
-        b.putInt("defaultPokemon",lastAddedPokemonId);
+        b.putInt("defaultPokemon", lastAddedPokemonId);
         fragment.setArguments(b);
-        fragment.setTargetFragment(this,0);
+        fragment.setTargetFragment(this, 0);
         fragment.show(fm, "");
     }
 
@@ -140,16 +142,15 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
         int callerViewPosition[] = new int[2];
         callerView.getLocationOnScreen(callerViewPosition);
         StoredPokemonPopupFragment fragment = StoredPokemonPopupFragment.newInstance(callerViewPosition, selectedPokemon, pokemonPos);
-        fragment.setTargetFragment(this,0);
-        fragment.show(fragmentManager,"storedPokemonPopup");
+        fragment.setTargetFragment(this, 0);
+        fragment.show(fragmentManager, "storedPokemonPopup");
     }
 
-    void updateGridView(){
-        if(storedPokemonAdapter.getCount() > 0) {
+    void updateGridView() {
+        if (storedPokemonAdapter.getCount() > 0) {
             buttonRemove.setEnabled(true);
             textHintStore.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             buttonRemove.setChecked(false);
             buttonRemove.setEnabled(false);
             textHintStore.setVisibility(View.VISIBLE);
@@ -174,8 +175,8 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
         int callerViewPosition[] = new int[2];
         v.getLocationOnScreen(callerViewPosition);
         Bundle b = new Bundle();
-        b.putInt("x",callerViewPosition[0]);
-        b.putInt("y",callerViewPosition[1]);
+        b.putInt("x", callerViewPosition[0]);
+        b.putInt("y", callerViewPosition[1]);
         return b;
     }
 
@@ -186,10 +187,33 @@ public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFr
 
     @Override
     public void onPokemonAltered(PokemonInfo alteredPokemon, int position) {
-        mCallback.editPokemon(alteredPokemon,position);
+        mCallback.editPokemon(alteredPokemon, position);
         storedPokemonAdapter.notifyDataSetChanged();
 
     }
 
+    interface OnPokemonListChanged {
+        void addPokemonToList(PokemonInfo pokemon);
 
+        void editPokemon(PokemonInfo pokemon, int position);
+
+        void removePokemon(int position);
+
+        PokemonInfo getGoalData();
+
+        PokemonInfo getSelectedPokemonData(int position);
+
+        List<PokemonInfo> getStoredPokemonList();
+
+    }
+
+    interface FeedDataStoredPokemon {
+        ArrayList<String> getListOfNatures();
+    }
+
+
+    @Override
+    public ArrayList<String> getListOfNatures() {
+        return feederCallback.getListOfNatures();
+    }
 }
