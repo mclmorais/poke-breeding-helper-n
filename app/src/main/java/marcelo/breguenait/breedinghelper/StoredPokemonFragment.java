@@ -211,6 +211,7 @@ AddPokemonPopupFragment.FeedDataCreatePokemon{
     interface FeedDataStoredPokemon {
         ArrayList<String> getListOfNatures();
         HashMap<Integer,String> getListOfAbilities(int pokemonId);
+        int getGenderRate(int pokemonId);
     }
 
 
@@ -222,5 +223,10 @@ AddPokemonPopupFragment.FeedDataCreatePokemon{
     @Override
     public HashMap<Integer, String> getListOfAbilities(int pokemonId) {
         return feederCallback.getListOfAbilities(pokemonId);
+    }
+
+    @Override
+    public int getGenderRate(int pokemonId) {
+        return feederCallback.getGenderRate(pokemonId);
     }
 }

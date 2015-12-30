@@ -618,4 +618,9 @@ public class IvCalculatorFragment extends Fragment
     public HashMap<Integer, String> getListOfAbilities(int pokemonId) {
         return breedingManager.getListOfAbilities(pokemonId);
     }
+
+    @Override
+    public int getGenderRate(int pokemonId) {
+        return breedingManager.getGenderRate(pokemonId);
+    }
 }

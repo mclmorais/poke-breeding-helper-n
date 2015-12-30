@@ -408,8 +408,21 @@ public class MyDatabase extends SQLiteAssetHelper {
         int evolutionChainId = cursorEvolutionChainId.getInt(0);
         cursorEvolutionChainId.close();
         return evolutionChainId;
+    }
 
+    public int getGenderRate(int pokemonId) {
+        String s = "SELECT " +
+                "gender_rate " +
+                "FROM " +
+                "pokemon_species " +
+                "WHERE id=" +
+                Integer.toString(pokemonId);
 
+        Cursor cursorGenderRate = database.rawQuery(s, null);
+        cursorGenderRate.moveToFirst();
+        int genderRate = cursorGenderRate.getInt(0);
+        cursorGenderRate.close();
+        return genderRate;
     }
 
 }

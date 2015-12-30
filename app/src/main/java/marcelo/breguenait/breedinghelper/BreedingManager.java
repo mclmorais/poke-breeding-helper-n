@@ -202,4 +202,8 @@ public class BreedingManager {
     HashMap<Integer, String> getListOfAbilities(int pokemonId) {
         return database.getListOfAbilities(pokemonId, 9);
     }
+
+    int getGenderRate(int pokemonId) {
+        return database.getGenderRate(pokemonId);
+    }
 }

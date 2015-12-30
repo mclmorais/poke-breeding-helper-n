@@ -31,6 +31,15 @@ import java.util.HashMap;
 
 public class AddPokemonPopupFragment extends PopupDialogFragment implements SelectPokemonFragment.OnPokemonSelectedListener {
 
+    public static int FEMALE = 1;
+    public static int MALE = 2;
+    public static int GENDERLESS = 3;
+
+    public static int GENDERLESS_ONLY = -1;
+    public static int MALE_ONLY = 0;
+    public static int FEMALE_ONLY = 8;
+
+    private int genderId = -1;
 
     //-----------
     private final CheckBox[] checkBoxInputIVs = new CheckBox[6];
@@ -342,6 +351,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         updateAbilities(selectedPokemonId);
         updateInterfacePokemon(selectedPokemonId);
         updatePokemonGender(selectedPokemonId);
+        updateInterfaceGender(selectedPokemonId);
         updateNameButton();
     }
 
@@ -392,28 +402,53 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
 
     }
 
-    void updatePokemonGender(int id) {
-        if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.NONE) {
-            if (!togglePokemonGender.isClickable()) {
-                togglePokemonGender.setBackgroundResource(R.drawable.ic_toggle_gender_selector);
-                togglePokemonGender.setClickable(true);
-            }
-            pokemonGender = togglePokemonGender.isChecked() ? Gender.MALE : Gender.FEMALE;
-        } else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.GENDERLESS) {
+    void updateInterfaceGender(int pokemonId) {
+        int genderRate = feederCallback.getGenderRate(pokemonId);
+
+        if(genderRate == GENDERLESS_ONLY) {
             togglePokemonGender.setBackgroundResource(R.drawable.symbol_genderless);
             togglePokemonGender.setClickable(false);
-            pokemonGender = Gender.GENDERLESS;
-        } else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.DITTO) {
-            togglePokemonGender.setBackgroundResource(R.drawable.symbol_genderless);
-            togglePokemonGender.setClickable(false);
-            pokemonGender = Gender.DITTO;
-        } else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.MALE_ONLY) {
+            genderId = GENDERLESS;
+        }
+        else if (genderRate == MALE_ONLY) {
             togglePokemonGender.setBackgroundResource(R.drawable.symbol_male);
             togglePokemonGender.setClickable(false);
-            pokemonGender = Gender.MALE;
-        } else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.FEMALE_ONLY) {
+            genderId = MALE;
+        }
+        else if (genderRate == FEMALE_ONLY) {
             togglePokemonGender.setBackgroundResource(R.drawable.symbol_female);
             togglePokemonGender.setClickable(false);
+            genderId = FEMALE;
+        }
+        else {
+                togglePokemonGender.setBackgroundResource(R.drawable.ic_toggle_gender_selector);
+                togglePokemonGender.setClickable(true);
+        }
+        togglePokemonGender.invalidate();
+    }
+
+    void updatePokemonGender(int id) {
+        if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.NONE) {
+//            if (!togglePokemonGender.isClickable()) {
+//                togglePokemonGender.setBackgroundResource(R.drawable.ic_toggle_gender_selector);
+//                togglePokemonGender.setClickable(true);
+//            }
+            pokemonGender = togglePokemonGender.isChecked() ? Gender.MALE : Gender.FEMALE;
+        } else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.GENDERLESS) {
+//            togglePokemonGender.setBackgroundResource(R.drawable.symbol_genderless);
+//            togglePokemonGender.setClickable(false);
+            pokemonGender = Gender.GENDERLESS;
+        } else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.DITTO) {
+//            togglePokemonGender.setBackgroundResource(R.drawable.symbol_genderless);
+//            togglePokemonGender.setClickable(false);
+            pokemonGender = Gender.DITTO;
+        } else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.MALE_ONLY) {
+//            togglePokemonGender.setBackgroundResource(R.drawable.symbol_male);
+//            togglePokemonGender.setClickable(false);
+            pokemonGender = Gender.MALE;
+        } else if (PokemonData.getInstance().getGenderRestriction(id) == GenderRestriction.FEMALE_ONLY) {
+//            togglePokemonGender.setBackgroundResource(R.drawable.symbol_female);
+//            togglePokemonGender.setClickable(false);
             pokemonGender = Gender.FEMALE;
         }
 
@@ -469,7 +504,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
         return new StoredPokemon.Builder()
                 .setPokemonId(selectedPokemonId)
                 .setIVs(pokemonIVs)
-                .setGenderId(1) //TODO: pegar gender ID duma maneira MENOS BOSTA
+                .setGenderId(genderId)
                 .setNatureId(1) //TODO: fazer spinner pegar info da DB pra depois pegar certo aqui
                 .setAbilitySlot(1) //TODO: fazer spinner pegar info da DB pra pegar certo aqui
                 .createStoredPokemon();
@@ -485,6 +520,7 @@ public class AddPokemonPopupFragment extends PopupDialogFragment implements Sele
     public interface FeedDataCreatePokemon {
         ArrayList<String> getListOfNatures();
         HashMap<Integer,String> getListOfAbilities(int pokemonId);
+        int getGenderRate(int pokemonId);
     }
 
 }
