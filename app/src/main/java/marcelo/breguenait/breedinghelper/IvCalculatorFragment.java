@@ -42,6 +42,7 @@ public class IvCalculatorFragment extends Fragment
         implements
         StoredPokemonFragment.OnPokemonListChanged,
         StoredPokemonFragment.FeedDataStoredPokemon,
+        StoredPokemonFragment.UpdateStoredPokemonList,
         LuckFragment.UpdateLuckInterface,
         GoalIVsFragment.OnGoalUpdate,
         GoalIVsFragment.FeedDataGoalIVs,
@@ -622,5 +623,10 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public int getGenderRate(int pokemonId) {
         return breedingManager.getGenderRate(pokemonId);
+    }
+
+    @Override
+    public void storePokemon(StoredPokemon pokemon) {
+        breedingManager.storePokemon(pokemon);
     }
 }

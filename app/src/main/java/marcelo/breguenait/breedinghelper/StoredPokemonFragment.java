@@ -23,9 +23,11 @@ import java.util.List;
 /**
  * Created by Marcelo on 21/12/2014.
  */
-public class StoredPokemonFragment extends Fragment implements AddPokemonPopupFragment.OnBuildPokemon,
+public class StoredPokemonFragment extends Fragment implements
+        AddPokemonPopupFragment.OnBuildPokemon,
         StoredPokemonPopupFragment.OnPokemonPopupListener,
-AddPokemonPopupFragment.FeedDataCreatePokemon{
+        AddPokemonPopupFragment.FeedDataCreatePokemon,
+        AddPokemonPopupFragment.UpdateStoredPokemonList {
 
     private OnPokemonListChanged mCallback;
     private StoredPokemonAdapter storedPokemonAdapter;
@@ -37,6 +39,7 @@ AddPokemonPopupFragment.FeedDataCreatePokemon{
     private TextView textHintRemove;
 
     private FeedDataStoredPokemon feederCallback;
+    private UpdateStoredPokemonList updaterCallback;
 
     @Override
     public void onAttach(Activity activity) {
@@ -63,6 +66,17 @@ AddPokemonPopupFragment.FeedDataCreatePokemon{
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement FeedDataStoredPokemon!");
+        }
+
+        try {
+            Fragment targetFragment = getTargetFragment();
+            if (targetFragment == null)
+                updaterCallback = (UpdateStoredPokemonList) activity;
+            else
+                updaterCallback = (UpdateStoredPokemonList) getTargetFragment();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement UpdateStoredPokemonList!");
         }
     }
 
@@ -193,6 +207,21 @@ AddPokemonPopupFragment.FeedDataCreatePokemon{
 
     }
 
+    @Override
+    public ArrayList<String> getListOfNatures() {
+        return feederCallback.getListOfNatures();
+    }
+
+    @Override
+    public HashMap<Integer, String> getListOfAbilities(int pokemonId) {
+        return feederCallback.getListOfAbilities(pokemonId);
+    }
+
+    @Override
+    public int getGenderRate(int pokemonId) {
+        return feederCallback.getGenderRate(pokemonId);
+    }
+
     interface OnPokemonListChanged {
         void addPokemonToList(PokemonInfo pokemon);
 
@@ -210,23 +239,18 @@ AddPokemonPopupFragment.FeedDataCreatePokemon{
 
     interface FeedDataStoredPokemon {
         ArrayList<String> getListOfNatures();
-        HashMap<Integer,String> getListOfAbilities(int pokemonId);
+
+        HashMap<Integer, String> getListOfAbilities(int pokemonId);
+
         int getGenderRate(int pokemonId);
     }
 
-
-    @Override
-    public ArrayList<String> getListOfNatures() {
-        return feederCallback.getListOfNatures();
+    interface UpdateStoredPokemonList {
+        void storePokemon(StoredPokemon pokemon);
     }
 
     @Override
-    public HashMap<Integer, String> getListOfAbilities(int pokemonId) {
-        return feederCallback.getListOfAbilities(pokemonId);
-    }
-
-    @Override
-    public int getGenderRate(int pokemonId) {
-        return feederCallback.getGenderRate(pokemonId);
+    public void storePokemon(StoredPokemon pokemon) {
+        updaterCallback.storePokemon(pokemon);
     }
 }

@@ -22,6 +22,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 class PokemonData {
 
     private static PokemonData instance;
