@@ -27,7 +27,7 @@ public class BreedingManager {
 
     private ArrayList<StoredPokemon> storedPokemonList = new ArrayList<>();
 
-    private ArrayList<ChancePokemonMatch> chancePokemonMatchList = new ArrayList<>();
+    //private ArrayList<ChancePokemonMatch> chancePokemonMatchList = new ArrayList<>();
 
     public BreedingManager() {
         ivChanceCalculator = new IvChanceCalculator();
@@ -37,6 +37,80 @@ public class BreedingManager {
         goalPokemon = new StoredPokemon.Builder().createStoredPokemon();
         database = MyDatabase.getInstance();
 
+    }
+
+    public ArrayList<ChancePokemonMatch> calculateBestMatches() {
+
+        //Doesn't do any calculations if the goal Pokemon isn't set
+        if (goalPokemon.getPokemonId() == -1)
+            return new ArrayList<>(0);
+
+//        try {
+//            if (chancePokemonMatchList == null)
+//                throw new Exception("matchChanceList was null when " +
+//                        "trying to calculate best matches!");
+//        } catch (Exception e) {
+//            System.err.println(e.getMessage());
+//        }
+
+        ArrayList<ChancePokemonMatch> chancePokemonMatchList = new ArrayList<>();
+
+        //Runs through all possible different combinations of pokémon
+        for (int i = 0; i < storedPokemonList.size(); i++) {
+            StoredPokemon firstPokemon = storedPokemonList.get(i);
+
+            for (int j = (i + 1); j < storedPokemonList.size(); j++) {
+                StoredPokemon secondPokemon = storedPokemonList.get(j);
+
+                //Checks for gender/family/egg group compatibility
+                if (breedingCompatibilityChecker.
+                        checkCompatibility(firstPokemon, secondPokemon, goalPokemon)) {
+
+                    //Gets raw iv chance
+                    double chance = ivChanceCalculator.getIvChance(
+                            firstPokemon.getIVs(),
+                            secondPokemon.getIVs(),
+                            goalPokemon.getIVs(),
+                            true); //TODO: fazer pegar essa informaçao dinamicamente de algum lugar
+
+                    //Adds nature chance multiplier
+                    chance = natureChanceCalculator.getNatureChance(
+                            firstPokemon,
+                            secondPokemon,
+                            goalPokemon,
+                            chance);
+
+                    //Adds ability chance multiplier
+                    chance = abilityChanceCalculator.getAbilityChance(
+                            firstPokemon,
+                            secondPokemon,
+                            goalPokemon,
+                            chance);
+
+                    //Adds chance to list
+                    chancePokemonMatchList.add(
+                            new ChancePokemonMatch(
+                                    firstPokemon.getUUID(),
+                                    secondPokemon.getUUID(),
+                                    chance));
+                }
+            }
+        }
+
+        class ChanceComparator implements Comparator<ChancePokemonMatch> {
+            @Override
+            public int compare(ChancePokemonMatch e1, ChancePokemonMatch e2) {
+                return Double.compare(e1.getChance(), e2.getChance());
+            }
+        }
+
+        //Sorts list by biggest to smallest chance
+        if (!chancePokemonMatchList.isEmpty()) {
+            Collections.sort(chancePokemonMatchList, new ChanceComparator());
+            Collections.reverse(chancePokemonMatchList);
+        }
+
+        return chancePokemonMatchList;
     }
 
     public void setGoalGender(int genderId) {
@@ -82,77 +156,7 @@ public class BreedingManager {
         storedPokemonList.add(newPokemon);
     }
 
-    public ArrayList<ChancePokemonMatch> calculateBestMatches() {
 
-        //Doesn't do any calculations if the goal Pokemon isn't set
-        if (goalPokemon.getPokemonId() == -1)
-            return new ArrayList<>(0);
-
-        try {
-            if (chancePokemonMatchList == null)
-                throw new Exception("matchChanceList was null when " +
-                        "trying to calculate best matches!");
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-
-        //Runs through all possible different combinations of pokémon
-        for (int i = 0; i < storedPokemonList.size(); i++) {
-            StoredPokemon firstPokemon = storedPokemonList.get(i);
-
-            for (int j = (i + 1); j < storedPokemonList.size(); j++) {
-                StoredPokemon secondPokemon = storedPokemonList.get(j);
-
-                //Checks for gender/family/egg group compatibility
-                if (breedingCompatibilityChecker.
-                        checkCompatibility(firstPokemon, secondPokemon, goalPokemon)) {
-
-                    //Gets raw iv chance
-                    double chance = ivChanceCalculator.getIvChance(
-                            firstPokemon.getIVs(),
-                            secondPokemon.getIVs(),
-                            goalPokemon.getIVs(),
-                            true);
-
-                    //Adds nature chance multiplier
-                    chance = natureChanceCalculator.getNatureChance(
-                            firstPokemon,
-                            secondPokemon,
-                            goalPokemon,
-                            chance);
-
-                    //Adds ability chance multiplier
-                    chance = abilityChanceCalculator.getAbilityChance(
-                            firstPokemon,
-                            secondPokemon,
-                            goalPokemon,
-                            chance);
-
-                    //Adds chance to list
-                    chancePokemonMatchList.add(
-                            new ChancePokemonMatch(
-                                    firstPokemon.getUUID(),
-                                    secondPokemon.getUUID(),
-                                    chance));
-                }
-            }
-        }
-
-        class ChanceComparator implements Comparator<ChancePokemonMatch> {
-            @Override
-            public int compare(ChancePokemonMatch e1, ChancePokemonMatch e2) {
-                return Double.compare(e1.getChance(), e2.getChance());
-            }
-        }
-
-        //Sorts list by biggest to smallest chance
-        if (!chancePokemonMatchList.isEmpty()) {
-            Collections.sort(chancePokemonMatchList, new ChanceComparator());
-            Collections.reverse(chancePokemonMatchList);
-        }
-
-        return chancePokemonMatchList;
-    }
 
     ArrayList<String> getListOfNatures() {
         return database.getListOfNatures(languageId);

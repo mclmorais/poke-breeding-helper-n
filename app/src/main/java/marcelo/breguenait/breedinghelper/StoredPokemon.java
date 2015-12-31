@@ -39,10 +39,11 @@ public class StoredPokemon {
 
     }
 
-
     private void refreshStaticData() {
 
         if(pokemonId > 0) {
+            eggGroup1Id = eggGroup2Id = -1;
+
             ArrayList<Integer> eggGroups = MyDatabase.getInstance().getPokemonEggGroupIds(pokemonId);
             eggGroup1Id = eggGroups.get(0);
             if (eggGroups.size() >= 2)

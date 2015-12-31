@@ -585,8 +585,6 @@ public class IvCalculatorFragment extends Fragment
         return breedingManager.getGenderRate(pokemonId);
     }
 
-
-
     @Override
     public ArrayList<InterfaceStoredPokemon> getInterfaceStoredPokemonList() {
         return breedingManager.getInterfaceStoredPokemonList();

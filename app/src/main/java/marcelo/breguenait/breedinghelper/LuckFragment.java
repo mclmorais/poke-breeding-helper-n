@@ -12,6 +12,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -176,7 +178,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 showOnlyBestChance = isChecked;
-                //updateCurrentChances(chanceDataList); //TODO: ver se realmente é necessário
+                updateCurrentChances();
             }
         });
 
@@ -236,19 +238,16 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
     @Override
     public void onStart() {
         super.onStart();
-
+        updateCurrentChances();
     }
 
     public void updateCurrentChances() {
 
         List<ChancePokemonMatch> chancePokemonMatchList = feederCallback.getChancesList();
-        //TODO: descagar as chances, ta mandando uma chance sempre com pokemons que nao existem
         if (chancePokemonMatchList.isEmpty()) {
             layoutChances.removeAllViews();
-            return;
         }
 
-        if(true) return;
 
         if (layoutChances != null)
             layoutChances.removeAllViews();
@@ -260,6 +259,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
             interfaceChanceList.add(noMatch);
             layoutChances.addView(noMatch);
             ResizeAnimation r = new ResizeAnimation(layoutChances, targetHeight);
+            r.setInterpolator(new AccelerateDecelerateInterpolator());
             r.setDuration(300);
             layoutChances.startAnimation(r);
 
@@ -481,6 +481,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         int targetHeight = (int) (interfaceChanceList.size() * getResources().getDimension(R.dimen.chance_data_height));
         targetHeight += interfaceChanceList.size() * convertDpToPixel(11, getActivity().getApplicationContext());
         ResizeAnimation r = new ResizeAnimation(layoutChances, targetHeight);
+        r.setInterpolator(new DecelerateInterpolator());
         r.setDuration(300);
         layoutChances.startAnimation(r);
     }
