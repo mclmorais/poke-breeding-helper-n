@@ -200,11 +200,11 @@ public class BreedingManager {
     }
 
     HashMap<Integer, String> getListOfGoalAbilities() {
-        return database.getListOfAbilities(goalPokemon.getPokemonId() > 0 ? goalPokemon.getPokemonId() : 1, 9); //TODO: TEMPORARIO - qd nao tem defaulta pro bulbasauro, fazer lidar com não ter depois
+        return database.getListOfAbilities(goalPokemon.getPokemonId(), languageId);
     }
 
     HashMap<Integer, String> getListOfAbilities(int pokemonId) {
-        return database.getListOfAbilities(pokemonId, 9);
+        return database.getListOfAbilities(pokemonId, languageId);
     }
 
     int getGenderRate(int pokemonId) {

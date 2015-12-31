@@ -290,7 +290,7 @@ public class MyDatabase extends SQLiteAssetHelper {
         Cursor cursorAbilitiesIdSlot = database.rawQuery(s, null);
         cursorAbilitiesIdSlot.moveToFirst();
 
-        HashMap<Integer, String> abilities = new HashMap<>();
+        HashMap<Integer, String> abilities = new HashMap<>(cursorAbilitiesIdSlot.getCount());
 
         while (!cursorAbilitiesIdSlot.isAfterLast()) {
             s = "SELECT name FROM ability_names WHERE local_language_id=" +
