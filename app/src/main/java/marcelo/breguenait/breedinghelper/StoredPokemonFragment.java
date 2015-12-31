@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-//TODO: Fazer o adapter pegar os novos poceymans ao invés dos velhos
+//TODO: fazer list do stored adapter ser mais proativo ao invés de ressetar toda vez
 
 /**
  * Created by Marcelo on 21/12/2014.
@@ -31,7 +31,7 @@ public class StoredPokemonFragment extends Fragment implements
         EditorPokemonFragment.FeedDataCreatePokemon,
         CreatePokemonFragment.UpdateCreatePokemon,
         StoredPokemonViewerFragment.FeedDataPokemonViewer,
-        StoredPokemonViewerFragment.UpdatePokemonViewer{
+        StoredPokemonViewerFragment.UpdatePokemonViewer {
 
     private OnPokemonListChanged mCallback;
     private StoredPokemonAdapter storedPokemonAdapter;
@@ -127,11 +127,15 @@ public class StoredPokemonFragment extends Fragment implements
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (buttonRemove.isChecked()) {
-                    mCallback.removePokemon(i);
+                    InterfaceStoredPokemon p = (InterfaceStoredPokemon) gridViewPokemons.getAdapter().getItem(i);
+                    updaterCallback.removeStoredPokemon(p.getUUID());
+                    setHatchAdapter(feederCallback.getInterfaceStoredPokemonList(), getContext());
                     updateGridView();
+
+
                 } else {
                     InterfaceStoredPokemon p = (InterfaceStoredPokemon) gridViewPokemons.getAdapter().getItem(i);
-                    openStoredPokemonViewerFragment(view, p.getStoredId(), i); //TODO: TESTAR -- PASSANDO UUID APENAS!!
+                    openStoredPokemonViewerFragment(view, p.getUUID(), i);
                 }
             }
         });
@@ -245,6 +249,27 @@ public class StoredPokemonFragment extends Fragment implements
         return feederCallback.getPokemonNames();
     }
 
+    @Override
+    public InterfaceViewerPokemon getInterfaceViewerPokemon(UUID uuid) {
+        return feederCallback.getInterfaceViewerPokemon(uuid);
+    }
+
+    @Override
+    public String getPokemonName(int pokemonId) {
+        return feederCallback.getPokemonName(pokemonId);
+    }
+
+    @Override
+    public InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
+        return feederCallback.getInterfaceModifierPokemon(uuid);
+    }
+
+    @Override
+    public void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
+        updaterCallback.updateStoredPokemon(uuid, pokemonId, genderId, IVs, natureId, abilitySlot);
+        setHatchAdapter(feederCallback.getInterfaceStoredPokemonList(), getContext());
+    }
+
     interface OnPokemonListChanged {
         void addPokemonToList(PokemonInfo pokemon);
 
@@ -285,29 +310,9 @@ public class StoredPokemonFragment extends Fragment implements
 
     interface UpdateStoredPokemonList {
         void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot);
+
         void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot);
-    }
 
-
-
-    @Override
-    public InterfaceViewerPokemon getInterfaceViewerPokemon(UUID uuid) {
-        return feederCallback.getInterfaceViewerPokemon(uuid);
-    }
-
-    @Override
-    public String getPokemonName(int pokemonId) {
-        return feederCallback.getPokemonName(pokemonId);
-    }
-
-    @Override
-    public InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
-        return feederCallback.getInterfaceModifierPokemon(uuid);
-    }
-
-    @Override
-    public void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
-        updaterCallback.updateStoredPokemon(uuid, pokemonId, genderId, IVs, natureId, abilitySlot);
-        setHatchAdapter(feederCallback.getInterfaceStoredPokemonList(), getContext());
+        void removeStoredPokemon(UUID uuid);
     }
 }

@@ -671,4 +671,9 @@ public class IvCalculatorFragment extends Fragment
         breedingManager.updateStoredPokemon(uuid, pokemonId, genderId, IVs, natureId, abilitySlot);
         updatePokemonListFragment(); //TODO: remover daqui
     }
+
+    @Override
+    public void removeStoredPokemon(UUID uuid) {
+        breedingManager.removePokemon(uuid);
+    }
 }

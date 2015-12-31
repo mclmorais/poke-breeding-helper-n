@@ -27,7 +27,7 @@ class InterfaceStoredPokemon {
         this.IVs = IVs;
     }
 
-    public UUID getStoredId() {
+    public UUID getUUID() {
         return storedId;
     }
 

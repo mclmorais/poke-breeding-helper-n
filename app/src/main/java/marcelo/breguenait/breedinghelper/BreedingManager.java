@@ -118,6 +118,7 @@ public class BreedingManager {
      *
      * @param position Position of the Pokemon to be removed.
      */
+    @Deprecated
     public void removePokemon(int position) {
         try {
             if (storedPokemonList == null)
@@ -129,6 +130,7 @@ public class BreedingManager {
             System.err.println(e.getMessage());
         }
     }
+
 
     public void calculateBestMatches() {
         //Doesn't do any calculations if the goal Pokemon isn't set
@@ -344,5 +346,19 @@ public class BreedingManager {
 
 
     }
+
+    public void removePokemon(UUID uuid) {
+        StoredPokemon pokemonToBeChanged = null;
+
+        for (StoredPokemon storedPokemon : storedPokemonList) {
+            if(storedPokemon.getUUID().equals(uuid)) {
+                storedPokemonList.remove(storedPokemon);
+                break;
+            }
+        }
+
+
+    }
+
 
 }
