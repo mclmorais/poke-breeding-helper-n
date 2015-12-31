@@ -37,16 +37,6 @@ public class BreedingManager {
         goalPokemon = new StoredPokemon.Builder().createStoredPokemon();
         database = MyDatabase.getInstance();
 
-        for (int i = 225; i < 227; i++) {
-            int[] IVs = {1, 1, 1, 1, 0, 1};
-            storedPokemonList.add(new StoredPokemon.Builder()
-                    .setPokemonId(i)
-                    .setAbilitySlot(3)
-                    .setNatureId(2)
-                    .setGenderId(1)
-                    .setIVs(IVs)
-                    .createStoredPokemon());
-        }
     }
 
     public void setGoalGender(int genderId) {
@@ -403,5 +393,20 @@ public class BreedingManager {
 
     }
 
+    ArrayList<StoredPokemon> getStoredPokemonObjects() {
+        return storedPokemonList;
+    }
+
+    StoredPokemon getGoalPokemonObject() {
+        return goalPokemon;
+    }
+
+    void swapListOfObjects(ArrayList<StoredPokemon> storedPokemonList) {
+        this.storedPokemonList = storedPokemonList;
+    }
+
+    void setGoalObject(StoredPokemon goalPokemon) {
+        this.goalPokemon = goalPokemon;
+    }
 
 }

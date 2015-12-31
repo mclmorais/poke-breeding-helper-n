@@ -163,7 +163,6 @@ public class IvCalculatorFragment extends Fragment
         }
     }
 
-
     void openSettings() {
         Intent intent = new Intent(getContext(), SettingsActivity.class);
         startActivity(intent);
@@ -246,9 +245,6 @@ public class IvCalculatorFragment extends Fragment
 
     }
 
-    public boolean goalExists() {
-        return ivManager.getGoalPokemon() != null;
-    }
 
     void createGoalIVsFragment(Bundle savedInstanceState, View v) {
         // Check that the activity is using the layout version with
@@ -335,14 +331,6 @@ public class IvCalculatorFragment extends Fragment
         frag.updateCurrentChances();
     }
 
-    public void addPokemonToList(PokemonInfo pokemon) {
-        ivManager.storePokemon(pokemon);
-        //updateLuckFragment(ivManager.getBestCombinations());
-        updatePokemonListFragment();
-    }
-
-
-
     void saveData() {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -372,6 +360,14 @@ public class IvCalculatorFragment extends Fragment
         jsonString = gson.toJson(l.getShinyOptions());
         prefEditor.putString("jsonShinyOptions", jsonString);
 
+        //-------Breeding Manager---------------
+
+        jsonString = gson.toJson(breedingManager.getStoredPokemonObjects());
+        prefEditor.putString("jsonBreedingManagerStoredList", jsonString);
+
+        jsonString = gson.toJson(breedingManager.getGoalPokemonObject());
+        prefEditor.putString("jsonBreedingManagerGoal", jsonString);
+
         prefEditor.apply();
 
 
@@ -383,8 +379,7 @@ public class IvCalculatorFragment extends Fragment
 
         jsonString = sharedPref.getString("jsonPokemonList", null);
         if (jsonString != null) {
-            Type type = new TypeToken<List<PokemonInfo>>() {
-            }.getType();
+            Type type = new TypeToken<List<PokemonInfo>>() {}.getType();
             List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
             ivManager.setStoredPokemonList(eggList);
         }
@@ -405,10 +400,10 @@ public class IvCalculatorFragment extends Fragment
             ivManager.setConsiderAbility(gson.fromJson(jsonString, Boolean.class));
         }
 
-        jsonString = sharedPref.getString("jsonCurrentGoal", null);
-        if (jsonString != null) {
-            ivManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
-        }
+//        jsonString = sharedPref.getString("jsonCurrentGoal", null);
+//        if (jsonString != null) {
+//            ivManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
+//        }
 
         jsonString = sharedPref.getString("jsonCurrentGoal", null);
         if (jsonString != null) {
@@ -453,6 +448,19 @@ public class IvCalculatorFragment extends Fragment
             }
             sharedPref.edit().remove("jsonEggList").apply();
         }
+
+        jsonString = sharedPref.getString("jsonBreedingManagerStoredList", null);
+        if (jsonString != null) {
+            Type type = new TypeToken<ArrayList<StoredPokemon>>() {}.getType();
+            ArrayList<StoredPokemon> objectsList = gson.fromJson(jsonString, type);
+            breedingManager.swapListOfObjects(objectsList);
+        }
+
+        jsonString = sharedPref.getString("jsonBreedingManagerGoal", null);
+        if (jsonString != null) {
+            breedingManager.setGoalObject(gson.fromJson(jsonString, StoredPokemon.class));
+        }
+
     }
 
 
