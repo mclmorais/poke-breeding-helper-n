@@ -1,9 +1,12 @@
 package marcelo.breguenait.breedinghelper;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Created by Marcelo on 28/12/2015.
@@ -33,6 +36,17 @@ public class BreedingManager {
         breedingCompatibilityChecker = new BreedingCompatibilityChecker();
         goalPokemon = new StoredPokemon.Builder().createStoredPokemon();
         database = MyDatabase.getInstance();
+
+        for(int i = 225; i < 227; i++) {
+            int[] IVs = {1, 1, 1, 1, 0, 1};
+            storedPokemonList.add(new StoredPokemon.Builder()
+                    .setPokemonId(i)
+                    .setAbilitySlot(3)
+                    .setNatureId(2)
+                    .setGenderId(1)
+                    .setIVs(IVs)
+                    .createStoredPokemon());
+        }
     }
 
     public void setGoalGender(int genderId) {
@@ -84,25 +98,18 @@ public class BreedingManager {
 
     }
 
-    /**
-     * Stores a Pokemon on the list.
-     *
-     * @param pokemon The Pokemon to be stored.
-     */
-    public void storePokemon(StoredPokemon pokemon) {
 
-        try {
-            if (pokemon == null)
-                throw new Exception("Received a null pokemon when adding one to the stored list!");
-            if (storedPokemonList == null)
-                throw new Exception("Tried storing a new Pokemon but the list was null!");
+    public void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
 
-            storedPokemonList.add(pokemon);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
+        StoredPokemon newPokemon = new StoredPokemon.Builder()
+                .setPokemonId(pokemonId)
+                .setGenderId(genderId)
+                .setIVs(IVs)
+                .setNatureId(natureId)
+                .setAbilitySlot(abilitySlot)
+                .createStoredPokemon();
 
-
+        storedPokemonList.add(newPokemon);
     }
 
     /**
@@ -171,8 +178,8 @@ public class BreedingManager {
                     //Adds chance to list
                     pokemonMatchChanceList.add(
                             new PokemonMatchChance(
-                                    firstPokemon.getStoredId(),
-                                    secondPokemon.getStoredId(),
+                                    firstPokemon.getUUID(),
+                                    secondPokemon.getUUID(),
                                     chance));
                 }
             }
@@ -209,9 +216,7 @@ public class BreedingManager {
         return database.getGenderRate(pokemonId);
     }
 
-    ArrayList<StoredPokemon> getStoredPokemonList() {
-        return storedPokemonList;
-    }
+
 
     @Deprecated
         //TODO: nao usar isso!
@@ -234,7 +239,110 @@ public class BreedingManager {
         return database.getPokemonIds();
     }
 
-    StoredPokemon getStoredPokemon(int position) {
-        return storedPokemonList.get(position);
+    ArrayList<InterfaceStoredPokemon> getInterfaceStoredPokemonList() {
+
+        ArrayList<InterfaceStoredPokemon> interfaceStoredPokemonList =
+                new ArrayList<>(storedPokemonList.size());
+
+        for (StoredPokemon storedPokemon : storedPokemonList) {
+            InterfaceStoredPokemon interfaceStoredPokemon = new InterfaceStoredPokemon(
+                    storedPokemon.getUUID(),
+                    storedPokemon.getPokemonId(),
+                    storedPokemon.getGenderId(),
+                    storedPokemon.getIVs()
+            );
+
+            interfaceStoredPokemonList.add(interfaceStoredPokemon);
+        }
+        return interfaceStoredPokemonList;
     }
+
+    InterfaceViewerPokemon getInterfaceViewerPokemon(UUID uuid) {
+
+        StoredPokemon desiredPokemon = null;
+
+        int[] IVs = {-1,-1,-1,-1,-1,-1};
+
+        for (StoredPokemon storedPokemon : storedPokemonList) {
+            if(storedPokemon.getUUID().equals(uuid)) {
+                desiredPokemon = storedPokemon;
+                break;
+            }
+        }
+
+        if(desiredPokemon == null)
+            return new InterfaceViewerPokemon(-1,-1,IVs,"","","");
+        else {
+            String natureName = database.getNatureName(desiredPokemon.getNatureId(), languageId);
+            String abilityName = database.getAbilityName(desiredPokemon.getPokemonId(), desiredPokemon.getAbilitySlot(), languageId);
+            String pokemonName = database.getPokemonName(desiredPokemon.getPokemonId(), languageId);
+            return new InterfaceViewerPokemon(
+                    desiredPokemon.getPokemonId(),
+                    desiredPokemon.getGenderId(),
+                    desiredPokemon.getIVs(),
+                    natureName,
+                    abilityName,
+                    pokemonName
+            );
+
+        }
+
+    }
+
+    String getPokemonName(int pokemonId) {
+        return database.getPokemonName(pokemonId, languageId);
+    }
+
+    InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
+        StoredPokemon desiredPokemon = null;
+
+        int[] IVs = {-1,-1,-1,-1,-1,-1};
+
+        for (StoredPokemon storedPokemon : storedPokemonList) {
+            if(storedPokemon.getUUID().equals(uuid)) {
+                desiredPokemon = storedPokemon;
+                break;
+            }
+        }
+
+        if(desiredPokemon == null)
+            return new InterfaceModifierPokemon(-1,-1,IVs,-1,-1);
+        else {
+            return new InterfaceModifierPokemon(
+                    desiredPokemon.getPokemonId(),
+                    desiredPokemon.getGenderId(),
+                    desiredPokemon.getIVs(),
+                    desiredPokemon.getNatureId(),
+                    desiredPokemon.getAbilitySlot()
+            );
+
+        }
+
+    }
+
+    void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
+
+        StoredPokemon pokemonToBeChanged = null;
+
+        for (StoredPokemon storedPokemon : storedPokemonList) {
+            if(storedPokemon.getUUID().equals(uuid)) {
+                pokemonToBeChanged = storedPokemon;
+                break;
+            }
+        }
+
+        if(pokemonToBeChanged == null) {
+            Log.d("BM", "DIDNT FIND THE UUID THAT WAS SUPPOSED TO BE CHANGED!!!");
+        }
+        else {
+            pokemonToBeChanged.setPokemonId(pokemonId);
+            pokemonToBeChanged.setGenderId(genderId);
+            pokemonToBeChanged.setIVs(IVs);
+            pokemonToBeChanged.setNatureId(natureId);
+            pokemonToBeChanged.setAbilitySlot(abilitySlot);
+        }
+
+
+    }
+
 }

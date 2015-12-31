@@ -176,7 +176,7 @@ public class MoveDexActivity extends Fragment implements SelectPokemonFragment.O
         String iconId = "pkmn_big_" + String.format("%03d", id);
         floatingIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getContext().getPackageName()));
 
-        collapsingToolbarLayout.setTitle(db.getPokemonName(id));
+        collapsingToolbarLayout.setTitle(db.getPokemonName(id, 9)); //TODO: fazer ser dinamico o ID nesse fragment
 
         EggMovesListFragment page = (EggMovesListFragment) pagerAdapter.getItem(2);
         if (page.mRecyclerView != null) {

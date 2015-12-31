@@ -29,6 +29,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -577,9 +578,6 @@ public class IvCalculatorFragment extends Fragment
         return ivManager.considerAbility();
     }
 
-
-
-
     @Override
     public ArrayList<String> getListOfNatures() {
         return breedingManager.getListOfNatures();
@@ -623,14 +621,14 @@ public class IvCalculatorFragment extends Fragment
     }
 
     @Override
-    public void storePokemon(StoredPokemon pokemon) {
-        breedingManager.storePokemon(pokemon);
+    public void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
+        breedingManager.storePokemon(pokemonId, genderId, IVs, natureId, abilitySlot);
         updatePokemonListFragment(); //TODO: remover daqui
     }
 
     @Override
-    public ArrayList<StoredPokemon> getStoredPokemonList() {
-        return breedingManager.getStoredPokemonList();
+    public ArrayList<InterfaceStoredPokemon> getInterfaceStoredPokemonList() {
+        return breedingManager.getInterfaceStoredPokemonList();
     }
 
     @Override
@@ -651,5 +649,26 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public ArrayList<String> getPokemonNames() {
         return breedingManager.getPokemonNames();
+    }
+
+    @Override
+    public InterfaceViewerPokemon getInterfaceViewerPokemon(UUID uuid) {
+        return breedingManager.getInterfaceViewerPokemon(uuid);
+    }
+
+    @Override
+    public String getPokemonName(int pokemonId) {
+        return breedingManager.getPokemonName(pokemonId);
+    }
+
+    @Override
+    public InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
+        return breedingManager.getInterfaceModifierPokemon(uuid);
+    }
+
+    @Override
+    public void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
+        breedingManager.updateStoredPokemon(uuid, pokemonId, genderId, IVs, natureId, abilitySlot);
+        updatePokemonListFragment(); //TODO: remover daqui
     }
 }

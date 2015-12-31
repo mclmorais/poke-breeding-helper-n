@@ -18,6 +18,7 @@ import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 //TODO: Fazer o adapter pegar os novos poceymans ao invés dos velhos
 
@@ -25,11 +26,12 @@ import java.util.HashMap;
  * Created by Marcelo on 21/12/2014.
  */
 public class StoredPokemonFragment extends Fragment implements
-        CreatePokemonFragment.OnBuildPokemon,
-        StoredPokemonPopupFragment.OnPokemonPopupListener,
-        CreatePokemonFragment.FeedDataCreatePokemon,
-        CreatePokemonFragment.UpdateStoredPokemonList,
-        StoredPokemonPopupFragment.FeedDataStoredPopup{
+        EditorPokemonFragment.OnBuildPokemon,
+        StoredPokemonViewerFragment.OnPokemonPopupListener,
+        EditorPokemonFragment.FeedDataCreatePokemon,
+        CreatePokemonFragment.UpdateCreatePokemon,
+        StoredPokemonViewerFragment.FeedDataPokemonViewer,
+        StoredPokemonViewerFragment.UpdatePokemonViewer{
 
     private OnPokemonListChanged mCallback;
     private StoredPokemonAdapter storedPokemonAdapter;
@@ -128,8 +130,8 @@ public class StoredPokemonFragment extends Fragment implements
                     mCallback.removePokemon(i);
                     updateGridView();
                 } else {
-                    StoredPokemon selectedPokemon = (StoredPokemon) gridViewPokemons.getAdapter().getItem(i);
-                    openStoredPokemonPopupFragment(view, selectedPokemon, i); //TODO: verificar se vai dar certo
+                    InterfaceStoredPokemon p = (InterfaceStoredPokemon) gridViewPokemons.getAdapter().getItem(i);
+                    openStoredPokemonViewerFragment(view, p.getStoredId(), i); //TODO: TESTAR -- PASSANDO UUID APENAS!!
                 }
             }
         });
@@ -138,7 +140,7 @@ public class StoredPokemonFragment extends Fragment implements
         return view;
     }
 
-    void setHatchAdapter(ArrayList<StoredPokemon> list, Context context) {
+    void setHatchAdapter(ArrayList<InterfaceStoredPokemon> list, Context context) {
         storedPokemonAdapter = new StoredPokemonAdapter(list, context);
         gridViewPokemons.setAdapter(storedPokemonAdapter);
         updateGridView();
@@ -155,11 +157,11 @@ public class StoredPokemonFragment extends Fragment implements
         fragment.show(fm, "");
     }
 
-    void openStoredPokemonPopupFragment(View callerView, StoredPokemon selectedPokemon, int pokemonPos) {
+    void openStoredPokemonViewerFragment(View callerView, UUID pokemonUUID, int pokemonPos) {
         FragmentManager fragmentManager = getFragmentManager();
         int callerViewPosition[] = new int[2];
         callerView.getLocationOnScreen(callerViewPosition);
-        StoredPokemonPopupFragment fragment = StoredPokemonPopupFragment.newInstance(callerViewPosition, selectedPokemon, pokemonPos);
+        StoredPokemonViewerFragment fragment = StoredPokemonViewerFragment.newInstance(callerViewPosition, pokemonUUID, pokemonPos); //TODO: usar newinstance pra passar o pokemon pro modifypokemonfragment
         fragment.setTargetFragment(this, 0);
         fragment.show(fragmentManager, "storedPokemonPopup");
     }
@@ -179,7 +181,7 @@ public class StoredPokemonFragment extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
-        setHatchAdapter(feederCallback.getStoredPokemonList(), getContext());
+        setHatchAdapter(feederCallback.getInterfaceStoredPokemonList(), getContext());
         updateGridView();
     }
 
@@ -220,15 +222,13 @@ public class StoredPokemonFragment extends Fragment implements
     }
 
     @Override
-    public void storePokemon(StoredPokemon pokemon) {
-        lastAddedPokemonId = pokemon.getPokemonId();
-        updaterCallback.storePokemon(pokemon);
+    public void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
+        lastAddedPokemonId = pokemonId;
+        updaterCallback.storePokemon(pokemonId, genderId, IVs, natureId, abilitySlot);
+        setHatchAdapter(feederCallback.getInterfaceStoredPokemonList(), getContext());
+
     }
 
-    @Override
-    public StoredPokemon getGoalPokemon() {
-        return feederCallback.getGoalPokemon();
-    }
 
     @Override
     public ArrayList<Integer> getCompatiblePokemonList() {
@@ -264,7 +264,7 @@ public class StoredPokemonFragment extends Fragment implements
 
         HashMap<Integer, String> getListOfAbilities(int pokemonId);
 
-        ArrayList<StoredPokemon> getStoredPokemonList(); //TODO: ver se não é uma boa passar uma cópia dessa lista pra evitar merda aqui (ver no final isso)
+        ArrayList<InterfaceStoredPokemon> getInterfaceStoredPokemonList(); //TODO: ver se não é uma boa passar uma cópia dessa lista pra evitar merda aqui (ver no final isso)
 
         int getGenderRate(int pokemonId);
 
@@ -275,14 +275,39 @@ public class StoredPokemonFragment extends Fragment implements
         ArrayList<Integer> getPokemonIds();
 
         ArrayList<String> getPokemonNames();
+
+        InterfaceViewerPokemon getInterfaceViewerPokemon(UUID uuid);
+
+        String getPokemonName(int pokemonId);
+
+        InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid);
     }
 
     interface UpdateStoredPokemonList {
-        void storePokemon(StoredPokemon pokemon);
+        void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot);
+        void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot);
+    }
+
+
+
+    @Override
+    public InterfaceViewerPokemon getInterfaceViewerPokemon(UUID uuid) {
+        return feederCallback.getInterfaceViewerPokemon(uuid);
     }
 
     @Override
-    public StoredPokemon getTemporaryPokemon() {
-        return null;
+    public String getPokemonName(int pokemonId) {
+        return feederCallback.getPokemonName(pokemonId);
+    }
+
+    @Override
+    public InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
+        return feederCallback.getInterfaceModifierPokemon(uuid);
+    }
+
+    @Override
+    public void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
+        updaterCallback.updateStoredPokemon(uuid, pokemonId, genderId, IVs, natureId, abilitySlot);
+        setHatchAdapter(feederCallback.getInterfaceStoredPokemonList(), getContext());
     }
 }

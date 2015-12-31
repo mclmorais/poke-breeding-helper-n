@@ -11,7 +11,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="250dp"
         android:layout_height="232dp"
-        tools:context="marcelo.breguenait.breedinghelper.StoredPokemonPopupFragment"
+        tools:context=".StoredPokemonViewerFragment"
         xmlns:fab="http://schemas.android.com/apk/res-auto">
 
 
@@ -258,7 +258,7 @@
             android:text="@string/placeholder"
             android:id="@+id/textPokemonPopupEggGroup1"
             android:layout_gravity="center_horizontal"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:textColor="#ffcfcfcf"
             android:textStyle="italic"
             android:textSize="10dp"
@@ -276,7 +276,7 @@
             android:text="@string/placeholder"
             android:id="@+id/textPokemonPopupEggGroup2"
             android:layout_gravity="center_horizontal"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:textColor="#ffcfcfcf"
             android:textStyle="italic"
             android:textSize="10dp"

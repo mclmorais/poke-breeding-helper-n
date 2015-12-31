@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.util.Log;
 
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -238,12 +239,28 @@ public class MyDatabase extends SQLiteAssetHelper {
         return list;
     }
 
-    public String getPokemonName(int pokemonId) {
-        String s = "SELECT name FROM pokemon_species_names where local_language_id=9 and pokemon_species_id=" + Integer.toString(pokemonId);
+    public String getPokemonName(int pokemonId, int languageId) {
+        String s = "SELECT " +
+                "name " +
+                "FROM " +
+                "pokemon_species_names " +
+                "WHERE " +
+                "local_language_id=" +
+                Integer.toString(languageId) +
+                " AND " +
+                "pokemon_species_id=" +
+                Integer.toString(pokemonId);
 
         Cursor c = database.rawQuery(s, null);
         c.moveToFirst();
-        return c.getString(0);
+        String name;
+        if(c.getCount() > 0)
+            name = c.getString(0);
+        else
+            name = "";
+
+        c.close();
+        return name;
     }
 
     public ArrayList<String> getListOfNatures(int languageId) {
@@ -484,6 +501,69 @@ public class MyDatabase extends SQLiteAssetHelper {
 
     }
 
+    public String getNatureName(int natureId, int languageId) {
+        String s = "SELECT " +
+                "name " +
+                "FROM " +
+                "nature_names " +
+                "WHERE " +
+                "local_language_id=" +
+                Integer.toString(languageId) +
+                " AND " +
+                "nature_id=" +
+                Integer.toString(natureId);
+
+        Cursor c = database.rawQuery(s, null);
+        c.moveToFirst();
+        String name;
+        if(c.getCount() > 0)
+            name = c.getString(0);
+        else {
+            name = "";
+            Log.d("DB", "NAME OF THE NATURE WAS NOT FOUND!!!!!");
+        }
+        c.close();
+        return name;
+    }
+
+    public String getAbilityName(int pokemonId, int abilitySlot, int languageId) {
+        String s = "SELECT " +
+                "name " +
+                "FROM " +
+                "ability_names " +
+                "WHERE " +
+                "local_language_id=" +
+                Integer.toString(languageId) +
+                " AND " +
+                "ability_id " +
+                "IN(" +
+                "SELECT " +
+                "ability_id " +
+                "FROM " +
+                "pokemon_abilities " +
+                "WHERE " +
+                "pokemon_id=" +
+                Integer.toString(pokemonId) +
+                " AND " +
+                "slot=" +
+                Integer.toString(abilitySlot) +
+                ")";
+
+
+        Cursor c = database.rawQuery(s, null);
+        c.moveToFirst();
+        String name;
+        if(c.getCount() > 0)
+            name = c.getString(0);
+        else {
+            name = "";
+            Log.d("DB", "NAME OF THE ABILITY WAS NOT FOUND!!!!!");
+        }
+
+        c.close();
+        return name;
+    }
+
 
     ArrayList<Integer> getPokemonIds() {
 
@@ -529,6 +609,8 @@ public class MyDatabase extends SQLiteAssetHelper {
 
             cursorIds.moveToNext();
         }
+
+        cursorIds.close();
 
         return names;
 

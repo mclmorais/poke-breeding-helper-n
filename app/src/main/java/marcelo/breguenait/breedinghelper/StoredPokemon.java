@@ -8,7 +8,7 @@ import java.util.UUID;
 public class StoredPokemon {
 
     /*Unique identifier of this stored Pokemon*/
-    private UUID storedId; //TODO: create internally
+    private UUID storedId;
 
     /*Dynamic data - User defined*/
     /*These fields should be set manually*/
@@ -57,7 +57,7 @@ public class StoredPokemon {
         return abilitySlot;
     }
 
-    public UUID getStoredId() {
+    public UUID getUUID() {
         return storedId;
     }
 
