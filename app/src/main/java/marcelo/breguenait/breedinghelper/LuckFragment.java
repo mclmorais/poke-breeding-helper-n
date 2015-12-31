@@ -86,7 +86,6 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
     private final List<View> interfaceChanceList = new ArrayList<>();
     private boolean showOnlyBestChance = true;
     private PreloadedDrawables preloadedDrawables;
-    private List<ChancePokemonMatch> chanceDataList;
     private UpdateLuckInterface mListener;
     private LinearLayout layoutChances;
     private LayoutInflater inflater2;
@@ -243,8 +242,13 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
     public void updateCurrentChances() {
 
         List<ChancePokemonMatch> chancePokemonMatchList = feederCallback.getChancesList();
+        //TODO: descagar as chances, ta mandando uma chance sempre com pokemons que nao existem
+        if (chancePokemonMatchList.isEmpty()) {
+            layoutChances.removeAllViews();
+            return;
+        }
 
-        chanceDataList = new ArrayList<>(chancePokemonMatchList);
+        if(true) return;
 
         if (layoutChances != null)
             layoutChances.removeAllViews();
@@ -345,6 +349,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
             // secondIcon.setBackgroundResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
             secondIcon.setBackground(CachedPokemonIcons.getInstance().getIcon(secondPokemon.getPokemonId()).getConstantState().newDrawable());
             //secondIcon.setBackground(PokemonData.getInstance().getDrawableFromId(secondPokemon.getPokemonId()).getConstantState().newDrawable());
+
 
             ImageView firstIVs[] = new ImageView[6];
             firstIVs[0] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstHP);

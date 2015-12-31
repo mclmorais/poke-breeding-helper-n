@@ -545,21 +545,25 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public void updateGoalId(int id) {
         breedingManager.setGoalId(id);
+        updateLuckFragment();
     }
 
     @Override
     public void updateGoalNature(int natureId) {
         breedingManager.setGoalNature(natureId);
+        updateLuckFragment();
     }
 
     @Override
     public void updateGoalAbilitySlot(int abilitySlot) {
         breedingManager.setGoalAbilitySlot(abilitySlot);
+        updateLuckFragment();
     }
 
     @Override
     public void updateGoalIVs(int[] IVs) {
         breedingManager.setGoalIVs(IVs);
+        updateLuckFragment();
     }
 
 
@@ -573,12 +577,7 @@ public class IvCalculatorFragment extends Fragment
         return breedingManager.getGenderRate(pokemonId);
     }
 
-    @Override
-    public void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
-        breedingManager.storePokemon(pokemonId, genderId, IVs, natureId, abilitySlot);
-        updatePokemonListFragment(); //TODO: remover daqui
-        updateLuckFragment();
-    }
+
 
     @Override
     public ArrayList<InterfaceStoredPokemon> getInterfaceStoredPokemonList() {
@@ -621,14 +620,23 @@ public class IvCalculatorFragment extends Fragment
     }
 
     @Override
+    public void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
+        breedingManager.storePokemon(pokemonId, genderId, IVs, natureId, abilitySlot);
+        updatePokemonListFragment(); //TODO: remover daqui
+        updateLuckFragment();
+    }
+
+    @Override
     public void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
         breedingManager.updateStoredPokemon(uuid, pokemonId, genderId, IVs, natureId, abilitySlot);
         updatePokemonListFragment(); //TODO: remover daqui
+        updateLuckFragment();
     }
 
     @Override
     public void removeStoredPokemon(UUID uuid) {
         breedingManager.removePokemon(uuid);
+        updateLuckFragment();
     }
 
     @Override
