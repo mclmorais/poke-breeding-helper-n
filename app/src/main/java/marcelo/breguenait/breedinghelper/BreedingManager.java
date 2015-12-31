@@ -27,7 +27,7 @@ public class BreedingManager {
 
     private ArrayList<StoredPokemon> storedPokemonList = new ArrayList<>();
 
-    private ArrayList<PokemonMatchChance> pokemonMatchChanceList = new ArrayList<>();
+    private ArrayList<ChancePokemonMatch> chancePokemonMatchList = new ArrayList<>();
 
     public BreedingManager() {
         ivChanceCalculator = new IvChanceCalculator();
@@ -37,7 +37,7 @@ public class BreedingManager {
         goalPokemon = new StoredPokemon.Builder().createStoredPokemon();
         database = MyDatabase.getInstance();
 
-        for(int i = 225; i < 227; i++) {
+        for (int i = 225; i < 227; i++) {
             int[] IVs = {1, 1, 1, 1, 0, 1};
             storedPokemonList.add(new StoredPokemon.Builder()
                     .setPokemonId(i)
@@ -132,13 +132,14 @@ public class BreedingManager {
     }
 
 
-    public void calculateBestMatches() {
+    public ArrayList<ChancePokemonMatch> calculateBestMatches() {
+
         //Doesn't do any calculations if the goal Pokemon isn't set
         if (goalPokemon.getPokemonId() == -1)
-            return;
+            return new ArrayList<>(0);
 
         try {
-            if (pokemonMatchChanceList == null)
+            if (chancePokemonMatchList == null)
                 throw new Exception("matchChanceList was null when " +
                         "trying to calculate best matches!");
         } catch (Exception e) {
@@ -178,8 +179,8 @@ public class BreedingManager {
                             chance);
 
                     //Adds chance to list
-                    pokemonMatchChanceList.add(
-                            new PokemonMatchChance(
+                    chancePokemonMatchList.add(
+                            new ChancePokemonMatch(
                                     firstPokemon.getUUID(),
                                     secondPokemon.getUUID(),
                                     chance));
@@ -187,18 +188,20 @@ public class BreedingManager {
             }
         }
 
-        class ChanceComparator implements Comparator<PokemonMatchChance> {
+        class ChanceComparator implements Comparator<ChancePokemonMatch> {
             @Override
-            public int compare(PokemonMatchChance e1, PokemonMatchChance e2) {
-                return Double.compare(e1.chance, e2.chance);
+            public int compare(ChancePokemonMatch e1, ChancePokemonMatch e2) {
+                return Double.compare(e1.getChance(), e2.getChance());
             }
         }
 
         //Sorts list by biggest to smallest chance
-        if (!pokemonMatchChanceList.isEmpty()) {
-            Collections.sort(pokemonMatchChanceList, new ChanceComparator());
-            Collections.reverse(pokemonMatchChanceList);
+        if (!chancePokemonMatchList.isEmpty()) {
+            Collections.sort(chancePokemonMatchList, new ChanceComparator());
+            Collections.reverse(chancePokemonMatchList);
         }
+
+        return chancePokemonMatchList;
     }
 
     ArrayList<String> getListOfNatures() {
@@ -217,7 +220,6 @@ public class BreedingManager {
     int getGenderRate(int pokemonId) {
         return database.getGenderRate(pokemonId);
     }
-
 
 
     @Deprecated
@@ -263,17 +265,17 @@ public class BreedingManager {
 
         StoredPokemon desiredPokemon = null;
 
-        int[] IVs = {-1,-1,-1,-1,-1,-1};
+        int[] IVs = {-1, -1, -1, -1, -1, -1};
 
         for (StoredPokemon storedPokemon : storedPokemonList) {
-            if(storedPokemon.getUUID().equals(uuid)) {
+            if (storedPokemon.getUUID().equals(uuid)) {
                 desiredPokemon = storedPokemon;
                 break;
             }
         }
 
-        if(desiredPokemon == null)
-            return new InterfaceViewerPokemon(-1,-1,IVs,"","","");
+        if (desiredPokemon == null)
+            return new InterfaceViewerPokemon(-1, -1, IVs, "", "", "");
         else {
             String natureName = database.getNatureName(desiredPokemon.getNatureId(), languageId);
             String abilityName = database.getAbilityName(desiredPokemon.getPokemonId(), desiredPokemon.getAbilitySlot(), languageId);
@@ -298,17 +300,17 @@ public class BreedingManager {
     InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
         StoredPokemon desiredPokemon = null;
 
-        int[] IVs = {-1,-1,-1,-1,-1,-1};
+        int[] IVs = {-1, -1, -1, -1, -1, -1};
 
         for (StoredPokemon storedPokemon : storedPokemonList) {
-            if(storedPokemon.getUUID().equals(uuid)) {
+            if (storedPokemon.getUUID().equals(uuid)) {
                 desiredPokemon = storedPokemon;
                 break;
             }
         }
 
-        if(desiredPokemon == null)
-            return new InterfaceModifierPokemon(-1,-1,IVs,-1,-1);
+        if (desiredPokemon == null)
+            return new InterfaceModifierPokemon(-1, -1, IVs, -1, -1);
         else {
             return new InterfaceModifierPokemon(
                     desiredPokemon.getPokemonId(),
@@ -327,16 +329,15 @@ public class BreedingManager {
         StoredPokemon pokemonToBeChanged = null;
 
         for (StoredPokemon storedPokemon : storedPokemonList) {
-            if(storedPokemon.getUUID().equals(uuid)) {
+            if (storedPokemon.getUUID().equals(uuid)) {
                 pokemonToBeChanged = storedPokemon;
                 break;
             }
         }
 
-        if(pokemonToBeChanged == null) {
+        if (pokemonToBeChanged == null) {
             Log.d("BM", "DIDNT FIND THE UUID THAT WAS SUPPOSED TO BE CHANGED!!!");
-        }
-        else {
+        } else {
             pokemonToBeChanged.setPokemonId(pokemonId);
             pokemonToBeChanged.setGenderId(genderId);
             pokemonToBeChanged.setIVs(IVs);
@@ -351,12 +352,54 @@ public class BreedingManager {
         StoredPokemon pokemonToBeChanged = null;
 
         for (StoredPokemon storedPokemon : storedPokemonList) {
-            if(storedPokemon.getUUID().equals(uuid)) {
+            if (storedPokemon.getUUID().equals(uuid)) {
                 storedPokemonList.remove(storedPokemon);
                 break;
             }
         }
 
+
+    }
+
+    InterfaceChancePokemon getInterfaceChancePokemon(UUID uuid) {
+        StoredPokemon desiredPokemon = null;
+
+        int[] IVs = {-1, -1, -1, -1, -1, -1};
+
+        for (StoredPokemon storedPokemon : storedPokemonList) {
+            if (storedPokemon.getUUID().equals(uuid)) {
+                desiredPokemon = storedPokemon;
+                break;
+            }
+        }
+
+        if (desiredPokemon == null)
+            return new InterfaceChancePokemon(-1, -1, IVs, "", "", false);
+        else {
+            String natureName = database.getNatureName(desiredPokemon.getNatureId(), languageId);
+            String abilityName = database.getAbilityName(desiredPokemon.getPokemonId(), desiredPokemon.getAbilitySlot(), languageId);
+            boolean sameNature = (desiredPokemon.getNatureId() == goalPokemon.getNatureId());
+
+            return new InterfaceChancePokemon(
+                    desiredPokemon.getPokemonId(),
+                    desiredPokemon.getGenderId(),
+                    desiredPokemon.getIVs(),
+                    natureName,
+                    abilityName,
+                    sameNature
+            );
+        }
+    }
+
+    InterfaceGoalPokemon getInterfaceGoalPokemon() {
+        String pokemonName = database.getPokemonName(goalPokemon.getPokemonId(), languageId);
+        return new InterfaceGoalPokemon(
+                goalPokemon.getIVs(),
+                goalPokemon.getPokemonId(),
+                pokemonName,
+                goalPokemon.getNatureId(),
+                goalPokemon.getAbilitySlot()
+        );
 
     }
 

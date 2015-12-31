@@ -72,15 +72,8 @@ class InterfaceViewerPokemon {
 
 //TODO: CRIAR EDITOR CLASSE PRA ESSE FRAGMENT!!!!!
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link StoredPokemonViewerFragment.OnPokemonPopupListener} interface
- * to handle interaction events.
- * Use the {@link StoredPokemonViewerFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class StoredPokemonViewerFragment extends PopupDialogFragment implements EditorPokemonFragment.OnBuildPokemon,
+public class StoredPokemonViewerFragment extends PopupDialogFragment
+        implements
         EditorPokemonFragment.FeedDataCreatePokemon,
         ModifierPokemonFragment.FeedDataModifyPokemon,
         ModifierPokemonFragment.UpdateModifyPokemon {
@@ -100,8 +93,6 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment implements 
 
 
     private int pokemonPos;
-
-    private OnPokemonPopupListener mListener;
 
     private FeedDataPokemonViewer feederCallback;
     private UpdatePokemonViewer updaterCallback;
@@ -188,16 +179,6 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment implements 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                mListener = (OnPokemonPopupListener) activity;
-            else
-                mListener = (OnPokemonPopupListener) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnPokemonPopupListener");
-        }
 
         try {
             Fragment targetFragment = getTargetFragment();
@@ -225,7 +206,7 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment implements 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        //TODO: ver se é necessário colocar null nos callbacks
     }
 
     @Override
@@ -377,10 +358,6 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment implements 
         return b;
     }
 
-    @Override
-    public PokemonInfo getGoal() {
-        return mListener.getGoal();
-    }
 
     @Override
     public ArrayList<String> getListOfNatures() {
@@ -429,21 +406,6 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment implements 
         updateInterface();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnPokemonPopupListener {
-        void onPokemonAltered(PokemonInfo alteredPokemon, int position);
-
-        PokemonInfo getGoal();
-    }
 
     public interface FeedDataPokemonViewer {
 
@@ -469,7 +431,6 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment implements 
     public interface UpdatePokemonViewer {
         void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot);
     }
-
 
     private class PreloadedDrawables {
         final Drawable[] IVActive = new Drawable[6];

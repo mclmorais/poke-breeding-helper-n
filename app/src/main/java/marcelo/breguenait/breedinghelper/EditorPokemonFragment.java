@@ -64,8 +64,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     private FloatingActionButton buttonEdit;
     private View buttonPokemonSelector;
 
-    @Deprecated
-    private OnBuildPokemon mCallback;
     private boolean showOnlyCompatible;
     protected Spinner spinnerNature, spinnerAbility;
     protected ArrayList<Integer> abilityIds;
@@ -79,17 +77,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         super.onAttach(activity);
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                mCallback = (OnBuildPokemon) activity;
-            else
-                mCallback = (OnBuildPokemon) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getTargetFragment().toString()
-                    + " must implement BuildPokemon");
-        }
-
         try {
             Fragment targetFragment = getTargetFragment();
             if (targetFragment == null)
@@ -407,10 +394,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         return feederCallback.getPokemonNames();
     }
 
-    @Deprecated
-    public interface OnBuildPokemon {
-        PokemonInfo getGoal();
-    }
 
     public interface FeedDataCreatePokemon {
         ArrayList<String> getListOfNatures();

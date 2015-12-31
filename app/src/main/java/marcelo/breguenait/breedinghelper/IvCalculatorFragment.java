@@ -41,13 +41,13 @@ class Constants {
 
 public class IvCalculatorFragment extends Fragment
         implements
-        StoredPokemonFragment.OnPokemonListChanged,
         StoredPokemonFragment.FeedDataStoredPokemon,
         StoredPokemonFragment.UpdateStoredPokemonList,
         LuckFragment.UpdateLuckInterface,
         GoalIVsFragment.OnGoalUpdate,
         GoalIVsFragment.FeedDataGoalIVs,
-        GoalIVsFragment.UpdateGoal {
+        GoalIVsFragment.UpdateGoal,
+        LuckFragment.FeederLuckData {
 
     private final Gson gson = new Gson();
     @Bind(R.id.main_activity_toolbar)
@@ -117,7 +117,7 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public void onStart() {
         super.onStart();
-        //  updateLuckFragment(ivManager.getBestCombinations());
+          //updateLuckFragment();
 
 
     }
@@ -158,18 +158,11 @@ public class IvCalculatorFragment extends Fragment
             case R.id.action_report_bug:
                 sendBugReport();
                 return true;
-            case R.id.action_open_movedex:
-                openMoveDex();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    void openMoveDex() {
-        Intent myIntent = new Intent(getContext(), MoveDexActivity.class);
-        myIntent.putExtra("goalPokemon", (getGoal() != null) ? getGoal().id : 0);
-        IvCalculatorFragment.this.startActivity(myIntent);
-    }
 
     void openSettings() {
         Intent intent = new Intent(getContext(), SettingsActivity.class);
@@ -253,11 +246,6 @@ public class IvCalculatorFragment extends Fragment
 
     }
 
-
-    public PokemonInfo getGoal() {
-        return ivManager.getGoalPokemon();
-    }
-
     public boolean goalExists() {
         return ivManager.getGoalPokemon() != null;
     }
@@ -335,32 +323,25 @@ public class IvCalculatorFragment extends Fragment
 
     }
 
-
+    @Deprecated
     void updatePokemonListFragment() {
+        //TODO: fazer por callback!
         StoredPokemonFragment frag = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         frag.updateGridView();
     }
 
-    void updateLuckFragment(List<ChanceData> c) {
-
-        if (c == null) return;
-
+    void updateLuckFragment() {
         LuckFragment frag = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
-        frag.updateCurrentChances(c);
-
+        frag.updateCurrentChances();
     }
 
     public void addPokemonToList(PokemonInfo pokemon) {
         ivManager.storePokemon(pokemon);
-        updateLuckFragment(ivManager.getBestCombinations());
+        //updateLuckFragment(ivManager.getBestCombinations());
         updatePokemonListFragment();
     }
 
-    @Override
-    public void removePokemon(int position) {
-        ivManager.removePokemon(position);
-        updateLuckFragment(ivManager.getBestCombinations());
-    }
+
 
     void saveData() {
 
@@ -476,22 +457,9 @@ public class IvCalculatorFragment extends Fragment
 
 
     @Override
-    public void updateGoal(PokemonInfo p) {
-        ivManager.setGoalPokemon(p);
-
-        int counter = 0;
-        for (int i = 0; i < 6; i++) {
-            counter += p.IVs[i];
-        }
-
-        updateLuckFragment(ivManager.getBestCombinations());
-    }
-
-
-    @Override
     public void setDestinyKnot(boolean b) {
         ivManager.setMaleItem(b ? Item.DESTINY_KNOT : Item.NO_ITEM);
-        updateLuckFragment(ivManager.getBestCombinations());
+        //updateLuckFragment(ivManager.getBestCombinations());
     }
 
     @Override
@@ -511,11 +479,6 @@ public class IvCalculatorFragment extends Fragment
     }
 
 
-    @Override
-    public PokemonInfo getGoalData() {
-        return getGoal();
-    }
-
     void saveBoolean(String key, Boolean value) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor prefEditor = sharedPref.edit();
@@ -529,21 +492,11 @@ public class IvCalculatorFragment extends Fragment
 
     }
 
-    @Override
-    public PokemonInfo getSelectedPokemonData(int position) {
-        return ivManager.getStoredPokemon(position);
-    }
-
-    @Override
-    public void editPokemon(PokemonInfo pokemon, int position) {
-        ivManager.editPokemon(pokemon, position);
-        updateLuckFragment(ivManager.getBestCombinations());
-    }
 
     @Override
     public void updateNatureStatus(boolean b) {
         ivManager.setConsiderNature(b);
-        updateLuckFragment(ivManager.getBestCombinations());
+        //updateLuckFragment(ivManager.getBestCombinations());
     }
 
     @Override
@@ -554,7 +507,7 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public void setEverstone(boolean b) {
         ivManager.setEverstone(b);
-        updateLuckFragment(ivManager.getBestCombinations());
+        //updateLuckFragment(ivManager.getBestCombinations());
     }
 
     @Override
@@ -570,7 +523,7 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public void updateAbilityStatus(boolean b) {
         ivManager.setConsiderAbility(b);
-        updateLuckFragment(ivManager.getBestCombinations());
+        //updateLuckFragment(ivManager.getBestCombinations());
     }
 
     @Override
@@ -624,6 +577,7 @@ public class IvCalculatorFragment extends Fragment
     public void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
         breedingManager.storePokemon(pokemonId, genderId, IVs, natureId, abilitySlot);
         updatePokemonListFragment(); //TODO: remover daqui
+        updateLuckFragment();
     }
 
     @Override
@@ -675,5 +629,20 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public void removeStoredPokemon(UUID uuid) {
         breedingManager.removePokemon(uuid);
+    }
+
+    @Override
+    public ArrayList<ChancePokemonMatch> getChancesList() {
+        return breedingManager.calculateBestMatches();
+    }
+
+    @Override
+    public InterfaceChancePokemon getInterfaceChancePokemon(UUID uuid) {
+        return breedingManager.getInterfaceChancePokemon(uuid);
+    }
+
+    @Override
+    public InterfaceGoalPokemon getInterfaceGoalPokemon() {
+        return breedingManager.getInterfaceGoalPokemon();
     }
 }

@@ -20,20 +20,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+
 //TODO: fazer list do stored adapter ser mais proativo ao invés de ressetar toda vez
 
 /**
  * Created by Marcelo on 21/12/2014.
  */
 public class StoredPokemonFragment extends Fragment implements
-        EditorPokemonFragment.OnBuildPokemon,
-        StoredPokemonViewerFragment.OnPokemonPopupListener,
         EditorPokemonFragment.FeedDataCreatePokemon,
         CreatePokemonFragment.UpdateCreatePokemon,
         StoredPokemonViewerFragment.FeedDataPokemonViewer,
         StoredPokemonViewerFragment.UpdatePokemonViewer {
 
-    private OnPokemonListChanged mCallback;
     private StoredPokemonAdapter storedPokemonAdapter;
     private GridView gridViewPokemons;
     private Button buttonAdd;
@@ -48,18 +46,6 @@ public class StoredPokemonFragment extends Fragment implements
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                mCallback = (OnPokemonListChanged) activity;
-            else
-                mCallback = (OnPokemonListChanged) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement TempInterface");
-        }
 
         try {
             Fragment targetFragment = getTargetFragment();
@@ -198,17 +184,6 @@ public class StoredPokemonFragment extends Fragment implements
         return b;
     }
 
-    @Override
-    public PokemonInfo getGoal() {
-        return mCallback.getGoalData();
-    }
-
-    @Override
-    public void onPokemonAltered(PokemonInfo alteredPokemon, int position) {
-        mCallback.editPokemon(alteredPokemon, position);
-        storedPokemonAdapter.notifyDataSetChanged();
-
-    }
 
     @Override
     public ArrayList<String> getListOfNatures() {
@@ -270,20 +245,6 @@ public class StoredPokemonFragment extends Fragment implements
         setHatchAdapter(feederCallback.getInterfaceStoredPokemonList(), getContext());
     }
 
-    interface OnPokemonListChanged {
-        void addPokemonToList(PokemonInfo pokemon);
-
-        void editPokemon(PokemonInfo pokemon, int position);
-
-        void removePokemon(int position);
-
-        PokemonInfo getGoalData();
-
-        PokemonInfo getSelectedPokemonData(int position);
-
-
-    }
-
     interface FeedDataStoredPokemon {
         ArrayList<String> getListOfNatures();
 
@@ -315,4 +276,6 @@ public class StoredPokemonFragment extends Fragment implements
 
         void removeStoredPokemon(UUID uuid);
     }
+
+
 }
