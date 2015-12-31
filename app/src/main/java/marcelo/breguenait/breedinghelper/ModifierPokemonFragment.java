@@ -110,7 +110,7 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
 
     void pickSpinnersWithReceivedData() {
 
-
+        //TODO: mudar esse abilityslots q ta meio merda
         int position = 0;
         for (int i = 0; i < abilitySlots.size(); i++) {
             if(abilitySlots.get(i) == selectedAbilitySlot) {
