@@ -183,7 +183,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         });
 
         checkBoxDestinyKnot = (CheckBox) v.findViewById(R.id.luckFragmentCheckBoxDestinyKnot);
-        checkBoxDestinyKnot.setChecked(mListener.updateDestinyKnotChance());
+        checkBoxDestinyKnot.setChecked(feederCallback.isDestinyKnotActive());
 
         checkBoxDestinyKnot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -545,7 +545,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
     public interface UpdateLuckInterface {
         void setDestinyKnot(boolean b);
 
-        boolean updateDestinyKnotChance();
+
 
         int loadShinyOptions();
 
@@ -560,6 +560,8 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         ArrayList<ChancePokemonMatch> getChancesList();
 
         InterfaceChancePokemon getInterfaceChancePokemon(UUID uuid);
+
+        boolean isDestinyKnotActive();
     }
 
     private class PreloadedDrawables {

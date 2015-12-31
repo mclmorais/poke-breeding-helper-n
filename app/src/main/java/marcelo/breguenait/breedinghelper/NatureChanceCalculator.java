@@ -5,8 +5,24 @@ package marcelo.breguenait.breedinghelper;
  */
 public class NatureChanceCalculator {
 
-    boolean considerNature = false;
-    boolean hasEverstone = true;
+    private boolean considerNature = false;
+    private boolean hasEverstone = true;
+
+    public boolean considerNature() {
+        return considerNature;
+    }
+
+    public void setConsiderNature(boolean considerNature) {
+        this.considerNature = considerNature;
+    }
+
+    public boolean hasEverstone() {
+        return hasEverstone;
+    }
+
+    public void setHasEverstone(boolean hasEverstone) {
+        this.hasEverstone = hasEverstone;
+    }
 
     public double getNatureChance(StoredPokemon firstPokemon,
                                   StoredPokemon secondPokemon,

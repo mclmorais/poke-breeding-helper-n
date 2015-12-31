@@ -98,7 +98,7 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
 
         // clone the inflater using the ContextThemeWrapper
         LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-        View view = localInflater.inflate(R.layout.fragment_add_pokemon_2, container, false);
+        View view = localInflater.inflate(R.layout.fragment_edit_pokemon, container, false);
 
 
         buttonPokemonSelector = view.findViewById(R.id.buttonSelectPokemon);

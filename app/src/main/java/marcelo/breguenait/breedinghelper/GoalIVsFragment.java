@@ -95,8 +95,10 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     private final AdapterView.OnItemSelectedListener updateGoalNatureOnSeletion = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (spinnerNature.getTag() != position) //TODO: TESTAR!!!!!!!!!!!!!!!!!!
+            if (spinnerNature.getTag() != position) {//TODO: TESTAR!!!!!!!!!!!!!!!!!!
+                spinnerNature.setTag(-1);
                 onInterfaceGoalNatureChanged();
+            }
         }
 
         @Override
@@ -115,8 +117,10 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     private final AdapterView.OnItemSelectedListener updateGoalAbilityOnSeletion = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (spinnerAbility.getTag() != position)
+            if (spinnerAbility.getTag() != position) {
+                spinnerAbility.setTag(-1);
                 onInterfaceGoalAbilityChanged();
+            }
         }
 
         @Override
@@ -191,23 +195,21 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         spinnerNature.setOnItemSelectedListener(updateGoalNatureOnSeletion);
         spinnerAbility.setOnItemSelectedListener(updateGoalAbilityOnSeletion);
 
-//        checkBoxActivateNatures = (CheckBox) view.findViewById(R.id.checkBoxGoalIVsActivateNatures);
-        checkBoxActivateNatures.setChecked(mCallback.getConsiderNatureStatus());
+        checkBoxActivateNatures.setChecked(feederCallback.getConsiderNatureStatus());
         checkBoxActivateNatures.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mCallback.updateNatureStatus(isChecked);
+                updaterCallback.updateNatureStatus(isChecked);
                 String s = isChecked ? "considered" : "ignored";
                 Toast.makeText(getActivity().getApplicationContext(), "Nature " + s + ".", Toast.LENGTH_SHORT).show();
             }
         });
 
-        //  checkBoxActivateAbilities = (CheckBox) view.findViewById(R.id.checkBoxGoalIVsActivateAbilities);
-        checkBoxActivateAbilities.setChecked(mCallback.getConsiderAbilityStatus());
+        checkBoxActivateAbilities.setChecked(feederCallback.getConsiderAbilityStatus());
         checkBoxActivateAbilities.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mCallback.updateAbilityStatus(isChecked);
+                updaterCallback.updateAbilityStatus(isChecked);
                 String s = isChecked ? "considered" : "ignored";
                 Toast.makeText(getActivity().getApplicationContext(), "Ability " + s + ".", Toast.LENGTH_SHORT).show();
             }
@@ -447,13 +449,7 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
 
     interface OnGoalUpdate {
 
-        void updateNatureStatus(boolean b);
 
-        void updateAbilityStatus(boolean b);
-
-        boolean getConsiderNatureStatus();
-
-        boolean getConsiderAbilityStatus();
 
     }
 
@@ -467,6 +463,9 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         ArrayList<String> getPokemonNames();
 
         InterfaceGoalPokemon getInterfaceGoalPokemon();
+
+        boolean getConsiderNatureStatus();
+        boolean getConsiderAbilityStatus();
     }
 
     interface UpdateGoal {
@@ -477,5 +476,10 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         void updateGoalAbilitySlot(int abilitySlot);
 
         void updateGoalIVs(int[] IVs);
+
+        void updateAbilityStatus(boolean b);
+        void updateNatureStatus(boolean b);
+
+
     }
 }

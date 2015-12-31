@@ -129,7 +129,6 @@
         android:verticalSpacing="4dp"
         android:horizontalSpacing="4dp"
         android:stretchMode="columnWidth"
-        android:columnWidth="48dp"
-        android:animateLayoutChanges="true"/>
+        android:columnWidth="48dp" />
 
 </LinearLayout>

@@ -338,22 +338,23 @@ public class IvCalculatorFragment extends Fragment
 
         String jsonString;
 
-        jsonString = gson.toJson(ivManager.getStoredPokemonList());
-        prefEditor.putString("jsonPokemonList", jsonString);
+//        jsonString = gson.toJson(ivManager.getStoredPokemonList());
+//        prefEditor.putString("jsonPokemonList", jsonString);
 
-        jsonString = gson.toJson(ivManager.hasEverstone());
+//        jsonString = gson.toJson(ivManager.getGoalPokemon());
+//        prefEditor.putString("jsonCurrentGoal", jsonString);
+
+
+        jsonString = gson.toJson(breedingManager.hasEverstone());
         prefEditor.putString("jsonHasEverstone", jsonString);
 
-        jsonString = gson.toJson(ivManager.considerNature());
+        jsonString = gson.toJson(breedingManager.considerNature());
         prefEditor.putString("jsonConsiderNature", jsonString);
 
-        jsonString = gson.toJson(ivManager.considerAbility());
+        jsonString = gson.toJson(breedingManager.considerAbility());
         prefEditor.putString("jsonConsiderAbility", jsonString);
 
-        jsonString = gson.toJson(ivManager.getGoalPokemon());
-        prefEditor.putString("jsonCurrentGoal", jsonString);
-
-        jsonString = gson.toJson(ivManager.getMaleItem());
+        jsonString = gson.toJson(breedingManager.hasDestinyKnot());
         prefEditor.putString("jsonMaleItem", jsonString);
 
         LuckFragment l = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
@@ -387,17 +388,17 @@ public class IvCalculatorFragment extends Fragment
 
         jsonString = sharedPref.getString("jsonHasEverstone", null);
         if (jsonString != null) {
-            ivManager.setEverstone(gson.fromJson(jsonString, Boolean.class));
+            breedingManager.setEverstone(gson.fromJson(jsonString, Boolean.class));
         }
 
         jsonString = sharedPref.getString("jsonConsiderNature", null);
         if (jsonString != null) {
-            ivManager.setConsiderNature(gson.fromJson(jsonString, Boolean.class));
+            breedingManager.setConsiderNature(gson.fromJson(jsonString, Boolean.class));
         }
 
         jsonString = sharedPref.getString("jsonConsiderAbility", null);
         if (jsonString != null) {
-            ivManager.setConsiderAbility(gson.fromJson(jsonString, Boolean.class));
+            breedingManager.setConsiderAbility(gson.fromJson(jsonString, Boolean.class));
         }
 
 //        jsonString = sharedPref.getString("jsonCurrentGoal", null);
@@ -405,49 +406,51 @@ public class IvCalculatorFragment extends Fragment
 //            ivManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
 //        }
 
-        jsonString = sharedPref.getString("jsonCurrentGoal", null);
+//        jsonString = sharedPref.getString("jsonCurrentGoal", null);
+//        if (jsonString != null) {
+//            ivManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
+//        } else {
+//            ivManager.setEmptyGoalPokemon();
+//        }
+
+        jsonString = sharedPref.getString("jsonMaleItem", null); //POR ENQUANTO ARMAZENA O DESTINY KNOT!
         if (jsonString != null) {
-            ivManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
-        } else {
-            ivManager.setEmptyGoalPokemon();
+            breedingManager.setDestinyKnot(gson.fromJson(jsonString, Boolean.class));
         }
 
-        jsonString = sharedPref.getString("jsonMaleItem", null);
-        if (jsonString != null) {
-            ivManager.setMaleItem(gson.fromJson(jsonString, Item.class));
-        }
 
-        jsonString = sharedPref.getString("jsonDittoList", null);
-        if (jsonString != null) {
-            Type type = new TypeToken<List<PokemonInfo>>() {
-            }.getType();
-            List<PokemonInfo> dittoList = gson.fromJson(jsonString, type);
-            for (int i = 0; i < dittoList.size(); i++) {
-                PokemonInfo p = new PokemonInfo.Builder()
-                        .id(Constants.DITTO_ID)
-                        .gender(Gender.DITTO)
-                        .IVs(dittoList.get(i).IVs)
-                        .build();
-                ivManager.storePokemon(p);
-            }
-            sharedPref.edit().remove("jsonDittoList").apply();
-        }
 
-        jsonString = sharedPref.getString("jsonEggList", null);
-        if (jsonString != null) {
-            Type type = new TypeToken<List<PokemonInfo>>() {
-            }.getType();
-            List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
-            for (int i = 0; i < eggList.size(); i++) {
-                PokemonInfo p = new PokemonInfo.Builder()
-                        .id(0)
-                        .gender(eggList.get(i).gender)
-                        .IVs(eggList.get(i).IVs)
-                        .build();
-                ivManager.storePokemon(p);
-            }
-            sharedPref.edit().remove("jsonEggList").apply();
-        }
+//        jsonString = sharedPref.getString("jsonDittoList", null);
+//        if (jsonString != null) {
+//            Type type = new TypeToken<List<PokemonInfo>>() {
+//            }.getType();
+//            List<PokemonInfo> dittoList = gson.fromJson(jsonString, type);
+//            for (int i = 0; i < dittoList.size(); i++) {
+//                PokemonInfo p = new PokemonInfo.Builder()
+//                        .id(Constants.DITTO_ID)
+//                        .gender(Gender.DITTO)
+//                        .IVs(dittoList.get(i).IVs)
+//                        .build();
+//                ivManager.storePokemon(p);
+//            }
+//            sharedPref.edit().remove("jsonDittoList").apply();
+//        }
+//
+//        jsonString = sharedPref.getString("jsonEggList", null);
+//        if (jsonString != null) {
+//            Type type = new TypeToken<List<PokemonInfo>>() {
+//            }.getType();
+//            List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
+//            for (int i = 0; i < eggList.size(); i++) {
+//                PokemonInfo p = new PokemonInfo.Builder()
+//                        .id(0)
+//                        .gender(eggList.get(i).gender)
+//                        .IVs(eggList.get(i).IVs)
+//                        .build();
+//                ivManager.storePokemon(p);
+//            }
+//            sharedPref.edit().remove("jsonEggList").apply();
+//        }
 
         jsonString = sharedPref.getString("jsonBreedingManagerStoredList", null);
         if (jsonString != null) {
@@ -466,13 +469,14 @@ public class IvCalculatorFragment extends Fragment
 
     @Override
     public void setDestinyKnot(boolean b) {
-        ivManager.setMaleItem(b ? Item.DESTINY_KNOT : Item.NO_ITEM);
-        //updateLuckFragment(ivManager.getBestCombinations());
+        breedingManager.setDestinyKnot(b);
+        updateLuckFragment();
     }
 
     @Override
-    public boolean updateDestinyKnotChance() {
-        return ivManager.getMaleItem() == Item.DESTINY_KNOT;
+    public boolean isDestinyKnotActive() {
+        //return ivManager.getMaleItem() == Item.DESTINY_KNOT;
+        return breedingManager.hasDestinyKnot();
     }
 
     @Override
@@ -503,40 +507,40 @@ public class IvCalculatorFragment extends Fragment
 
     @Override
     public void updateNatureStatus(boolean b) {
-        ivManager.setConsiderNature(b);
-        //updateLuckFragment(ivManager.getBestCombinations());
+        breedingManager.setConsiderNature(b);
+        updateLuckFragment();
     }
 
     @Override
     public boolean careAboutNatures() {
-        return (ivManager.hasEverstone() && ivManager.considerNature());
+        return (breedingManager.hasEverstone() && breedingManager.considerNature());
     }
 
     @Override
     public void setEverstone(boolean b) {
-        ivManager.setEverstone(b);
-        //updateLuckFragment(ivManager.getBestCombinations());
+        breedingManager.setEverstone(b);
+        updateLuckFragment();
     }
 
     @Override
     public boolean getConsiderNatureStatus() {
-        return ivManager.considerNature();
+        return breedingManager.considerNature();
     }
 
     @Override
     public boolean updateEverstoneStatus() {
-        return ivManager.hasEverstone();
+        return breedingManager.hasEverstone();
     }
 
     @Override
     public void updateAbilityStatus(boolean b) {
-        ivManager.setConsiderAbility(b);
-        //updateLuckFragment(ivManager.getBestCombinations());
+        breedingManager.setConsiderAbility(b);
+        updateLuckFragment();
     }
 
     @Override
     public boolean getConsiderAbilityStatus() {
-        return ivManager.considerAbility();
+        return breedingManager.considerAbility();
     }
 
     @Override

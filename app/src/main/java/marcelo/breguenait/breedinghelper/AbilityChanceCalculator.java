@@ -10,7 +10,15 @@ public class AbilityChanceCalculator {
     private static int GENDERLESS = 3;
     private static int DITTO = 4;
 
-    boolean considerAbility = false;
+    private boolean considerAbility = false;
+
+    public boolean considerAbility() {
+        return considerAbility;
+    }
+
+    public void setConsiderAbility(boolean considerAbility) {
+        this.considerAbility = considerAbility;
+    }
 
     public double getAbilityChance(StoredPokemon firstPokemon,
                                    StoredPokemon secondPokemon,

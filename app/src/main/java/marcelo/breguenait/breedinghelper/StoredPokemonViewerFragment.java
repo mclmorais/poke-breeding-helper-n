@@ -150,7 +150,7 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
 
         // clone the inflater using the ContextThemeWrapper
         LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-        View thisFragment = localInflater.inflate(R.layout.fragment_stored_pokemon_popup2, container, false);
+        View thisFragment = localInflater.inflate(R.layout.fragment_stored_pokemon_viewer, container, false);
 
         interfaceViewerPokemon = feederCallback.getInterfaceViewerPokemon(receivedUUID);
 

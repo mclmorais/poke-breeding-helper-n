@@ -8,9 +8,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.UUID;
 
-/**
- * Created by Marcelo on 28/12/2015.
- */
 public class BreedingManager {
 
     MyDatabase database;
@@ -25,9 +22,8 @@ public class BreedingManager {
 
     private StoredPokemon goalPokemon;
 
+    private boolean destinyKnot = true;
     private ArrayList<StoredPokemon> storedPokemonList = new ArrayList<>();
-
-    //private ArrayList<ChancePokemonMatch> chancePokemonMatchList = new ArrayList<>();
 
     public BreedingManager() {
         ivChanceCalculator = new IvChanceCalculator();
@@ -37,6 +33,14 @@ public class BreedingManager {
         goalPokemon = new StoredPokemon.Builder().createStoredPokemon();
         database = MyDatabase.getInstance();
 
+    }
+
+    public boolean hasDestinyKnot() {
+        return destinyKnot;
+    }
+
+    public void setDestinyKnot(boolean destinyKnot) {
+        this.destinyKnot = destinyKnot;
     }
 
     public ArrayList<ChancePokemonMatch> calculateBestMatches() {
@@ -71,7 +75,7 @@ public class BreedingManager {
                             firstPokemon.getIVs(),
                             secondPokemon.getIVs(),
                             goalPokemon.getIVs(),
-                            true); //TODO: fazer pegar essa informaçao dinamicamente de algum lugar
+                            destinyKnot);
 
                     //Adds nature chance multiplier
                     chance = natureChanceCalculator.getNatureChance(
@@ -88,11 +92,12 @@ public class BreedingManager {
                             chance);
 
                     //Adds chance to list
-                    chancePokemonMatchList.add(
-                            new ChancePokemonMatch(
-                                    firstPokemon.getUUID(),
-                                    secondPokemon.getUUID(),
-                                    chance));
+                    if (chance > 0.0d)
+                        chancePokemonMatchList.add(
+                                new ChancePokemonMatch(
+                                        firstPokemon.getUUID(),
+                                        secondPokemon.getUUID(),
+                                        chance));
                 }
             }
         }
@@ -155,8 +160,6 @@ public class BreedingManager {
 
         storedPokemonList.add(newPokemon);
     }
-
-
 
     ArrayList<String> getListOfNatures() {
         return database.getListOfNatures(languageId);
@@ -364,6 +367,31 @@ public class BreedingManager {
 
     void replaceGoalObject(StoredPokemon goalPokemon) {
         this.goalPokemon = goalPokemon;
+    }
+
+
+    public void setConsiderNature(boolean b) {
+        natureChanceCalculator.setConsiderNature(b);
+    }
+
+    public void setConsiderAbility(boolean b) {
+        abilityChanceCalculator.setConsiderAbility(b);
+    }
+
+    boolean considerAbility() {
+        return abilityChanceCalculator.considerAbility();
+    }
+
+    boolean considerNature() {
+        return natureChanceCalculator.considerNature();
+    }
+
+    boolean hasEverstone() {
+        return natureChanceCalculator.hasEverstone();
+    }
+
+    void setEverstone(boolean b) {
+        natureChanceCalculator.setHasEverstone(b);
     }
 
 }
