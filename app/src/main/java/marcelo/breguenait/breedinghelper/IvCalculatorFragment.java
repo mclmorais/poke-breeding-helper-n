@@ -365,7 +365,7 @@ public class IvCalculatorFragment extends Fragment
         jsonString = gson.toJson(breedingManager.getStoredPokemonObjects());
         prefEditor.putString("jsonBreedingManagerStoredList", jsonString);
 
-        jsonString = gson.toJson(breedingManager.getGoalPokemonObject());
+        jsonString = gson.toJson(breedingManager.getGoalObject());
         prefEditor.putString("jsonBreedingManagerGoal", jsonString);
 
         prefEditor.apply();
@@ -453,12 +453,12 @@ public class IvCalculatorFragment extends Fragment
         if (jsonString != null) {
             Type type = new TypeToken<ArrayList<StoredPokemon>>() {}.getType();
             ArrayList<StoredPokemon> objectsList = gson.fromJson(jsonString, type);
-            breedingManager.swapListOfObjects(objectsList);
+            breedingManager.replaceStoredPokemonObjects(objectsList);
         }
 
         jsonString = sharedPref.getString("jsonBreedingManagerGoal", null);
         if (jsonString != null) {
-            breedingManager.setGoalObject(gson.fromJson(jsonString, StoredPokemon.class));
+            breedingManager.replaceGoalObject(gson.fromJson(jsonString, StoredPokemon.class));
         }
 
     }
@@ -590,11 +590,6 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public ArrayList<InterfaceStoredPokemon> getInterfaceStoredPokemonList() {
         return breedingManager.getInterfaceStoredPokemonList();
-    }
-
-    @Override
-    public StoredPokemon getGoalPokemon() {
-        return breedingManager.getGoalPokemon();
     }
 
     @Override

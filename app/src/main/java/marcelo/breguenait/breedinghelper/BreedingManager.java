@@ -68,26 +68,6 @@ public class BreedingManager {
         goalPokemon.setPokemonId(goalId);
     }
 
-    /**
-     * This method should be called when loading a list of stored Pokemon from a previous instance.
-     *
-     * @param storedPokemonList The list that will replace the current list.
-     */
-    public void replaceStoredPokemonList(ArrayList<StoredPokemon> storedPokemonList) {
-        if (!this.storedPokemonList.isEmpty())
-            this.storedPokemonList.clear();
-
-        try {
-            if (storedPokemonList == null)
-                throw new Exception("Received a null storedPokemonList when replacing lists!");
-            else
-                this.storedPokemonList = storedPokemonList;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-
-    }
-
 
     public void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
 
@@ -101,26 +81,6 @@ public class BreedingManager {
 
         storedPokemonList.add(newPokemon);
     }
-
-    /**
-     * TODO: Do this by UUID
-     * Removes a pokemon from a position in the list.
-     *
-     * @param position Position of the Pokemon to be removed.
-     */
-    @Deprecated
-    public void removePokemon(int position) {
-        try {
-            if (storedPokemonList == null)
-                throw new Exception("Tried removing a Pokemon but the list was null!");
-            if (position < 0 || position >= storedPokemonList.size())
-                throw new Exception("Tried removing a Pokemon from a position that is not " +
-                        "on the list!");
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
 
     public ArrayList<ChancePokemonMatch> calculateBestMatches() {
 
@@ -209,13 +169,6 @@ public class BreedingManager {
 
     int getGenderRate(int pokemonId) {
         return database.getGenderRate(pokemonId);
-    }
-
-
-    @Deprecated
-        //TODO: nao usar isso!
-    StoredPokemon getGoalPokemon() {
-        return goalPokemon;
     }
 
     ArrayList<Integer> getCompatiblePokemonList(int pokemonId) {
@@ -397,15 +350,15 @@ public class BreedingManager {
         return storedPokemonList;
     }
 
-    StoredPokemon getGoalPokemonObject() {
+    StoredPokemon getGoalObject() {
         return goalPokemon;
     }
 
-    void swapListOfObjects(ArrayList<StoredPokemon> storedPokemonList) {
+    void replaceStoredPokemonObjects(ArrayList<StoredPokemon> storedPokemonList) {
         this.storedPokemonList = storedPokemonList;
     }
 
-    void setGoalObject(StoredPokemon goalPokemon) {
+    void replaceGoalObject(StoredPokemon goalPokemon) {
         this.goalPokemon = goalPokemon;
     }
 

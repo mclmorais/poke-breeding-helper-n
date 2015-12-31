@@ -250,11 +250,9 @@ public class StoredPokemonFragment extends Fragment implements
 
         HashMap<Integer, String> getListOfAbilities(int pokemonId);
 
-        ArrayList<InterfaceStoredPokemon> getInterfaceStoredPokemonList(); //TODO: ver se não é uma boa passar uma cópia dessa lista pra evitar merda aqui (ver no final isso)
+        ArrayList<InterfaceStoredPokemon> getInterfaceStoredPokemonList();
 
         int getGenderRate(int pokemonId);
-
-        StoredPokemon getGoalPokemon();
 
         ArrayList<Integer> getCompatiblePokemonList();
 
