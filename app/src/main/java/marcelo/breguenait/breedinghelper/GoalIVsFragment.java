@@ -426,7 +426,12 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
 
     @Override
     public ArrayList<Integer> getCompatiblePokemonList() {
-        return new ArrayList<>(0);
+        return new ArrayList<>(0); //Dummy call, this fragment doesn't need to feed this info
+    }
+
+    @Override
+    public ArrayList<Integer> getBasicPokemonList() {
+        return feederCallback.getBasicPokemonList();
     }
 
     @Override
@@ -438,6 +443,8 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     public ArrayList<String> getPokemonNames() {
         return feederCallback.getPokemonNames();
     }
+
+
 
 
     interface OnGoalUpdate {
@@ -456,6 +463,8 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
         ArrayList<String> getPokemonNames();
 
         InterfaceGoalPokemon getInterfaceGoalPokemon();
+
+        ArrayList<Integer> getBasicPokemonList();
 
         boolean getConsiderNatureStatus();
         boolean getConsiderAbilityStatus();

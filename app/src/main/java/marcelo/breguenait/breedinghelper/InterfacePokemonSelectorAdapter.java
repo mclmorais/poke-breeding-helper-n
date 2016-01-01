@@ -21,6 +21,7 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
     private boolean showOnlyCompatible = false;
     private boolean showOnlyBasic = false;
     private ArrayList<Integer> compatiblePokemonList;
+    private ArrayList<Integer> basicPokemonList;
 
     private ArrayList<Integer> pokemonIds;
     private ArrayList<String> pokemonNames;
@@ -49,6 +50,10 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
 
     public void setCompatiblePokemonList(ArrayList<Integer> compatiblePokemonList) {
         this.compatiblePokemonList = compatiblePokemonList;
+    }
+
+    public void setBasicPokemonList(ArrayList<Integer> basicPokemonList) {
+        this.basicPokemonList = basicPokemonList;
     }
 
     @Override
@@ -122,6 +127,11 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
                     * at least one egg group compatible with the current goal pokemon.*/
                     if (showOnlyCompatible) {
                         if (!compatiblePokemonList.contains(currentId))
+                            continue;
+                    }
+
+                    if(showOnlyBasic) {
+                        if(!basicPokemonList.contains(currentId))
                             continue;
                     }
 

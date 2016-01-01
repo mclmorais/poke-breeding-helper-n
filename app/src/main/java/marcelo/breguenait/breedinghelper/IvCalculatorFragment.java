@@ -601,6 +601,11 @@ public class IvCalculatorFragment extends Fragment
     }
 
     @Override
+    public ArrayList<Integer> getBasicPokemonList() {
+        return breedingManager.getBasicPokemonList();
+    }
+
+    @Override
     public ArrayList<Integer> getPokemonIds() {
         return breedingManager.getPokemonIds();
     }

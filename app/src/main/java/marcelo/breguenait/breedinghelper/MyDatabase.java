@@ -501,6 +501,26 @@ public class MyDatabase extends SQLiteAssetHelper {
 
     }
 
+    ArrayList<Integer> getBasicPokemonList() {
+        String s = "SELECT id FROM pokemon_species WHERE evolves_from_species_id IS NULL AND is_baby=0" +
+                " UNION " +
+                "SELECT id FROM pokemon_species WHERE evolves_from_species_id IN(SELECT id FROM pokemon_species where is_baby=1)" +
+                " EXCEPT " +
+                "SELECT species_id FROM pokemon_egg_groups WHERE egg_group_id=15";
+
+        Cursor cursorBasicPokemon = database.rawQuery(s, null);
+        cursorBasicPokemon.moveToFirst();
+
+        ArrayList<Integer> pokemonList = new ArrayList<>(cursorBasicPokemon.getCount());
+        while(!cursorBasicPokemon.isAfterLast()) {
+            pokemonList.add(cursorBasicPokemon.getInt(0));
+            cursorBasicPokemon.moveToNext();
+        }
+        cursorBasicPokemon.close();
+
+        return pokemonList;
+    }
+
     public String getNatureName(int natureId, int languageId) {
         String s = "SELECT " +
                 "name " +

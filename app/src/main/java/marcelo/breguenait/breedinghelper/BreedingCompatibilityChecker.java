@@ -54,6 +54,12 @@ public class BreedingCompatibilityChecker {
         int potentialEvolutionChainId = potentialPokemon.getEvolutionChainId();
         int goalEvolutionChainId = goalPokemon.getEvolutionChainId();
 
+        //Shortcut for nidoran anomaly
+        if(potentialEvolutionChainId == 12 && goalEvolutionChainId == 13) return true;
+
+        //Shortcut for volbeat/illumise anomaly
+        if(potentialEvolutionChainId == 157 && goalEvolutionChainId == 156) return true;
+
         /*Checks if they're the same AND if they're not unset (-1)*/
         return potentialEvolutionChainId > 0
                 && goalEvolutionChainId > 0

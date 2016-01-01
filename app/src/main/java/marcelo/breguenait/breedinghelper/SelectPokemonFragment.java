@@ -87,7 +87,8 @@ public class SelectPokemonFragment extends PopupDialogFragment {
                 feederCallback.getPokemonIds(),
                 feederCallback.getPokemonNames());
 
-        interfaceSelectorAdapter.setCompatiblePokemonList(feederCallback.getCompatiblePokemonList());
+        interfaceSelectorAdapter.setCompatiblePokemonList(feederCallback.getCompatiblePokemonList()); //TODO: ver se nao da pra fazer essa call somente se o fragment for pedir isso
+        interfaceSelectorAdapter.setBasicPokemonList(feederCallback.getBasicPokemonList());
 
         GridView gridViewSelector = (GridView) view.findViewById(R.id.gridViewSelectPokemon);
         gridViewSelector.setAdapter(interfaceSelectorAdapter);
@@ -219,6 +220,8 @@ public class SelectPokemonFragment extends PopupDialogFragment {
         ArrayList<String> getPokemonNames();
 
         ArrayList<Integer> getCompatiblePokemonList();
+
+        ArrayList<Integer> getBasicPokemonList();
 
     }
 

@@ -1,5 +1,5 @@
 package marcelo.breguenait.breedinghelper;
-
+//TODO: fazer o filtro de colocar na frente lembrar de nidoran e volbeat
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -183,6 +183,10 @@ public class BreedingManager {
             return database.getCompatiblePokemonList(pokemonId);
         else
             return new ArrayList<>(0);
+    }
+
+    ArrayList<Integer> getBasicPokemonList() {
+        return database.getBasicPokemonList();
     }
 
     ArrayList<String> getPokemonNames() {
