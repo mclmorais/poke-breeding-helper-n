@@ -32,7 +32,7 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
         compatiblePokemonList = new ArrayList<>();
 
         this.pokemonIds = pokemonIds;
-        this.filteredPokemonIds = pokemonIds; //TODO: ver se precisa mesmo
+        this.filteredPokemonIds = pokemonIds;
         this.pokemonNames = pokemonNames;
 
         inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

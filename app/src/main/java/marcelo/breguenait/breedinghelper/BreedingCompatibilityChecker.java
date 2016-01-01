@@ -1,17 +1,12 @@
 package marcelo.breguenait.breedinghelper;
 
-/**
- * Created by Marcelo on 28/12/2015.
- */
-
-
 public class BreedingCompatibilityChecker {
 
 
-    private static int FEMALE = 1;
-    private static int MALE = 2;
-    private static int GENDERLESS = 3;
-    private static int DITTO = 4; //TODO: make StoredPokemon convert ditto's gender to this (not on db)
+    private static final int FEMALE = 1;
+    private static final int MALE = 2;
+    private static final int GENDERLESS = 3;
+    private static final int DITTO_ID = 132;
 
     public boolean checkCompatibility(StoredPokemon firstPokemon,
                                       StoredPokemon secondPokemon,
@@ -36,14 +31,14 @@ public class BreedingCompatibilityChecker {
             return (femaleIsCompatible && maleIsCompatible);
         }
         /*If it's DITTO + SOMETHING*/
-        else if (firstPokemon.getGenderId() == DITTO) {
+        else if (firstPokemon.getPokemonId() == DITTO_ID) {
             //Other pokemon can't also be a ditto and has to be in the family of the goal
-            if (secondPokemon.getGenderId() != DITTO) {
+            if (secondPokemon.getPokemonId() != DITTO_ID) {
                 return checkFamilyCompatibility(secondPokemon, goalPokemon);
             }
         }
         /*If it's SOMETHING + DITTO*/
-        else if (secondPokemon.getGenderId() == DITTO) {
+        else if (secondPokemon.getPokemonId() == DITTO_ID) {
             //Other pokemon can't also be a ditto and has to be in the family of the goal
             return checkFamilyCompatibility(firstPokemon, goalPokemon);
 

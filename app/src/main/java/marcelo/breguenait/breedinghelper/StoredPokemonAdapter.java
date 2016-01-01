@@ -108,20 +108,20 @@ class StoredPokemonAdapter extends BaseAdapter {
             holder = (LayoutHolder) convertView.getTag();
         }
 
-        InterfaceStoredPokemon storedPokemon = storedPokemonList.get(i);
+        InterfaceStoredPokemon interfaceStoredPokemon = storedPokemonList.get(i);
 
         if (deleteMode)
             holder.frame.setBackgroundResource(R.drawable.layer_card_background_round_red);
         else
             holder.frame.setBackgroundResource(R.drawable.layer_background_round_selector);
 
-        if (storedPokemon.getPokemonId() > 0)
-            holder.icon.setBackground(data.getDrawableFromId(storedPokemon.getPokemonId()).getConstantState().newDrawable()); //TODO: mudar pro novo
+        if (interfaceStoredPokemon.getPokemonId() > 0)
+            holder.icon.setBackground(CachedPokemonIcons.getInstance().getIcon(interfaceStoredPokemon.getPokemonId()).getConstantState().newDrawable());
         else
             holder.icon.setBackground(preloadedDrawables.missingno);
-        holder.gender.setBackground(preloadedDrawables.getGenderDrawable(storedPokemon.getGenderId()));
+        holder.gender.setBackground(preloadedDrawables.getGenderDrawable(interfaceStoredPokemon.getGenderId()));
         for (int j = 0; j < 6; j++)
-            holder.IVs[j].setBackground(preloadedDrawables.getIVDrawable(j, (storedPokemon.getIVs()[j] == 1)));
+            holder.IVs[j].setBackground(preloadedDrawables.getIVDrawable(j, (interfaceStoredPokemon.getIVs()[j] == 1)));
         holder.number.setText(String.valueOf(i + 1));
 
         return hatch;

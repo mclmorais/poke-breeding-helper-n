@@ -406,78 +406,19 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
             abilityName = firstPokemon.getAbilityName();
 
 
-//            if (natureName.equals("Unset") && abilityName.equals("Unset")) {
-//                firstNature.setText("Nat. & Abl. unset");
-//            } else if (!natureName.equals("Unset")) {
-//                String text = natureName;
-//                if (!abilityName.equals("Unset")) {
-//                    text += " | ";
-//                    text += abilityName;
-//
-//                }
-//                firstNature.setText(text);
-//            } else {
-//                firstNature.setText(abilityName);
-//            }
-
-            firstNature.setText(natureName + " | " + abilityName);
+            firstNature.setText(natureName + " | " + abilityName); //TODO: converter para sistema
 
             TextView secondNature = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceSecondNature);
-//            nature = chancePokemonMatchList.get(i).secondPokemon.nature;
-//            if (nature == null) nature = Nature.UNSET;
-
-//            natureName = "Unset";
-//            for (int j = 0; j < Nature.values().length; j++) {//TODO: fazer isso em tudo q eh lugar
-//                if (Nature.values()[j] == nature) {
-//                    natureName = PokemonData.getInstance().getNatureName(j);
-//                    break;
-//                }
-//            }
-//            if (chancePokemonMatchList.get(i).secondPokemon.ability == PokemonData.getInstance().getFirstAbilityId(chancePokemonMatchList.get(i).secondPokemon.id))
-//                abilityName = (PokemonData.getInstance().getFirstAbility(chancePokemonMatchList.get(i).secondPokemon.id));
-//            else if (chancePokemonMatchList.get(i).secondPokemon.ability == PokemonData.getInstance().getSecondAbilityId(chancePokemonMatchList.get(i).secondPokemon.id))
-//                abilityName = (PokemonData.getInstance().getSecondAbility(chancePokemonMatchList.get(i).secondPokemon.id));
-//            else if (chancePokemonMatchList.get(i).secondPokemon.ability == PokemonData.getInstance().getHiddenAbilityId(chancePokemonMatchList.get(i).secondPokemon.id))
-//                abilityName = (PokemonData.getInstance().getHiddenAbility(chancePokemonMatchList.get(i).secondPokemon.id));
-//            else
-//                abilityName = ("Unset");
-//
-//            if (natureName.equals("Unset") && abilityName.equals("Unset")) {
-//                secondNature.setText("Nat. & Abl. unset");
-//            } else if (!natureName.equals("Unset")) {
-//                String text = natureName;
-//                if (!abilityName.equals("Unset")) {
-//                    text += " | ";
-//                    text += abilityName;
-//
-//                }
-//                secondNature.setText(text);
-//            } else {
-//                secondNature.setText(abilityName);
-//            }
 
             natureName = secondPokemon.getNatureName();
             abilityName = secondPokemon.getAbilityName();
 
-            secondNature.setText(natureName + " | " + abilityName);
+            secondNature.setText(natureName + " | " + abilityName); //TODO: converter para sistema
 
-
-//            TextView secondNature = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceSecondNature);
-//            nature = chancePokemonMatchList.get(i).secondPokemon.nature;
-//            if(nature == null) nature = Nature.UNSET;
-//            for(int j = 0; j < Nature.values().length; j++) //TODO: fazer isso em tudo q eh lugar
-//                if(Nature.values()[j] == nature) {
-//                    String name = PokemonData.getInstance().getNatureName(j);
-//                    if(!name.equals("Unset"))
-//                        secondNature.setText(name);
-//                    else
-//                        secondNature.setText("");
-//                    break;
-//                }
 
 
         }
-//        int targetHeight = (int) (interfaceChanceList.size()*convertDpToPixel(200,getActivity().getApplicationContext()));
+
         int targetHeight = (int) (interfaceChanceList.size() * getResources().getDimension(R.dimen.chance_data_height));
         targetHeight += interfaceChanceList.size() * convertDpToPixel(11, getActivity().getApplicationContext());
         ResizeAnimation r = new ResizeAnimation(layoutChances, targetHeight);

@@ -70,8 +70,6 @@ class InterfaceViewerPokemon {
     }
 }
 
-//TODO: CRIAR EDITOR CLASSE PRA ESSE FRAGMENT!!!!!
-
 public class StoredPokemonViewerFragment extends PopupDialogFragment
         implements
         EditorPokemonFragment.FeedDataCreatePokemon,

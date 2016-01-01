@@ -120,10 +120,6 @@ class PokemonData {
     }
 
     public static PokemonData getInstance() {
-//        //TODO: WAT
-//        if(instance == null) {
-//           // instance = new PokemonData();
-//        }
 
         return instance;
 

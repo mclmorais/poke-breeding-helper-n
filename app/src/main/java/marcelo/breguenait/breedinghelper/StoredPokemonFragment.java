@@ -151,7 +151,7 @@ public class StoredPokemonFragment extends Fragment implements
         FragmentManager fragmentManager = getFragmentManager();
         int callerViewPosition[] = new int[2];
         callerView.getLocationOnScreen(callerViewPosition);
-        StoredPokemonViewerFragment fragment = StoredPokemonViewerFragment.newInstance(callerViewPosition, pokemonUUID, pokemonPos); //TODO: usar newinstance pra passar o pokemon pro modifypokemonfragment
+        StoredPokemonViewerFragment fragment = StoredPokemonViewerFragment.newInstance(callerViewPosition, pokemonUUID, pokemonPos);
         fragment.setTargetFragment(this, 0);
         fragment.show(fragmentManager, "storedPokemonPopup");
     }

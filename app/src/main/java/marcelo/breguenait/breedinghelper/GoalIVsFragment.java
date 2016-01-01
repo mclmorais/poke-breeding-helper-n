@@ -268,8 +268,6 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
 
         updaterCallback.updateGoalId(id);
 
-//        PokemonInfo newGoal = buildGoalPokemon(id); //TODO: remover
-//        mCallback.updateGoal(newGoal);
         updateInterfacePokemon();
     }
 
@@ -379,10 +377,6 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     }
 
     private void updateAbilitySpinnerSelection(int abilitySlot) {
-//        String abilityName = PokemonData.getInstance().getAbilityName(abilityId);
-//
-//        if (abilityId == PokemonData.getInstance().getHiddenAbilityId(pokemonId))
-//            abilityName += " (Hidden)";//TODO: mudar para string do sistema
         if(abilitySlot > 0) {
 
             //TODO: mudar esse abilityslots q ta meio merda
@@ -393,7 +387,6 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
                     break;
                 }
             }
-
             spinnerAbility.setTag(position);
             spinnerAbility.setSelection(position);
         }

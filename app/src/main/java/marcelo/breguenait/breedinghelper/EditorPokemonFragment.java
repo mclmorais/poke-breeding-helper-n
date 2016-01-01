@@ -28,8 +28,6 @@ import com.melnykov.fab.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//TODO: this fragment should return a StoredPokemon to be added on BreedingManager's list.
-
 public class EditorPokemonFragment extends PopupDialogFragment implements
         SelectPokemonFragment.OnPokemonSelectedListener,
         SelectPokemonFragment.FeedDataSelectPokemon {
@@ -274,8 +272,8 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     }
 
     void updateInterface() {
-        updateAbilities(selectedPokemonId); //TODO: fazer pegar o slot de temporaryPokemon e botar o spinner na posiçao certa
-        updateInterfacePokemon(selectedPokemonId);//TODO: fazer pegar o slot de temporaryPokemon e botar o spinner na posiçao certa
+        updateAbilities(selectedPokemonId);
+        updateInterfacePokemon(selectedPokemonId);
         updateInterfaceGender(selectedPokemonId);
         updateNameButton();
 
