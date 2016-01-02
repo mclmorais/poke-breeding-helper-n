@@ -27,10 +27,14 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MoveDexActivity extends Fragment implements SelectPokemonFragment.OnPokemonSelectedListener, AppBarLayout.OnOffsetChangedListener {
+public class MoveDexActivity extends Fragment implements
+        SelectPokemonFragment.OnPokemonSelectedListener,
+        SelectPokemonFragment.FeedDataSelectPokemon,
+        AppBarLayout.OnOffsetChangedListener {
 
     private static final String TAG = MoveDexActivity.class.getSimpleName();
 
+    int languageId = 9;
 
     ActionBarDrawerToggle drawerToggle;
 
@@ -72,12 +76,7 @@ public class MoveDexActivity extends Fragment implements SelectPokemonFragment.O
         drawerToggle = setupDrawerToggle();
         initialActivity.mDrawer.setDrawerListener(drawerToggle);
 
-
-//        setSupportActionBar(toolbar);
-//        if(getSupportActionBar() != null)
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setTitle("");
-
+        
         buttonSelectPokemon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -317,5 +316,29 @@ public class MoveDexActivity extends Fragment implements SelectPokemonFragment.O
 
     }
 
+    @Override
+    public ArrayList<Integer> getPokemonIds() {
+        return db.getPokemonIds();
+    }
+
+    @Override
+    public ArrayList<String> getPokemonNames() {
+        return db.getPokemonNames(languageId);
+    }
+
+    @Override
+    public ArrayList<Integer> getCompatiblePokemonList() {
+        return new ArrayList<>(0);
+    }
+
+    @Override
+    public ArrayList<Integer> getPokemonFamilyList() {
+        return new ArrayList<>(0);
+    }
+
+    @Override
+    public ArrayList<Integer> getBasicPokemonList() {
+        return new ArrayList<>(0);
+    }
 }
 

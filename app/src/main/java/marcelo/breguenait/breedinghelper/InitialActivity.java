@@ -49,6 +49,8 @@ public class InitialActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            currentFragment = fragment;
+            nvDrawer.getMenu().getItem(0).setChecked(true);
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
         }
 

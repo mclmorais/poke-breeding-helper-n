@@ -28,7 +28,7 @@
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="movedex_name">MoveDex</string>
-    <string name="breeding_fragment_name">Iv Calculator</string>
+    <string name="breeding_fragment_name">Breeding Manager</string>
 
     <string name="app_name" translatable="false">Breeding Helper</string>
     <string name="action_settings">Settings</string>
