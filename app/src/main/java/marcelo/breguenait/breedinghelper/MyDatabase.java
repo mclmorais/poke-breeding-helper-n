@@ -364,11 +364,17 @@ public class MyDatabase extends SQLiteAssetHelper {
 
             //typename
             Cursor typeNameCursor = getTypeName(moveInfoCursor.getInt(0), languageId);
-            moveInfoBuilder.setType(typeNameCursor.getString(0));
+            if(typeNameCursor.getCount() > 0)
+                moveInfoBuilder.setType(typeNameCursor.getString(0));
+            else
+                moveInfoBuilder.setType("");
 
             //classname
             Cursor classNameCursor = getClassName(moveInfoCursor.getInt(3), languageId);
-            moveInfoBuilder.setMoveClass(classNameCursor.getString(0));
+            if(classNameCursor.getCount() > 0)
+                moveInfoBuilder.setMoveClass(classNameCursor.getString(0));
+            else
+                moveInfoBuilder.setMoveClass("");
 
             moveInfoList.add(moveInfoBuilder.createMoveInfo());
 

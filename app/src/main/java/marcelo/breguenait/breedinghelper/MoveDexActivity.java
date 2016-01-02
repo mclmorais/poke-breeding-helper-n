@@ -1,8 +1,10 @@
 package marcelo.breguenait.breedinghelper;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -18,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,6 +41,8 @@ public class MoveDexActivity extends Fragment implements
     int languageId = 9;
 
     ActionBarDrawerToggle drawerToggle;
+
+    private final Gson gson = new Gson();
 
     InitialActivity initialActivity;
     @Bind(R.id.moveDex_toolbar)
@@ -58,11 +64,28 @@ public class MoveDexActivity extends Fragment implements
     private int currentPoceymanId;
 
 
+    void readData() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String jsonString;
+
+        languageId = Integer.valueOf(sharedPref.getString("gameLanguage", "9"));
+
+        jsonString = sharedPref.getString("jsonBreedingManagerGoal", null);
+        if (jsonString != null) {
+            onPokemonSelected(gson.fromJson(jsonString, StoredPokemon.class).getPokemonId());
+        }
+
+
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_move_dex, container, false);
         ButterKnife.bind(this, v);
+
+
 
         cleanOldFragments();
 
@@ -115,6 +138,8 @@ public class MoveDexActivity extends Fragment implements
 
             }
         });
+
+        readData();
 
 
         return v;
@@ -175,7 +200,7 @@ public class MoveDexActivity extends Fragment implements
         String iconId = "pkmn_big_" + String.format("%03d", id);
         floatingIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getContext().getPackageName()));
 
-        collapsingToolbarLayout.setTitle(db.getPokemonName(id, 9)); //TODO: fazer ser dinamico o ID nesse fragment
+        collapsingToolbarLayout.setTitle(db.getPokemonName(id, languageId));
 
         EggMovesListFragment page = (EggMovesListFragment) pagerAdapter.getItem(2);
         if (page.mRecyclerView != null) {
@@ -188,9 +213,9 @@ public class MoveDexActivity extends Fragment implements
             page.noMovesText.setVisibility(View.GONE);
 
 
-        new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 1, 9);
-        new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 4, 9);
-        new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 2, 9);
+        new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 1, languageId);
+        new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 4, languageId);
+        new LoadMovesAsync().execute(MoveDexActivity.this, db, id, debugVersion, 2, languageId);
 
         //showMoves(id);
         //showMovesDB(id);

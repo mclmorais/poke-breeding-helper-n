@@ -670,6 +670,23 @@ public class BreedingFragment extends Fragment
     public void onDestroyView() {
         super.onDestroyView();
 
+//        List<Fragment> fragments = getFragmentManager().getFragments();
+//        if (fragments != null) {
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            for (Fragment f : fragments) {
+//                if (f instanceof GoalIVsFragment ||
+//                        f instanceof LuckFragment ||
+//                        f instanceof StoredPokemonFragment
+//                        ) {
+//                    ft.remove(f);
+//                }
+//            }
+//            ft.commit();
+//        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
         List<Fragment> fragments = getFragmentManager().getFragments();
         if (fragments != null) {
             FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -683,5 +700,6 @@ public class BreedingFragment extends Fragment
             }
             ft.commit();
         }
+        super.onSaveInstanceState(outState);
     }
 }
