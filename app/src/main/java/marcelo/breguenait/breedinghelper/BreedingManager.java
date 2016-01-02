@@ -1,5 +1,4 @@
 package marcelo.breguenait.breedinghelper;
-//TODO: fazer o filtro de colocar na frente lembrar de nidoran e volbeat
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -7,8 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.UUID;
-
-//TODO: tirar babies de matches boas!
 
 public class BreedingManager {
 

@@ -12,6 +12,10 @@ public class BreedingCompatibilityChecker {
                                       StoredPokemon secondPokemon,
                                       StoredPokemon goalPokemon) {
 
+        /*Undiscovered Pokemon can't breed*/
+        if(firstPokemon.getEggGroup1Id() == 15 || secondPokemon.getEggGroup1Id() == 15)
+            return false;
+
         /*If it's MALE + FEMALE*/
         if (firstPokemon.getGenderId() == MALE && secondPokemon.getGenderId() == FEMALE) {
             //Female has to be in Goal's family
@@ -69,6 +73,7 @@ public class BreedingCompatibilityChecker {
 
     private boolean checkEggGroupCompatibility(StoredPokemon potentialPokemon,
                                                StoredPokemon goalPokemon) {
+        
 
         /*If the 1st egg group of the potential pokemon matches any of the goal
         * pokemon, it's compatible*/

@@ -349,7 +349,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
             togglePokemonGender.setBackgroundResource(R.drawable.ic_toggle_gender_selector);
             togglePokemonGender.setClickable(true);
             togglePokemonGender.setChecked(selectedGenderId==MALE); //TODO: HMM
-            //selectedGenderId = togglePokemonGender.isChecked() ? MALE : FEMALE;
         }
         togglePokemonGender.invalidate();
     }

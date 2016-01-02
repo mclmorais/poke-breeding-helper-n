@@ -29,8 +29,6 @@ import java.util.UUID;
 
 import static marcelo.breguenait.breedinghelper.R.id.imageDynamicChanceSecondItem;
 
-//TODO: luck fragment has to be updated AFTER stored pokemon fragment so that it receives its information correctly
-
 class InterfaceChancePokemon {
     private int pokemonId;
     private int genderId;
