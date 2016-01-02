@@ -200,8 +200,12 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 updaterCallback.updateNatureStatus(isChecked);
-                String s = isChecked ? "considered" : "ignored";
-                Toast.makeText(getActivity().getApplicationContext(), "Nature " + s + ".", Toast.LENGTH_SHORT).show();
+                String s;
+                if(isChecked)
+                    s = getActivity().getString(R.string.message_nature_considered);
+                else
+                    s = getActivity().getString(R.string.message_nature_ignored);
+                Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -210,8 +214,13 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 updaterCallback.updateAbilityStatus(isChecked);
-                String s = isChecked ? "considered" : "ignored";
-                Toast.makeText(getActivity().getApplicationContext(), "Ability " + s + ".", Toast.LENGTH_SHORT).show();
+                String s;
+                if(isChecked)
+                    s = getActivity().getString(R.string.message_ability_considered);
+                else
+                    s = getActivity().getString(R.string.message_ability_ignored);
+
+                Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT).show();
             }
         });
 

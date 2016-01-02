@@ -131,11 +131,11 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
             if (IVs.isChecked()) hasIVs = true;
         }
         if (!hasIVs) {
-            showToast("Select at least one IV.");
+            showToast(getActivity().getString(R.string.message_select_one_iv));
             return;
         }
         if (selectedPokemonId <= 0) {
-            showToast("Select a Pokemon.");
+            showToast(getActivity().getString(R.string.message_select_pokemon));
             return;
         }
 

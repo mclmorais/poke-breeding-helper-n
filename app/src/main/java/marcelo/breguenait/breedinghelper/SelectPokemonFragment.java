@@ -204,7 +204,7 @@ public class SelectPokemonFragment extends PopupDialogFragment {
     }
 
 
-    //IvCalculatorFragment baseActivity;
+    //BreedingFragment baseActivity;
     public interface OnPokemonSelectedListener {
         void onPokemonSelected(int id);
 

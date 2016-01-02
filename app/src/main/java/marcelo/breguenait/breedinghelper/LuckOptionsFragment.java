@@ -27,7 +27,7 @@ public class LuckOptionsFragment extends PopupDialogFragment {
 
 
 
-    IvCalculatorFragment baseActivity;
+    BreedingFragment baseActivity;
 
     private TypedArray shinyOptionsDrawables;
     private String[] shinyOptionsStrings;
@@ -111,7 +111,7 @@ public class LuckOptionsFragment extends PopupDialogFragment {
 
         checkBoxShiny = (CheckBox) view.findViewById(R.id.luckOptionsCheckBoxShiny);
         checkBoxShiny.setChecked((shinyOptions&LuckFragment.SHINY)==LuckFragment.SHINY);
-        checkBoxShiny.setText((shinyOptions&LuckFragment.SHINY)==LuckFragment.SHINY?"Shiny":"Normal");
+        checkBoxShiny.setText((shinyOptions&LuckFragment.SHINY)==LuckFragment.SHINY?getActivity().getString(R.string.label_shiny):getActivity().getString(R.string.label_normal));
 
 
         checkBoxShinyCharm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -139,11 +139,11 @@ public class LuckOptionsFragment extends PopupDialogFragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    checkBoxShiny.setText("Shiny");
-                    mCallback.changeShinyStatus(LuckFragment.SHINY,true);
+                    checkBoxShiny.setText(getActivity().getString(R.string.label_shiny));
+                            mCallback.changeShinyStatus(LuckFragment.SHINY, true);
                 }
                 else {
-                    checkBoxShiny.setText("Normal");
+                    checkBoxShiny.setText(getActivity().getString(R.string.label_normal));
                     mCallback.changeShinyStatus(LuckFragment.SHINY,false);
                 }
             }

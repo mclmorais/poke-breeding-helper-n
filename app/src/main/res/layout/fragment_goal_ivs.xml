@@ -18,7 +18,8 @@
         android:layout_alignLeft="@+id/goalCardView"
         android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:textAllCaps="true" />
 
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -73,7 +74,8 @@
                 android:layout_alignParentTop="false"
                 android:layout_toRightOf="@+id/frameLayoutPokemonSelectorButton"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="-4dp" />
+                android:layout_marginTop="-4dp"
+                android:singleLine="true" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -133,7 +135,7 @@
                 android:id="@+id/LayoutNature">
 
                 <TextView
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/label_nature"
@@ -171,7 +173,7 @@
                 android:layout_below="@+id/LayoutNature">
 
                 <TextView
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/label_ability"

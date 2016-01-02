@@ -88,9 +88,9 @@ public class MoveDexActivity extends Fragment implements SelectPokemonFragment.O
 
         db = MyDatabase.getInstance();
 
-        tabLayout.addTab(tabLayout.newTab().setText("Level Up"));
-        tabLayout.addTab(tabLayout.newTab().setText("TM/HM"));
-        tabLayout.addTab(tabLayout.newTab().setText("Egg Moves"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.label_level_up));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.label_machine));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.label_egg_moves));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         pagerAdapter = new PagerAdapter

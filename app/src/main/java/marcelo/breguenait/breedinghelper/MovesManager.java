@@ -34,11 +34,6 @@ public class MovesManager {
 //        System.out.println(s);
     }
 
-    @SuppressWarnings("unchecked")
-    public void showMovesAsync(int id) {
 
-        new MyAsyncTask().execute(MovesManager.this, id);
-
-    }
 
 }

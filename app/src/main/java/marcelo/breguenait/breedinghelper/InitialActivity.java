@@ -1,10 +1,7 @@
 package marcelo.breguenait.breedinghelper;
 
-import android.animation.LayoutTransition;
-import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -45,7 +41,7 @@ public class InitialActivity extends AppCompatActivity {
             Fragment fragment = null;
             Class fragmentClass;
 
-            fragmentClass = IvCalculatorFragment.class;
+            fragmentClass = BreedingFragment.class;
 
             try {
                 fragment = (Fragment) fragmentClass.newInstance();
@@ -107,7 +103,10 @@ public class InitialActivity extends AppCompatActivity {
                 fragmentClass = MoveDexActivity.class;
                 break;
             case R.id.nav_second_fragment:
-                fragmentClass = IvCalculatorFragment.class;
+                fragmentClass = BreedingFragment.class;
+                break;
+            case R.id.nav_settings:
+                fragmentClass = PreferencesFragment.class;
                 break;
             default:
                 fragmentClass = MoveDexActivity.class;

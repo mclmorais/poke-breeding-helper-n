@@ -96,9 +96,9 @@ public class EggMoveAdapter extends RecyclerView.Adapter<EggMoveAdapter.ViewHold
             holder.power.setText(Integer.toString(power));
 
         if(moves.get(position).isHiddenMachine())
-            holder.machineType.setText("HM");
+            holder.machineType.setText(R.string.label_hm);
         else
-            holder.machineType.setText("TM");
+            holder.machineType.setText(R.string.label_tm);
 
         TypedArray ids = context.getResources().obtainTypedArray(R.array.type_colors);
 

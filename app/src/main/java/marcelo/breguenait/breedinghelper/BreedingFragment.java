@@ -1,5 +1,7 @@
 package marcelo.breguenait.breedinghelper;
 
+//TODO: fazer menu de settings que deixa eu trocar o idioma da database
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -40,7 +42,7 @@ class Constants {
     public static final int DITTO_ID = 132;
 }
 
-public class IvCalculatorFragment extends Fragment
+public class BreedingFragment extends Fragment
         implements
         StoredPokemonFragment.FeedDataStoredPokemon,
         StoredPokemonFragment.UpdateStoredPokemonList,
@@ -61,11 +63,18 @@ public class IvCalculatorFragment extends Fragment
     private AdView adView;
     private IvManager ivManager;
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.activity_main, container, false);
+
+
+        setHasOptionsMenu(true);
+
+
 
         initialActivity = (InitialActivity) getActivity();
 
@@ -78,9 +87,24 @@ public class IvCalculatorFragment extends Fragment
 
 
         toolbar.setTitle("Breeding Helper");
+        toolbar.inflateMenu(R.menu.main);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_settings:
+                        openSettings();
+                        return true;
+                    case R.id.action_report_bug:
+                        sendBugReport();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
 
         readData();
-
 
         ivManager.updateBestCombination();
 
@@ -88,16 +112,8 @@ public class IvCalculatorFragment extends Fragment
         createPokemonListFragment(savedInstanceState, v);
         createChanceFragment(savedInstanceState, v);
 
-
-//        cardMainIVs.refreshInterface();
-//        cardChance.updateGoalIvChance();
-//        cardChance.updateItems();
-//        cardPokemonGrid.refreshItemsInterface();
-
         cardAd = v.findViewById(R.id.cardAd);
-//        if(!sharedPref.getBoolean("hasSeenDittoTutorial",false)) {
-//            dittoTutorial();
-//        }
+
 
         ChangeLog cl = new ChangeLog(getContext());
         if (cl.isFirstRun()) {
@@ -136,11 +152,6 @@ public class IvCalculatorFragment extends Fragment
         setAdVisibility(true);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main, menu);
-    }
-
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(getActivity(),
                 initialActivity.getDrawer(), toolbar,
@@ -149,24 +160,15 @@ public class IvCalculatorFragment extends Fragment
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                openSettings();
-                return true;
-            case R.id.action_report_bug:
-                sendBugReport();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     void openSettings() {
-        Intent intent = new Intent(getContext(), SettingsActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(getContext(), SettingsActivity.class);
+//        startActivity(intent);
+
+        // Display the fragment as the main content.
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new PreferencesFragment())
+                .commit();
     }
 
     void createAd() {
@@ -193,17 +195,6 @@ public class IvCalculatorFragment extends Fragment
 
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("267EF55A4F5EC1C9C51E1CFE97F4ECB2")
-                .addTestDevice("13294F32A78405C5913ABE707DFDBA19")
-                .addTestDevice("91A24715E4A4374919B327DF3077F7F1")
-                .addTestDevice("1F046724752EDE67A5E450DC2A244643")
-                .addTestDevice("25A7191AABFFE286F36D039D86AB7D11")
-                .addTestDevice("0787F1B6D26E3657D6C7F11CE39DFB1F")
-                .addTestDevice("AB68924514A4CDD20D5D115C7174D722")
-                .addTestDevice("EE498B7BD93FDB4D08CD04DE6C09F09A")
-                .addTestDevice("815CB1AC3DD5926E21AE260FC94A4D6A")
-                .addTestDevice("8C7BA5C848E50217D49DACC26972F1B9")
-                .addTestDevice("C4BE91EE53C4D54137B99B336B805908")
                 .build();
 
         adView.loadAd(adRequest);
@@ -417,6 +408,9 @@ public class IvCalculatorFragment extends Fragment
         if (jsonString != null) {
             breedingManager.setDestinyKnot(gson.fromJson(jsonString, Boolean.class));
         }
+
+        int gameLanguage = Integer.valueOf(sharedPref.getString("gameLanguage", "9"));
+        breedingManager.setLanguageId(gameLanguage);
 
 
 

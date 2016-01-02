@@ -5,14 +5,24 @@
         <item>@drawable/symbol_ditto_shiny</item>
     </array>
 
-    <array name="string_pokemon_list">
-        <item>Bulbasaur</item>
-        <item>Ivysaur</item>
-        <item>Venosaur</item>
-    </array>
+    <string-array name="game_languages">
+        <item>English</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Spanish</item>
+        <item>Italian</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+    </string-array>
 
-    <array name="drawables">
-        <item>@drawable/pkmn_001</item>
-    </array>
+    <string-array name="game_language_values">
+        <item>9</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>1</item>
+        <item>3</item>
+    </string-array>
 
 </resources>

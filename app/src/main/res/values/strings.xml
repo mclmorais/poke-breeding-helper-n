@@ -1,92 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="title_activity_main">Breeding Helper</string>
+
+    <!-- Menu Strings -->
+    <string name="setting_game_language_title">Game Language</string>
+    <string name="setting_game_language_summary">Selects the language that will be used when
+    displaying Pokémon information</string>
+
+    <!--Goal Pokemon Fragment-->
+    <string name="label_goal_ivs">Goal Pokémon</string>
+
+    <string name="title_activity_main" translatable="false">Breeding Helper</string>
     <string name="label_type">TYPE:</string>
     <string name="label_modifiers">MODIFIERS:</string>
     <string name="label_shiny_charm">Shiny Charm</string>
     <string name="label_masuda_method">Masuda Method</string>
     <string name="label_done">Done</string>
 
-    <string name="label_parent_modifications">PARENT MODIFICATIONS:</string>
-    <string name="label_equipped_item">EQUIPPED ITEM:</string>
-    <string name="label_destiny_knot">Destiny Knot</string>
-    <string name="label_power_weight">Power Weight (HP)</string>
-    <string name="label_power_bracer">Power Bracer (ATK)</string>
-    <string name="label_power_belt">Power Belt (DEF)</string>
-    <string name="label_power_lens">Power Lens (SATK)</string>
-    <string name="label_power_band">Power Band (SDEF)</string>
-    <string name="label_power_anklet">Power Anklet (SPD)</string>
-    <string name="label_unequip">Unequip</string>
     <string name="label_error">Error</string>
-    <string name="label_switch">SWITCH:</string>
     <string name="label_filter">FILTER:</string>
 
-    <string name="toast_select_iv">Select at least one IV.</string>
+    <string name="placeholder_number_2" translatable="false">##</string>
+    <string name="placeholder_number_3" translatable="false">###</string>
+    <string name="placeholder_percentage" translatable="false">###.##&#37;</string>
 
-    <string name="label_use_as_ditto">Use this parent as a Ditto</string>
-
-    <string name="list_of_dittos">List of Dittos</string>
-    <string name="list_of_eggs">List of Eggs</string>
-
-    <string name="male_added_back">Male parent was added back to the list.</string>
-    <string name="female_added_back">Female parent was added back to the list.</string>
-    <string name="both_added_back">Both parents were added back to the list.</string>
-
-    <string name="placeholder_number_2">##</string>
-    <string name="placeholder_number_3">###</string>
-    <string name="placeholder_percentage">###.##&#37;</string>
-    <string name="placeholder_percentage_total_and_increase" formatted="false">&#43;XX.X&#37; &#40;&#43;YY.Y%&#41;</string>
-
-    <string name="save_file_name">iv_data.dat</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
 
     <string name="movedex_name">MoveDex</string>
-    <string name="iv_calculator_name">Iv Calculator</string>
-    <string name="moveDex_tabLevel">Level Up</string>
-    <string name="moveDex_tabMachine">TM/HM</string>
-    <string name="moveDex_tabEgg">Egg Moves</string>
+    <string name="breeding_fragment_name">Iv Calculator</string>
 
-    <string name="app_name">Breeding Helper</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name" translatable="false">Breeding Helper</string>
     <string name="action_settings">Settings</string>
-    <string name="title_main_ivs">Parent and Goal IVs</string>
-    <string name="placeholder_text">The quick brown fox jumps over the lazy dog.</string>
-    <string name="placeholder">Placeholder</string>
+    <string name="placeholder" translatable="false">Placeholder</string>
     <string name="label_hp">HP</string>
     <string name="label_atk">ATK</string>
     <string name="label_def">DEF</string>
     <string name="label_satk">SATK</string>
     <string name="label_sdef">SDEF</string>
     <string name="label_spd">SPD</string>
-    <string name="male_pkmn">Male Pokemon IVs</string>
-    <string name="female_pkmn">Female Pokemon IVs</string>
-    <string name="goal_pkmn">Goal Pokemon IVs</string>
-    <string name="symbol_luck">Luck Icon</string>
-    <string name="button_add_an_egg">Add an egg</string>
     <string name="label_gender">GENDER</string>
     <string name="button_confirm">Confirm</string>
-    <string name="better_match_found">Better match found!</string>
-    <string name="title_activity_test_card">TestCardActivity</string>
-    <string name="button_clear">CLEAR</string>
-    <string name="button_switch">SWITCH</string>
-    <string name="label_chance">Chance:</string>
-    <string name="list_of_items">List of Items</string>
-    <string name="confirm">Confirm</string>
-    <string name="remove_all">REMOVE ALL</string>
     <string name="cancel">Cancel</string>
-    <string name="add">ADD</string>
     <string name="report_bug">Report a Bug</string>
-    <string name="title_activity_start">StartActivity</string>
-    <string name="iv_chance_calculator">IV Chance Calculator</string>
-    <string name="title_activity_breeding_poke_dex">BreedingPokeDexActivity</string>
-    <string name="title_activity_ev_training">EvTrainingActivity</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="label_no_pokemon_selected">No Pokémon selected</string>
-    <string name="label_select">Select</string>
     <string name="label_select_pokemon">Select a Pokémon</string>
-    <string name="label_goal_ivs">GOAL IVS</string>
+
     <string name="label_best_matches">Best Matches</string>
     <string name="label_normal">Normal</string>
     <string name="label_stored_pokemons">Stored Pokémon</string>
@@ -101,18 +59,31 @@
     <string name="label_nature">Nature:</string>
     <string name="label_nature_sans_colon">Nature</string>
     <string name="label_ability">Ability:</string>
-    <string name="label_ability_sans_colon">Ability:</string>
-    <string name="placeholder_eggs">~### eggs</string>
+    <string name="label_ability_sans_colon">Ability</string>
+    <string name="placeholder_eggs" translatable="false">~### eggs</string>
     <string name="label_close">Close</string>
     <array name="shiny_spinner_options_strings">
         <item>Normal</item>
         <item>Shiny</item>
     </array>
-    <string name="title_activity_move_dex">MoveDexActivity</string>
-    <string name="title_activity_tabbed">TabbedActivity</string>
-    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam bibendum ante dolor, id venenatis nunc maximus at. Suspendisse imperdiet, nibh eleifend euismod porta, nibh arcu laoreet mauris, eget laoreet odio risus eget dui. Nunc semper nec neque vel auctor. Cras consectetur tortor ex, eu auctor tortor vulputate in. Duis venenatis interdum nulla ac tincidunt. Suspendisse sit amet ex ipsum. Sed pulvinar turpis et mauris dapibus, eu porttitor velit malesuada. Donec id auctor metus. Vestibulum aliquet hendrerit neque, in ornare orci consectetur quis. Praesent malesuada, est eget viverra finibus, erat elit convallis felis, ac lobortis neque augue in nunc. Nullam enim elit, interdum at vehicula non, venenatis nec diam. Vestibulum dictum sagittis augue, vel facilisis nibh finibus in. Nulla consequat lorem eu quam tempus ullamcorper. Sed vehicula, ex vel porttitor semper, enim arcu fringilla diam, quis efficitur augue lectus a eros.</string>
-    <string name="title_activity_with_pages">WithPagesActivity</string>
-    <string name="example_moveclass">Physical</string>
-    <string name="example_movetype">Ice</string>
-    <string name="example_movename">Poison Sludge</string>
+    <string name="lorem_ipsum" tools:ignore="UnusedResources" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam bibendum ante dolor, id venenatis nunc maximus at. Suspendisse imperdiet, nibh eleifend euismod porta, nibh arcu laoreet mauris, eget laoreet odio risus eget dui. Nunc semper nec neque vel auctor. Cras consectetur tortor ex, eu auctor tortor vulputate in. Duis venenatis interdum nulla ac tincidunt. Suspendisse sit amet ex ipsum. Sed pulvinar turpis et mauris dapibus, eu porttitor velit malesuada. Donec id auctor metus. Vestibulum aliquet hendrerit neque, in ornare orci consectetur quis. Praesent malesuada, est eget viverra finibus, erat elit convallis felis, ac lobortis neque augue in nunc. Nullam enim elit, interdum at vehicula non, venenatis nec diam. Vestibulum dictum sagittis augue, vel facilisis nibh finibus in. Nulla consequat lorem eu quam tempus ullamcorper. Sed vehicula, ex vel porttitor semper, enim arcu fringilla diam, quis efficitur augue lectus a eros.</string>
+    <string name="example_movename" translatable="false">Poison Sludge</string>
+    <string name="message_select_one_iv">Select at least one IV.</string>
+    <string name="message_select_pokemon">Select a Pokemon.</string>
+    <string name="label_hm">HM</string>
+    <string name="label_tm">TM</string>
+    <string name="message_no_egg_moves">This Pokemon has no egg moves.</string>
+    <string name="message_nature_considered">Nature considered.</string>
+    <string name="message_nature_ignored">Nature ignored.</string>
+    <string name="message_ability_considered">Ability considered.</string>
+    <string name="message_ability_ignored">Ability ignored.</string>
+    <string name="message_dk_enabled">Destiny Knot enabled.</string>
+    <string name="message_dk_disabled">Destiny Knot disabled.</string>
+    <string name="label_more_than_999_eggs"><![CDATA[>999 eggs]]></string>
+    <string name="label_about_number">~</string>
+    <string name="label_eggs">eggs</string>
+    <string name="label_shiny">Shiny</string>
+    <string name="label_level_up">Level Up</string>
+    <string name="label_machine">TM/HM</string>
+    <string name="label_egg_moves">Egg Moves</string>
 </resources>

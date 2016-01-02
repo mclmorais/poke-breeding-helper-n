@@ -27,7 +27,7 @@ public class EggMovesListFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_moves_list, container, false);
 
         noMovesText = (TextView) v.findViewById(R.id.fragmentMoves_textNoMoves);
-        noMovesText.setText("This Pokemon has no egg moves.");
+        noMovesText.setText(R.string.message_no_egg_moves);
 
         loadingIcon = (AVLoadingIndicatorView) v.findViewById(R.id.fragmentMoves_loadingIcon);
 

@@ -86,9 +86,9 @@ public class MachineMoveAdapter extends RecyclerView.Adapter<MachineMoveAdapter.
             holder.power.setText(Integer.toString(power));
 
         if(moves.get(position).isHiddenMachine())
-            holder.machineType.setText("HM");
+            holder.machineType.setText(context.getString(R.string.label_hm));
         else
-            holder.machineType.setText("TM");
+            holder.machineType.setText(context.getString(R.string.label_tm));
 
         TypedArray ids = context.getResources().obtainTypedArray(R.array.type_colors);
 

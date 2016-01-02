@@ -187,10 +187,15 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         checkBoxDestinyKnot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String end = isChecked ? "enabled" : "disabled";
+                String s;
+                if(isChecked)
+                    s = getActivity().getString(R.string.message_dk_enabled);
+                else
+                    s = getActivity().getString(R.string.message_dk_disabled);
+
                 int pos[] = new int[2];
                 checkBoxDestinyKnot.getLocationOnScreen(pos);
-                Toast t = Toast.makeText(getActivity().getApplicationContext(), "Destiny Knot " + end + ".", Toast.LENGTH_SHORT);
+                Toast t = Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT);
                 t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, pos[1] - (int) convertDpToPixel(80, getActivity().getApplicationContext()));
                 t.show();
                 mListener.setDestinyKnot(isChecked);
@@ -204,10 +209,15 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         checkBoxEverstone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String end = isChecked ? "enabled" : "disabled";
+                String s;
+                if(isChecked)
+                    s = "Everstone enabled.";
+                else
+                    s = "Everstone disabled.";
+
                 int pos[] = new int[2];
                 checkBoxEverstone.getLocationOnScreen(pos);
-                Toast t = Toast.makeText(getActivity().getApplicationContext(), "Everstone " + end + ".", Toast.LENGTH_SHORT);
+                Toast t = Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT);
                 t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, pos[1] - (int) convertDpToPixel(80, getActivity().getApplicationContext()));
                 t.show();
                 mListener.setEverstone(isChecked);
@@ -328,10 +338,15 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
             v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceEggs);
             double eggs = 1 / chance;
             if (eggs > 999)
-                v.setText(">999 eggs");
-            else
-                v.setText("~" + String.format("%.0f", 1 / chance) + " eggs");
-
+                v.setText(R.string.label_more_than_999_eggs);
+            else {
+//                v.setText("~" + String.format("%.0f", 1 / chance) + " eggs");
+                String about = getActivity().getString(R.string.label_about_number);
+                String number = String.format("%.0f", 1 / chance);
+                String eggsLabel = getActivity().getString(R.string.label_eggs);
+                String finalString = about + number + " " + eggsLabel;
+                v.setText(finalString);
+            }
 
             ImageView firstIcon = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstIcon);
             //String iconId = "pkmn_big_" + String.format("%03d", chancePokemonMatchList.get(i).firstPokemon.id);
