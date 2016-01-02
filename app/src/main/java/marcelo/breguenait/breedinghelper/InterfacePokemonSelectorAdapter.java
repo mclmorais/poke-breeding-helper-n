@@ -99,7 +99,7 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
         int pokemonId = filteredPokemonIds.get(position);
 
         holder.id.setText(String.format("%03d", pokemonId));
-        holder.icon.setBackground(CachedPokemonIcons.getInstance().getIcon(pokemonId)); //TODO HMMMMMM
+        holder.icon.setBackground(CachedPokemonIcons.getInstance().getIcon(pokemonId));
 
         return pokemonDynamicLayout;
 

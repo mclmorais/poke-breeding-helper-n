@@ -530,7 +530,26 @@ public class MyDatabase extends SQLiteAssetHelper {
             cursorCompatible.moveToNext();
         }
         cursorCompatible.close();
+
+        //Hacks for the exceptions. Maybe add another table on the db to solve this?
+        if(pokemonId == 29) {
+            compatiblePokemonList.add(32);
+            compatiblePokemonList.add(33);
+            compatiblePokemonList.add(34);
+        }
+        if(pokemonId == 32 || pokemonId == 33 || pokemonId == 34) {
+            compatiblePokemonList.add(29);
+        }
+        if(pokemonId == 313) {
+            compatiblePokemonList.add(314);
+        }
+        if(pokemonId == 314) {
+            compatiblePokemonList.add(313);
+        }
+
+
         return compatiblePokemonList;
+
 
     }
 
