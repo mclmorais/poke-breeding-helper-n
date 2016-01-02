@@ -44,7 +44,7 @@ public class BreedingCompatibilityChecker {
 
         }
 
-        System.err.println("Could NOT determine gender compatibility!");
+    //    System.err.println("Could NOT determine gender compatibility!");
         return false;
     }
 
@@ -79,7 +79,8 @@ public class BreedingCompatibilityChecker {
         /*If the potential Pokemon has a 2nd egg group and it's compatible with any
         * of the goal pokemon, it's compatible*/
         if (potentialPokemon.getEggGroup2Id() > 0) {
-            if (potentialPokemon.getEggGroup2Id() == goalPokemon.getEggGroup2Id())
+            if (potentialPokemon.getEggGroup2Id() == goalPokemon.getEggGroup1Id()
+                    || potentialPokemon.getEggGroup2Id() == goalPokemon.getEggGroup2Id())
                 return true;
         }
 

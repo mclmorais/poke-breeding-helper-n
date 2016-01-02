@@ -2,6 +2,7 @@ package marcelo.breguenait.breedinghelper;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -182,4 +183,16 @@ class StoredPokemonAdapter extends BaseAdapter {
 
         ImageView[] IVs = new ImageView[6];
     }
+
+    int getPositionByUUID(UUID uuid) {
+        for (int i = 0; i < storedPokemonList.size(); i++) {
+            if(storedPokemonList.get(i).getUUID() == uuid)
+                return i;
+        }
+
+        Log.d("StoredAdapter", "Couldn't find the UUID sent!");
+        return -1;
+    }
+
+
 }

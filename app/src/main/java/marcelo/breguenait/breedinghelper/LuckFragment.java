@@ -29,6 +29,7 @@ import java.util.UUID;
 
 import static marcelo.breguenait.breedinghelper.R.id.imageDynamicChanceSecondItem;
 
+//TODO: luck fragment has to be updated AFTER stored pokemon fragment so that it receives its information correctly
 
 class InterfaceChancePokemon {
     private int pokemonId;
@@ -313,12 +314,10 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
             interfaceChanceList.get(i).setLayoutParams(params);
 
             TextView v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceFirstNumber);
-            v.setText("0"); //TODO: fazer pegar o numero do storedpokemon fragment
-//            v.setText(String.valueOf(chancePokemonMatchList.get(i).firstPokemonNumber+1));
-//
+            v.setText(String.valueOf(feederCallback.getInterfacePokemonPosition(chancePokemonMatchList.get(i).getFirstPokemonUUID())+1));
+
             v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceSecondNumber);
-//            v.setText(String.valueOf(chancePokemonMatchList.get(i).secondPokemonNumber+1));
-            v.setText("0"); //TODO: fazer pegar o numero do storedpokemon fragment
+            v.setText(String.valueOf(feederCallback.getInterfacePokemonPosition(chancePokemonMatchList.get(i).getSecondPokemonUUID())+1));
 
             double chance = chancePokemonMatchList.get(i).getChance();
             chance = applyShinyChance(chance);
@@ -501,6 +500,8 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
         ArrayList<ChancePokemonMatch> getChancesList();
 
         InterfaceChancePokemon getInterfaceChancePokemon(UUID uuid);
+
+        int getInterfacePokemonPosition(UUID uuid);
 
         boolean isDestinyKnotActive();
     }

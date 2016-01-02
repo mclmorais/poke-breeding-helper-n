@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-
 //TODO: fazer list do stored adapter ser mais proativo ao invés de ressetar toda vez
 
 /**
@@ -132,6 +131,7 @@ public class StoredPokemonFragment extends Fragment implements
 
     void setHatchAdapter(ArrayList<InterfaceStoredPokemon> list, Context context) {
         storedPokemonAdapter = new StoredPokemonAdapter(list, context);
+        storedPokemonAdapter.setDeleteMode(buttonRemove.isChecked()); //TODO: meio merda implementaçao geral disso aqui, bom mudar quando eu tirar esse gridview talvez?
         gridViewPokemons.setAdapter(storedPokemonAdapter);
         updateGridView();
 
@@ -280,5 +280,9 @@ public class StoredPokemonFragment extends Fragment implements
     @Override
     public ArrayList<Integer> getPokemonFamilyList() {
         return feederCallback.getPokemonFamilyList();
+    }
+
+    int getInterfacePokemonPosition(UUID uuid) {
+        return ((StoredPokemonAdapter)gridViewPokemons.getAdapter()).getPositionByUUID(uuid);
     }
 }

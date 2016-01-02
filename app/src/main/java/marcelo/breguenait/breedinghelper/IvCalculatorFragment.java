@@ -320,12 +320,11 @@ public class IvCalculatorFragment extends Fragment
 
     }
 
-    @Deprecated
     void updatePokemonListFragment() {
-        //TODO: fazer por callback!
         StoredPokemonFragment frag = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
-        frag.updateGridView();
+        frag.setHatchAdapter(breedingManager.getInterfaceStoredPokemonList(), getContext());
     }
+
 
     void updateLuckFragment() {
         LuckFragment frag = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
@@ -633,20 +632,21 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
         breedingManager.storePokemon(pokemonId, genderId, IVs, natureId, abilitySlot);
-        updatePokemonListFragment(); //TODO: remover daqui
+        updatePokemonListFragment();
         updateLuckFragment();
     }
 
     @Override
     public void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
         breedingManager.updateStoredPokemon(uuid, pokemonId, genderId, IVs, natureId, abilitySlot);
-        updatePokemonListFragment(); //TODO: remover daqui
+        updatePokemonListFragment();
         updateLuckFragment();
     }
 
     @Override
     public void removeStoredPokemon(UUID uuid) {
         breedingManager.removePokemon(uuid);
+        //TODO: ver pq nao precisa de updatePokemonListFragment(); aqui
         updateLuckFragment();
     }
 
@@ -668,5 +668,11 @@ public class IvCalculatorFragment extends Fragment
     @Override
     public ArrayList<Integer> getPokemonFamilyList() {
         return breedingManager.getPokemonFamilyList(breedingManager.getGoalId());
+    }
+
+    @Override
+    public int getInterfacePokemonPosition(UUID uuid) {
+        StoredPokemonFragment frag = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        return frag.getInterfacePokemonPosition(uuid);
     }
 }

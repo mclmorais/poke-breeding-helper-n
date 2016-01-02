@@ -51,14 +51,6 @@ public class BreedingManager {
         if (goalPokemon.getPokemonId() == -1)
             return new ArrayList<>(0);
 
-//        try {
-//            if (chancePokemonMatchList == null)
-//                throw new Exception("matchChanceList was null when " +
-//                        "trying to calculate best matches!");
-//        } catch (Exception e) {
-//            System.err.println(e.getMessage());
-//        }
-
         ArrayList<ChancePokemonMatch> chancePokemonMatchList = new ArrayList<>();
 
         //Runs through all possible different combinations of pokémon
