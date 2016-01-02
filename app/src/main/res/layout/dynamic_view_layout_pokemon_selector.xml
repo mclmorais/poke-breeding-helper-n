@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.CardView
-    android:layout_height="40dp"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="40dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="40dp">
+
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -11,25 +11,25 @@
 
 
         <TextView
+            android:id="@+id/textViewId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/placeholder_number_3"
-            android:id="@+id/textViewId"
             android:layout_gravity="left|top"
             android:layout_marginLeft="2dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="@string/placeholder_number_3"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#808080"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:fontFamily="sans-serif-thin" />
+            android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/imageViewIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/imageViewIcon"
             android:layout_gravity="center_horizontal|bottom"
-            android:background="@drawable/pkmn_006"
-            android:layout_marginRight="2dp" />
+            android:layout_marginRight="2dp"
+            android:background="@drawable/pkmn_006" />
     </FrameLayout>
 
 </android.support.v7.widget.CardView>

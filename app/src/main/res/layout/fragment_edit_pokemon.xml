@@ -1,422 +1,426 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress AndroidUnknownAttribute -->
-<view
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--suppress AndroidUnknownAttribute -->
+<view xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:layout_width="300dp"
-    android:layout_height="260dp"
+    android:id="@+id/view4"
     class="android.support.v7.widget.CardView"
-    android:id="@+id/view4">
+    android:layout_width="300dp"
+    android:layout_height="260dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <View
+            android:id="@+id/backgroundTop"
             android:layout_width="fill_parent"
             android:layout_height="68dp"
-            android:background="@color/colorPrimary"
-            android:id="@+id/backgroundTop"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:visibility="visible"
-            android:layout_alignParentTop="true" />
+            android:background="@color/colorPrimary"
+            android:visibility="visible" />
+
         <View
+            android:id="@+id/horizontalSeparator1"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="@color/background_light_gray"
-            android:id="@+id/horizontalSeparator1"
-            android:layout_below="@+id/linearLayout8"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-        <ImageView
-            android:layout_width="62dp"
-            android:layout_height="62dp"
-            android:id="@+id/imageViewInsideCircle"
-            android:src="@drawable/circle"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="4dp" />
-        <view
-            android:layout_width="96dp"
-            android:layout_height="64dp"
-            app:border_width="2dp"
-            app:border_color="@color/accent"
-            class="de.hdodenhof.circleimageview.CircleImageView"
-            android:id="@+id/imageViewSelectedIcon"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:src="@drawable/pkmn_big_000"
+            android:layout_below="@+id/linearLayout8"
+            android:background="@color/background_light_gray" />
+
+        <ImageView
+            android:id="@+id/imageViewInsideCircle"
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/circle" />
+
+        <view
+            android:id="@+id/imageViewSelectedIcon"
+            class="de.hdodenhof.circleimageview.CircleImageView"
+            android:layout_width="96dp"
+            android:layout_height="64dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:layout_marginLeft="-8dp"
-            android:layout_marginTop="2dp" />
+            android:layout_marginTop="2dp"
+            android:src="@drawable/pkmn_big_000"
+            app:border_color="@color/accent"
+            app:border_width="2dp" />
 
         <Button
+            android:id="@+id/buttonSelectPokemon"
             style="@style/MyRaisedButton"
             android:layout_width="194dp"
             android:layout_height="40dp"
-            android:text="@string/select_pokemon"
-            android:id="@+id/buttonSelectPokemon"
             android:layout_gravity="right"
-            android:textColor="@color/colorPrimary"
-            android:layout_toRightOf="@+id/imageViewInsideCircle"
             android:layout_marginLeft="18dp"
             android:layout_marginTop="12dp"
+            android:layout_toRightOf="@+id/imageViewInsideCircle"
+            android:text="@string/select_pokemon"
+            android:textColor="@color/colorPrimary"
             android:visibility="gone" />
 
         <View
+            android:id="@+id/horizontalSeparator333"
             android:layout_width="fill_parent"
             android:layout_height="2dp"
-            android:background="@color/accent"
-            android:id="@+id/horizontalSeparator333"
-            android:layout_below="@+id/backgroundTop"
             android:layout_alignParentLeft="false"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/backgroundTop"
+            android:background="@color/accent" />
 
         <GridLayout
+            android:id="@+id/gridLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/horizontalSeparator333"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="2dp"
             android:columnCount="10"
             android:rowCount="11"
-            android:id="@+id/gridLayout"
-            android:visibility="visible"
-            android:layout_gravity="center_horizontal"
-            android:layout_below="@+id/horizontalSeparator333"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="2dp">
+            android:visibility="visible">
 
             <CheckBox
+                android:id="@+id/checkBoxInputHP"
                 style="@style/AppTheme"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:id="@+id/checkBoxInputHP"
-                android:checked="false"
-                android:button="@android:color/transparent"
-                android:maxHeight="30dp"
-                android:maxWidth="20dp"
-                android:background="@drawable/ic_iv_circle_selector"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"
-                android:layout_row="1"
                 android:layout_column="1"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp" />
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_row="1"
+                android:background="@drawable/ic_iv_circle_selector"
+                android:button="@android:color/transparent"
+                android:checked="false"
+                android:maxHeight="30dp"
+                android:maxWidth="20dp" />
 
             <CheckBox
+                android:id="@+id/checkBoxInputATK"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:id="@+id/checkBoxInputATK"
-                android:checked="false"
+                android:layout_column="2"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_row="1"
                 android:background="@drawable/ic_iv_triangle_selector"
                 android:button="@android:color/transparent"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"
-                android:layout_row="1"
-                android:layout_column="2"
-                android:layout_gravity="center_horizontal" />
+                android:checked="false" />
 
             <CheckBox
-                android:layout_width="30dp"
-                android:layout_height="30dp"
                 android:id="@+id/checkBoxInputSDEF"
-                android:checked="false"
-                android:button="@android:color/transparent"
-                android:background="@drawable/ic_iv_star_selector"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"
-                android:layout_row="1"
-                android:layout_column="5"
-                android:layout_gravity="center_horizontal" />
-
-            <CheckBox
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_column="5"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_row="1"
+                android:background="@drawable/ic_iv_star_selector"
+                android:button="@android:color/transparent"
+                android:checked="false" />
+
+            <CheckBox
                 android:id="@+id/checkBoxInputSPD"
-                android:checked="false"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_column="6"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_row="1"
                 android:background="@drawable/ic_iv_diamond_selector"
                 android:button="@android:color/transparent"
-                android:layout_marginBottom="5dp"
-                android:layout_row="1"
-                android:layout_column="6"
-                android:layout_marginRight="10dp"
-                android:layout_gravity="center_horizontal" />
+                android:checked="false" />
 
             <CheckBox
+                android:id="@+id/checkBoxInputDEF"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:id="@+id/checkBoxInputDEF"
-                android:checked="false"
+                android:layout_column="3"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="10dp"
+                android:layout_row="1"
                 android:background="@drawable/ic_iv_square_selector"
                 android:button="@android:color/transparent"
-                android:layout_row="1"
-                android:layout_column="3"
-                android:layout_marginRight="10dp"
-                android:layout_gravity="center_horizontal" />
+                android:checked="false" />
 
             <CheckBox
+                android:id="@+id/checkBoxInputSATK"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:id="@+id/checkBoxInputSATK"
-                android:checked="false"
+                android:layout_column="4"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_row="1"
                 android:background="@drawable/ic_iv_heart_selector"
                 android:button="@android:color/transparent"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"
-                android:layout_row="1"
-                android:layout_column="4"
-                android:layout_gravity="center_horizontal" />
+                android:checked="false" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/label_hp"
                 android:id="@+id/textView10"
-                android:layout_row="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:textStyle="bold"
-                android:textSize="12sp"
-                android:textIsSelectable="false"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp" />
+                android:layout_marginBottom="4dp"
+                android:layout_row="0"
+                android:text="@string/label_hp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/label_atk"
                 android:id="@+id/textView12"
-                android:layout_row="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="2"
-                android:textStyle="bold"
-                android:textSize="12sp"
-                android:textIsSelectable="false"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="-10dp"
-                android:layout_marginBottom="4dp" />
+                android:layout_row="0"
+                android:text="@string/label_atk"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/label_def"
                 android:id="@+id/textView14"
-                android:layout_row="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="3"
-                android:textStyle="bold"
-                android:textSize="12sp"
-                android:textIsSelectable="false"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="-10dp"
-                android:layout_marginBottom="4dp" />
+                android:layout_row="0"
+                android:text="@string/label_def"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/label_satk"
                 android:id="@+id/textView15"
-                android:layout_row="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="4"
-                android:textStyle="bold"
-                android:textSize="12sp"
-                android:textIsSelectable="false"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="-10dp"
-                android:layout_marginBottom="4dp" />
+                android:layout_row="0"
+                android:text="@string/label_satk"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/label_sdef"
                 android:id="@+id/textView17"
-                android:layout_row="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="5"
-                android:textStyle="bold"
-                android:textSize="12sp"
-                android:textIsSelectable="false"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="-10dp"
-                android:layout_marginBottom="4dp" />
+                android:layout_row="0"
+                android:text="@string/label_sdef"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/label_spd"
                 android:id="@+id/textView18"
-                android:layout_row="0"
-                android:layout_column="6"
-                android:textStyle="bold"
-                android:textSize="12sp"
-                android:textIsSelectable="false"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="-10dp"
-                android:layout_marginBottom="4dp" />
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/label_gender"
-                android:id="@+id/textView19"
-                android:layout_row="0"
-                android:layout_column="0"
-                android:textStyle="bold"
-                android:textSize="12sp"
-                android:textIsSelectable="false"
+                android:layout_column="6"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="-10dp"
+                android:layout_row="0"
+                android:text="@string/label_spd"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="0dp"
-                android:layout_marginBottom="4dp" />
+                android:layout_row="0"
+                android:text="@string/label_gender"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textIsSelectable="false"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <ToggleButton
+                android:id="@+id/toggleButtonInputGender"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:id="@+id/toggleButtonInputGender"
-                android:background="@drawable/ic_toggle_gender_selector"
-                android:textOff=" "
-                android:textOn=""
-                android:layout_row="1"
                 android:layout_column="0"
                 android:layout_gravity="center_horizontal"
-                android:checked="true" />
+                android:layout_row="1"
+                android:background="@drawable/ic_toggle_gender_selector"
+                android:checked="true"
+                android:textOff=" "
+                android:textOn="" />
         </GridLayout>
 
         <TextView
+            android:id="@+id/textView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:fontFamily="sans-serif-condensed"
-            android:text="@string/label_nature_sans_colon"
-            android:id="@+id/textView20"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:layout_below="@+id/gridLayout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_below="@+id/gridLayout"
             android:layout_marginLeft="4dp"
-            android:paddingLeft="18dp" />
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:paddingLeft="18dp"
+            android:text="@string/label_nature_sans_colon"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="14sp" />
 
         <Spinner
+            android:id="@+id/spinnerAddPokemonNature"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:id="@+id/spinnerAddPokemonNature"
-            android:gravity="center"
-            android:layout_below="@+id/textView20"
             android:layout_alignLeft="@+id/textView20"
             android:layout_alignStart="@+id/textView20"
-            android:layout_marginLeft="10dp" />
+            android:layout_below="@+id/textView20"
+            android:layout_marginLeft="10dp"
+            android:gravity="center" />
 
         <TextView
+            android:id="@+id/textView21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:fontFamily="sans-serif-condensed"
-            android:text="@string/label_ability_sans_colon"
-            android:id="@+id/textView21"
-            android:textSize="14sp"
-            android:textAllCaps="false"
-            android:gravity="center"
             android:layout_above="@+id/spinnerAddPokemonAbility"
             android:layout_alignLeft="@+id/spinnerAddPokemonAbility"
-            android:paddingLeft="8dp" />
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            android:text="@string/label_ability_sans_colon"
+            android:textAllCaps="false"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="14sp" />
 
         <Spinner
+            android:id="@+id/spinnerAddPokemonAbility"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:id="@+id/spinnerAddPokemonAbility"
-            android:gravity="center"
             android:layout_below="@+id/textView20"
-            android:layout_toRightOf="@+id/spinnerAddPokemonNature"
+            android:layout_marginLeft="30dp"
             android:layout_toEndOf="@+id/spinnerAddPokemonNature"
-            android:layout_marginLeft="30dp" />
+            android:layout_toRightOf="@+id/spinnerAddPokemonNature"
+            android:gravity="center" />
+
         <View
+            android:id="@+id/horizontalSeparator123123123"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-            android:background="@color/background_light_gray"
-            android:id="@+id/horizontalSeparator123123123"
             android:layout_above="@+id/linearLayout9"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:background="@color/background_light_gray" />
+
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/linearLayout9"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:id="@+id/linearLayout9"
             android:layout_alignParentBottom="false"
             android:layout_alignParentLeft="false"
             android:layout_alignParentStart="false"
-            android:visibility="visible"
-            android:layout_below="@+id/spinnerAddPokemonNature">
+            android:layout_below="@+id/spinnerAddPokemonNature"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <Button
-                android:textSize="16sp"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimary"
+                android:id="@+id/fragmentAddPokemonButtonCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="@string/cancel"
-                android:id="@+id/fragmentAddPokemonButtonCancel"
-                android:visibility="visible"
-                android:background="@drawable/button_press_white_lightgray_selector"
-                android:textStyle="bold"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="4dp"
-                android:layout_weight="0.5" />
+                android:layout_weight="0.5"
+                android:background="@drawable/button_press_white_lightgray_selector"
+                android:text="@string/cancel"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
 
             <View
+                android:id="@+id/horizontalSeparator334"
                 android:layout_width="1dp"
                 android:layout_height="40dp"
-                android:background="@color/background_light_gray"
+                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
-                android:id="@+id/horizontalSeparator334"
                 android:layout_marginTop="6dp"
-                android:layout_marginBottom="4dp"
+                android:background="@color/background_light_gray"
                 android:visibility="visible" />
 
             <Button
-                android:textSize="16sp"
-                android:textAllCaps="true"
-                android:textColor="@color/colorPrimary"
+                android:id="@+id/confirmIVsButton"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:text="@string/button_confirm"
-                android:id="@+id/confirmIVsButton"
-                android:visibility="visible"
-                android:background="@drawable/button_press_white_lightgray_selector"
-                android:textStyle="bold"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="4dp"
-                android:layout_weight="0.5" />
+                android:layout_weight="0.5"
+                android:background="@drawable/button_press_white_lightgray_selector"
+                android:text="@string/button_confirm"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textViewSelectedName"
             android:layout_width="172dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/placeholder"
-            android:fontFamily="Condensed"
-            android:id="@+id/textViewSelectedName"
-            android:textColor="@android:color/white"
-            android:layout_below="@+id/horizontalSeparator1"
             android:layout_alignBottom="@+id/imageViewSelectedIcon"
-            android:gravity="center"
+            android:layout_below="@+id/horizontalSeparator1"
             android:layout_toRightOf="@+id/imageViewInsideCircle"
+            android:fontFamily="Condensed"
+            android:gravity="center"
+            android:text="@string/placeholder"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"
             android:visibility="visible" />
 
         <view
+            android:id="@+id/buttonAddPokemonEdit"
             class="com.melnykov.fab.FloatingActionButton"
-            fab:fab_shadow="false"
-            fab:fab_colorNormal="@color/accent"
-            fab:fab_colorPressed="@color/colorPrimary"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/buttonAddPokemonEdit"
-            android:src="@drawable/ic_action_edit"
             android:layout_alignTop="@+id/imageViewInsideCircle"
-            android:layout_toRightOf="@+id/textViewSelectedName"
+            android:layout_marginTop="2dp"
             android:layout_toEndOf="@+id/textViewSelectedName"
-            android:layout_marginTop="2dp" />
+            android:layout_toRightOf="@+id/textViewSelectedName"
+            android:src="@drawable/ic_action_edit"
+            fab:fab_colorNormal="@color/accent"
+            fab:fab_colorPressed="@color/colorPrimary"
+            fab:fab_shadow="false" />
     </RelativeLayout>
-    </view>
+</view>

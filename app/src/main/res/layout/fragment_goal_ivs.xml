@@ -1,207 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@color/colorPrimary"
-    android:id="@+id/relativeLayout">
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
 
 
     <TextView
         android:id="@+id/info_text"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:text="@string/label_goal_ivs"
         android:layout_above="@+id/goalCardView"
         android:layout_alignLeft="@+id/goalCardView"
-        android:textStyle="bold"
+        android:text="@string/label_goal_ivs"
+        android:textAllCaps="true"
         android:textColor="@android:color/white"
-        android:visibility="visible"
-        android:textAllCaps="true" />
+        android:textStyle="bold"
+        android:visibility="visible" />
 
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/goalCardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="4dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="false"
+        android:layout_centerHorizontal="true"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:layout_centerHorizontal="true">
+        card_view:cardCornerRadius="4dp">
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:paddingRight="16dp"
-            android:paddingLeft="16dp"
-            android:paddingTop="16dp"
+            android:focusable="false"
             android:paddingBottom="4dp"
-            android:focusable="false">
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp">
 
             <FrameLayout
+                android:id="@+id/frameLayoutPokemonSelectorButton"
+                style="@style/MyRaisedButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                style="@style/MyRaisedButton"
-                android:id="@+id/frameLayoutPokemonSelectorButton"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true">
 
                 <ImageView
+                    android:id="@+id/imageViewSelectedPokemonIcon"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:id="@+id/imageViewSelectedPokemonIcon"
-                    android:background="@drawable/pkmn_big_000"
-                    android:layout_gravity="center"
+                    android:layout_alignEnd="@+id/frameLayoutPokemonSelectorButton"
                     android:layout_alignParentTop="false"
-                    android:layout_alignEnd="@+id/frameLayoutPokemonSelectorButton" />
+                    android:layout_gravity="center"
+                    android:background="@drawable/pkmn_big_000" />
             </FrameLayout>
 
             <TextView
+                android:id="@+id/textViewPokemonName"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/label_select_pokemon"
-                android:id="@+id/textViewPokemonName"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:textAllCaps="true"
                 android:layout_alignParentTop="false"
-                android:layout_toRightOf="@+id/frameLayoutPokemonSelectorButton"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="-4dp"
-                android:singleLine="true" />
+                android:layout_toRightOf="@+id/frameLayoutPokemonSelectorButton"
+                android:singleLine="true"
+                android:text="@string/label_select_pokemon"
+                android:textAllCaps="true"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:id="@+id/LayoutIVs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/LayoutIVs"
-                android:layout_alignParentRight="false"
                 android:layout_alignParentEnd="false"
-                android:layout_toRightOf="@+id/frameLayoutPokemonSelectorButton"
+                android:layout_alignParentRight="false"
                 android:layout_below="@+id/textViewPokemonName"
-                android:layout_marginLeft="8dp">
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/frameLayoutPokemonSelectorButton"
+                android:orientation="horizontal">
 
                 <CheckBox
+                    android:id="@+id/checkBoxGoalHP"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:id="@+id/checkBoxGoalHP"
                     android:button="@drawable/ic_iv_circle_selector"
                     android:checked="false" />
 
                 <CheckBox
+                    android:id="@+id/checkBoxGoalATK"
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/checkBoxGoalATK"
                     android:button="@drawable/ic_iv_triangle_selector" />
 
                 <CheckBox
+                    android:id="@+id/checkBoxGoalDEF"
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/checkBoxGoalDEF"
                     android:button="@drawable/ic_iv_square_selector" />
 
                 <CheckBox
+                    android:id="@+id/checkBoxGoalSATK"
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/checkBoxGoalSATK"
                     android:button="@drawable/ic_iv_heart_selector" />
 
                 <CheckBox
+                    android:id="@+id/checkBoxGoalSDEF"
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/checkBoxGoalSDEF"
                     android:button="@drawable/ic_iv_star_selector" />
 
                 <CheckBox
+                    android:id="@+id/checkBoxGoalSPD"
                     android:layout_width="32dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/checkBoxGoalSPD"
                     android:button="@drawable/ic_iv_diamond_selector" />
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:id="@+id/LayoutNature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_below="@+id/LayoutIVs"
-                android:id="@+id/LayoutNature">
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/label_nature"
-                    android:id="@+id/textView2"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:textAllCaps="true"
-                    android:gravity="center"
-                    android:layout_below="@+id/frameLayoutPokemonSelectorButton"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/frameLayoutPokemonSelectorButton"
+                    android:gravity="center"
+                    android:text="@string/label_nature"
+                    android:textAllCaps="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <Spinner
+                    android:id="@+id/spinnerGoalIVsNatures"
                     android:layout_width="160dp"
                     android:layout_height="40dp"
-                    android:id="@+id/spinnerGoalIVsNatures"
-                    android:gravity="center"
                     android:layout_below="@+id/LayoutIVs"
-                    android:layout_toRightOf="@+id/textView2" />
+                    android:layout_toRightOf="@+id/textView2"
+                    android:gravity="center" />
 
                 <CheckBox
+                    android:id="@+id/checkBoxGoalIVsActivateNatures"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/checkBoxGoalIVsActivateNatures"
                     android:layout_alignBottom="@+id/spinnerGoalIVsNatures"
-                    android:layout_toRightOf="@+id/LayoutIVs"
-                    android:layout_toEndOf="@+id/LayoutIVs" />
+                    android:layout_toEndOf="@+id/LayoutIVs"
+                    android:layout_toRightOf="@+id/LayoutIVs" />
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:id="@+id/LayoutAbility"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/LayoutAbility"
-                android:layout_below="@+id/LayoutNature">
+                android:layout_below="@+id/LayoutNature"
+                android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/label_ability"
-                    android:id="@+id/textView8"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:textAllCaps="true"
-                    android:gravity="center"
-                    android:layout_below="@+id/textView2"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/textView2"
+                    android:gravity="center"
+                    android:text="@string/label_ability"
+                    android:textAllCaps="true"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <Spinner
+                    android:id="@+id/spinnerGoalIVsAbilities"
                     android:layout_width="160dp"
                     android:layout_height="40dp"
-                    android:id="@+id/spinnerGoalIVsAbilities"
-                    android:gravity="center"
-                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentTop="true"
+                    android:gravity="center" />
 
                 <CheckBox
+                    android:id="@+id/checkBoxGoalIVsActivateAbilities"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/checkBoxGoalIVsActivateAbilities"
-                    android:layout_alignTop="@+id/textView8"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignTop="@+id/textView8" />
             </LinearLayout>
 
         </RelativeLayout>

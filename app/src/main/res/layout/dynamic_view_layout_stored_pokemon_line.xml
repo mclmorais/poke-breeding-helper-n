@@ -1,101 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frameDynamicHatch"
     android:layout_width="48dp"
     android:layout_height="48dp"
-    android:background="@drawable/layer_card_background_button_white_square"
-    android:id="@+id/frameDynamicHatch">
+    android:background="@drawable/layer_card_background_button_white_square">
 
     <TextView
+        android:id="@+id/textDynamicHatchNumber"
+        style="@style/CapsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/placeholder_number_2"
-        android:id="@+id/textDynamicHatchNumber"
         android:layout_gravity="left|top"
-        style="@style/CapsLabel"
-        android:textSize="12sp"
+        android:layout_marginLeft="2dp"
         android:layout_marginTop="2dp"
+        android:text="@string/placeholder_number_2"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/darker_gray"
-        android:layout_marginLeft="2dp" />
+        android:textSize="12sp" />
 
     <GridLayout
+        android:id="@+id/layoutDynamicHatchIVs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|top"
-        android:layout_marginTop="2dp"
         android:layout_marginRight="4dp"
-        android:id="@+id/layoutDynamicHatchIVs">
+        android:layout_marginTop="2dp">
 
     </GridLayout>
 
     <ImageView
-        android:layout_width="8dp"
-        android:layout_height="8dp"
         android:id="@+id/imageDynamicHatchHP"
-        android:background="@drawable/ic_iv_circle_selector"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
         android:layout_gravity="left|bottom"
+        android:layout_marginBottom="4dp"
         android:layout_marginLeft="1dp"
-        android:layout_marginBottom="4dp" />
+        android:background="@drawable/ic_iv_circle_selector" />
 
     <ImageView
-        android:layout_width="8dp"
-        android:layout_height="8dp"
         android:id="@+id/imageDynamicHatchATK"
-        android:background="@drawable/ic_iv_triangle_selector"
-        android:layout_gravity="left|bottom"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="8dp" />
-
-    <ImageView
         android:layout_width="8dp"
         android:layout_height="8dp"
+        android:layout_gravity="left|bottom"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/ic_iv_triangle_selector" />
+
+    <ImageView
         android:id="@+id/imageDynamicHatchDEF"
-        android:background="@drawable/ic_iv_square_selector"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
         android:layout_gravity="left|bottom"
         android:layout_marginBottom="4dp"
-        android:layout_marginLeft="16dp" />
+        android:layout_marginLeft="16dp"
+        android:background="@drawable/ic_iv_square_selector" />
 
     <ImageView
-        android:layout_width="8dp"
-        android:layout_height="8dp"
         android:id="@+id/imageDynamicHatchSATK"
-        android:background="@drawable/ic_iv_heart_selector"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
         android:layout_gravity="right|bottom"
+        android:layout_marginBottom="4dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="4dp" />
+        android:background="@drawable/ic_iv_heart_selector" />
 
     <ImageView
-        android:layout_width="8dp"
-        android:layout_height="8dp"
         android:id="@+id/imageDynamicHatchSDEF"
-        android:background="@drawable/ic_iv_star_selector"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="4dp"
-        android:layout_gravity="right|bottom" />
-
-    <ImageView
         android:layout_width="8dp"
         android:layout_height="8dp"
-        android:id="@+id/imageDynamicHatchSPD"
-        android:background="@drawable/ic_iv_diamond_selector"
         android:layout_gravity="right|bottom"
         android:layout_marginBottom="4dp"
-        android:layout_marginRight="1dp" />
+        android:layout_marginRight="8dp"
+        android:background="@drawable/ic_iv_star_selector" />
 
     <ImageView
+        android:id="@+id/imageDynamicHatchSPD"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="4dp"
+        android:layout_marginRight="1dp"
+        android:background="@drawable/ic_iv_diamond_selector" />
+
+    <ImageView
+        android:id="@+id/imageDynamicHatchIcon"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:id="@+id/imageDynamicHatchIcon"
         android:layout_gravity="center"
         android:background="@drawable/pkmn_384" />
 
     <ImageView
+        android:id="@+id/imageDynamicHatchGender"
         android:layout_width="13dp"
         android:layout_height="13dp"
-        android:id="@+id/imageDynamicHatchGender"
         android:layout_gravity="right|top"
-        android:background="@drawable/symbol_male"
+        android:layout_marginRight="2dp"
         android:layout_marginTop="2dp"
-        android:layout_marginRight="2dp" />
+        android:background="@drawable/symbol_male" />
 
 </FrameLayout>

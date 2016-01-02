@@ -12,43 +12,6 @@ import android.widget.CheckBox;
 import java.util.UUID;
 
 
-class InterfaceModifierPokemon {
-
-    private int pokemonId;
-    private int genderId;
-    private int[] IVs;
-    private int natureId;
-    private int abilitySlot;
-
-    public InterfaceModifierPokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
-        this.pokemonId = pokemonId;
-        this.genderId = genderId;
-        this.IVs = IVs;
-        this.natureId = natureId;
-        this.abilitySlot = abilitySlot;
-    }
-
-    public int getPokemonId() {
-        return pokemonId;
-    }
-
-    public int getGenderId() {
-        return genderId;
-    }
-
-    public int[] getIVs() {
-        return IVs;
-    }
-
-    public int getNatureId() {
-        return natureId;
-    }
-
-    public int getAbilitySlot() {
-        return abilitySlot;
-    }
-}
-
 public class ModifierPokemonFragment extends EditorPokemonFragment {
 
     private static final String ARG_POS_X = "x";
@@ -92,7 +55,7 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
 
     void fillInterfaceWithReceivedData() {
         for (int i = 0; i < checkBoxInputIVs.length; i++) {
-            checkBoxInputIVs[i].setChecked(interfaceModifierPokemon.getIVs()[i]==1);
+            checkBoxInputIVs[i].setChecked(interfaceModifierPokemon.getIVs()[i] == 1);
         }
         selectedPokemonId = interfaceModifierPokemon.getPokemonId();
 
@@ -113,7 +76,7 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
         //TODO: mudar esse abilityslots q ta meio merda
         int position = 0;
         for (int i = 0; i < abilitySlots.size(); i++) {
-            if(abilitySlots.get(i) == selectedAbilitySlot) {
+            if (abilitySlots.get(i) == selectedAbilitySlot) {
                 position = i;
                 break;
             }
@@ -121,7 +84,7 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
 
         spinnerAbility.setSelection(position);
 
-        spinnerNature.setSelection(selectedNatureId-1); //TODO: fazer de um jeito mais galo pra poder organizar os itens depois
+        spinnerNature.setSelection(selectedNatureId - 1); //TODO: fazer de um jeito mais galo pra poder organizar os itens depois
     }
 
     void finishFragment() {
@@ -148,7 +111,7 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
 
         int natureId = spinnerNature.getSelectedItemPosition() + 1;
 
-        updaterFeederCallback.updateStoredPokemon(receivedUUID,selectedPokemonId,selectedGenderId,pokemonIVs,natureId,abilitySlot);
+        updaterFeederCallback.updateStoredPokemon(receivedUUID, selectedPokemonId, selectedGenderId, pokemonIVs, natureId, abilitySlot);
 
         closeFragment();
     }
@@ -199,5 +162,42 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
     interface UpdateModifyPokemon {
         void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot);
 
+    }
+
+    public static class InterfaceModifierPokemon {
+
+        private int pokemonId;
+        private int genderId;
+        private int[] IVs;
+        private int natureId;
+        private int abilitySlot;
+
+        public InterfaceModifierPokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
+            this.pokemonId = pokemonId;
+            this.genderId = genderId;
+            this.IVs = IVs;
+            this.natureId = natureId;
+            this.abilitySlot = abilitySlot;
+        }
+
+        public int getPokemonId() {
+            return pokemonId;
+        }
+
+        public int getGenderId() {
+            return genderId;
+        }
+
+        public int[] getIVs() {
+            return IVs;
+        }
+
+        public int getNatureId() {
+            return natureId;
+        }
+
+        public int getAbilitySlot() {
+            return abilitySlot;
+        }
     }
 }

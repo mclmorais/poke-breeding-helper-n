@@ -25,50 +25,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import databasemanager.DatabaseConstants;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
-class InterfaceViewerPokemon {
-    private int pokemonId;
-    private int genderId;
-    private int IVs[];
-    private String natureName;
-    private String abilityName;
-    private String pokemonName;
-
-    public InterfaceViewerPokemon(int pokemonId, int genderId, int[] IVs, String natureName, String abilityName, String pokemonName) {
-        this.pokemonId = pokemonId;
-        this.genderId = genderId;
-        this.IVs = IVs;
-        this.natureName = natureName;
-        this.abilityName = abilityName;
-        this.pokemonName = pokemonName;
-    }
-
-    public int getPokemonId() {
-        return pokemonId;
-    }
-
-    public int getGenderId() {
-        return genderId;
-    }
-
-    public int[] getIVs() {
-        return IVs;
-    }
-
-    public String getNatureName() {
-        return natureName;
-    }
-
-    public String getAbilityName() {
-        return abilityName;
-    }
-
-    public String getPokemonName() {
-        return pokemonName;
-    }
-}
 
 public class StoredPokemonViewerFragment extends PopupDialogFragment
         implements
@@ -79,9 +38,6 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
 
     private static final String ARG_POS_X = "x";
     private static final String ARG_POS_Y = "y";
-    private static int FEMALE = 1;
-    private static int MALE = 2;
-    private static int GENDERLESS = 3;
     private int mPosX;
     private int mPosY;
 
@@ -300,9 +256,9 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
         }
 
         int genderId = interfaceViewerPokemon.getGenderId();
-        if (genderId == MALE)
+        if (genderId == DatabaseConstants.MALE_ID)
             imageGender.setBackgroundResource(R.drawable.symbol_male);
-        else if (genderId == FEMALE)
+        else if (genderId == DatabaseConstants.FEMALE_ID)
             imageGender.setBackgroundResource(R.drawable.symbol_female);
         else
             imageGender.setBackgroundResource(R.drawable.symbol_genderless);
@@ -393,7 +349,7 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
     }
 
     @Override
-    public InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
+    public ModifierPokemonFragment.InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
         return feederCallback.getInterfaceModifierPokemon(uuid);
     }
 
@@ -418,6 +374,7 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
         int getGenderRate(int pokemonId);
 
         ArrayList<Integer> getPokemonFamilyList();
+
         ArrayList<Integer> getCompatiblePokemonList();
 
         ArrayList<Integer> getPokemonIds();
@@ -428,11 +385,53 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
 
         String getPokemonName(int pokemonId);
 
-        InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid);
+        ModifierPokemonFragment.InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid);
     }
 
     public interface UpdatePokemonViewer {
         void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot);
+    }
+
+    public static class InterfaceViewerPokemon {
+        private int pokemonId;
+        private int genderId;
+        private int IVs[];
+        private String natureName;
+        private String abilityName;
+        private String pokemonName;
+
+        public InterfaceViewerPokemon(int pokemonId, int genderId, int[] IVs, String natureName, String abilityName, String pokemonName) {
+            this.pokemonId = pokemonId;
+            this.genderId = genderId;
+            this.IVs = IVs;
+            this.natureName = natureName;
+            this.abilityName = abilityName;
+            this.pokemonName = pokemonName;
+        }
+
+        public int getPokemonId() {
+            return pokemonId;
+        }
+
+        public int getGenderId() {
+            return genderId;
+        }
+
+        public int[] getIVs() {
+            return IVs;
+        }
+
+        public String getNatureName() {
+            return natureName;
+        }
+
+        public String getAbilityName() {
+            return abilityName;
+        }
+
+        public String getPokemonName() {
+            return pokemonName;
+        }
     }
 
     private class PreloadedDrawables {
@@ -464,12 +463,6 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
             IVInactive[3] = c.getResources().getDrawable(R.drawable.iv_heart_clear);
             IVInactive[4] = c.getResources().getDrawable(R.drawable.iv_star_clear);
             IVInactive[5] = c.getResources().getDrawable(R.drawable.iv_diamond_clear);
-        }
-
-        Drawable getGenderDrawable(Gender gender) {
-            if (gender == Gender.MALE) return maleIcon;
-            else if (gender == Gender.FEMALE) return femaleIcon;
-            else return genderlessIcon;
         }
 
         Drawable getIVDrawable(int position, boolean active) {

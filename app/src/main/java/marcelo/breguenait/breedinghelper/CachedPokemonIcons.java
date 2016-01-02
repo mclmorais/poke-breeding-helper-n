@@ -7,18 +7,19 @@ import android.support.v4.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by Marcelo on 30/12/2015.
- */
+import databasemanager.MyDatabase;
+
 public class CachedPokemonIcons {
 
 
+    private static CachedPokemonIcons instance;
     private HashMap<Integer, Drawable> iconsMap = new HashMap<>();
-
     private Context context;
 
-
-    private static CachedPokemonIcons instance;
+    private CachedPokemonIcons(Context context) {
+        this.context = context;
+        fillIconsList();
+    }
 
     public static CachedPokemonIcons getInstance() {
         return instance;
@@ -28,19 +29,14 @@ public class CachedPokemonIcons {
         instance = new CachedPokemonIcons(context);
     }
 
-    private CachedPokemonIcons(Context context) {
-        this.context = context;
-        fillIconsList();
-    }
-
-    void fillIconsList() {
+    private void fillIconsList() {
 
         ArrayList<Integer> ids = MyDatabase.getInstance().getPokemonIds();
 
         for (Integer id : ids) {
             String iconId = "pkmn_" + String.format("%03d", id);
             Drawable d = ContextCompat.getDrawable(context, context.getResources().getIdentifier(iconId, "drawable", context.getPackageName()));
-            iconsMap.put(id,d);
+            iconsMap.put(id, d);
         }
 
     }

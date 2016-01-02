@@ -5,18 +5,14 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.CheckBox;
 
-/**
- * Created by Marcelo on 30/12/2015.
- */
-
 //TODO: SALVAR ULTIMA POSIÇAO DE TUDO PRA EVITAR FADIGA
 public class CreatePokemonFragment extends EditorPokemonFragment {
 
 
-    UpdateCreatePokemon updaterCallback;
+    private UpdateCreatePokemon updaterCallback;
 
 
-    void finishFragment() {
+    private void finishFragment() {
 
         boolean hasIVs = false;
         for (CheckBox IVs : checkBoxInputIVs) {

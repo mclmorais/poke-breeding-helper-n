@@ -28,45 +28,29 @@ import com.melnykov.fab.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import databasemanager.DatabaseConstants;
+
 public class EditorPokemonFragment extends PopupDialogFragment implements
         SelectPokemonFragment.OnPokemonSelectedListener,
         SelectPokemonFragment.FeedDataSelectPokemon {
 
-
-    public static int FEMALE = 1;
-    public static int MALE = 2;
-    public static int GENDERLESS = 3;
-    public static int GENDERLESS_ONLY = -1;
-    public static int MALE_ONLY = 0;
-
-
-    //--------------------------------------------
-    public static int FEMALE_ONLY = 8;
-    //-----------
     protected final CheckBox[] checkBoxInputIVs = new CheckBox[6];
-
+    protected Button confirmButton;
+    protected Spinner spinnerNature, spinnerAbility;
+    protected ArrayList<Integer> abilityIds;
+    protected ArrayList<Integer> abilitySlots;
     int selectedPokemonId = -1;
     int selectedGenderId = 2;
     int[] selectedIVs = {-1, -1, -1, -1, -1, -1};
     int selectedNatureId = -1;
     int selectedAbilitySlot = -1;
-
     private TextView selectedName;
     private ImageView selectedIcon;
-
     private ToggleButton togglePokemonGender;
-
-    protected Button confirmButton;
     private Button cancelButton;
-
     private FloatingActionButton buttonEdit;
     private View buttonPokemonSelector;
-
     private boolean showOnlyCompatible;
-    protected Spinner spinnerNature, spinnerAbility;
-    protected ArrayList<Integer> abilityIds;
-    protected ArrayList<Integer> abilitySlots;
-
     private FeedDataCreatePokemon feederCallback;
 
 
@@ -170,7 +154,7 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         togglePokemonGender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                selectedGenderId = isChecked ? MALE : FEMALE;
+                selectedGenderId = isChecked ? DatabaseConstants.MALE_ID : DatabaseConstants.FEMALE_ID;
             }
         });
 
@@ -185,7 +169,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     void initialize() {
         populateNatureSpinner();
     }
-
 
 
     void populateNatureSpinner() {
@@ -328,27 +311,27 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
 
     void updateInterfaceGender(int pokemonId) {
 
-        if(pokemonId <= 0) return;
+        if (pokemonId <= 0) return;
 
         int genderRate = feederCallback.getGenderRate(pokemonId);
 
 
-        if (genderRate == GENDERLESS_ONLY) {
+        if (genderRate == DatabaseConstants.GENDERLESS_ONLY) {
             togglePokemonGender.setBackgroundResource(R.drawable.symbol_genderless);
             togglePokemonGender.setClickable(false);
-            selectedGenderId = GENDERLESS;
-        } else if (genderRate == MALE_ONLY) {
+            selectedGenderId = DatabaseConstants.GENDERLESS_ID;
+        } else if (genderRate == DatabaseConstants.MALE_ONLY) {
             togglePokemonGender.setBackgroundResource(R.drawable.symbol_male);
             togglePokemonGender.setClickable(false);
-            selectedGenderId = MALE;
-        } else if (genderRate == FEMALE_ONLY) {
+            selectedGenderId = DatabaseConstants.MALE_ID;
+        } else if (genderRate == DatabaseConstants.FEMALE_ONLY) {
             togglePokemonGender.setBackgroundResource(R.drawable.symbol_female);
             togglePokemonGender.setClickable(false);
-            selectedGenderId = FEMALE;
+            selectedGenderId = DatabaseConstants.FEMALE_ID;
         } else {
             togglePokemonGender.setBackgroundResource(R.drawable.ic_toggle_gender_selector);
             togglePokemonGender.setClickable(true);
-            togglePokemonGender.setChecked(selectedGenderId==MALE); //TODO: HMM
+            togglePokemonGender.setChecked(selectedGenderId == DatabaseConstants.MALE_ID);
         }
         togglePokemonGender.invalidate();
     }
@@ -356,9 +339,9 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     void updateInterfacePokemon(int id) {
         //selectedPokemonId = id;
         String name = feederCallback.getPokemonName(id);
-               selectedName.setText(name);
+        selectedName.setText(name);
 
-        if(id >= 0) {
+        if (id >= 0) {
             String iconId = "pkmn_big_" + String.format("%03d", id);
             selectedIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
         }

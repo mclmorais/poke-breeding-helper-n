@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/layer_card_background"
-    android:baselineAligned="true">
+    android:baselineAligned="true"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/itemGridHeader"
@@ -13,122 +13,123 @@
 
         <TextView
             android:id="@+id/itemGridHeaderTitle"
+            style="@style/card_header_title"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:fontFamily="sans-serif-condensed"
-            android:text="@string/label_stored_pokemons"
             android:layout_alignParentTop="false"
-            style="@style/card_header_title"
-            android:visibility="visible"
-            android:singleLine="true"
             android:layout_toLeftOf="@+id/separatorFragmentPokemonList2"
-            android:layout_toStartOf="@+id/separatorFragmentPokemonList2" />
+            android:layout_toStartOf="@+id/separatorFragmentPokemonList2"
+            android:fontFamily="sans-serif-condensed"
+            android:singleLine="true"
+            android:text="@string/label_stored_pokemon"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:visibility="visible" />
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/LayoutIVs"
             android:layout_width="150dp"
             android:layout_height="fill_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:id="@+id/LayoutIVs">
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal">
 
             <ToggleButton
+                android:id="@+id/buttonFragmentPokemonListRemove"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/label_remove"
-                android:textOn="REMOVE"
-                android:textOff="REMOVE"
-                android:id="@+id/buttonFragmentPokemonListRemove"
-                android:background="@drawable/button_press_white_lightgray_selector"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
                 android:layout_weight="1"
+                android:background="@drawable/button_press_white_lightgray_selector"
+                android:checked="false"
+                android:text="@string/label_remove"
+                android:textColor="@color/colorPrimary"
+                android:textOff="REMOVE"
+                android:textOn="REMOVE"
                 android:textSize="15sp"
-                android:checked="false" />
+                android:textStyle="bold" />
 
             <View
                 android:id="@+id/separatorFragmentPokemonList1"
                 android:layout_width="1dp"
                 android:layout_height="32dp"
-                android:background="@color/background_light_gray"
-                android:layout_weight="0"
                 android:layout_gravity="center_vertical"
+                android:layout_weight="0"
+                android:background="@color/background_light_gray"
                 android:visibility="visible" />
 
             <Button
+                android:id="@+id/buttonFragmentPokemonListAdd"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/label_add"
-                android:id="@+id/buttonFragmentPokemonListAdd"
-                android:background="@drawable/button_press_white_lightgray_selector"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
                 android:layout_weight="1"
-                android:textSize="15sp" />
+                android:background="@drawable/button_press_white_lightgray_selector"
+                android:text="@string/label_add"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <View
             android:id="@+id/separatorFragmentPokemonList2"
             android:layout_width="1dp"
             android:layout_height="32dp"
-            android:background="@color/background_light_gray"
-            android:layout_gravity="center_vertical"
             android:layout_alignTop="@+id/itemGridHeaderTitle"
+            android:layout_gravity="center_vertical"
             android:layout_toLeftOf="@+id/LayoutIVs"
-            android:layout_toStartOf="@+id/LayoutIVs" />
+            android:layout_toStartOf="@+id/LayoutIVs"
+            android:background="@color/background_light_gray" />
 
     </RelativeLayout>
 
-    <View android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/background_light_gray"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp" />
-
-    <TextView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/hint_store_pokemons"
-        android:id="@+id/textViewHintStore"
-        style="@style/CapsLabel"
-        android:textColor="@android:color/darker_gray"
+        android:layout_height="1dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:gravity="center"
-        android:layout_marginTop="4dp" />
+        android:background="@color/background_light_gray" />
 
     <TextView
+        android:id="@+id/textViewHintStore"
+        style="@style/CapsLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/hint_store_pokemons"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/textViewHintDelete"
         style="@style/CapsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/hint_remove_pokemons"
-        android:id="@+id/textViewHintDelete"
-        android:textColor="@android:color/darker_gray"
+        android:layout_gravity="center_horizontal"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
         android:gravity="center"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="4dp" />
+        android:text="@string/hint_remove_pokemons"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/darker_gray" />
 
     <view
+        android:id="@+id/gridViewPokemonsList"
+        class="customviews.ExpandableGridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        class="marcelo.breguenait.breedinghelper.ExpandableGridView"
-        android:listSelector="@android:color/transparent"
-        android:id="@+id/gridViewPokemonsList"
-        android:numColumns="auto_fit"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:verticalSpacing="4dp"
+        android:layout_marginTop="8dp"
+        android:columnWidth="48dp"
         android:horizontalSpacing="4dp"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        android:columnWidth="48dp" />
+        android:verticalSpacing="4dp" />
 
 </LinearLayout>

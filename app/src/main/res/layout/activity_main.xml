@@ -1,81 +1,76 @@
 <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/main_activity_toolbar"
-        android:layout_height="@dimen/abc_action_bar_default_height_material"
         android:layout_width="match_parent"
-        android:minHeight="@dimen/abc_action_bar_default_height_material"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
         android:background="@color/colorPrimary"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-    </android.support.v7.widget.Toolbar>
+        android:minHeight="@dimen/abc_action_bar_default_height_material"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:background="@color/background_light_gray"
+        android:id="@+id/scrollViewMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollViewMain"
-        android:fillViewport="true"
-        android:fadeScrollbars="false"
+        android:layout_below="@+id/main_activity_toolbar"
         android:animateLayoutChanges="true"
-        android:overScrollMode="never"
-        android:layout_below="@+id/main_activity_toolbar">
+        android:background="@color/background_light_gray"
+        android:fadeScrollbars="false"
+        android:fillViewport="true"
+        android:overScrollMode="never">
 
         <LinearLayout
+            android:id="@+id/linearLayoutInsideScrollView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayoutInsideScrollView"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true">
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
 
 
             <FrameLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/frameGoalIVsFragmentContainer"
-                android:animateLayoutChanges="true"/>
-
-            <FrameLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/frameLuckFragmentContainer"
-                android:layout_marginLeft="@dimen/distance_to_edge"
-                android:layout_marginRight="@dimen/distance_to_edge"
-                android:layout_marginTop="@dimen/distance_between_cards"
-                android:animateLayoutChanges="true"/>
-
-            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/framePokemonListFragmentContainer"
+                android:animateLayoutChanges="true" />
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/frameLuckFragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/distance_to_edge"
                 android:layout_marginRight="@dimen/distance_to_edge"
                 android:layout_marginTop="@dimen/distance_between_cards"
-                android:animateLayoutChanges="true"/>
+                android:animateLayoutChanges="true" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/framePokemonListFragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/distance_to_edge"
+                android:layout_marginRight="@dimen/distance_to_edge"
+                android:layout_marginTop="@dimen/distance_between_cards"
+                android:animateLayoutChanges="true" />
 
             <include
+                android:id="@+id/cardAd"
+                layout="@layout/layout_ad"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/layout_ad"
                 android:layout_gravity="center_horizontal"
-                android:id="@+id/cardAd"
                 android:layout_marginLeft="@dimen/distance_to_edge"
                 android:layout_marginRight="@dimen/distance_to_edge"
                 android:layout_marginTop="@dimen/distance_between_cards"
-                android:animateLayoutChanges="true"/>
+                android:animateLayoutChanges="true" />
 
         </LinearLayout>
     </ScrollView>
 
-    <view
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        class="com.nhaarman.supertooltips.ToolTipRelativeLayout"
-        android:id="@+id/tooltipLayout" />
 
 </RelativeLayout>
 

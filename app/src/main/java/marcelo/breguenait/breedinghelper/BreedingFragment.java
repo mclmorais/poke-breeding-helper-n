@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
@@ -32,35 +31,53 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import breedingmanager.BreedingManager;
+import breedingmanager.ChancePokemonMatch;
+import breedingmanager.StoredPokemon;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import databasemanager.MyDatabase;
 import de.cketti.library.changelog.ChangeLog;
-
-class Constants {
-    public static final int DITTO_ID = 132;
-}
 
 public class BreedingFragment extends Fragment
         implements
         StoredPokemonFragment.FeedDataStoredPokemon,
         StoredPokemonFragment.UpdateStoredPokemonList,
-        LuckFragment.UpdateLuckInterface,
-        GoalIVsFragment.OnGoalUpdate,
-        GoalIVsFragment.FeedDataGoalIVs,
-        GoalIVsFragment.UpdateGoal,
-        LuckFragment.FeederLuckData {
+        ChanceFragment.UpdateLuckInterface,
+        GoalPokemonFragment.OnGoalUpdate,
+        GoalPokemonFragment.FeedDataGoalIVs,
+        GoalPokemonFragment.UpdateGoal,
+        ChanceFragment.FeederLuckData {
 
     private final Gson gson = new Gson();
     @Bind(R.id.main_activity_toolbar)
     Toolbar toolbar;
-    ActionBarDrawerToggle drawerToggle;
 
-    InitialActivity initialActivity;
-    BreedingManager breedingManager;
+    private ActionBarDrawerToggle drawerToggle;
+
+    private MainActivity mainActivity;
+    private BreedingManager breedingManager;
     private View cardAd;
     private AdView adView;
-    private IvManager ivManager;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        List<Fragment> fragments = getFragmentManager().getFragments();
+//        if (fragments != null) {
+//            FragmentTransaction ft = getFragmentManager().beginTransaction();
+//            for (Fragment f : fragments) {
+//                if (f instanceof GoalPokemonFragment ||
+//                        f instanceof ChanceFragment ||
+//                        f instanceof StoredPokemonFragment
+//                        ) {
+//                    ft.remove(f);
+//                }
+//            }
+//            ft.commit();
+//        }
+    }
 
     @Nullable
     @Override
@@ -72,14 +89,13 @@ public class BreedingFragment extends Fragment
         setHasOptionsMenu(true);
 
 
-        initialActivity = (InitialActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
 
         ButterKnife.bind(this, v);
-        ivManager = new IvManager();
         breedingManager = new BreedingManager();
 
         drawerToggle = setupDrawerToggle();
-        initialActivity.mDrawer.setDrawerListener(drawerToggle);
+        mainActivity.mDrawer.setDrawerListener(drawerToggle);
 
 
         toolbar.setTitle("Breeding Helper");
@@ -102,11 +118,9 @@ public class BreedingFragment extends Fragment
 
         readData();
 
-        ivManager.updateBestCombination();
-
         createGoalIVsFragment(savedInstanceState, v);
-        createPokemonListFragment(savedInstanceState, v);
-        createChanceFragment(savedInstanceState, v);
+        createPokemonListFragment(savedInstanceState);
+        createChanceFragment(savedInstanceState);
 
         cardAd = v.findViewById(R.id.cardAd);
 
@@ -144,19 +158,18 @@ public class BreedingFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         setAdVisibility(true);
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(getActivity(),
-                initialActivity.getDrawer(), toolbar,
+                mainActivity.getDrawer(), toolbar,
                 R.string.drawer_open,
                 R.string.drawer_close);
     }
 
 
-    void openSettings() {
+    private void openSettings() {
 //        Intent intent = new Intent(getContext(), SettingsActivity.class);
 //        startActivity(intent);
 
@@ -166,7 +179,7 @@ public class BreedingFragment extends Fragment
                 .commit();
     }
 
-    void createAd() {
+    private void createAd() {
         adView = new AdView(getContext());
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId("ca-app-pub-9350161103739995/6628696664");
@@ -196,7 +209,7 @@ public class BreedingFragment extends Fragment
 
     }
 
-    void setAdVisibility(boolean disabled) {
+    private void setAdVisibility(boolean disabled) {
         if (disabled) {
             cardAd.setVisibility(View.GONE);
             if (adView != null) {
@@ -213,7 +226,7 @@ public class BreedingFragment extends Fragment
         }
     }
 
-    void sendBugReport() {
+    private void sendBugReport() {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
         i.putExtra(Intent.EXTRA_EMAIL, new String[]{"marcelofernandesmorais+bhbug@gmail.com"});
@@ -233,7 +246,7 @@ public class BreedingFragment extends Fragment
     }
 
 
-    void createGoalIVsFragment(Bundle savedInstanceState, View v) {
+    private void createGoalIVsFragment(Bundle savedInstanceState, View v) {
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
         if (v.findViewById(R.id.frameGoalIVsFragmentContainer) != null) {
@@ -246,7 +259,7 @@ public class BreedingFragment extends Fragment
             }
 
             // Create a new Fragment to be placed in the activity layout
-            GoalIVsFragment firstFragment = new GoalIVsFragment();
+            GoalPokemonFragment firstFragment = new GoalPokemonFragment();
 
             // In case this activity was started with special instructions from an
             // Intent, pass the Intent's extras to the fragment as arguments
@@ -263,7 +276,7 @@ public class BreedingFragment extends Fragment
 
     }
 
-    void createPokemonListFragment(Bundle savedInstanceState, View v) {
+    private void createPokemonListFragment(Bundle savedInstanceState) {
         // However, if we're being restored from a previous state,
         // then we don't need to do anything and should return or else
         // we could end up with overlapping fragments.
@@ -285,39 +298,39 @@ public class BreedingFragment extends Fragment
 
     }
 
-    void createChanceFragment(Bundle savedInstanceState, View v) {
+    private void createChanceFragment(Bundle savedInstanceState) {
         // However, if we're being restored from a previous state,
         // then we don't need to do anything and should return or else
         // we could end up with overlapping fragments.
         if (savedInstanceState != null) {
             return;
         }
-        LuckFragment luckFragment = new LuckFragment();
+        ChanceFragment chanceFragment = new ChanceFragment();
 
         // In case this activity was started with special instructions from an
         // Intent, pass the Intent's extras to the fragment as arguments
-        luckFragment.setArguments(getActivity().getIntent().getExtras());
-        luckFragment.setTargetFragment(this, 0);
+        chanceFragment.setArguments(getActivity().getIntent().getExtras());
+        chanceFragment.setTargetFragment(this, 0);
 
 
         // Add the fragment to the 'fragment_container' FrameLayout
         getFragmentManager().beginTransaction()
-                .add(R.id.frameLuckFragmentContainer, luckFragment).commit();
+                .add(R.id.frameLuckFragmentContainer, chanceFragment).commit();
 
     }
 
-    void updatePokemonListFragment() {
+    private void updatePokemonListFragment() {
         StoredPokemonFragment frag = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         frag.setHatchAdapter(breedingManager.getInterfaceStoredPokemonList(), getContext());
     }
 
 
-    void updateLuckFragment() {
-        LuckFragment frag = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
+    private void updateLuckFragment() {
+        ChanceFragment frag = (ChanceFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
         frag.updateCurrentChances();
     }
 
-    void saveData() {
+    private void saveData() {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor prefEditor = sharedPreferences.edit();
@@ -343,7 +356,7 @@ public class BreedingFragment extends Fragment
         jsonString = gson.toJson(breedingManager.hasDestinyKnot());
         prefEditor.putString("jsonMaleItem", jsonString);
 
-        LuckFragment l = (LuckFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
+        ChanceFragment l = (ChanceFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
         jsonString = gson.toJson(l.getShinyOptions());
         prefEditor.putString("jsonShinyOptions", jsonString);
 
@@ -360,16 +373,157 @@ public class BreedingFragment extends Fragment
 
     }
 
-    void readData() {
+    private StoredPokemon convertCompatPokemon(final PokemonInfo compatPokemon) {
+
+        int pokemonId = compatPokemon.id;
+        int genderId;
+        switch (compatPokemon.gender) {
+            case FEMALE:
+                genderId = 1;
+                break;
+            case MALE:
+                genderId = 2;
+                break;
+            case GENDERLESS:
+                genderId = 3;
+                break;
+            default:
+                genderId = -1;
+                break;
+        }
+        int[] IVs = compatPokemon.IVs;
+        int natureId;
+        switch (compatPokemon.nature) {
+            case HARDY:
+                natureId = 1;
+                break;
+            case BOLD:
+                natureId = 2;
+                break;
+            case MODEST:
+                natureId = 3;
+                break;
+            case CALM:
+                natureId = 4;
+                break;
+            case TIMID:
+                natureId = 5;
+                break;
+            case LONELY:
+                natureId = 6;
+                break;
+            case DOCILE:
+                natureId = 7;
+                break;
+            case MILD:
+                natureId = 8;
+                break;
+            case GENTLE:
+                natureId = 9;
+                break;
+            case HASTY:
+                natureId = 10;
+                break;
+            case ADAMANT:
+                natureId = 11;
+                break;
+            case IMPISH:
+                natureId = 12;
+                break;
+            case BASHFUL:
+                natureId = 13;
+                break;
+            case CAREFUL:
+                natureId = 14;
+                break;
+            case RASH:
+                natureId = 15;
+                break;
+            case JOLLY:
+                natureId = 16;
+                break;
+            case NAUGHTY:
+                natureId = 17;
+                break;
+            case LAX:
+                natureId = 18;
+                break;
+            case QUIRKY:
+                natureId = 19;
+                break;
+            case NAIVE:
+                natureId = 20;
+                break;
+            case BRAVE:
+                natureId = 21;
+                break;
+            case RELAXED:
+                natureId = 22;
+                break;
+            case QUIET:
+                natureId = 23;
+                break;
+            case SASSY:
+                natureId = 24;
+                break;
+            case SERIOUS:
+                natureId = 25;
+                break;
+            default:
+                natureId = 1;
+                break;
+        }
+
+        int abilitySlot = MyDatabase.getInstance().getAbilitySlot(pokemonId, compatPokemon.ability);
+
+
+        return new StoredPokemon.Builder()
+                .setPokemonId(pokemonId)
+                .setGenderId(genderId)
+                .setIVs(IVs)
+                .setNatureId(natureId)
+                .setAbilitySlot(abilitySlot)
+                .createStoredPokemon();
+
+    }
+
+
+    private void readData() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         String jsonString;
 
+
+        jsonString = sharedPref.getString("jsonCurrentGoal", null);
+        if (jsonString != null) {
+            breedingManager.replaceGoalObject(convertCompatPokemon(gson.fromJson(jsonString, PokemonInfo.class)));
+            sharedPref.edit().remove("jsonCurrentGoal").apply();
+        } else {
+            jsonString = sharedPref.getString("jsonBreedingManagerGoal", null);
+            if (jsonString != null) {
+                breedingManager.replaceGoalObject(gson.fromJson(jsonString, StoredPokemon.class));
+            }
+        }
+
+        //TODO: fazer opçao neutra de nature e ability pra nao foder compatibilidade
         jsonString = sharedPref.getString("jsonPokemonList", null);
         if (jsonString != null) {
             Type type = new TypeToken<List<PokemonInfo>>() {
             }.getType();
             List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
-            ivManager.setStoredPokemonList(eggList);
+            ArrayList<StoredPokemon> newList = new ArrayList<>(eggList.size());
+            for (PokemonInfo pokemonInfo : eggList) {
+                newList.add(convertCompatPokemon(pokemonInfo));
+            }
+            breedingManager.replaceStoredPokemonObjects(newList);
+            //        sharedPref.edit().remove("jsonPokemonList").apply();
+        } else {
+            jsonString = sharedPref.getString("jsonBreedingManagerStoredList", null);
+            if (jsonString != null) {
+                Type type = new TypeToken<ArrayList<StoredPokemon>>() {
+                }.getType();
+                ArrayList<StoredPokemon> objectsList = gson.fromJson(jsonString, type);
+                breedingManager.replaceStoredPokemonObjects(objectsList);
+            }
         }
 
 
@@ -388,18 +542,6 @@ public class BreedingFragment extends Fragment
             breedingManager.setConsiderAbility(gson.fromJson(jsonString, Boolean.class));
         }
 
-//        jsonString = sharedPref.getString("jsonCurrentGoal", null);
-//        if (jsonString != null) {
-//            ivManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
-//        }
-
-//        jsonString = sharedPref.getString("jsonCurrentGoal", null);
-//        if (jsonString != null) {
-//            ivManager.setGoalPokemon(gson.fromJson(jsonString, PokemonInfo.class));
-//        } else {
-//            ivManager.setEmptyGoalPokemon();
-//        }
-
         jsonString = sharedPref.getString("jsonMaleItem", null); //POR ENQUANTO ARMAZENA O DESTINY KNOT!
         if (jsonString != null) {
             breedingManager.setDestinyKnot(gson.fromJson(jsonString, Boolean.class));
@@ -407,52 +549,6 @@ public class BreedingFragment extends Fragment
 
         int gameLanguage = Integer.valueOf(sharedPref.getString("gameLanguage", "9"));
         breedingManager.setLanguageId(gameLanguage);
-
-
-//        jsonString = sharedPref.getString("jsonDittoList", null);
-//        if (jsonString != null) {
-//            Type type = new TypeToken<List<PokemonInfo>>() {
-//            }.getType();
-//            List<PokemonInfo> dittoList = gson.fromJson(jsonString, type);
-//            for (int i = 0; i < dittoList.size(); i++) {
-//                PokemonInfo p = new PokemonInfo.Builder()
-//                        .id(Constants.DITTO_ID)
-//                        .gender(Gender.DITTO)
-//                        .IVs(dittoList.get(i).IVs)
-//                        .build();
-//                ivManager.storePokemon(p);
-//            }
-//            sharedPref.edit().remove("jsonDittoList").apply();
-//        }
-//
-//        jsonString = sharedPref.getString("jsonEggList", null);
-//        if (jsonString != null) {
-//            Type type = new TypeToken<List<PokemonInfo>>() {
-//            }.getType();
-//            List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
-//            for (int i = 0; i < eggList.size(); i++) {
-//                PokemonInfo p = new PokemonInfo.Builder()
-//                        .id(0)
-//                        .gender(eggList.get(i).gender)
-//                        .IVs(eggList.get(i).IVs)
-//                        .build();
-//                ivManager.storePokemon(p);
-//            }
-//            sharedPref.edit().remove("jsonEggList").apply();
-//        }
-
-        jsonString = sharedPref.getString("jsonBreedingManagerStoredList", null);
-        if (jsonString != null) {
-            Type type = new TypeToken<ArrayList<StoredPokemon>>() {
-            }.getType();
-            ArrayList<StoredPokemon> objectsList = gson.fromJson(jsonString, type);
-            breedingManager.replaceStoredPokemonObjects(objectsList);
-        }
-
-        jsonString = sharedPref.getString("jsonBreedingManagerGoal", null);
-        if (jsonString != null) {
-            breedingManager.replaceGoalObject(gson.fromJson(jsonString, StoredPokemon.class));
-        }
 
     }
 
@@ -479,21 +575,6 @@ public class BreedingFragment extends Fragment
             return (gson.fromJson(jsonString, Integer.class));
         } else return 0;
     }
-
-
-    void saveBoolean(String key, Boolean value) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        SharedPreferences.Editor prefEditor = sharedPref.edit();
-        prefEditor.putBoolean(key, value);
-        prefEditor.apply();
-    }
-
-    Boolean readBoolean(String key, Boolean assumedValue) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        return sharedPref.getBoolean(key, assumedValue);
-
-    }
-
 
     @Override
     public void updateNatureStatus(boolean b) {
@@ -580,7 +661,7 @@ public class BreedingFragment extends Fragment
     }
 
     @Override
-    public ArrayList<InterfaceStoredPokemon> getInterfaceStoredPokemonList() {
+    public ArrayList<StoredPokemonFragment.InterfaceStoredPokemon> getInterfaceStoredPokemonList() {
         return breedingManager.getInterfaceStoredPokemonList();
     }
 
@@ -605,7 +686,7 @@ public class BreedingFragment extends Fragment
     }
 
     @Override
-    public InterfaceViewerPokemon getInterfaceViewerPokemon(UUID uuid) {
+    public StoredPokemonViewerFragment.InterfaceViewerPokemon getInterfaceViewerPokemon(UUID uuid) {
         return breedingManager.getInterfaceViewerPokemon(uuid);
     }
 
@@ -615,7 +696,7 @@ public class BreedingFragment extends Fragment
     }
 
     @Override
-    public InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
+    public ModifierPokemonFragment.InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
         return breedingManager.getInterfaceModifierPokemon(uuid);
     }
 
@@ -646,12 +727,12 @@ public class BreedingFragment extends Fragment
     }
 
     @Override
-    public InterfaceChancePokemon getInterfaceChancePokemon(UUID uuid) {
+    public ChanceFragment.InterfaceChancePokemon getInterfaceChancePokemon(UUID uuid) {
         return breedingManager.getInterfaceChancePokemon(uuid);
     }
 
     @Override
-    public InterfaceGoalPokemon getInterfaceGoalPokemon() {
+    public GoalPokemonFragment.InterfaceGoalPokemon getInterfaceGoalPokemon() {
         return breedingManager.getInterfaceGoalPokemon();
     }
 
@@ -666,16 +747,15 @@ public class BreedingFragment extends Fragment
         return frag.getInterfacePokemonPosition(uuid);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
 //        List<Fragment> fragments = getFragmentManager().getFragments();
 //        if (fragments != null) {
 //            FragmentTransaction ft = getFragmentManager().beginTransaction();
 //            for (Fragment f : fragments) {
-//                if (f instanceof GoalIVsFragment ||
-//                        f instanceof LuckFragment ||
+//                if (f instanceof GoalPokemonFragment ||
+//                        f instanceof ChanceFragment ||
 //                        f instanceof StoredPokemonFragment
 //                        ) {
 //                    ft.remove(f);
@@ -683,23 +763,6 @@ public class BreedingFragment extends Fragment
 //            }
 //            ft.commit();
 //        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        List<Fragment> fragments = getFragmentManager().getFragments();
-        if (fragments != null) {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            for (Fragment f : fragments) {
-                if (f instanceof GoalIVsFragment ||
-                        f instanceof LuckFragment ||
-                        f instanceof StoredPokemonFragment
-                        ) {
-                    ft.remove(f);
-                }
-            }
-            ft.commit();
-        }
         super.onSaveInstanceState(outState);
     }
 }

@@ -1,136 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    android:id="@+id/dynMoveLvl_mainLayout"
+    android:layout_width="match_parent"
     android:layout_height="64dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
     android:baselineAligned="false"
-    android:id="@+id/dynMoveLvl_mainLayout">
+    android:orientation="horizontal"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/dynMoveLvl_levelLayout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="15"
-        android:id="@+id/dynMoveLvl_levelLayout"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Lv"
             android:id="@+id/dynMoveLvl_labelLevel"
-            android:fontFamily="sans-serif-light"
-            android:textSize="12dp"
-            android:layout_marginRight="2dp" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="68"
-            android:id="@+id/dynMoveLvl_textLevel"
+            android:layout_marginRight="2dp"
             android:fontFamily="sans-serif-light"
+            android:text="Lv"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/dynMoveLvl_textLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="68"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="14dp"
-            android:typeface="normal"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:typeface="normal" />
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/dynMoveLvl_nameLayout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="8dp"
         android:layout_weight="40"
-        android:id="@+id/dynMoveLvl_nameLayout"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/dynMoveLvl_textName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/dynMoveLvl_textName"
             android:fontFamily="sans-serif-condensed"
-            android:textSize="17dp"
-            android:text="@string/example_movename" />
+            android:text="@string/example_movename"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="17dp" />
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/dynMoveLvl_attribLayout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="28"
-        android:id="@+id/dynMoveLvl_attribLayout">
+        android:layout_weight="28">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Physical"
             android:id="@+id/dynMoveLvl_textEffect"
-            android:textAllCaps="true"
-            android:fontFamily="sans-serif-condensed"
-            android:textSize="12dp"
-            android:layout_alignParentRight="false"
-            android:layout_alignParentEnd="false"
-            android:layout_marginRight="0dp"
-            android:textIsSelectable="false"
-            android:layout_marginLeft="12dp"
-            android:layout_below="@+id/dynMoveLvl_textType"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentRight="false"
+            android:layout_below="@+id/dynMoveLvl_textType"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="0dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Physical"
+            android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Fighting"
+            android:textIsSelectable="false"
+            android:textSize="12dp" />
+
+        <TextView
             android:id="@+id/dynMoveLvl_textType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="false"
             android:layout_alignParentStart="false"
-            android:textAllCaps="true"
-            android:fontFamily="sans-serif-condensed"
-            android:textSize="14dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
-            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
+            android:text="Fighting"
+            android:textAllCaps="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#A890F0"
             android:textIsSelectable="false"
-            android:layout_centerHorizontal="true" />
+            android:textSize="14dp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/dynMoveLvl_valuesLayout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="20"
-        android:id="@+id/dynMoveLvl_valuesLayout">
+        android:layout_weight="20">
 
         <TextView
+            android:id="@+id/dynMoveLvl_textAccuracy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="55%"
-            android:id="@+id/dynMoveLvl_textAccuracy"
-            android:textAllCaps="true"
-            android:fontFamily="sans-serif-thin"
-            android:textSize="14dp"
-            android:layout_below="@+id/dynMoveLvl_textPower"
             android:layout_alignLeft="@+id/dynMoveLvl_textPower"
             android:layout_alignStart="@+id/dynMoveLvl_textPower"
+            android:layout_below="@+id/dynMoveLvl_textPower"
             android:layout_marginLeft="12dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="55%"
+            android:textAllCaps="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="14dp"
             android:typeface="normal" />
 
         <TextView
+            android:id="@+id/dynMoveLvl_textPower"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="120"
-            android:id="@+id/dynMoveLvl_textPower"
             android:layout_alignParentLeft="false"
             android:layout_alignParentStart="false"
-            android:textAllCaps="true"
-            android:fontFamily="sans-serif-light"
-            android:textSize="14dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="12dp"
+            android:fontFamily="sans-serif-light"
+            android:text="120"
+            android:textAllCaps="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="14dp" />
     </RelativeLayout>
 
 </LinearLayout>
