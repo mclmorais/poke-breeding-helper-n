@@ -89,7 +89,6 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     CheckBox checkBoxActivateAbilities;
     @Bind(R.id.textViewPokemonName)
     TextView selectedName;
-    private OnGoalUpdate mCallback;
     private FeedDataGoalIVs feederCallback;
     private UpdateGoal updaterCallback;
     private final AdapterView.OnItemSelectedListener updateGoalNatureOnSeletion = new AdapterView.OnItemSelectedListener() {
@@ -132,18 +131,6 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                mCallback = (OnGoalUpdate) getActivity();
-            else
-                mCallback = (OnGoalUpdate) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getActivity().toString()
-                    + " must implement OnGoalUpdate!");
-        }
 
         try {
             Fragment targetFragment = getTargetFragment();
@@ -169,11 +156,18 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
 
 
     }
+//
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//       // setRetainInstance(true);
+//    }
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        setTargetFragment(null, -1);
     }
 
     @Nullable

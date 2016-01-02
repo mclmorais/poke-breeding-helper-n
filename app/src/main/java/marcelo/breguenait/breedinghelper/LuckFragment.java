@@ -130,7 +130,7 @@ public class LuckFragment extends Fragment implements LuckOptionsFragment.OnLuck
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+        //setRetainInstance(true);
     }
 
     @Override

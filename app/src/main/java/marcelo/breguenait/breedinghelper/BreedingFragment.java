@@ -9,16 +9,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -64,7 +62,6 @@ public class BreedingFragment extends Fragment
     private IvManager ivManager;
 
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +70,6 @@ public class BreedingFragment extends Fragment
 
 
         setHasOptionsMenu(true);
-
 
 
         initialActivity = (InitialActivity) getActivity();
@@ -134,7 +130,7 @@ public class BreedingFragment extends Fragment
     @Override
     public void onStart() {
         super.onStart();
-          //updateLuckFragment();
+        //updateLuckFragment();
 
 
     }
@@ -158,7 +154,6 @@ public class BreedingFragment extends Fragment
                 R.string.drawer_open,
                 R.string.drawer_close);
     }
-
 
 
     void openSettings() {
@@ -371,7 +366,8 @@ public class BreedingFragment extends Fragment
 
         jsonString = sharedPref.getString("jsonPokemonList", null);
         if (jsonString != null) {
-            Type type = new TypeToken<List<PokemonInfo>>() {}.getType();
+            Type type = new TypeToken<List<PokemonInfo>>() {
+            }.getType();
             List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
             ivManager.setStoredPokemonList(eggList);
         }
@@ -413,7 +409,6 @@ public class BreedingFragment extends Fragment
         breedingManager.setLanguageId(gameLanguage);
 
 
-
 //        jsonString = sharedPref.getString("jsonDittoList", null);
 //        if (jsonString != null) {
 //            Type type = new TypeToken<List<PokemonInfo>>() {
@@ -448,7 +443,8 @@ public class BreedingFragment extends Fragment
 
         jsonString = sharedPref.getString("jsonBreedingManagerStoredList", null);
         if (jsonString != null) {
-            Type type = new TypeToken<ArrayList<StoredPokemon>>() {}.getType();
+            Type type = new TypeToken<ArrayList<StoredPokemon>>() {
+            }.getType();
             ArrayList<StoredPokemon> objectsList = gson.fromJson(jsonString, type);
             breedingManager.replaceStoredPokemonObjects(objectsList);
         }
@@ -668,5 +664,24 @@ public class BreedingFragment extends Fragment
     public int getInterfacePokemonPosition(UUID uuid) {
         StoredPokemonFragment frag = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         return frag.getInterfacePokemonPosition(uuid);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        List<Fragment> fragments = getFragmentManager().getFragments();
+        if (fragments != null) {
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            for (Fragment f : fragments) {
+                if (f instanceof GoalIVsFragment ||
+                        f instanceof LuckFragment ||
+                        f instanceof StoredPokemonFragment
+                        ) {
+                    ft.remove(f);
+                }
+            }
+            ft.commit();
+        }
     }
 }
