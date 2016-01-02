@@ -397,6 +397,11 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         return new ArrayList<>(0); //This fragment will never ask for basic only pokemon, so there is just a dummy call
     }
 
+    @Override
+    public ArrayList<Integer> getPokemonFamilyList() {
+        return feederCallback.getPokemonFamilyList();
+    }
+
     public interface FeedDataCreatePokemon {
         ArrayList<String> getListOfNatures();
 
@@ -411,5 +416,7 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         ArrayList<String> getPokemonNames();
 
         String getPokemonName(int pokemonId);
+
+        ArrayList<Integer> getPokemonFamilyList();
     }
 }

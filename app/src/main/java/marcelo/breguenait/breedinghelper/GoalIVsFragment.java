@@ -430,6 +430,11 @@ public class GoalIVsFragment extends Fragment implements SelectPokemonFragment.O
     }
 
     @Override
+    public ArrayList<Integer> getPokemonFamilyList() {
+        return new ArrayList<>(0); //Dummy call, this fragment doesn't need to feed this info
+    }
+
+    @Override
     public ArrayList<Integer> getBasicPokemonList() {
         return feederCallback.getBasicPokemonList();
     }

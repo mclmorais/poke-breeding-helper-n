@@ -664,4 +664,9 @@ public class IvCalculatorFragment extends Fragment
     public InterfaceGoalPokemon getInterfaceGoalPokemon() {
         return breedingManager.getInterfaceGoalPokemon();
     }
+
+    @Override
+    public ArrayList<Integer> getPokemonFamilyList() {
+        return breedingManager.getPokemonFamilyList(breedingManager.getGoalId());
+    }
 }

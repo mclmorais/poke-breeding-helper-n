@@ -8,6 +8,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.UUID;
 
+//TODO: tirar babies de matches boas!
+
 public class BreedingManager {
 
     MyDatabase database;
@@ -184,6 +186,15 @@ public class BreedingManager {
         else
             return new ArrayList<>(0);
     }
+
+    ArrayList<Integer> getPokemonFamilyList(int pokemonId) {
+        if (goalPokemon.getPokemonId() > 0) //Only returns something if a goal is set
+            return database.getPokemonFamilyList(pokemonId);
+        else
+            return new ArrayList<>(0);
+    }
+
+
 
     ArrayList<Integer> getBasicPokemonList() {
         return database.getBasicPokemonList();

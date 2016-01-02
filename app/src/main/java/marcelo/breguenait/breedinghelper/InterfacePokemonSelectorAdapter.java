@@ -14,13 +14,16 @@ import java.util.ArrayList;
 
 public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filterable {
 
+    private static final int DITTO_ID = 132;
 
     private final LayoutInflater inflater;
 
+    private boolean addDittoLater = false;
 
     private boolean showOnlyCompatible = false;
     private boolean showOnlyBasic = false;
     private ArrayList<Integer> compatiblePokemonList;
+    private ArrayList<Integer> pokemonFamilyList;
     private ArrayList<Integer> basicPokemonList;
 
     private ArrayList<Integer> pokemonIds;
@@ -54,6 +57,10 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
 
     public void setBasicPokemonList(ArrayList<Integer> basicPokemonList) {
         this.basicPokemonList = basicPokemonList;
+    }
+
+    public void setPokemonFamilyList(ArrayList<Integer> pokemonFamilyList) {
+        this.pokemonFamilyList = pokemonFamilyList;
     }
 
     @Override
@@ -113,7 +120,9 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
             protected FilterResults performFiltering(CharSequence constraint) {
 
                 FilterResults results = new FilterResults();
-                ArrayList<Integer> FilteredArray = new ArrayList<>();
+                ArrayList<Integer> filteredArray = new ArrayList<>();
+
+                int familyPosition = 0; //Used so that the family is not added in reverse order
 
                 constraint = constraint.toString().toLowerCase();
 
@@ -130,40 +139,37 @@ public class InterfacePokemonSelectorAdapter extends BaseAdapter implements Filt
                             continue;
                     }
 
-                    if(showOnlyBasic) {
-                        if(!basicPokemonList.contains(currentId))
+                    if (showOnlyBasic) {
+                        if (!basicPokemonList.contains(currentId))
                             continue;
                     }
-
-//                    if (showOnlyBasic) { //TODO: REDO IT ALL, DISABLED BY NOW
-//                        int id = currentPokemonData.id;
-//                        int breeds = currentPokemonData.breeds;
-//
-//                        if (id == Constants.DITTO_ID)
-//                            continue;
-//
-//                        if (id != breeds) {
-//                            if (id != 32 && id != 314) //Excludes nidoranM and Illumise because they're special cases
-//                                continue;
-//                        }
-//
-//
-//                    }
 
 
                     String nameToBeCompared = pokemonNames.get(i);
 
+
                     //IF CONSTRAINT IS EMPTY, ADDS ALL
-                    if (nameToBeCompared.toLowerCase().startsWith(constraint.toString())) {
-//                        if (showOnlyCompatible && currentPokemonData.breeds == PokemonData.getInstance().getBasicPokemon(goalPokemon.getPokemonId()))
-//                            FilteredArray.add(0, currentPokemonData); //TODO: isso eh oq faz colocar na frente, fazer do jeito novo depois
-//                        else
-                        FilteredArray.add(currentId);
+                    if (nameToBeCompared.toLowerCase().contains(constraint.toString())) {
+
+                        if (currentId == DITTO_ID) {
+                            addDittoLater = true;
+                            continue;
+                        }
+
+                        if (showOnlyCompatible && pokemonFamilyList.contains(currentId)) {
+                            filteredArray.add(familyPosition, currentId);
+                            familyPosition++;
+                        } else
+                            filteredArray.add(currentId);
                     }
                 }
 
-                results.count = FilteredArray.size();
-                results.values = FilteredArray;
+                if (showOnlyCompatible && addDittoLater)
+                    filteredArray.add(0, DITTO_ID);
+
+
+                results.count = filteredArray.size();
+                results.values = filteredArray;
 
                 return results;
             }

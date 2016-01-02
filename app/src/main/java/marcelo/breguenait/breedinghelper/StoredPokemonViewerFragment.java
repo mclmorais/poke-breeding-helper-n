@@ -404,6 +404,10 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
         updateInterface();
     }
 
+    @Override
+    public ArrayList<Integer> getPokemonFamilyList() {
+        return feederCallback.getPokemonFamilyList();
+    }
 
     public interface FeedDataPokemonViewer {
 
@@ -413,6 +417,7 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
 
         int getGenderRate(int pokemonId);
 
+        ArrayList<Integer> getPokemonFamilyList();
         ArrayList<Integer> getCompatiblePokemonList();
 
         ArrayList<Integer> getPokemonIds();

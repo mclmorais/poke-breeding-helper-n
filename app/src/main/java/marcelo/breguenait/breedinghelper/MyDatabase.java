@@ -501,8 +501,41 @@ public class MyDatabase extends SQLiteAssetHelper {
 
     }
 
+    public ArrayList<Integer> getPokemonFamilyList(int pokemonId) {
+
+            String s = "SELECT " +
+                    "id " +
+                    "FROM " +
+                    "pokemon_species " +
+                    "WHERE " +
+                    "evolution_chain_id " +
+                    "IN(" +
+                    "SELECT " +
+                    "evolution_chain_id " +
+                    "FROM " +
+                    "pokemon_species " +
+                    "WHERE " +
+                    "id=" +
+                    Integer.toString(pokemonId) +
+                    ")";
+
+
+        Cursor cursorCompatible = database.rawQuery(s, null);
+        cursorCompatible.moveToFirst();
+
+        ArrayList<Integer> compatiblePokemonList = new ArrayList<>(cursorCompatible.getCount());
+
+        while(!cursorCompatible.isAfterLast()) {
+            compatiblePokemonList.add(cursorCompatible.getInt(0));
+            cursorCompatible.moveToNext();
+        }
+        cursorCompatible.close();
+        return compatiblePokemonList;
+
+    }
+
     ArrayList<Integer> getBasicPokemonList() {
-        String s = "SELECT id FROM pokemon_species WHERE evolves_from_species_id IS NULL AND is_baby=0" +
+        String s = "SELECT id FROM pokemon_species WHERE evolves_from_species_id IS NULL AND is_baby=0 AND id<>132" +
                 " UNION " +
                 "SELECT id FROM pokemon_species WHERE evolves_from_species_id IN(SELECT id FROM pokemon_species where is_baby=1)" +
                 " EXCEPT " +

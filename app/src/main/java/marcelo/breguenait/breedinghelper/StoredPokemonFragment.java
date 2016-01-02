@@ -256,6 +256,8 @@ public class StoredPokemonFragment extends Fragment implements
 
         ArrayList<Integer> getCompatiblePokemonList();
 
+        ArrayList<Integer> getPokemonFamilyList();
+
         ArrayList<Integer> getPokemonIds();
 
         ArrayList<String> getPokemonNames();
@@ -275,5 +277,8 @@ public class StoredPokemonFragment extends Fragment implements
         void removeStoredPokemon(UUID uuid);
     }
 
-
+    @Override
+    public ArrayList<Integer> getPokemonFamilyList() {
+        return feederCallback.getPokemonFamilyList();
+    }
 }
