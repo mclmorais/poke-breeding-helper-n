@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout mDrawer;
     @Bind(R.id.nvView)
     NavigationView nvDrawer;
+    MenuItem lastMenuItem = null;
+    MenuItem currentMenuItem;
 
 
     Fragment currentFragment = null;
@@ -32,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_initial);
 
         ButterKnife.bind(this);
-        //       cleanOldFragments();
         setupDrawerContent(nvDrawer);
 
+        currentMenuItem = nvDrawer.getMenu().getItem(0);
         if (currentFragment == null) {
 
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -98,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
-
                         mDrawer.closeDrawers();
                         return true;
                     }
@@ -133,17 +134,29 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        // Insert the fragment by replacing any existing fragment
+
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        fragmentManager.beginTransaction().
-                setCustomAnimations(R.anim.sliderightleft, R.anim.slideleftright, R.anim.sliderightleft, R.anim.slideleftright).
-                replace(R.id.flContent, currentFragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContent, currentFragment).commit();
 
-        // Highlight the selected item, update the title, and close the drawer
+        lastMenuItem = currentMenuItem;
+
+        currentMenuItem = menuItem;
+
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
-//        mDrawer.closeDrawers();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (currentFragment instanceof MoveDexFragment)
+            selectDrawerItem(nvDrawer.getMenu().getItem(0));
+        else if (currentFragment instanceof  PreferencesFragment && lastMenuItem != null)
+            selectDrawerItem(lastMenuItem);
+        else
+            super.onBackPressed();
     }
 
     @Override
