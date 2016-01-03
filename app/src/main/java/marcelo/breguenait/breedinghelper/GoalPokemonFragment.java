@@ -1,6 +1,5 @@
 package marcelo.breguenait.breedinghelper;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -92,45 +91,58 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         }
     };
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
 
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                feederCallback = (FeedDataGoalIVs) getActivity();
-            else
-                feederCallback = (FeedDataGoalIVs) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getActivity().toString()
-                    + " must implement FeedDataGoalIVs!");
-        }
-
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                updaterCallback = (UpdateGoal) getActivity();
-            else
-                updaterCallback = (UpdateGoal) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getActivity().toString()
-                    + " must implement UpdateGoal!");
-        }
-
-
+    public void setCallbacks(Fragment callbacks) {
+        this.feederCallback = (FeedDataGoalIVs) callbacks;
+        this.updaterCallback = (UpdateGoal) callbacks;
     }
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        Log.d("Lifecycle", "GoalPokemonFragment - onSaveInstanceState");
         super.onSaveInstanceState(outState);
-        setTargetFragment(null, -1);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        Log.d("Lifecycle", "GoalPokemonFragment - onViewStateRestored");
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(false);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        //Stops this from crashing by not having the callbacks initialized when
+        // restarting the app from a termination. Why? It's a mystery to everybody!
+        if (savedInstanceState != null) {
+            return null;
+        }
+
+        Log.d("STACK", Log.getStackTraceString(new Exception()));
+
+        Log.d("Lifecycle", "GoalPokemonFragment - onCreateView");
         View view = inflater.inflate(R.layout.fragment_goal_ivs, container, false);
+
+        if (savedInstanceState == null)
+            Log.d("Lifecycle", "GoalPokemonFragment - savedinstancestate null!");
+        else
+            Log.d("Lifecycle", "GoalPokemonFragment - savedinstancestate nao null!");
+
+
+//        if(feederCallback == null || updaterCallback == null) {
+//            Log.d("Lifecycle", "GoalPokemonFragment - callbacks null!");
+//
+//            return view;
+//        }
 
         ButterKnife.bind(this, view);
 
@@ -177,6 +189,12 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
         initialize();
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("Lifecycle", "GoalPokemonFragment - onDestroy");
     }
 
     private void initialize() {

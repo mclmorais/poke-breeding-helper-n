@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,39 +54,25 @@ public class BreedingFragment extends Fragment
     private final Gson gson = new Gson();
     @Bind(R.id.main_activity_toolbar)
     Toolbar toolbar;
-
+    GoalPokemonFragment goalPokemonFragment;
+    ChanceFragment chanceFragment;
+    StoredPokemonFragment storedPokemonFragment;
     private ActionBarDrawerToggle drawerToggle;
-
     private MainActivity mainActivity;
     private BreedingManager breedingManager;
     private View cardAd;
     private AdView adView;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        List<Fragment> fragments = getFragmentManager().getFragments();
-//        if (fragments != null) {
-//            FragmentTransaction ft = getFragmentManager().beginTransaction();
-//            for (Fragment f : fragments) {
-//                if (f instanceof GoalPokemonFragment ||
-//                        f instanceof ChanceFragment ||
-//                        f instanceof StoredPokemonFragment
-//                        ) {
-//                    ft.remove(f);
-//                }
-//            }
-//            ft.commit();
-//        }
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        Log.d("Lifecycle", "BreedingFragment - onCreateView");
         View v = inflater.inflate(R.layout.activity_main, container, false);
-
 
         setHasOptionsMenu(true);
 
@@ -138,7 +126,6 @@ public class BreedingFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        drawerToggle.syncState();
     }
 
     @Override
@@ -151,8 +138,15 @@ public class BreedingFragment extends Fragment
 
     @Override
     public void onPause() {
+        Log.d("Lifecycle", "BreedingFragment - onPause");
         super.onPause();
         saveData();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d("Lifecycle", "BreedingFragment - onDestroy");
+        super.onDestroy();
     }
 
     @Override
@@ -247,6 +241,7 @@ public class BreedingFragment extends Fragment
 
 
     private void createGoalIVsFragment(Bundle savedInstanceState, View v) {
+
         // Check that the activity is using the layout version with
         // the fragment_container FrameLayout
         if (v.findViewById(R.id.frameGoalIVsFragmentContainer) != null) {
@@ -258,43 +253,16 @@ public class BreedingFragment extends Fragment
                 return;
             }
 
-            // Create a new Fragment to be placed in the activity layout
             GoalPokemonFragment firstFragment = new GoalPokemonFragment();
-
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
+            firstFragment.setCallbacks(this);
             firstFragment.setArguments(getActivity().getIntent().getExtras());
-            firstFragment.setTargetFragment(this, 0);
 
-            // Add the fragment to the 'fragment_container' FrameLayout
-            getFragmentManager().beginTransaction()
-                    .add(R.id.frameGoalIVsFragmentContainer, firstFragment).commit();
+            FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.frameGoalIVsFragmentContainer, firstFragment, "GoalFragment");
+            fragmentTransaction.commit();
 
-
+            goalPokemonFragment = firstFragment;
         }
-
-
-    }
-
-    private void createPokemonListFragment(Bundle savedInstanceState) {
-        // However, if we're being restored from a previous state,
-        // then we don't need to do anything and should return or else
-        // we could end up with overlapping fragments.
-        if (savedInstanceState != null) {
-            return;
-        }
-        StoredPokemonFragment storedPokemonFragment = new StoredPokemonFragment();
-
-        // In case this activity was started with special instructions from an
-        // Intent, pass the Intent's extras to the fragment as arguments
-        storedPokemonFragment.setArguments(getActivity().getIntent().getExtras());
-
-        storedPokemonFragment.setTargetFragment(this, 0);
-
-        // Add the fragment to the 'fragment_container' FrameLayout
-        getFragmentManager().beginTransaction()
-                .add(R.id.framePokemonListFragmentContainer, storedPokemonFragment).commit();
-
 
     }
 
@@ -305,28 +273,54 @@ public class BreedingFragment extends Fragment
         if (savedInstanceState != null) {
             return;
         }
-        ChanceFragment chanceFragment = new ChanceFragment();
+        ChanceFragment secondFragment = new ChanceFragment();
 
         // In case this activity was started with special instructions from an
         // Intent, pass the Intent's extras to the fragment as arguments
-        chanceFragment.setArguments(getActivity().getIntent().getExtras());
-        chanceFragment.setTargetFragment(this, 0);
+        secondFragment.setArguments(getActivity().getIntent().getExtras());
+        secondFragment.setCallbacks(this);
 
 
         // Add the fragment to the 'fragment_container' FrameLayout
-        getFragmentManager().beginTransaction()
-                .add(R.id.frameLuckFragmentContainer, chanceFragment).commit();
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.frameLuckFragmentContainer, secondFragment).commit();
+        chanceFragment = secondFragment;
 
     }
 
+    private void createPokemonListFragment(Bundle savedInstanceState) {
+        // However, if we're being restored from a previous state,
+        // then we don't need to do anything and should return or else
+        // we could end up with overlapping fragments.
+        if (savedInstanceState != null) {
+            return;
+        }
+        StoredPokemonFragment thirdFragment = new StoredPokemonFragment();
+
+        // In case this activity was started with special instructions from an
+        // Intent, pass the Intent's extras to the fragment as arguments
+        thirdFragment.setArguments(getActivity().getIntent().getExtras());
+
+        thirdFragment.setCallbacks(this);
+
+        // Add the fragment to the 'fragment_container' FrameLayout
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.framePokemonListFragmentContainer, thirdFragment).commit();
+
+        storedPokemonFragment = thirdFragment;
+
+
+    }
+
+
     private void updatePokemonListFragment() {
-        StoredPokemonFragment frag = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        StoredPokemonFragment frag = (StoredPokemonFragment) getChildFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         frag.setHatchAdapter(breedingManager.getInterfaceStoredPokemonList(), getContext());
     }
 
 
     private void updateLuckFragment() {
-        ChanceFragment frag = (ChanceFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
+        ChanceFragment frag = (ChanceFragment) getChildFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
         frag.updateCurrentChances();
     }
 
@@ -356,7 +350,7 @@ public class BreedingFragment extends Fragment
         jsonString = gson.toJson(breedingManager.hasDestinyKnot());
         prefEditor.putString("jsonMaleItem", jsonString);
 
-        ChanceFragment l = (ChanceFragment) getFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
+        ChanceFragment l = (ChanceFragment) getChildFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
         jsonString = gson.toJson(l.getShinyOptions());
         prefEditor.putString("jsonShinyOptions", jsonString);
 
@@ -743,26 +737,8 @@ public class BreedingFragment extends Fragment
 
     @Override
     public int getInterfacePokemonPosition(UUID uuid) {
-        StoredPokemonFragment frag = (StoredPokemonFragment) getFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
+        StoredPokemonFragment frag = (StoredPokemonFragment) getChildFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
         return frag.getInterfacePokemonPosition(uuid);
     }
 
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-//        List<Fragment> fragments = getFragmentManager().getFragments();
-//        if (fragments != null) {
-//            FragmentTransaction ft = getFragmentManager().beginTransaction();
-//            for (Fragment f : fragments) {
-//                if (f instanceof GoalPokemonFragment ||
-//                        f instanceof ChanceFragment ||
-//                        f instanceof StoredPokemonFragment
-//                        ) {
-//                    ft.remove(f);
-//                }
-//            }
-//            ft.commit();
-//        }
-        super.onSaveInstanceState(outState);
-    }
 }

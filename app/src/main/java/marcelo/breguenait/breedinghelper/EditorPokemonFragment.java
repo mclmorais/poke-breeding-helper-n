@@ -75,7 +75,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        setRetainInstance(true);
         final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.AppTheme);
 
         // clone the inflater using the ContextThemeWrapper

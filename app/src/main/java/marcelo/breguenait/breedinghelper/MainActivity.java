@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -26,11 +27,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Lifecycle", "MainActivity - onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial);
 
         ButterKnife.bind(this);
-
+        //       cleanOldFragments();
         setupDrawerContent(nvDrawer);
 
         if (currentFragment == null) {
@@ -55,6 +57,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("Lifecycle", "MainActivity - onDestroy");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        Log.d("Lifecycle", "MainActivity - onSaveInstanceState");
+        super.onSaveInstanceState(outState);
+    }
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
@@ -97,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         // Create a new fragment and specify the planet to show based on
         // position
         //Fragment fragment = null;
-
+//        cleanOldFragments();
         Class fragmentClass;
         switch (menuItem.getItemId()) {
             case R.id.nav_first_fragment:
@@ -123,7 +136,9 @@ public class MainActivity extends AppCompatActivity {
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        fragmentManager.beginTransaction().setTransition(android.support.v4.app.FragmentTransaction.TRANSIT_FRAGMENT_CLOSE).replace(R.id.flContent, currentFragment).commit();
+        fragmentManager.beginTransaction().
+                setCustomAnimations(R.anim.sliderightleft, R.anim.slideleftright, R.anim.sliderightleft, R.anim.slideleftright).
+                replace(R.id.flContent, currentFragment).commit();
 
         // Highlight the selected item, update the title, and close the drawer
         menuItem.setChecked(true);

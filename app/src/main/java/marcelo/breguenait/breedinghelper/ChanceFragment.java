@@ -88,44 +88,24 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
 
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //setRetainInstance(true);
+
+    public void setCallbacks(Fragment callbacks) {
+        this.feederCallback = (FeederLuckData) callbacks;
+        this.mListener = (UpdateLuckInterface) callbacks;
     }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                mListener = (UpdateLuckInterface) context;
-            else
-                mListener = (UpdateLuckInterface) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getTargetFragment().toString()
-                    + " must implement UpdateLuckInterface");
-        }
-
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                feederCallback = (FeederLuckData) context;
-            else
-                feederCallback = (FeederLuckData) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getTargetFragment().toString()
-                    + " must implement FeederLuckData");
-        }
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        if (savedInstanceState != null) {
+            return null;
+        }
+
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_luck, container, false);
+
 
         preloadedDrawables = new PreloadedDrawables(getActivity().getApplicationContext());
         layoutChances = (LinearLayout) v.findViewById(R.id.luckFragmentLayoutChances);
@@ -196,6 +176,7 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
 
         shinyOptions = mListener.loadShinyOptions();
 
+        //updateCurrentChances();
         return v;
 
     }
@@ -209,7 +190,7 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
     @Override
     public void onStart() {
         super.onStart();
-        updateCurrentChances();
+
     }
 
     public void updateCurrentChances() {

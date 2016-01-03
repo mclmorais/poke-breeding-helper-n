@@ -8,7 +8,14 @@ public class PreferencesFragment extends PreferenceFragmentCompat {
 
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.fragment_settings);
     }
+
+
 }

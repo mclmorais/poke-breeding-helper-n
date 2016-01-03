@@ -112,7 +112,7 @@ public class MoveDexFragment extends Fragment implements
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         movesPagerAdapter = new MovesPagerAdapter
-                (getFragmentManager(), tabLayout.getTabCount());
+                (getChildFragmentManager(), tabLayout.getTabCount());
 
         viewPager.setAdapter(movesPagerAdapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));

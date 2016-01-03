@@ -1,6 +1,5 @@
 package marcelo.breguenait.breedinghelper;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -45,38 +44,22 @@ public class StoredPokemonFragment extends Fragment implements
     private FeedDataStoredPokemon feederCallback;
     private UpdateStoredPokemonList updaterCallback;
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                feederCallback = (FeedDataStoredPokemon) activity;
-            else
-                feederCallback = (FeedDataStoredPokemon) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement FeedDataStoredPokemon!");
-        }
-
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                updaterCallback = (UpdateStoredPokemonList) activity;
-            else
-                updaterCallback = (UpdateStoredPokemonList) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement UpdateStoredPokemonList!");
-        }
+    public void setCallbacks(Fragment callbacks) {
+        this.feederCallback = (FeedDataStoredPokemon) callbacks;
+        this.updaterCallback = (UpdateStoredPokemonList) callbacks;
     }
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        if (savedInstanceState != null) {
+            return null;
+        }
+
         View view = inflater.inflate(R.layout.fragment_stored_pokemon, container, false);
+
 
         gridViewPokemons = (GridView) view.findViewById(R.id.gridViewPokemonsList);
         buttonAdd = (Button) view.findViewById(R.id.buttonFragmentPokemonListAdd);
