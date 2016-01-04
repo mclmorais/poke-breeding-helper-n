@@ -1,5 +1,6 @@
 package marcelo.breguenait.breedinghelper;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,9 +50,9 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     @Bind(R.id.spinnerGoalIVsAbilities)
     Spinner spinnerAbility;
     @Bind(R.id.checkBoxGoalIVsActivateNatures)
-    CheckBox checkBoxActivateNatures;
+    Switch checkBoxActivateNatures;
     @Bind(R.id.checkBoxGoalIVsActivateAbilities)
-    CheckBox checkBoxActivateAbilities;
+    Switch checkBoxActivateAbilities;
     @Bind(R.id.textViewPokemonName)
     TextView selectedName;
     private FeedDataGoalIVs feederCallback;
@@ -280,7 +283,12 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
      */
     private void populateNatureSpinner() {
         ArrayList<String> natureNames = feederCallback.getListOfNatures();
+        ArrayList<NatureSpinnerAdapter.InterfaceNature> interfaceNatures = new ArrayList<>(natureNames.size());
+//        for (String natureName : natureNames) {
+//            interfaceNatures.add(new NatureSpinnerAdapter.InterfaceNature(natureName, "ATK", "SATK"));
+//        }
         spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, natureNames));
+        //spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, getContext()));
     }
 
     private void populateAbilitySpinner() {
@@ -399,7 +407,6 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         return index;
     }
 
-
     private Bundle addPositionAsArguments(View v) {
         int callerViewPosition[] = new int[2];
         v.getLocationOnScreen(callerViewPosition);
@@ -510,4 +517,76 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             return abilitySlot;
         }
     }
+
+    static class NatureSpinnerAdapter extends BaseAdapter {
+
+        ArrayList<InterfaceNature> interfaceNatures;
+        LayoutInflater inflater;
+
+        public NatureSpinnerAdapter(ArrayList<InterfaceNature> interfaceNatures, Context context) {
+            this.interfaceNatures = interfaceNatures;
+            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public int getCount() {
+            return interfaceNatures.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return interfaceNatures.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View natureView = convertView;
+            LayoutHolder holder;
+
+            if(convertView == null) {
+                natureView = inflater.inflate(R.layout.dynamic_layout_nature, parent, false);
+                holder = new LayoutHolder();
+
+                holder.viewNatureName = (TextView) natureView.findViewById(R.id.dynNature_name);
+                holder.viewIncreasedStatName = (TextView) natureView.findViewById(R.id.dynNature_increasedStat);
+                holder.viewDecreasedStatName = (TextView) natureView.findViewById(R.id.dynNature_decreasedStat);
+
+                natureView.setTag(holder);
+
+            } else {
+                holder = (LayoutHolder) natureView.getTag();
+            }
+
+            holder.viewNatureName.setText(interfaceNatures.get(position).natureName);
+            holder.viewIncreasedStatName.setText("+" + interfaceNatures.get(position).increasedStatName);
+            holder.viewDecreasedStatName.setText("-" + interfaceNatures.get(position).decreasedStatName);
+
+            return natureView;
+
+        }
+
+        static class InterfaceNature {
+            String natureName;
+            String increasedStatName;
+            String decreasedStatName;
+
+            public InterfaceNature(String natureName, String increasedStatName, String decreasedStatName) {
+                this.natureName = natureName;
+                this.increasedStatName = increasedStatName;
+                this.decreasedStatName = decreasedStatName;
+            }
+        }
+
+        class LayoutHolder {
+            TextView viewNatureName;
+            TextView viewIncreasedStatName;
+            TextView viewDecreasedStatName;
+        }
+    }
+
 }

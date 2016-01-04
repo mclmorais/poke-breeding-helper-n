@@ -357,6 +357,7 @@ public class StoredPokemonFragment extends Fragment implements
                 holder.IVs[3] = (ImageView) hatch.findViewById(R.id.imageDynamicHatchSATK);
                 holder.IVs[4] = (ImageView) hatch.findViewById(R.id.imageDynamicHatchSDEF);
                 holder.IVs[5] = (ImageView) hatch.findViewById(R.id.imageDynamicHatchSPD);
+
                 hatch.setTag(holder);
             } else {
                 holder = (LayoutHolder) convertView.getTag();
