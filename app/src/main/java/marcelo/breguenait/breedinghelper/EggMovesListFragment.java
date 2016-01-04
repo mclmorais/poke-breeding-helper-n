@@ -127,7 +127,7 @@ public class EggMovesListFragment extends Fragment {
             else
                 holder.machineType.setText(R.string.label_tm);
 
-            TypedArray ids = context.getResources().obtainTypedArray(R.array.type_colors);
+            TypedArray ids = context.getResources().obtainTypedArray(R.array.colorPokemonTypes);
 
             // Get resource id by its index
             ids.getResourceId(moves.get(position).getTypeId() - 1, -1);

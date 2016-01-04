@@ -90,7 +90,6 @@
 
     <TextView
         android:id="@+id/textViewHintStore"
-        style="@style/CapsLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -98,12 +97,10 @@
         android:layout_marginTop="4dp"
         android:gravity="center"
         android:text="@string/hint_store_pokemons"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@color/colorWhiteBgDisabledHint" />
 
     <TextView
         android:id="@+id/textViewHintDelete"
-        style="@style/CapsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -112,8 +109,7 @@
         android:layout_marginTop="4dp"
         android:gravity="center"
         android:text="@string/hint_remove_pokemons"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@color/colorWhiteBgDisabledHint" />
 
     <view
         android:id="@+id/gridViewPokemonsList"

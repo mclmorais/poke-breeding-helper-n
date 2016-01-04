@@ -85,7 +85,7 @@ public class LevelMovesListFragment extends Fragment {
             else
                 holder.power.setText(Integer.toString(moves.get(position).getPower()));
 
-            TypedArray ids = context.getResources().obtainTypedArray(R.array.type_colors);
+            TypedArray ids = context.getResources().obtainTypedArray(R.array.colorPokemonTypes);
 
             // Get resource id by its index
             ids.getResourceId(moves.get(position).getTypeId() - 1, -1);
