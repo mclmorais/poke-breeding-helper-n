@@ -42,6 +42,7 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.farbod.labelledspinner:labelledspinner:1.1.0'
+    compile 'com.weiwangcn.betterspinner:library:1.1.0'
     compile('com.github.ozodrukh:CircularReveal:1.1.1@aar') {
         transitive = true;
     }

@@ -717,5 +717,39 @@ public class MyDatabase extends SQLiteAssetHelper {
 
     }
 
+    public String getNatureChangedStatName(int natureId, int languageId, boolean increased) {
+
+        String whichStat = increased ? "increased_stat_id " : "decreased_stat_id ";
+
+        String s = "SELECT " +
+                "name " +
+                "FROM " +
+                "stat_names " +
+                "WHERE " +
+                "local_language_id=" +
+                String.valueOf(languageId) +
+                " AND " +
+                "stat_id " +
+                "IN (" +
+                "SELECT " +
+                whichStat +
+                "FROM " +
+                "natures " +
+                "WHERE " +
+                "id=" +
+                String.valueOf(natureId) +
+                ")";
+
+        Cursor c = database.rawQuery(s, null);
+        c.moveToFirst();
+        String name = "";
+        if (c.getCount() > 0)
+            name = c.getString(0);
+
+        c.close();
+
+        return name;
+    }
+
 
 }

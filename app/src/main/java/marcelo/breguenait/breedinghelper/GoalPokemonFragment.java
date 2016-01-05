@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -290,13 +293,14 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
      * Populates the Nature spinner with all possible natures.
      */
     private void populateNatureSpinner() {
-        ArrayList<String> natureNames = feederCallback.getListOfNatures();
-        ArrayList<NatureSpinnerAdapter.InterfaceNature> interfaceNatures = new ArrayList<>(natureNames.size());
+//        ArrayList<String> natureNames = feederCallback.getListOfNatures();
+//        ArrayList<NatureSpinnerAdapter.InterfaceNature> interfaceNatures = new ArrayList<>(natureNames.size());
 //        for (String natureName : natureNames) {
-//            interfaceNatures.add(new NatureSpinnerAdapter.InterfaceNature(natureName, "ATK", "SATK"));
+//            interfaceNatures.add(new NatureSpinnerAdapter.InterfaceNature(natureName, "Attack", "Special Attack"));
 //        }
-        spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, natureNames));
-        //spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, getContext()));
+        ArrayList<NatureSpinnerAdapter.InterfaceNature> interfaceNatures = feederCallback.getInterfaceNatures();
+        //spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, natureNames));
+        spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, getContext()));
     }
 
     private void populateAbilitySpinner() {
@@ -458,6 +462,8 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     interface FeedDataGoalIVs {
         ArrayList<String> getListOfNatures();
 
+        ArrayList<NatureSpinnerAdapter.InterfaceNature> getInterfaceNatures();
+
         HashMap<Integer, String> getListOfGoalAbilities();
 
         ArrayList<Integer> getPokemonIds();
@@ -526,14 +532,16 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         }
     }
 
-    static class NatureSpinnerAdapter extends BaseAdapter {
+    public static class NatureSpinnerAdapter extends BaseAdapter {
 
         ArrayList<InterfaceNature> interfaceNatures;
         LayoutInflater inflater;
+        DisplayMetrics metrics;
 
         public NatureSpinnerAdapter(ArrayList<InterfaceNature> interfaceNatures, Context context) {
             this.interfaceNatures = interfaceNatures;
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            metrics = context.getResources().getDisplayMetrics();
         }
 
         @Override
@@ -545,6 +553,8 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         public Object getItem(int position) {
             return interfaceNatures.get(position);
         }
+
+
 
         @Override
         public long getItemId(int position) {
@@ -560,6 +570,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
                 natureView = inflater.inflate(R.layout.dynamic_layout_nature, parent, false);
                 holder = new LayoutHolder();
 
+                holder.layout = natureView.findViewById(R.id.dynNature_layout);
                 holder.viewNatureName = (TextView) natureView.findViewById(R.id.dynNature_name);
                 holder.viewIncreasedStatName = (TextView) natureView.findViewById(R.id.dynNature_increasedStat);
                 holder.viewDecreasedStatName = (TextView) natureView.findViewById(R.id.dynNature_decreasedStat);
@@ -571,14 +582,65 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             }
 
             holder.viewNatureName.setText(interfaceNatures.get(position).natureName);
-            holder.viewIncreasedStatName.setText("+" + interfaceNatures.get(position).increasedStatName);
-            holder.viewDecreasedStatName.setText("-" + interfaceNatures.get(position).decreasedStatName);
+
+            String increasedStat = interfaceNatures.get(position).increasedStatName;
+            String decreasedStat = interfaceNatures.get(position).decreasedStatName;
+
+            if(increasedStat.equals(decreasedStat)) {
+                holder.viewIncreasedStatName.setVisibility(View.GONE);
+                holder.viewDecreasedStatName.setText(R.string.nature_neutral);
+            }
+            else {
+                holder.viewIncreasedStatName.setVisibility(View.VISIBLE);
+                holder.viewIncreasedStatName.setText("+" + interfaceNatures.get(position).increasedStatName);
+                holder.viewDecreasedStatName.setText("-" + interfaceNatures.get(position).decreasedStatName);
+            }
 
             return natureView;
-
         }
 
-        static class InterfaceNature {
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            View natureView = convertView;
+            LayoutHolder holder;
+
+            if(convertView == null) {
+                natureView = inflater.inflate(R.layout.dynamic_layout_nature, parent, false);
+                holder = new LayoutHolder();
+
+                holder.layout = natureView.findViewById(R.id.dynNature_layout);
+                holder.viewNatureName = (TextView) natureView.findViewById(R.id.dynNature_name);
+                holder.viewIncreasedStatName = (TextView) natureView.findViewById(R.id.dynNature_increasedStat);
+                holder.viewDecreasedStatName = (TextView) natureView.findViewById(R.id.dynNature_decreasedStat);
+
+                natureView.setTag(holder);
+
+            } else {
+                holder = (LayoutHolder) natureView.getTag();
+            }
+
+            holder.viewNatureName.setText(interfaceNatures.get(position).natureName);
+
+            String increasedStat = interfaceNatures.get(position).increasedStatName;
+            String decreasedStat = interfaceNatures.get(position).decreasedStatName;
+
+            if(increasedStat.equals(decreasedStat)) {
+                holder.viewIncreasedStatName.setVisibility(View.GONE);
+                holder.viewDecreasedStatName.setText(R.string.nature_neutral);
+            }
+            else {
+                holder.viewIncreasedStatName.setVisibility(View.VISIBLE);
+                holder.viewIncreasedStatName.setText("+" + interfaceNatures.get(position).increasedStatName);
+                holder.viewDecreasedStatName.setText("-" + interfaceNatures.get(position).decreasedStatName);
+            }
+
+
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(60));
+            holder.layout.setLayoutParams(layoutParams);
+            return natureView;
+        }
+
+        public static class InterfaceNature {
             String natureName;
             String increasedStatName;
             String decreasedStatName;
@@ -591,9 +653,14 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         }
 
         class LayoutHolder {
+            View     layout;
             TextView viewNatureName;
             TextView viewIncreasedStatName;
             TextView viewDecreasedStatName;
+        }
+
+        public int dpToPx(float valueInDp) {
+            return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
         }
     }
 
@@ -606,5 +673,8 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             }
         }
     }
+
+
+
 
 }

@@ -168,6 +168,23 @@ public class BreedingManager {
         //return PokemonData.getInstance().getListOfNatures();
     }
 
+    public ArrayList<GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature> getInterfaceNatures() {
+
+        ArrayList<String> natureNames = database.getListOfNatures(languageId);
+        ArrayList<GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature>
+                interfaceNatures = new ArrayList<>(natureNames.size());
+
+        for (int i = 0; i < natureNames.size(); i++) {
+            String increasedStatName = database.getNatureChangedStatName(i+1,languageId, true);
+            String decreasedStatName = database.getNatureChangedStatName(i+1,languageId, false);
+            interfaceNatures.add(new GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature(
+                    natureNames.get(i), increasedStatName, decreasedStatName
+            ));
+        }
+
+        return interfaceNatures;
+    }
+
     public HashMap<Integer, String> getListOfGoalAbilities() {
         return database.getListOfAbilities(goalPokemon.getPokemonId(), languageId);
     }
@@ -193,7 +210,6 @@ public class BreedingManager {
         else
             return new ArrayList<>(0);
     }
-
 
     public ArrayList<Integer> getBasicPokemonList() {
         return database.getBasicPokemonList();

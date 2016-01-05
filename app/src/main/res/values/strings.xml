@@ -86,4 +86,5 @@
     <string name="label_level_up">Level Up</string>
     <string name="label_machine">TM/HM</string>
     <string name="label_egg_moves">Egg Moves</string>
+    <string name="nature_neutral">Neutral</string>
 </resources>

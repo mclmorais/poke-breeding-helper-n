@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="140dp" android:layout_height="40dp"
-    android:gravity="center">
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:gravity="center"
+    android:id="@+id/dynNature_layout">
 
     <TextView
         android:layout_width="wrap_content"
@@ -13,27 +14,29 @@
         android:textSize="15sp"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="8dp" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/dynNature_name"
-        android:layout_toEndOf="@+id/dynNature_name">
+        android:layout_toEndOf="@+id/dynNature_name"
+        android:layout_marginRight="8dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="+ ATK"
+            android:text="Unknown"
             android:id="@+id/dynNature_increasedStat"
             android:textAllCaps="false"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="#388E3C"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -41,17 +44,19 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="14dp"
+            android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="- SATK"
+            android:text="Unknown"
             android:id="@+id/dynNature_decreasedStat"
             android:textAllCaps="false"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center_vertical|right"
-            android:textColor="#D32F2F"
+            android:textColor="@color/colorWhiteBgDisabledHint"
             android:textSize="12sp"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:visibility="visible"
+            android:layout_marginTop="-2dp" />
     </LinearLayout>
 
 </RelativeLayout>

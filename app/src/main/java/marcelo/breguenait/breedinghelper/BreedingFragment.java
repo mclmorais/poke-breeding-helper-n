@@ -1,7 +1,5 @@
 package marcelo.breguenait.breedinghelper;
 
-//TODO: fazer menu de settings que deixa eu trocar o idioma da database
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -91,7 +89,7 @@ public class BreedingFragment extends Fragment
 
 
         toolbar.setTitle("Breeding Helper");
-        toolbar.inflateMenu(R.menu.main);
+        //toolbar.inflateMenu(R.menu.main);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -746,4 +744,8 @@ public class BreedingFragment extends Fragment
         return frag.getInterfacePokemonPosition(uuid);
     }
 
+    @Override
+    public ArrayList<GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature> getInterfaceNatures() {
+        return breedingManager.getInterfaceNatures();
+    }
 }
