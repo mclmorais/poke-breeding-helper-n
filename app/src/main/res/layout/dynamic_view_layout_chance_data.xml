@@ -28,7 +28,7 @@
                 android:layout_gravity="center"
                 android:text="@string/placeholder_number_2"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/secondary_text"
+                android:textColor="@color/colorWhitebgSecondaryText"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -60,7 +60,7 @@
                 android:gravity="center"
                 android:text="@string/placeholder_number_2"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/secondary_text"
+                android:textColor="@color/colorWhitebgSecondaryText"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -150,7 +150,7 @@
                     android:singleLine="true"
                     android:text="@string/placeholder"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/secondary_text"
+                    android:textColor="@color/colorWhitebgSecondaryText"
                     android:textSize="11sp" />
             </FrameLayout>
 
@@ -188,7 +188,7 @@
                 android:gravity="center"
                 android:text="@string/placeholder_number_2"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/secondary_text"
+                android:textColor="@color/colorWhitebgSecondaryText"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -278,7 +278,7 @@
                     android:singleLine="true"
                     android:text="@string/placeholder"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/secondary_text"
+                    android:textColor="@color/colorWhitebgSecondaryText"
                     android:textSize="11sp"
                     android:visibility="visible" />
             </FrameLayout>
@@ -320,7 +320,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/placeholder_percentage"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/secondary_text"
+                android:textColor="@color/colorWhitebgSecondaryText"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -330,7 +330,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/placeholder_eggs"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/secondary_text"
+                android:textColor="@color/colorWhitebgSecondaryText"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>

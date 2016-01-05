@@ -1,6 +1,9 @@
 package marcelo.breguenait.breedinghelper;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -149,7 +152,12 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
         ButterKnife.bind(this, view);
 
-        for (CheckBox goalIV : goalIVs) goalIV.setOnClickListener(updateGoalOnIVCheckboxChange);
+        for (CheckBox goalIV : goalIVs) {
+            goalIV.setOnClickListener(updateGoalOnIVCheckboxChange);
+            removeRippleEffectFromCheckBox(goalIV);
+        }
+
+
 
         buttonPokemonSelector.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -360,7 +368,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
         if (id > 0) { //TODO: fazer 0 < x < limite
             String iconId = "pkmn_big_" + String.format("%03d", id);
-            selectedIcon.setBackgroundResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
+            selectedIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
         }
     }
 
@@ -586,6 +594,16 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             TextView viewNatureName;
             TextView viewIncreasedStatName;
             TextView viewDecreasedStatName;
+        }
+    }
+
+    private void removeRippleEffectFromCheckBox(CheckBox checkBox) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Drawable drawable = checkBox.getBackground();
+            if (drawable instanceof RippleDrawable) {
+                drawable = ((RippleDrawable) drawable).findDrawableByLayerId(0);
+                checkBox.setBackground(drawable);
+            }
         }
     }
 

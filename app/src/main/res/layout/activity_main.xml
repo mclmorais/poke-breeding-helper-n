@@ -19,7 +19,7 @@
         android:layout_below="@+id/main_activity_toolbar"
         android:animateLayoutChanges="false"
         android:background="@color/background_light_gray"
-        android:fadeScrollbars="false"
+        android:fadeScrollbars="true"
         android:fillViewport="true"
         android:overScrollMode="never">
 

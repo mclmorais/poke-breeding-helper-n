@@ -78,7 +78,7 @@ public class BreedingFragment extends Fragment
         Log.d("Lifecycle", "BreedingFragment - onCreateView");
         View v = inflater.inflate(R.layout.activity_main, container, false);
 
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
 
 
         mainActivity = (MainActivity) getActivity();
@@ -130,6 +130,7 @@ public class BreedingFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        drawerToggle.syncState();
     }
 
     @Override
