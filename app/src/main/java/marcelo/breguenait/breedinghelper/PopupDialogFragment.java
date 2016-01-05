@@ -14,7 +14,6 @@ import android.view.WindowManager;
 
 public class PopupDialogFragment extends DialogFragment {
 
-
     /**
      * This method converts device specific pixels to density independent pixels.
      *

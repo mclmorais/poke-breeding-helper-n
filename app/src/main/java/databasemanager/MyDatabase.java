@@ -10,6 +10,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import marcelo.breguenait.breedinghelper.MoveInfo;
@@ -279,6 +280,59 @@ public class MyDatabase extends SQLiteAssetHelper {
 
         return namesList;
     }
+
+    public LinkedHashMap<Integer, String> getSortedNatureNames(int languageId) {
+        String s = "SELECT name, nature_id FROM nature_names WHERE local_language_id="
+                + Integer.toString(languageId);
+
+
+        Cursor cursorNatureNames = database.rawQuery(s, null);
+        cursorNatureNames.moveToFirst();
+        LinkedHashMap<Integer, String> namesList = new LinkedHashMap<>(cursorNatureNames.getCount());
+        while (!cursorNatureNames.isAfterLast()) {
+            namesList.put(cursorNatureNames.getInt(1), cursorNatureNames.getString(0));
+            cursorNatureNames.moveToNext();
+        }
+
+        cursorNatureNames.close();
+
+        return namesList;
+
+    }
+
+    public ArrayList<Integer> getSortedNatureIds() {
+        String s = "SELECT id FROM natures WHERE decreased_stat_id<>increased_stat_id ORDER BY increased_stat_id";
+
+        Cursor c = database.rawQuery(s, null);
+        c.moveToFirst();
+
+        ArrayList<Integer> natureIds = new ArrayList<>(c.getCount());
+        while(!c.isAfterLast()){
+            natureIds.add(c.getInt(0));
+            c.moveToNext();
+        }
+        c.close();
+
+        boolean firstAtTop = true;
+        s = "SELECT id FROM natures WHERE decreased_stat_id==increased_stat_id ORDER BY increased_stat_id";
+        c = database.rawQuery(s, null);
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            if(firstAtTop) {
+                natureIds.add(0, c.getInt(0));
+                firstAtTop = false;
+            } else {
+                natureIds.add(c.getInt(0));
+            }
+            c.moveToNext();
+        }
+        c.close();
+
+        return natureIds;
+    }
+
+
+
 
     public HashMap<Integer, String> getListOfAbilities(int pokemonId, int languageId) {
 
@@ -750,6 +804,8 @@ public class MyDatabase extends SQLiteAssetHelper {
 
         return name;
     }
+
+
 
 
 }

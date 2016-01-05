@@ -221,9 +221,9 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
     private void onInterfaceGoalNatureChanged() {
 
-        int natureId = spinnerNature.getSelectedItemPosition() + 1;
-
-        updaterCallback.updateGoalNature(natureId);
+        NatureSpinnerAdapter.InterfaceNature interfaceNature = (NatureSpinnerAdapter.InterfaceNature) spinnerNature.getSelectedItem();
+        
+        updaterCallback.updateGoalNature(interfaceNature.id);
     }
 
     private void onInterfaceGoalAbilityChanged() {
@@ -641,11 +641,13 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         }
 
         public static class InterfaceNature {
-            String natureName;
-            String increasedStatName;
-            String decreasedStatName;
+            public int id;
+            public String natureName;
+            public String increasedStatName;
+            public String decreasedStatName;
 
-            public InterfaceNature(String natureName, String increasedStatName, String decreasedStatName) {
+            public InterfaceNature(int id, String natureName, String increasedStatName, String decreasedStatName) {
+                this.id = id;
                 this.natureName = natureName;
                 this.increasedStatName = increasedStatName;
                 this.decreasedStatName = decreasedStatName;

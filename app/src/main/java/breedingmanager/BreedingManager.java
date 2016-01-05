@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.UUID;
 
 import databasemanager.MyDatabase;
@@ -174,13 +175,37 @@ public class BreedingManager {
         ArrayList<GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature>
                 interfaceNatures = new ArrayList<>(natureNames.size());
 
-        for (int i = 0; i < natureNames.size(); i++) {
-            String increasedStatName = database.getNatureChangedStatName(i+1,languageId, true);
-            String decreasedStatName = database.getNatureChangedStatName(i+1,languageId, false);
+        LinkedHashMap<Integer, String> sortedNatureNames = database.getSortedNatureNames(languageId);
+
+
+        ArrayList<Integer> sortedIds = database.getSortedNatureIds();
+
+        for (Integer sortedId : sortedIds) {
+            String increasedStatName = database.getNatureChangedStatName(sortedId,languageId, true);
+            String decreasedStatName = database.getNatureChangedStatName(sortedId,languageId, false);
+
             interfaceNatures.add(new GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature(
-                    natureNames.get(i), increasedStatName, decreasedStatName
+                    sortedId, sortedNatureNames.get(sortedId), increasedStatName, decreasedStatName
             ));
         }
+
+
+//        for(HashMap.Entry<Integer, String> entry : sortedNatureNames.entrySet()) {
+//            String increasedStatName = database.getNatureChangedStatName(entry.getKey(),languageId, true);
+//            String decreasedStatName = database.getNatureChangedStatName(entry.getKey(),languageId, false);
+//            interfaceNatures.add(new GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature(
+//                    entry.getKey(), entry.getValue(), increasedStatName, decreasedStatName
+//            ));
+//        }
+
+
+//        for (int i = 0; i < natureNames.size(); i++) {
+//            String increasedStatName = database.getNatureChangedStatName(i+1,languageId, true);
+//            String decreasedStatName = database.getNatureChangedStatName(i+1,languageId, false);
+//            interfaceNatures.add(new GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature(
+//                    natureNames.get(i), increasedStatName, decreasedStatName
+//            ));
+//        }
 
         return interfaceNatures;
     }
@@ -397,7 +422,6 @@ public class BreedingManager {
     public void replaceGoalObject(StoredPokemon goalPokemon) {
         this.goalPokemon = goalPokemon;
     }
-
 
     public void setConsiderNature(boolean b) {
         natureChanceCalculator.setConsiderNature(b);
