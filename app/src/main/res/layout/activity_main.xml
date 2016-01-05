@@ -53,6 +53,7 @@
                 android:layout_marginLeft="@dimen/distance_to_edge"
                 android:layout_marginRight="@dimen/distance_to_edge"
                 android:layout_marginTop="@dimen/distance_between_cards"
+                android:layout_marginBottom="@dimen/distance_between_cards"
                 android:animateLayoutChanges="true" />
 
             <include

@@ -126,7 +126,7 @@
             <Spinner
                 android:id="@+id/spinnerGoalIVsNatures"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:gravity="fill"
                 android:minWidth="160dp"
                 android:layout_below="@+id/textView2"
@@ -134,6 +134,18 @@
                 android:layout_toStartOf="@+id/checkBoxGoalIVsActivateNatures"
                 android:textAlignment="center"
                 style="@style/Widget.AppCompat.Spinner.Underlined" />
+
+            <Spinner
+                android:id="@+id/spinnerGoalIVsAbilities"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_below="@+id/textView8"
+                android:layout_alignLeft="@+id/textView8"
+                android:layout_alignStart="@+id/textView8"
+                android:layout_toLeftOf="@+id/checkBoxGoalIVsActivateAbilities"
+                android:layout_toStartOf="@+id/checkBoxGoalIVsActivateAbilities"
+                style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
             <TextView
                 android:id="@+id/textViewPokemonName"
@@ -210,18 +222,6 @@
                 android:layout_alignLeft="@+id/spinnerGoalIVsNatures"
                 android:layout_alignStart="@+id/spinnerGoalIVsNatures"
                 android:layout_marginTop="4dp" />
-
-            <Spinner
-                android:id="@+id/spinnerGoalIVsAbilities"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_below="@+id/textView8"
-                android:layout_alignLeft="@+id/textView8"
-                android:layout_alignStart="@+id/textView8"
-                android:layout_toLeftOf="@+id/checkBoxGoalIVsActivateAbilities"
-                android:layout_toStartOf="@+id/checkBoxGoalIVsActivateAbilities"
-                style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
             <Switch
                 android:id="@+id/checkBoxGoalIVsActivateAbilities"

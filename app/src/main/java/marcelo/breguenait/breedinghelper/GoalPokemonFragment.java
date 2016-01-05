@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -222,7 +223,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     private void onInterfaceGoalNatureChanged() {
 
         NatureSpinnerAdapter.InterfaceNature interfaceNature = (NatureSpinnerAdapter.InterfaceNature) spinnerNature.getSelectedItem();
-        
+
         updaterCallback.updateGoalNature(interfaceNature.id);
     }
 
@@ -294,9 +295,9 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
      */
     private void populateNatureSpinner() {
 //        ArrayList<String> natureNames = feederCallback.getListOfNatures();
-//        ArrayList<NatureSpinnerAdapter.InterfaceNature> interfaceNatures = new ArrayList<>(natureNames.size());
+//        ArrayList<NatureSpinnerAdapter.InterfaceNature> interfaceAbilities = new ArrayList<>(natureNames.size());
 //        for (String natureName : natureNames) {
-//            interfaceNatures.add(new NatureSpinnerAdapter.InterfaceNature(natureName, "Attack", "Special Attack"));
+//            interfaceAbilities.add(new NatureSpinnerAdapter.InterfaceNature(natureName, "Attack", "Special Attack"));
 //        }
         ArrayList<NatureSpinnerAdapter.InterfaceNature> interfaceNatures = feederCallback.getInterfaceNatures();
         //spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, natureNames));
@@ -311,20 +312,27 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         ArrayList<String> abilityStrings = new ArrayList<>();
         abilitySlots = new ArrayList<>();
 
+        ArrayList<InterfaceAbility> interfaceAbilities = new ArrayList<>();
+
+
+        //TODO: desmerdear
         if (abilities.containsKey(1)) {
+            interfaceAbilities.add(new InterfaceAbility(abilities.get(1),1));
             abilityStrings.add(abilities.get(1));
             abilitySlots.add(1);
         }
         if (abilities.containsKey(2)) {
+            interfaceAbilities.add(new InterfaceAbility(abilities.get(2),2));
             abilityStrings.add(abilities.get(2));
             abilitySlots.add(2);
         }
         if (abilities.containsKey(3)) {
+            interfaceAbilities.add(new InterfaceAbility(abilities.get(3),3));
             abilityStrings.add(abilities.get(3) + " (Hidden)");
             abilitySlots.add(3);
         }
 
-        spinnerAbility.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, abilityStrings));
+        spinnerAbility.setAdapter(new AbilitySpinnerAdapter(interfaceAbilities,getContext()));
     }
 
     private void updateNatureSpinnerSelection(int natureId) {
@@ -532,6 +540,137 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         }
     }
 
+    public static class AbilitySpinnerAdapter extends BaseAdapter {
+        ArrayList<InterfaceAbility> interfaceAbilities;
+        LayoutInflater inflater;
+        DisplayMetrics metrics;
+        Context context;
+
+        public AbilitySpinnerAdapter(ArrayList<InterfaceAbility> interfaceAbilities, Context context) {
+            this.interfaceAbilities = interfaceAbilities;
+            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            this.context = context;
+            metrics = context.getResources().getDisplayMetrics();
+        }
+
+        @Override
+        public int getCount() {
+            return interfaceAbilities.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return interfaceAbilities.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View natureView = convertView;
+            LayoutHolder holder;
+
+            if(convertView == null) {
+                natureView = inflater.inflate(R.layout.dynamic_layout_ability, parent, false);
+                holder = new LayoutHolder();
+
+                holder.layout = natureView.findViewById(R.id.dynAbility_layout);
+                holder.viewAbilityName = (TextView) natureView.findViewById(R.id.dynAbility_name);
+                holder.viewAbilitySlot = (TextView) natureView.findViewById(R.id.dynAbility_slot);
+
+                natureView.setTag(holder);
+
+            } else {
+                holder = (LayoutHolder) natureView.getTag();
+            }
+
+            holder.viewAbilityName.setText(interfaceAbilities.get(position).abilityName);
+
+
+            switch (interfaceAbilities.get(position).abilityId) {
+                case 1:
+                    holder.viewAbilitySlot.setText("1st Slot");
+                    holder.viewAbilitySlot.setTextColor(ContextCompat.getColor(context, R.color.colorWhiteBgDisabledHint));
+                    break;
+                case 2:
+                    holder.viewAbilitySlot.setText("2nd Slot");
+                    holder.viewAbilitySlot.setTextColor(ContextCompat.getColor(context, R.color.colorWhiteBgDisabledHint));
+                    break;
+                case 3:
+                    holder.viewAbilitySlot.setText("Hidden Slot");
+                    holder.viewAbilitySlot.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                    break;
+                default:
+                    holder.viewAbilitySlot.setText("");
+                    holder.viewAbilitySlot.setTextColor(ContextCompat.getColor(context, R.color.colorWhiteBgDisabledHint));
+                    break;
+            }
+
+
+            return natureView;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            View natureView = convertView;
+            LayoutHolder holder;
+
+            if(convertView == null) {
+                natureView = inflater.inflate(R.layout.dynamic_layout_ability, parent, false);
+                holder = new LayoutHolder();
+
+                holder.layout = natureView.findViewById(R.id.dynAbility_layout);
+                holder.viewAbilityName = (TextView) natureView.findViewById(R.id.dynAbility_name);
+                holder.viewAbilitySlot = (TextView) natureView.findViewById(R.id.dynAbility_slot);
+
+                natureView.setTag(holder);
+
+            } else {
+                holder = (LayoutHolder) natureView.getTag();
+            }
+
+            holder.viewAbilityName.setText(interfaceAbilities.get(position).abilityName);
+
+
+            switch (interfaceAbilities.get(position).abilityId) {
+                case 1:
+                    holder.viewAbilitySlot.setText("1st Slot");
+                    holder.viewAbilitySlot.setTextColor(ContextCompat.getColor(context, R.color.colorWhiteBgDisabledHint));
+                    break;
+                case 2:
+                    holder.viewAbilitySlot.setText("2nd Slot");
+                    holder.viewAbilitySlot.setTextColor(ContextCompat.getColor(context, R.color.colorWhiteBgDisabledHint));
+                    break;
+                case 3:
+                    holder.viewAbilitySlot.setText("Hidden Slot");
+                    holder.viewAbilitySlot.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                    break;
+                default:
+                    holder.viewAbilitySlot.setText("");
+                    holder.viewAbilitySlot.setTextColor(ContextCompat.getColor(context, R.color.colorWhiteBgDisabledHint));
+                    break;
+            }
+
+
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(40));
+            holder.layout.setLayoutParams(layoutParams);
+            return natureView;
+        }
+
+        class LayoutHolder {
+            View     layout;
+            TextView viewAbilityName;
+            TextView viewAbilitySlot;
+        }
+
+        public int dpToPx(float valueInDp) {
+            return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
+        }
+    }
+
     public static class NatureSpinnerAdapter extends BaseAdapter {
 
         ArrayList<InterfaceNature> interfaceNatures;
@@ -553,8 +692,6 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         public Object getItem(int position) {
             return interfaceNatures.get(position);
         }
-
-
 
         @Override
         public long getItemId(int position) {
@@ -679,4 +816,14 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
 
 
+}
+
+class InterfaceAbility {
+    public String abilityName;
+    public int abilityId;
+
+    public InterfaceAbility(String abilityName, int abilityId) {
+        this.abilityName = abilityName;
+        this.abilityId = abilityId;
+    }
 }
