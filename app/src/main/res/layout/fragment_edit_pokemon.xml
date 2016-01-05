@@ -173,13 +173,15 @@
                 android:layout_height="wrap_content"
                 android:layout_column="1"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"
                 android:layout_row="0"
                 android:text="@string/label_hp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textIsSelectable="false"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textColor="@color/colorWhitebgSecondaryText"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="-2dp" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -187,14 +189,16 @@
                 android:layout_height="wrap_content"
                 android:layout_column="2"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="-10dp"
                 android:layout_row="0"
                 android:text="@string/label_atk"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textIsSelectable="false"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textColor="@color/colorWhitebgSecondaryText"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="-2dp" />
 
             <TextView
                 android:id="@+id/textView14"
@@ -202,14 +206,16 @@
                 android:layout_height="wrap_content"
                 android:layout_column="3"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="-10dp"
                 android:layout_row="0"
                 android:text="@string/label_def"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textIsSelectable="false"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textColor="@color/colorWhitebgSecondaryText"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="-2dp" />
 
             <TextView
                 android:id="@+id/textView15"
@@ -217,14 +223,16 @@
                 android:layout_height="wrap_content"
                 android:layout_column="4"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="-10dp"
                 android:layout_row="0"
                 android:text="@string/label_satk"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textIsSelectable="false"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textColor="@color/colorWhitebgSecondaryText"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="-2dp" />
 
             <TextView
                 android:id="@+id/textView17"
@@ -232,14 +240,16 @@
                 android:layout_height="wrap_content"
                 android:layout_column="5"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="-10dp"
                 android:layout_row="0"
                 android:text="@string/label_sdef"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textIsSelectable="false"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textColor="@color/colorWhitebgSecondaryText"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="-2dp" />
 
             <TextView
                 android:id="@+id/textView18"
@@ -247,14 +257,16 @@
                 android:layout_height="wrap_content"
                 android:layout_column="6"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="-10dp"
                 android:layout_row="0"
                 android:text="@string/label_spd"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textIsSelectable="false"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textColor="@color/colorWhitebgSecondaryText"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="-2dp" />
 
             <TextView
                 android:id="@+id/textView19"
@@ -262,14 +274,16 @@
                 android:layout_height="wrap_content"
                 android:layout_column="0"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="0dp"
                 android:layout_row="0"
                 android:text="@string/label_gender"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textIsSelectable="false"
                 android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textColor="@color/colorWhitebgSecondaryText"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="-2dp" />
 
             <ToggleButton
                 android:id="@+id/toggleButtonInputGender"
@@ -292,12 +306,11 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/gridLayout"
             android:layout_marginLeft="4dp"
-            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:paddingLeft="18dp"
             android:text="@string/label_nature_sans_colon"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="14sp" />
+            android:textSize="12dp" />
 
         <Spinner
             android:id="@+id/spinnerAddPokemonNature"
@@ -315,13 +328,12 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/spinnerAddPokemonAbility"
             android:layout_alignLeft="@+id/spinnerAddPokemonAbility"
-            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:paddingLeft="8dp"
             android:text="@string/label_ability_sans_colon"
             android:textAllCaps="false"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <Spinner
             android:id="@+id/spinnerAddPokemonAbility"
@@ -395,32 +407,48 @@
                 android:visibility="visible" />
         </LinearLayout>
 
-        <TextView
+        <customviews.AutoResizeTextView
             android:id="@+id/textViewSelectedName"
             android:layout_width="172dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/imageViewSelectedIcon"
             android:layout_below="@+id/horizontalSeparator1"
             android:layout_toRightOf="@+id/imageViewInsideCircle"
-            android:fontFamily="Condensed"
+            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
-            android:text="@string/placeholder"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:text="@string/label_select_pokemon"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/white"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:textSize="24sp" />
 
-        <view
-            android:id="@+id/buttonAddPokemonEdit"
-            class="com.melnykov.fab.FloatingActionButton"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignTop="@+id/imageViewInsideCircle"
-            android:layout_marginTop="2dp"
-            android:layout_toEndOf="@+id/textViewSelectedName"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:gravity="center_vertical"
+            android:id="@+id/sdafg"
+            android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/textViewSelectedName"
-            android:src="@drawable/ic_action_edit"
-            fab:fab_colorNormal="@color/colorAccent"
-            fab:fab_colorPressed="@color/colorPrimary"
-            fab:fab_shadow="false" />
+            android:layout_toEndOf="@+id/textViewSelectedName"
+            android:layout_alignBottom="@+id/textViewSelectedName">
+
+            <view
+                android:id="@+id/buttonAddPokemonEdit"
+                class="com.melnykov.fab.FloatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_alignTop="@+id/imageViewInsideCircle"
+                android:layout_marginTop="2dp"
+                android:layout_toEndOf="@+id/textViewSelectedName"
+                android:layout_toRightOf="@+id/textViewSelectedName"
+                android:src="@drawable/ic_action_edit"
+                fab:fab_colorNormal="@color/colorAccent"
+                fab:fab_colorPressed="@color/colorPrimary"
+                fab:fab_type="mini"
+                fab:fab_shadow="false" />
+        </LinearLayout>
+
     </RelativeLayout>
 </view>

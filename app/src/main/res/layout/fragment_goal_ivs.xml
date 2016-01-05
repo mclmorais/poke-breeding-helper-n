@@ -147,12 +147,11 @@
                 android:layout_toStartOf="@+id/checkBoxGoalIVsActivateAbilities"
                 style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
-            <TextView
+            <customviews.AutoResizeTextView
                 android:id="@+id/textViewPokemonName"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:singleLine="true"
-                android:text="Banshitrouye"
                 android:textAllCaps="false"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="24dp"
@@ -163,7 +162,7 @@
                 android:layout_toStartOf="@+id/glaucio"
                 android:layout_toLeftOf="@+id/glaucio"
                 android:gravity="center"
-                />
+                android:text="@string/label_select_pokemon" />
             <ImageView
                 android:id="@+id/imageViewInsideCircle"
                 android:layout_width="64dp"
@@ -178,7 +177,7 @@
                 android:layout_width="64dp"
                 android:layout_height="96dp"
                 android:layout_gravity="center"
-                android:src="@drawable/pkmn_big_084"
+                android:src="@drawable/pkmn_big_000"
                 app:border_color="@color/colorPrimaryDark"
                 app:border_width="2dp"
                 android:layout_alignParentTop="true"
@@ -203,7 +202,6 @@
                 android:gravity="center"
                 android:text="@string/label_nature_sans_colon"
                 android:textAllCaps="false"
-                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="12sp"
                 android:layout_below="@+id/LayoutIVs"
                 android:layout_alignLeft="@+id/spinnerGoalIVsNatures"
@@ -256,7 +254,6 @@
                     android:layout_marginRight="4dp"
                     android:gravity="center_horizontal"
                     android:fontFamily="sans-serif-light"
-                    android:textColor="@color/colorWhitebgSecondaryText"
                     android:singleLine="true" />
 
                 <TextView
