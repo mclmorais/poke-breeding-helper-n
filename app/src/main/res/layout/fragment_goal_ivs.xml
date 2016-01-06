@@ -162,7 +162,8 @@
                 android:layout_toStartOf="@+id/glaucio"
                 android:layout_toLeftOf="@+id/glaucio"
                 android:gravity="center"
-                android:text="@string/label_select_pokemon" />
+                android:text="@string/label_select_pokemon"
+                android:layout_marginRight="4dp" />
             <ImageView
                 android:id="@+id/imageViewInsideCircle"
                 android:layout_width="64dp"
@@ -170,7 +171,9 @@
                 android:src="@drawable/circle_primary"
                 android:layout_alignTop="@+id/imageViewSelectedPokemonIcon"
                 android:layout_alignBottom="@+id/imageViewSelectedPokemonIcon"
-                android:layout_alignLeft="@+id/imageViewSelectedPokemonIcon" />
+                android:layout_alignLeft="@+id/imageViewSelectedPokemonIcon"
+                android:visibility="visible" />
+
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/imageViewSelectedPokemonIcon"
@@ -180,13 +183,12 @@
                 android:src="@drawable/pkmn_big_000"
                 app:border_color="@color/colorPrimaryDark"
                 app:border_width="2dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="false"
+                android:layout_alignTop="@+id/textViewPokemonName"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="-16dp"
-                android:layout_marginBottom="-16dp" />
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="-16dp" />
 
-            <Switch
+            <android.support.v7.widget.SwitchCompat
                 android:id="@+id/checkBoxGoalIVsActivateNatures"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -221,7 +223,7 @@
                 android:layout_alignStart="@+id/spinnerGoalIVsNatures"
                 android:layout_marginTop="4dp" />
 
-            <Switch
+            <android.support.v7.widget.SwitchCompat
                 android:id="@+id/checkBoxGoalIVsActivateAbilities"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

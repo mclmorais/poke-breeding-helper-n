@@ -43,7 +43,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     protected ArrayList<Integer> abilitySlots;
     int selectedPokemonId = -1;
     int selectedGenderId = 2;
-    int[] selectedIVs = {-1, -1, -1, -1, -1, -1};
     int selectedNatureId = -1;
     int selectedAbilitySlot = -1;
     private TextView selectedName;
@@ -171,7 +170,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         populateNatureSpinner();
     }
 
-
     void populateNatureSpinner() {
         ArrayList<String> natureNames = feederCallback.getListOfNatures();
         spinnerNature.setAdapter(new ArrayAdapter<>(
@@ -179,7 +177,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
                 R.layout.spinner_item,
                 natureNames));
     }
-
 
     void openSelectPokemonFragment(View view) {
         FragmentManager fm = getFragmentManager();
@@ -200,11 +197,9 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         return b;
     }
 
-
     void showToast(String string) {
         Toast.makeText(getActivity().getApplicationContext(), string, Toast.LENGTH_LONG).show();
     }
-
 
     @Override
     protected void setDialogPosition() {
@@ -237,18 +232,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     }
 
 
-    private int getIndex(Spinner spinner, String myString) {
-
-        int index = 0;
-
-        for (int i = 0; i < spinner.getCount(); i++) {
-            if (spinner.getItemAtPosition(i).toString().equals(myString)) {
-                index = i;
-            }
-        }
-        return index;
-    }
-
     @Override
     public void onPokemonSelected(int id) {
         selectedPokemonId = id;
@@ -260,7 +243,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         updateInterfacePokemon(selectedPokemonId);
         updateInterfaceGender(selectedPokemonId);
         updateNameButton();
-
     }
 
     void updateAbilities(int id) {

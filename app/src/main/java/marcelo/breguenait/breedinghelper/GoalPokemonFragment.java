@@ -9,12 +9,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.SwitchCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
@@ -56,9 +58,9 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     @Bind(R.id.spinnerGoalIVsAbilities)
     Spinner spinnerAbility;
     @Bind(R.id.checkBoxGoalIVsActivateNatures)
-    Switch checkBoxActivateNatures;
+    SwitchCompat checkBoxActivateNatures;
     @Bind(R.id.checkBoxGoalIVsActivateAbilities)
-    Switch checkBoxActivateAbilities;
+    SwitchCompat checkBoxActivateAbilities;
     @Bind(R.id.textViewPokemonName)
     TextView selectedName;
 
@@ -554,7 +556,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             }
 
 
-            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(40));
+            AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(40));
             holder.layout.setLayoutParams(layoutParams);
             return natureView;
         }
@@ -669,7 +671,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             }
 
 
-            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(60));
+            AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(60));
             holder.layout.setLayoutParams(layoutParams);
             return natureView;
         }
