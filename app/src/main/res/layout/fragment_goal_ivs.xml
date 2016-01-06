@@ -207,7 +207,8 @@
                 android:textSize="12sp"
                 android:layout_below="@+id/LayoutIVs"
                 android:layout_alignLeft="@+id/spinnerGoalIVsNatures"
-                android:layout_alignStart="@+id/spinnerGoalIVsNatures" />
+                android:layout_alignStart="@+id/spinnerGoalIVsNatures"
+                android:textColor="@color/colorWhiteBgDisabledHint" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -221,7 +222,8 @@
                 android:layout_below="@+id/spinnerGoalIVsNatures"
                 android:layout_alignLeft="@+id/spinnerGoalIVsNatures"
                 android:layout_alignStart="@+id/spinnerGoalIVsNatures"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"
+                android:textColor="@color/colorWhiteBgDisabledHint" />
 
             <android.support.v7.widget.SwitchCompat
                 android:id="@+id/checkBoxGoalIVsActivateAbilities"

@@ -76,18 +76,18 @@ public class CreatePokemonFragment extends EditorPokemonFragment {
 
     private void finishFragment() {
 
-        boolean hasIVs = false;
-        for (CheckBox IVs : checkBoxInputIVs) {
-            if (IVs.isChecked()) hasIVs = true;
-        }
-        if (!hasIVs) {
-            showToast(getActivity().getString(R.string.message_select_one_iv));
-            return;
-        }
-        if (selectedPokemonId <= 0) {
-            showToast(getActivity().getString(R.string.message_select_pokemon));
-            return;
-        }
+//        boolean hasIVs = false;
+//        for (CheckBox IVs : checkBoxInputIVs) {
+//            if (IVs.isChecked()) hasIVs = true;
+//        }
+//        if (!hasIVs) {
+//            showToast(getActivity().getString(R.string.message_select_one_iv));
+//            return;
+//        }
+//        if (selectedPokemonId <= 0) {
+//            showToast(getActivity().getString(R.string.message_select_pokemon));
+//            return;
+//        }
 
         int[] pokemonIVs = new int[6];
         for (int i = 0; i < 6; i++)

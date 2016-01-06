@@ -115,14 +115,14 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
 
     void finishFragment() {
 
-        boolean hasIVs = false;
-        for (CheckBox IVs : checkBoxInputIVs) {
-            if (IVs.isChecked()) hasIVs = true;
-        }
-        if (!hasIVs) {
-            showToast(getActivity().getString(R.string.message_select_one_iv));
-            return;
-        }
+//        boolean hasIVs = false;
+//        for (CheckBox IVs : checkBoxInputIVs) {
+//            if (IVs.isChecked()) hasIVs = true;
+//        }
+//        if (!hasIVs) {
+//            showToast(getActivity().getString(R.string.message_select_one_iv));
+//            return;
+//        }
         if (selectedPokemonId <= 0) {
             showToast(getActivity().getString(R.string.message_select_pokemon));
             return;
