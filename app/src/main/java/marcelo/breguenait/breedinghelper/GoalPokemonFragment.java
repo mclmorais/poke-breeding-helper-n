@@ -64,10 +64,12 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     TextView selectedName;
     private FeedDataGoalIVs feederCallback;
     private UpdateGoal updaterCallback;
+    ArrayList<NatureSpinnerAdapter.InterfaceNature> interfaceNatures;
+
     private final AdapterView.OnItemSelectedListener updateGoalNatureOnSeletion = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (spinnerNature.getTag() != position) {//TODO: TESTAR!!!!!!!!!!!!!!!!!!
+            if (spinnerNature.getTag() != position) {
                 spinnerNature.setTag(-1);
                 onInterfaceGoalNatureChanged();
             }
@@ -107,7 +109,6 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         this.updaterCallback = (UpdateGoal) callbacks;
     }
 
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         Log.d("Lifecycle", "GoalPokemonFragment - onSaveInstanceState");
@@ -137,22 +138,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             return null;
         }
 
-        Log.d("STACK", Log.getStackTraceString(new Exception()));
-
-        Log.d("Lifecycle", "GoalPokemonFragment - onCreateView");
         View view = inflater.inflate(R.layout.fragment_goal_ivs, container, false);
-
-        if (savedInstanceState == null)
-            Log.d("Lifecycle", "GoalPokemonFragment - savedinstancestate null!");
-        else
-            Log.d("Lifecycle", "GoalPokemonFragment - savedinstancestate nao null!");
-
-
-//        if(feederCallback == null || updaterCallback == null) {
-//            Log.d("Lifecycle", "GoalPokemonFragment - callbacks null!");
-//
-//            return view;
-//        }
 
         ButterKnife.bind(this, view);
 
@@ -299,8 +285,8 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 //        for (String natureName : natureNames) {
 //            interfaceAbilities.add(new NatureSpinnerAdapter.InterfaceNature(natureName, "Attack", "Special Attack"));
 //        }
-        ArrayList<NatureSpinnerAdapter.InterfaceNature> interfaceNatures = feederCallback.getInterfaceNatures();
-        //spinnerNature.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, natureNames));
+
+        interfaceNatures = feederCallback.getInterfaceNatures();
         spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, getContext()));
     }
 
@@ -337,13 +323,25 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
     private void updateNatureSpinnerSelection(int natureId) {
 
-        if (natureId > 0) {
-            spinnerNature.setTag(natureId - 1);
-            spinnerNature.setSelection(natureId - 1);
-        } else {
-            Log.d("GoalFragment", "Received a pokemon with invalid nature");
-            //TODO: resolver sozinho se isso acontecer
+
+        for (int i = 0; i < interfaceNatures.size(); i++) {
+
+            if(interfaceNatures.get(i).id == natureId) {
+                spinnerNature.setTag(i);
+                spinnerNature.setSelection(i);
+                return;
+            }
+
         }
+        Log.d("GoalFragment", "Received a pokemon with invalid nature");
+
+//        if (natureId > 0) {
+//            spinnerNature.setTag(natureId - 1);
+//            spinnerNature.setSelection(natureId - 1);
+//        } else {
+//            Log.d("GoalFragment", "Received a pokemon with invalid nature");
+//            //TODO: resolver sozinho se isso acontecer
+//        }
     }
 
     /**
