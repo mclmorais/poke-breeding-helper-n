@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -27,6 +28,7 @@ import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import databasemanager.DatabaseConstants;
 
@@ -39,12 +41,14 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     protected final CheckBox[] checkBoxInputIVs = new CheckBox[6];
     protected Button confirmButton;
     protected Spinner spinnerNature, spinnerAbility;
-    protected ArrayList<Integer> abilityIds;
-    protected ArrayList<Integer> abilitySlots;
     int selectedPokemonId = -1;
     int selectedGenderId = 2;
     int selectedNatureId = -1;
     int selectedAbilitySlot = -1;
+
+    protected ArrayList<InterfaceNature> interfaceNatures;
+    protected ArrayList<InterfaceAbility> interfaceAbilities;
+
     private TextView selectedName;
     private ImageView selectedIcon;
     private ToggleButton togglePokemonGender;
@@ -53,6 +57,30 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     private View buttonPokemonSelector;
     private boolean showOnlyCompatible;
     private FeedDataCreatePokemon feederCallback;
+    private Spinner.OnItemSelectedListener onSpinnerItemSelectedHandler = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (parent == spinnerNature) {
+                if (spinnerNature.getTag() != position) {
+                    spinnerNature.setTag(-1);
+                    InterfaceNature interfaceNature = (InterfaceNature) spinnerNature.getSelectedItem();
+                    selectedNatureId = interfaceNature.id;
+                }
+            }
+            else if (parent == spinnerAbility) {
+                if (spinnerAbility.getTag() != position) {
+                    spinnerAbility.setTag(-1);
+                    selectedAbilitySlot = interfaceAbilities.get(position).abilitySlot;
+                }
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
 
 
     @Override
@@ -101,8 +129,10 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         checkBoxInputIVs[5] = (CheckBox) view.findViewById(R.id.checkBoxInputSPD);
 
         spinnerNature = (Spinner) view.findViewById(R.id.spinnerAddPokemonNature);
+        spinnerNature.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
 
         spinnerAbility = (Spinner) view.findViewById(R.id.spinnerAddPokemonAbility);
+        spinnerAbility.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
 
         buttonEdit = (FloatingActionButton) view.findViewById(R.id.buttonAddPokemonEdit);
 
@@ -115,7 +145,7 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
 //        if (receivedId != 0) {
 //            updateInterfacePokemon(receivedId);
 //            updateInterfaceGender(receivedId);
-//            updateAbilities(receivedId);
+//            feedAbilities(receivedId);
 //        }
 
 
@@ -124,7 +154,7 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         setDialogPosition();
 
         initialize();
-        updateInterface();
+        feedInterface();
         return view;
     }
 
@@ -171,11 +201,8 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     }
 
     void populateNatureSpinner() {
-        ArrayList<String> natureNames = feederCallback.getListOfNatures();
-        spinnerNature.setAdapter(new ArrayAdapter<>(
-                getActivity().getApplicationContext(),
-                R.layout.spinner_item,
-                natureNames));
+        interfaceNatures = feederCallback.getInterfaceNatures();
+        spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, getContext()));
     }
 
     void openSelectPokemonFragment(View view) {
@@ -231,41 +258,54 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         return false;
     }
 
-
     @Override
     public void onPokemonSelected(int id) {
         selectedPokemonId = id;
-        updateInterface();
+        feedInterface();
     }
 
-    void updateInterface() {
-        updateAbilities(selectedPokemonId);
+    void feedInterface() {
+        feedAbilities(selectedPokemonId);
         updateInterfacePokemon(selectedPokemonId);
         updateInterfaceGender(selectedPokemonId);
         updateNameButton();
     }
 
-    void updateAbilities(int id) {
+    void feedAbilities(int id) {
         if (spinnerAbility == null) return;
 
-        HashMap<Integer, String> abilities = feederCallback.getListOfAbilities(id);
-        abilityIds = new ArrayList<>();
-        abilitySlots = new ArrayList<>();
 
-        ArrayList<String> abilityStrings = new ArrayList<>();
+        interfaceAbilities = new ArrayList<>();
 
-        if (abilities.containsKey(1)) {
-            abilityStrings.add(abilities.get(1));
-            abilitySlots.add(1);
-        }
-        if (abilities.containsKey(2)) {
-            abilityStrings.add(abilities.get(2));
-            abilitySlots.add(2);
-        }
-        if (abilities.containsKey(3)) {
-            abilityStrings.add(abilities.get(3) + " (Hidden)");
-            abilitySlots.add(3);
-        }
+        LinkedHashMap<Integer, String> abilities = feederCallback.getListOfAbilities(id);
+
+        //Transforms the slot -> name HashMap into a InterfaceAbility to be used as a list
+        for (HashMap.Entry<Integer, String> entry : abilities.entrySet())
+            interfaceAbilities.add(new InterfaceAbility(entry.getValue(), entry.getKey()));
+
+//        if (selectedPokemonId < 0) {
+//            abilities = new HashMap<>();
+//            abilities.put(-1, "No Ability");
+//        } else {
+//            abilities = feederCallback.getListOfAbilities(id);
+//        }
+//        abilityIds = new ArrayList<>();
+//        abilitySlots = new ArrayList<>();
+//
+//        ArrayList<String> abilityStrings = new ArrayList<>();
+//
+//        if (abilities.containsKey(1)) {
+//            abilityStrings.add(abilities.get(1));
+//            abilitySlots.add(1);
+//        }
+//        if (abilities.containsKey(2)) {
+//            abilityStrings.add(abilities.get(2));
+//            abilitySlots.add(2);
+//        }
+//        if (abilities.containsKey(3)) {
+//            abilityStrings.add(abilities.get(3) + " (Hidden)");
+//            abilitySlots.add(3);
+//        }
 
 
 //        if (id != 0) {
@@ -288,7 +328,8 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
 //            }
 //        }
 
-        spinnerAbility.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, abilityStrings));
+            spinnerAbility.setAdapter(new GoalPokemonFragment.AbilitySpinnerAdapter(interfaceAbilities, getContext()));
+        //spinnerAbility.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, abilityStrings));
 
     }
 
@@ -368,9 +409,8 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     }
 
     public interface FeedDataCreatePokemon {
-        ArrayList<String> getListOfNatures();
 
-        HashMap<Integer, String> getListOfAbilities(int pokemonId);
+        LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId);
 
         int getGenderRate(int pokemonId);
 
@@ -383,5 +423,7 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         String getPokemonName(int pokemonId);
 
         ArrayList<Integer> getPokemonFamilyList();
+
+        ArrayList<InterfaceNature> getInterfaceNatures();
     }
 }

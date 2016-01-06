@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.UUID;
 
 import databasemanager.DatabaseConstants;
@@ -312,13 +312,9 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
     }
 
 
-    @Override
-    public ArrayList<String> getListOfNatures() {
-        return feederCallback.getListOfNatures();
-    }
 
     @Override
-    public HashMap<Integer, String> getListOfAbilities(int pokemonId) {
+    public LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId) {
         return feederCallback.getListOfAbilities(pokemonId);
     }
 
@@ -348,7 +344,7 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
     }
 
     @Override
-    public ModifierPokemonFragment.InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
+    public InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
         return feederCallback.getInterfaceModifierPokemon(uuid);
     }
 
@@ -364,11 +360,16 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
         return feederCallback.getPokemonFamilyList();
     }
 
+    @Override
+    public ArrayList<InterfaceNature> getInterfaceNatures() {
+        return feederCallback.getInterfaceNatures();
+    }
+
     public interface FeedDataPokemonViewer {
 
         ArrayList<String> getListOfNatures();
 
-        HashMap<Integer, String> getListOfAbilities(int pokemonId);
+        LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId);
 
         int getGenderRate(int pokemonId);
 
@@ -384,8 +385,12 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
 
         String getPokemonName(int pokemonId);
 
-        ModifierPokemonFragment.InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid);
+        InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid);
+
+        ArrayList<InterfaceNature> getInterfaceNatures();
     }
+
+
 
     public interface UpdatePokemonViewer {
         void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot);

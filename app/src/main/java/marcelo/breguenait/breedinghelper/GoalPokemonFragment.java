@@ -21,15 +21,14 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -67,7 +66,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     private FeedDataGoalIVs feederCallback;
     private UpdateGoal updaterCallback;
 
-    ArrayList<NatureSpinnerAdapter.InterfaceNature> interfaceNatures;
+    ArrayList<InterfaceNature> interfaceNatures;
     ArrayList<InterfaceAbility> interfaceAbilities;
 
     private View.OnClickListener onClickHandler = new View.OnClickListener() {
@@ -177,7 +176,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     }
 
     private void updateGoalNature() {
-        NatureSpinnerAdapter.InterfaceNature interfaceNature = (NatureSpinnerAdapter.InterfaceNature) spinnerNature.getSelectedItem();
+        InterfaceNature interfaceNature = (InterfaceNature) spinnerNature.getSelectedItem();
         updaterCallback.updateGoalNature(interfaceNature.id);
     }
 
@@ -243,19 +242,12 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         }
         Log.d("GoalFragment", "Received a pokemon with invalid nature");
 
-//        if (natureId > 0) {
-//            spinnerNature.setTag(natureId - 1);
-//            spinnerNature.setSelection(natureId - 1);
-//        } else {
-//            Log.d("GoalFragment", "Received a pokemon with invalid nature");
-//            //TODO: resolver sozinho se isso acontecer
-//        }
     }
 
     private void feedAbilitySpinner() {
         if (spinnerAbility == null) return;
 
-        HashMap<Integer, String> abilities = feederCallback.getListOfGoalAbilities();
+        LinkedHashMap<Integer, String> abilities = feederCallback.getListOfGoalAbilities();
 
         interfaceAbilities = new ArrayList<>();
 
@@ -369,11 +361,10 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     }
 
     interface FeedDataGoalIVs {
-        ArrayList<String> getListOfNatures();
 
-        ArrayList<NatureSpinnerAdapter.InterfaceNature> getInterfaceNatures();
+        ArrayList<InterfaceNature> getInterfaceNatures();
 
-        HashMap<Integer, String> getListOfGoalAbilities();
+        LinkedHashMap<Integer, String> getListOfGoalAbilities();
 
         ArrayList<Integer> getPokemonIds();
 
@@ -400,8 +391,6 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         void updateAbilityStatus(boolean b);
 
         void updateNatureStatus(boolean b);
-
-
     }
 
     public static class InterfaceGoalPokemon {
@@ -449,6 +438,9 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
         public AbilitySpinnerAdapter(ArrayList<InterfaceAbility> interfaceAbilities, Context context) {
             this.interfaceAbilities = interfaceAbilities;
+            if(interfaceAbilities.size() == 0) {
+                interfaceAbilities.add(new InterfaceAbility("No Ability", -1)); //TODO: fazer pegar do sistema
+            }
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             this.context = context;
             metrics = context.getResources().getDisplayMetrics();
@@ -569,136 +561,6 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             View layout;
             TextView viewAbilityName;
             TextView viewAbilitySlot;
-        }
-    }
-
-    public static class NatureSpinnerAdapter extends BaseAdapter {
-
-        ArrayList<InterfaceNature> interfaceNatures;
-        LayoutInflater inflater;
-        DisplayMetrics metrics;
-
-        public NatureSpinnerAdapter(ArrayList<InterfaceNature> interfaceNatures, Context context) {
-            this.interfaceNatures = interfaceNatures;
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            metrics = context.getResources().getDisplayMetrics();
-        }
-
-        @Override
-        public int getCount() {
-            return interfaceNatures.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return interfaceNatures.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View natureView = convertView;
-            LayoutHolder holder;
-
-            if (convertView == null) {
-                natureView = inflater.inflate(R.layout.dynamic_layout_nature, parent, false);
-                holder = new LayoutHolder();
-
-                holder.layout = natureView.findViewById(R.id.dynNature_layout);
-                holder.viewNatureName = (TextView) natureView.findViewById(R.id.dynNature_name);
-                holder.viewIncreasedStatName = (TextView) natureView.findViewById(R.id.dynNature_increasedStat);
-                holder.viewDecreasedStatName = (TextView) natureView.findViewById(R.id.dynNature_decreasedStat);
-
-                natureView.setTag(holder);
-
-            } else {
-                holder = (LayoutHolder) natureView.getTag();
-            }
-
-            holder.viewNatureName.setText(interfaceNatures.get(position).natureName);
-
-            String increasedStat = interfaceNatures.get(position).increasedStatName;
-            String decreasedStat = interfaceNatures.get(position).decreasedStatName;
-
-            if (increasedStat.equals(decreasedStat)) {
-                holder.viewIncreasedStatName.setVisibility(View.GONE);
-                holder.viewDecreasedStatName.setText(R.string.nature_neutral);
-            } else {
-                holder.viewIncreasedStatName.setVisibility(View.VISIBLE);
-                holder.viewIncreasedStatName.setText("+" + interfaceNatures.get(position).increasedStatName);
-                holder.viewDecreasedStatName.setText("-" + interfaceNatures.get(position).decreasedStatName);
-            }
-
-            return natureView;
-        }
-
-        @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            View natureView = convertView;
-            LayoutHolder holder;
-
-            if (convertView == null) {
-                natureView = inflater.inflate(R.layout.dynamic_layout_nature, parent, false);
-                holder = new LayoutHolder();
-
-                holder.layout = natureView.findViewById(R.id.dynNature_layout);
-                holder.viewNatureName = (TextView) natureView.findViewById(R.id.dynNature_name);
-                holder.viewIncreasedStatName = (TextView) natureView.findViewById(R.id.dynNature_increasedStat);
-                holder.viewDecreasedStatName = (TextView) natureView.findViewById(R.id.dynNature_decreasedStat);
-
-                natureView.setTag(holder);
-
-            } else {
-                holder = (LayoutHolder) natureView.getTag();
-            }
-
-            holder.viewNatureName.setText(interfaceNatures.get(position).natureName);
-
-            String increasedStat = interfaceNatures.get(position).increasedStatName;
-            String decreasedStat = interfaceNatures.get(position).decreasedStatName;
-
-            if (increasedStat.equals(decreasedStat)) {
-                holder.viewIncreasedStatName.setVisibility(View.GONE);
-                holder.viewDecreasedStatName.setText(R.string.nature_neutral);
-            } else {
-                holder.viewIncreasedStatName.setVisibility(View.VISIBLE);
-                holder.viewIncreasedStatName.setText("+" + interfaceNatures.get(position).increasedStatName);
-                holder.viewDecreasedStatName.setText("-" + interfaceNatures.get(position).decreasedStatName);
-            }
-
-
-            AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(60));
-            holder.layout.setLayoutParams(layoutParams);
-            return natureView;
-        }
-
-        public int dpToPx(float valueInDp) {
-            return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
-        }
-
-        public static class InterfaceNature {
-            public int id;
-            public String natureName;
-            public String increasedStatName;
-            public String decreasedStatName;
-
-            public InterfaceNature(int id, String natureName, String increasedStatName, String decreasedStatName) {
-                this.id = id;
-                this.natureName = natureName;
-                this.increasedStatName = increasedStatName;
-                this.decreasedStatName = decreasedStatName;
-            }
-        }
-
-        class LayoutHolder {
-            View layout;
-            TextView viewNatureName;
-            TextView viewIncreasedStatName;
-            TextView viewDecreasedStatName;
         }
     }
 

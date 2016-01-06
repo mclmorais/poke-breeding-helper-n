@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.UUID;
 
 import databasemanager.DatabaseConstants;
@@ -31,7 +31,8 @@ public class StoredPokemonFragment extends Fragment implements
         EditorPokemonFragment.FeedDataCreatePokemon,
         CreatePokemonFragment.UpdateCreatePokemon,
         StoredPokemonViewerFragment.FeedDataPokemonViewer,
-        StoredPokemonViewerFragment.UpdatePokemonViewer {
+        StoredPokemonViewerFragment.UpdatePokemonViewer,
+        CreatePokemonFragment.FeedDataCreatePokemon {
 
     private StoredPokemonAdapter storedPokemonAdapter;
     private GridView gridViewPokemons;
@@ -177,7 +178,7 @@ public class StoredPokemonFragment extends Fragment implements
     }
 
     @Override
-    public HashMap<Integer, String> getListOfAbilities(int pokemonId) {
+    public LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId) {
         return feederCallback.getListOfAbilities(pokemonId);
     }
 
@@ -221,7 +222,7 @@ public class StoredPokemonFragment extends Fragment implements
     }
 
     @Override
-    public ModifierPokemonFragment.InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
+    public InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
         return feederCallback.getInterfaceModifierPokemon(uuid);
     }
 
@@ -240,10 +241,24 @@ public class StoredPokemonFragment extends Fragment implements
         return ((StoredPokemonAdapter) gridViewPokemons.getAdapter()).getPositionByUUID(uuid);
     }
 
+    @Override
+    public ArrayList<InterfaceNature> getInterfaceNatures() {
+        return feederCallback.getInterfaceNatures();
+    }
+
+    @Override
+    public InterfaceModifierPokemon getLastInterfaceModifierPokemon() {
+        UUID lastPokemonUUID = ((StoredPokemonAdapter) gridViewPokemons.getAdapter()).getLastInterfaceStoredpokemonUUID();
+        if(lastPokemonUUID != null)
+            return feederCallback.getInterfaceModifierPokemon(lastPokemonUUID);
+        else
+            return new InterfaceModifierPokemon();
+    }
+
     interface FeedDataStoredPokemon {
         ArrayList<String> getListOfNatures();
 
-        HashMap<Integer, String> getListOfAbilities(int pokemonId);
+        LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId);
 
         ArrayList<InterfaceStoredPokemon> getInterfaceStoredPokemonList();
 
@@ -261,7 +276,9 @@ public class StoredPokemonFragment extends Fragment implements
 
         String getPokemonName(int pokemonId);
 
-        ModifierPokemonFragment.InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid);
+        InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid);
+
+        ArrayList<InterfaceNature> getInterfaceNatures();
     }
 
     interface UpdateStoredPokemonList {
@@ -382,6 +399,8 @@ public class StoredPokemonFragment extends Fragment implements
             return hatch;
         }
 
+
+
         int getPositionByUUID(UUID uuid) {
             for (int i = 0; i < storedPokemonList.size(); i++) {
                 if (storedPokemonList.get(i).getUUID() == uuid)
@@ -390,6 +409,13 @@ public class StoredPokemonFragment extends Fragment implements
 
             Log.d("StoredAdapter", "Couldn't find the UUID sent!");
             return -1;
+        }
+
+        UUID getLastInterfaceStoredpokemonUUID() {
+            if(!storedPokemonList.isEmpty())
+                return storedPokemonList.get(storedPokemonList.size()-1).getUUID();
+            else
+                return null;
         }
 
         private class PreloadedDrawables {

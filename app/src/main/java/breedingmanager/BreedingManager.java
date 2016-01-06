@@ -5,14 +5,14 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.UUID;
 
 import databasemanager.MyDatabase;
 import marcelo.breguenait.breedinghelper.ChanceFragment;
 import marcelo.breguenait.breedinghelper.GoalPokemonFragment;
-import marcelo.breguenait.breedinghelper.ModifierPokemonFragment;
+import marcelo.breguenait.breedinghelper.InterfaceModifierPokemon;
+import marcelo.breguenait.breedinghelper.InterfaceNature;
 import marcelo.breguenait.breedinghelper.StoredPokemonFragment;
 import marcelo.breguenait.breedinghelper.StoredPokemonViewerFragment;
 
@@ -170,10 +170,10 @@ public class BreedingManager {
         //return PokemonData.getInstance().getListOfNatures();
     }
 
-    public ArrayList<GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature> getInterfaceNatures() {
+    public ArrayList<InterfaceNature> getInterfaceNatures() {
 
         ArrayList<String> natureNames = database.getListOfNatures(languageId);
-        ArrayList<GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature>
+        ArrayList<InterfaceNature>
                 interfaceNatures = new ArrayList<>(natureNames.size());
 
         LinkedHashMap<Integer, String> sortedNatureNames = database.getSortedNatureNames(languageId);
@@ -185,7 +185,7 @@ public class BreedingManager {
             String increasedStatName = database.getNatureChangedStatName(sortedId,languageId, true);
             String decreasedStatName = database.getNatureChangedStatName(sortedId,languageId, false);
 
-            interfaceNatures.add(new GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature(
+            interfaceNatures.add(new InterfaceNature(
                     sortedId, sortedNatureNames.get(sortedId), increasedStatName, decreasedStatName
             ));
         }
@@ -211,11 +211,11 @@ public class BreedingManager {
         return interfaceNatures;
     }
 
-    public HashMap<Integer, String> getListOfGoalAbilities() {
+    public LinkedHashMap<Integer, String> getListOfGoalAbilities() {
         return database.getListOfAbilities(goalPokemon.getPokemonId(), languageId);
     }
 
-    public HashMap<Integer, String> getListOfAbilities(int pokemonId) {
+    public LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId) {
         return database.getListOfAbilities(pokemonId, languageId);
     }
 
@@ -303,7 +303,7 @@ public class BreedingManager {
         return database.getPokemonName(pokemonId, languageId);
     }
 
-    public ModifierPokemonFragment.InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
+    public InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
         StoredPokemon desiredPokemon = null;
 
         int[] IVs = {-1, -1, -1, -1, -1, -1};
@@ -316,9 +316,9 @@ public class BreedingManager {
         }
 
         if (desiredPokemon == null)
-            return new ModifierPokemonFragment.InterfaceModifierPokemon(-1, -1, IVs, -1, -1);
+            return new InterfaceModifierPokemon(-1, -1, IVs, -1, -1);
         else {
-            return new ModifierPokemonFragment.InterfaceModifierPokemon(
+            return new InterfaceModifierPokemon(
                     desiredPokemon.getPokemonId(),
                     desiredPokemon.getGenderId(),
                     desiredPokemon.getIVs(),

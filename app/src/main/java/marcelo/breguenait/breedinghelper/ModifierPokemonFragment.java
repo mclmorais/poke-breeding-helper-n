@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,26 +66,51 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
 
         selectedNatureId = interfaceModifierPokemon.getNatureId();
 
-        updateInterface();
+        feedInterface();
 
         pickSpinnersWithReceivedData();
 
     }
 
-    void pickSpinnersWithReceivedData() {
+    void feedNatureSpinnerSelection() {
+        //If there isn't a value received from somewhere else, doesn't select anything
+        if(selectedNatureId < 0) return;
 
-        //TODO: mudar esse abilityslots q ta meio merda
-        int position = 0;
-        for (int i = 0; i < abilitySlots.size(); i++) {
-            if (abilitySlots.get(i) == selectedAbilitySlot) {
-                position = i;
-                break;
+        for (int i = 0; i < interfaceNatures.size(); i++) {
+            if (interfaceNatures.get(i).id == selectedNatureId) {
+                spinnerNature.setTag(i);
+                spinnerNature.setSelection(i);
+                return;
+            }
+
+        }
+        Log.d("GoalFragment", "Received a pokemon with invalid nature");
+    }
+    void feedAbilitySpinnerSelection(int abilitySlot) {
+        //If the slot is valid
+        if (abilitySlot > 0) {
+            //Searches the interfaceAbilities for a one that corresponds to the goal slot
+            int position = -1;
+            for (int i = 0; i < interfaceAbilities.size(); i++) {
+                if (interfaceAbilities.get(i).abilitySlot == abilitySlot) {
+                    position = i;
+                    break;
+                }
+            }
+            if (position != -1) {
+                //If it has been found, sets the spinner to that position
+                spinnerAbility.setTag(position);
+                spinnerAbility.setSelection(position);
+            } else {
+                Log.d("GOAL", "AbilitySlot " + String.valueOf(abilitySlot) +
+                        " wasn't found in InterfaceAbilities.");
             }
         }
+    }
 
-        spinnerAbility.setSelection(position);
-
-        spinnerNature.setSelection(selectedNatureId - 1); //TODO: fazer de um jeito mais galo pra poder organizar os itens depois
+    void pickSpinnersWithReceivedData() {
+        feedAbilitySpinnerSelection(interfaceModifierPokemon.getAbilitySlot());
+        feedNatureSpinnerSelection();
     }
 
     void finishFragment() {
@@ -106,12 +132,7 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
         for (int i = 0; i < 6; i++)
             pokemonIVs[i] = checkBoxInputIVs[i].isChecked() ? 1 : 0;
 
-        int spinnerPosition = spinnerAbility.getSelectedItemPosition();
-        int abilitySlot = abilitySlots.get(spinnerPosition);
-
-        int natureId = spinnerNature.getSelectedItemPosition() + 1;
-
-        updaterFeederCallback.updateStoredPokemon(receivedUUID, selectedPokemonId, selectedGenderId, pokemonIVs, natureId, abilitySlot);
+        updaterFeederCallback.updateStoredPokemon(receivedUUID, selectedPokemonId, selectedGenderId, pokemonIVs, selectedNatureId, selectedAbilitySlot);
 
         closeFragment();
     }
@@ -164,40 +185,4 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
 
     }
 
-    public static class InterfaceModifierPokemon {
-
-        private int pokemonId;
-        private int genderId;
-        private int[] IVs;
-        private int natureId;
-        private int abilitySlot;
-
-        public InterfaceModifierPokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
-            this.pokemonId = pokemonId;
-            this.genderId = genderId;
-            this.IVs = IVs;
-            this.natureId = natureId;
-            this.abilitySlot = abilitySlot;
-        }
-
-        public int getPokemonId() {
-            return pokemonId;
-        }
-
-        public int getGenderId() {
-            return genderId;
-        }
-
-        public int[] getIVs() {
-            return IVs;
-        }
-
-        public int getNatureId() {
-            return natureId;
-        }
-
-        public int getAbilitySlot() {
-            return abilitySlot;
-        }
-    }
 }

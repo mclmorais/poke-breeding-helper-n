@@ -10,10 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.transition.Fade;
-import android.transition.Slide;
-import android.transition.TransitionInflater;
-import android.transition.TransitionManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +27,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -593,7 +589,7 @@ public class BreedingFragment extends Fragment
     }
 
     @Override
-    public HashMap<Integer, String> getListOfGoalAbilities() {
+    public LinkedHashMap<Integer, String> getListOfGoalAbilities() {
         return breedingManager.getListOfGoalAbilities();
     }
 
@@ -624,7 +620,7 @@ public class BreedingFragment extends Fragment
 
 
     @Override
-    public HashMap<Integer, String> getListOfAbilities(int pokemonId) {
+    public LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId) {
         return breedingManager.getListOfAbilities(pokemonId);
     }
 
@@ -669,7 +665,7 @@ public class BreedingFragment extends Fragment
     }
 
     @Override
-    public ModifierPokemonFragment.InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
+    public InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
         return breedingManager.getInterfaceModifierPokemon(uuid);
     }
 
@@ -721,7 +717,7 @@ public class BreedingFragment extends Fragment
     }
 
     @Override
-    public ArrayList<GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature> getInterfaceNatures() {
+    public ArrayList<InterfaceNature> getInterfaceNatures() {
         return breedingManager.getInterfaceNatures();
     }
 }

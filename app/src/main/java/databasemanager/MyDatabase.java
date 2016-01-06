@@ -334,7 +334,7 @@ public class MyDatabase extends SQLiteAssetHelper {
 
 
 
-    public HashMap<Integer, String> getListOfAbilities(int pokemonId, int languageId) {
+    public LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId, int languageId) {
 
         String s = "SELECT ability_id, slot FROM pokemon_abilities WHERE pokemon_id="
                 + Integer.toString(pokemonId);
@@ -343,7 +343,7 @@ public class MyDatabase extends SQLiteAssetHelper {
         Cursor cursorAbilitiesIdSlot = database.rawQuery(s, null);
         cursorAbilitiesIdSlot.moveToFirst();
 
-        HashMap<Integer, String> abilities = new HashMap<>(cursorAbilitiesIdSlot.getCount());
+        LinkedHashMap<Integer, String> abilities = new LinkedHashMap<>(cursorAbilitiesIdSlot.getCount());
 
         while (!cursorAbilitiesIdSlot.isAfterLast()) {
             s = "SELECT name FROM ability_names WHERE local_language_id=" +
