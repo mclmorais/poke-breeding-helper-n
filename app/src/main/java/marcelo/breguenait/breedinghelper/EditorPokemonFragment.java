@@ -30,6 +30,8 @@ import java.util.HashMap;
 
 import databasemanager.DatabaseConstants;
 
+
+//TODO: Gender button is acting demickey
 public class EditorPokemonFragment extends PopupDialogFragment implements
         SelectPokemonFragment.OnPokemonSelectedListener,
         SelectPokemonFragment.FeedDataSelectPokemon {

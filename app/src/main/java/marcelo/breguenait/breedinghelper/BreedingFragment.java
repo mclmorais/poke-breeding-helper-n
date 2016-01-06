@@ -65,11 +65,6 @@ public class BreedingFragment extends Fragment
     private View cardAd;
     private AdView adView;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -120,7 +115,6 @@ public class BreedingFragment extends Fragment
             cl.getLogDialog().show();
         }
 
-
         return v;
 
     }
@@ -132,24 +126,9 @@ public class BreedingFragment extends Fragment
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        //updateLuckFragment();
-
-
-    }
-
-    @Override
     public void onPause() {
-        Log.d("Lifecycle", "BreedingFragment - onPause");
         super.onPause();
         saveData();
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.d("Lifecycle", "BreedingFragment - onDestroy");
-        super.onDestroy();
     }
 
     @Override
@@ -164,7 +143,6 @@ public class BreedingFragment extends Fragment
                 R.string.drawer_open,
                 R.string.drawer_close);
     }
-
 
     private void openSettings() {
 //        Intent intent = new Intent(getContext(), SettingsActivity.class);
@@ -242,7 +220,6 @@ public class BreedingFragment extends Fragment
 
     }
 
-
     private void createGoalIVsFragment(Bundle savedInstanceState, View v) {
 
         // Check that the activity is using the layout version with
@@ -288,7 +265,6 @@ public class BreedingFragment extends Fragment
         getChildFragmentManager().beginTransaction()
                 .add(R.id.frameLuckFragmentContainer, secondFragment).commit();
         chanceFragment = secondFragment;
-
     }
 
     private void createPokemonListFragment(Bundle savedInstanceState) {

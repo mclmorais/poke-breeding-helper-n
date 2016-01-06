@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -62,65 +61,74 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     Switch checkBoxActivateAbilities;
     @Bind(R.id.textViewPokemonName)
     TextView selectedName;
+
     private FeedDataGoalIVs feederCallback;
     private UpdateGoal updaterCallback;
+
     ArrayList<NatureSpinnerAdapter.InterfaceNature> interfaceNatures;
+    ArrayList<InterfaceAbility> interfaceAbilities;
 
-    private final AdapterView.OnItemSelectedListener updateGoalNatureOnSeletion = new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (spinnerNature.getTag() != position) {
-                spinnerNature.setTag(-1);
-                onInterfaceGoalNatureChanged();
-            }
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-            onInterfaceGoalNatureChanged();
-        }
-    };
-    private final View.OnClickListener updateGoalOnIVCheckboxChange = new View.OnClickListener() {
+    private View.OnClickListener onClickHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            onInterfaceGoalIVsChanged();
+            if (v == buttonPokemonSelector) {
+                openSelectPokemonFragment(v);
+            }
+
         }
     };
 
-    private ArrayList<Integer> abilitySlots;
-    private final AdapterView.OnItemSelectedListener updateGoalAbilityOnSeletion = new AdapterView.OnItemSelectedListener() {
+    private Spinner.OnItemSelectedListener onSpinnerItemSelectedHandler = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (spinnerAbility.getTag() != position) {
-                spinnerAbility.setTag(-1);
-                onInterfaceGoalAbilityChanged();
+            if (parent == spinnerNature) {
+                if (spinnerNature.getTag() != position) {
+                    spinnerNature.setTag(-1);
+                    updateGoalNature();
+                }
+            } else if (parent == spinnerAbility) {
+                if (spinnerAbility.getTag() != position) {
+                    spinnerAbility.setTag(-1);
+                    updateGoalAbility();
+                }
             }
         }
 
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
-            onInterfaceGoalAbilityChanged();
+
         }
     };
+    private CheckBox.OnCheckedChangeListener onCheckBoxCheckHandler = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (buttonView == checkBoxActivateNatures) {
+                updaterCallback.updateNatureStatus(isChecked);
+                String s;
+                if (isChecked)
+                    s = getActivity().getString(R.string.message_nature_considered);
+                else
+                    s = getActivity().getString(R.string.message_nature_ignored);
+                Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+            } else if (buttonView == checkBoxActivateAbilities) {
+                updaterCallback.updateAbilityStatus(isChecked);
+                String s;
+                if (isChecked)
+                    s = getActivity().getString(R.string.message_ability_considered);
+                else
+                    s = getActivity().getString(R.string.message_ability_ignored);
 
+                Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+            }
 
-    public void setCallbacks(Fragment callbacks) {
-        this.feederCallback = (FeedDataGoalIVs) callbacks;
-        this.updaterCallback = (UpdateGoal) callbacks;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        Log.d("Lifecycle", "GoalPokemonFragment - onSaveInstanceState");
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        Log.d("Lifecycle", "GoalPokemonFragment - onViewStateRestored");
-        super.onViewStateRestored(savedInstanceState);
-    }
-
+            for (CheckBox goalIVsCheckBox : goalIVs) {
+                if (buttonView == goalIVsCheckBox) {
+                    updateGoalIVs();
+                    return;
+                }
+            }
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,96 +142,54 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
         //Stops this from crashing by not having the callbacks initialized when
         // restarting the app from a termination. Why? It's a mystery to everybody!
-        if (savedInstanceState != null) {
-            return null;
-        }
+        if (savedInstanceState != null) return null;
 
         View view = inflater.inflate(R.layout.fragment_goal_ivs, container, false);
-
         ButterKnife.bind(this, view);
 
-        for (CheckBox goalIV : goalIVs) {
-            goalIV.setOnClickListener(updateGoalOnIVCheckboxChange);
-            removeRippleEffectFromCheckBox(goalIV);
+        InterfaceGoalPokemon interfaceGoalPokemon = feederCallback.getInterfaceGoalPokemon();
+
+        buttonPokemonSelector.setOnClickListener(onClickHandler);
+
+        for (int i = 0; i < goalIVs.length; i++) {
+            removeRippleEffectFromCheckBox(goalIVs[i]);
+            goalIVs[i].setChecked(interfaceGoalPokemon.getIVs()[i] == 1);
+            goalIVs[i].setOnCheckedChangeListener(onCheckBoxCheckHandler);
         }
 
+        interfaceNatures = feederCallback.getInterfaceNatures();
+        spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, getContext()));
+        spinnerNature.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
 
-
-        buttonPokemonSelector.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openSelectPokemonFragment(v);
-            }
-        });
-
-        spinnerNature.setOnItemSelectedListener(updateGoalNatureOnSeletion);
-        spinnerAbility.setOnItemSelectedListener(updateGoalAbilityOnSeletion);
+        spinnerAbility.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
 
         checkBoxActivateNatures.setChecked(feederCallback.getConsiderNatureStatus());
-        checkBoxActivateNatures.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updaterCallback.updateNatureStatus(isChecked);
-                String s;
-                if (isChecked)
-                    s = getActivity().getString(R.string.message_nature_considered);
-                else
-                    s = getActivity().getString(R.string.message_nature_ignored);
-                Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-            }
-        });
+        checkBoxActivateNatures.setOnCheckedChangeListener(onCheckBoxCheckHandler);
 
         checkBoxActivateAbilities.setChecked(feederCallback.getConsiderAbilityStatus());
-        checkBoxActivateAbilities.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updaterCallback.updateAbilityStatus(isChecked);
-                String s;
-                if (isChecked)
-                    s = getActivity().getString(R.string.message_ability_considered);
-                else
-                    s = getActivity().getString(R.string.message_ability_ignored);
+        checkBoxActivateAbilities.setOnCheckedChangeListener(onCheckBoxCheckHandler);
 
-                Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-            }
-        });
+        feedInterface(interfaceGoalPokemon);
 
-        initialize();
         return view;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d("Lifecycle", "GoalPokemonFragment - onDestroy");
-    }
-
-    private void initialize() {
-
-        //Populates the Nature spinner
-        populateNatureSpinner();
-
-        updateInterfacePokemon();
-    }
-
-    private void onInterfaceGoalNatureChanged() {
-
+    private void updateGoalNature() {
         NatureSpinnerAdapter.InterfaceNature interfaceNature = (NatureSpinnerAdapter.InterfaceNature) spinnerNature.getSelectedItem();
-
         updaterCallback.updateGoalNature(interfaceNature.id);
     }
 
-    private void onInterfaceGoalAbilityChanged() {
+    private void updateGoalAbility() {
 
         int spinnerPosition = spinnerAbility.getSelectedItemPosition();
 
-        int abilitySlot = abilitySlots.get(spinnerPosition);
+        int abilitySlot = interfaceAbilities.get(spinnerPosition).abilitySlot;
 
         updaterCallback.updateGoalAbilitySlot(abilitySlot);
 
     }
 
-    private void onInterfaceGoalIVsChanged() {
+    private void updateGoalIVs() {
 
         int[] IVs = new int[6];
         for (int i = 0; i < 6; i++) {
@@ -233,100 +199,40 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         updaterCallback.updateGoalIVs(IVs);
     }
 
-    private void openSelectPokemonFragment(View view) {
-        FragmentManager fm = getFragmentManager();
-        SelectPokemonFragment selectPokemonFragment = new SelectPokemonFragment();
-        Bundle b = addPositionAsArguments(view);
-        selectPokemonFragment.setArguments(b);
-        selectPokemonFragment.setTargetFragment(this, 0);
-        selectPokemonFragment.show(fm, "");
+    private void feedInterface(InterfaceGoalPokemon interfaceGoalPokemon) {
+        feedDisplayedName(interfaceGoalPokemon.getPokemonName());
+        feedDisplayedIcon(interfaceGoalPokemon.getPokemonId());
+
+        feedNatureSpinnerSelection(interfaceGoalPokemon.getNatureId());
+
+        feedAbilitySpinner();
+        feedAbilitySpinnerSelection(interfaceGoalPokemon.getAbilitySlot());
     }
 
-    @Override
-    public void onPokemonSelected(int id) {
+    private void feedDisplayedName(String name) {
 
-        updaterCallback.updateGoalId(id);
+        //If not initialized (""): doesn't update
 
-        updateInterfacePokemon();
+        if (!name.equals(""))
+            selectedName.setText(name);
     }
 
-    private void updateInterfacePokemon() {
-
-        //Gets data from the current goal pokemon
-        //(stored previously to the creation of this fragment)
-        InterfaceGoalPokemon interfaceGoalPokemon = feederCallback.getInterfaceGoalPokemon();
-
-        //Sets the IV checkboxes according to the received data
-        //TODO: Onclick makes it so this doesn't trigger right now, try tag method later
-        updateIVCheckboxes(interfaceGoalPokemon.getIVs());
-
-        //Sets the name and icon of the goal pokemon according to the received data
-        updateDisplayedName(interfaceGoalPokemon.getPokemonName());
-        updateDisplayedIcon(interfaceGoalPokemon.getPokemonId());
-
-        //Sets the position of the spinner according to the received data
-        //TODO: this can't trigger the listener or it will be redundantly writing something that it just read
-        updateNatureSpinnerSelection(interfaceGoalPokemon.getNatureId());
-
-        //Populates the ability spinner with data of the current goal pokemon (makes its own callback)
-        populateAbilitySpinner();
-
-        //Sets the position of the ability spinner according to the received data
-        //TODO: this can't trigger the listener or it will be redundantly writing something that it just read
-        updateAbilitySpinnerSelection(interfaceGoalPokemon.getAbilitySlot());
-    }
-
-    /**
-     * Populates the Nature spinner with all possible natures.
-     */
-    private void populateNatureSpinner() {
-//        ArrayList<String> natureNames = feederCallback.getListOfNatures();
-//        ArrayList<NatureSpinnerAdapter.InterfaceNature> interfaceAbilities = new ArrayList<>(natureNames.size());
-//        for (String natureName : natureNames) {
-//            interfaceAbilities.add(new NatureSpinnerAdapter.InterfaceNature(natureName, "Attack", "Special Attack"));
-//        }
-
-        interfaceNatures = feederCallback.getInterfaceNatures();
-        spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, getContext()));
-    }
-
-    private void populateAbilitySpinner() {
-        if (spinnerAbility == null) return;
-
-        HashMap<Integer, String> abilities = feederCallback.getListOfGoalAbilities();
-
-        ArrayList<String> abilityStrings = new ArrayList<>();
-        abilitySlots = new ArrayList<>();
-
-        ArrayList<InterfaceAbility> interfaceAbilities = new ArrayList<>();
+    private void feedDisplayedIcon(int id) {
 
 
-        //TODO: desmerdear
-        if (abilities.containsKey(1)) {
-            interfaceAbilities.add(new InterfaceAbility(abilities.get(1),1));
-            abilityStrings.add(abilities.get(1));
-            abilitySlots.add(1);
+        //If not initialized (-1): doesn't update
+
+        if (id > 0) { //TODO: fazer 0 < x < limite
+            String iconId = "pkmn_big_" + String.format("%03d", id);
+            selectedIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
         }
-        if (abilities.containsKey(2)) {
-            interfaceAbilities.add(new InterfaceAbility(abilities.get(2),2));
-            abilityStrings.add(abilities.get(2));
-            abilitySlots.add(2);
-        }
-        if (abilities.containsKey(3)) {
-            interfaceAbilities.add(new InterfaceAbility(abilities.get(3),3));
-            abilityStrings.add(abilities.get(3) + " (Hidden)");
-            abilitySlots.add(3);
-        }
-
-        spinnerAbility.setAdapter(new AbilitySpinnerAdapter(interfaceAbilities,getContext()));
     }
 
-    private void updateNatureSpinnerSelection(int natureId) {
-
+    private void feedNatureSpinnerSelection(int natureId) {
 
         for (int i = 0; i < interfaceNatures.size(); i++) {
 
-            if(interfaceNatures.get(i).id == natureId) {
+            if (interfaceNatures.get(i).id == natureId) {
                 spinnerNature.setTag(i);
                 spinnerNature.setSelection(i);
                 return;
@@ -344,63 +250,56 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 //        }
     }
 
-    /**
-     * Updates the state of the IV checkboxes
-     *
-     * @param IVs The values that the checkboxes will be set to
-     */
-    private void updateIVCheckboxes(int[] IVs) {
+    private void feedAbilitySpinner() {
+        if (spinnerAbility == null) return;
 
-        //If not initialized (-1): set as unchecked
+        HashMap<Integer, String> abilities = feederCallback.getListOfGoalAbilities();
 
-        for (int i = 0; i < 6; i++) {
-            goalIVs[i].setChecked(IVs[i] == 1);
-        }
+        interfaceAbilities = new ArrayList<>();
+
+        //Transforms the slot -> name HashMap into a InterfaceAbility to be used as a list
+        for (HashMap.Entry<Integer, String> entry : abilities.entrySet())
+            interfaceAbilities.add(new InterfaceAbility(entry.getValue(), entry.getKey()));
+
+        spinnerAbility.setAdapter(new AbilitySpinnerAdapter(interfaceAbilities, getContext()));
     }
 
-    private void updateDisplayedName(String name) {
+    private void feedAbilitySpinnerSelection(int abilitySlot) {
 
-        //If not initialized (""): doesn't update
-
-        if (!name.equals(""))
-            selectedName.setText(name);
-    }
-
-    /**
-     * Given an ID, updates the imageView with the appropriate Pokémon icon
-     *
-     * @param id the ID of the Pokémon to be used
-     */
-    private void updateDisplayedIcon(int id) {
-
-
-        //If not initialized (-1): doesn't update
-
-        if (id > 0) { //TODO: fazer 0 < x < limite
-            String iconId = "pkmn_big_" + String.format("%03d", id);
-            selectedIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
-        }
-    }
-
-    private void updateAbilitySpinnerSelection(int abilitySlot) {
+        //If the slot is valid
         if (abilitySlot > 0) {
-
-            //TODO: mudar esse abilityslots q ta meio merda
-            int position = 0;
-            for (int i = 0; i < abilitySlots.size(); i++) {
-                if (abilitySlots.get(i) == abilitySlot) {
+            //Searches the interfaceAbilities for a one that corresponds to the goal slot
+            int position = -1;
+            for (int i = 0; i < interfaceAbilities.size(); i++) {
+                if (interfaceAbilities.get(i).abilitySlot == abilitySlot) {
                     position = i;
                     break;
                 }
             }
-            if (position > 0) {
+            if (position != -1) {
+                //If it has been found, sets the spinner to that position
                 spinnerAbility.setTag(position);
                 spinnerAbility.setSelection(position);
             } else {
-                Log.d("GoalFragment", "Received a pokemon with invalid ability");
-                //TODO: resolver sozinho se isso acontecer
+                Log.d("GOAL", "AbilitySlot " + String.valueOf(abilitySlot) +
+                        " wasn't found in InterfaceAbilities.");
             }
         }
+    }
+
+    private void openSelectPokemonFragment(View view) {
+        FragmentManager fm = getFragmentManager();
+        SelectPokemonFragment selectPokemonFragment = new SelectPokemonFragment();
+        Bundle b = addPositionAsArguments(view);
+        selectPokemonFragment.setArguments(b);
+        selectPokemonFragment.setTargetFragment(this, 0);
+        selectPokemonFragment.show(fm, "");
+    }
+
+    @Override
+    public void onPokemonSelected(int id) {
+        updaterCallback.updateGoalId(id);
+        feedInterface(feederCallback.getInterfaceGoalPokemon());
     }
 
     @Override
@@ -411,27 +310,6 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     @Override
     public boolean showOnlyBasic() {
         return true;
-    }
-
-    private int getIndex(Spinner spinner, String myString) {
-
-        int index = 0;
-
-        for (int i = 0; i < spinner.getCount(); i++) {
-            if (spinner.getItemAtPosition(i).toString().equals(myString)) {
-                index = i;
-            }
-        }
-        return index;
-    }
-
-    private Bundle addPositionAsArguments(View v) {
-        int callerViewPosition[] = new int[2];
-        v.getLocationOnScreen(callerViewPosition);
-        Bundle b = new Bundle();
-        b.putInt("x", callerViewPosition[0]);
-        b.putInt("y", callerViewPosition[1]);
-        return b;
     }
 
     @Override
@@ -459,6 +337,29 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         return feederCallback.getPokemonNames();
     }
 
+    private Bundle addPositionAsArguments(View v) {
+        int callerViewPosition[] = new int[2];
+        v.getLocationOnScreen(callerViewPosition);
+        Bundle b = new Bundle();
+        b.putInt("x", callerViewPosition[0]);
+        b.putInt("y", callerViewPosition[1]);
+        return b;
+    }
+
+    private void removeRippleEffectFromCheckBox(CheckBox checkBox) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Drawable drawable = checkBox.getBackground();
+            if (drawable instanceof RippleDrawable) {
+                drawable = ((RippleDrawable) drawable).findDrawableByLayerId(0);
+                checkBox.setBackground(drawable);
+            }
+        }
+    }
+
+    public void setCallbacks(Fragment callbacks) {
+        this.feederCallback = (FeedDataGoalIVs) callbacks;
+        this.updaterCallback = (UpdateGoal) callbacks;
+    }
 
     interface OnGoalUpdate {
 
@@ -571,7 +472,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             View natureView = convertView;
             LayoutHolder holder;
 
-            if(convertView == null) {
+            if (convertView == null) {
                 natureView = inflater.inflate(R.layout.dynamic_layout_ability, parent, false);
                 holder = new LayoutHolder();
 
@@ -588,7 +489,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             holder.viewAbilityName.setText(interfaceAbilities.get(position).abilityName);
 
 
-            switch (interfaceAbilities.get(position).abilityId) {
+            switch (interfaceAbilities.get(position).abilitySlot) {
                 case 1:
                     holder.viewAbilitySlot.setText("1st Slot");
                     holder.viewAbilitySlot.setTextColor(ContextCompat.getColor(context, R.color.colorWhiteBgDisabledHint));
@@ -616,7 +517,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             View natureView = convertView;
             LayoutHolder holder;
 
-            if(convertView == null) {
+            if (convertView == null) {
                 natureView = inflater.inflate(R.layout.dynamic_layout_ability, parent, false);
                 holder = new LayoutHolder();
 
@@ -633,7 +534,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             holder.viewAbilityName.setText(interfaceAbilities.get(position).abilityName);
 
 
-            switch (interfaceAbilities.get(position).abilityId) {
+            switch (interfaceAbilities.get(position).abilitySlot) {
                 case 1:
                     holder.viewAbilitySlot.setText("1st Slot");
                     holder.viewAbilitySlot.setTextColor(ContextCompat.getColor(context, R.color.colorWhiteBgDisabledHint));
@@ -658,14 +559,14 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             return natureView;
         }
 
-        class LayoutHolder {
-            View     layout;
-            TextView viewAbilityName;
-            TextView viewAbilitySlot;
-        }
-
         public int dpToPx(float valueInDp) {
             return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
+        }
+
+        class LayoutHolder {
+            View layout;
+            TextView viewAbilityName;
+            TextView viewAbilitySlot;
         }
     }
 
@@ -701,7 +602,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             View natureView = convertView;
             LayoutHolder holder;
 
-            if(convertView == null) {
+            if (convertView == null) {
                 natureView = inflater.inflate(R.layout.dynamic_layout_nature, parent, false);
                 holder = new LayoutHolder();
 
@@ -721,11 +622,10 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             String increasedStat = interfaceNatures.get(position).increasedStatName;
             String decreasedStat = interfaceNatures.get(position).decreasedStatName;
 
-            if(increasedStat.equals(decreasedStat)) {
+            if (increasedStat.equals(decreasedStat)) {
                 holder.viewIncreasedStatName.setVisibility(View.GONE);
                 holder.viewDecreasedStatName.setText(R.string.nature_neutral);
-            }
-            else {
+            } else {
                 holder.viewIncreasedStatName.setVisibility(View.VISIBLE);
                 holder.viewIncreasedStatName.setText("+" + interfaceNatures.get(position).increasedStatName);
                 holder.viewDecreasedStatName.setText("-" + interfaceNatures.get(position).decreasedStatName);
@@ -739,7 +639,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             View natureView = convertView;
             LayoutHolder holder;
 
-            if(convertView == null) {
+            if (convertView == null) {
                 natureView = inflater.inflate(R.layout.dynamic_layout_nature, parent, false);
                 holder = new LayoutHolder();
 
@@ -759,11 +659,10 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             String increasedStat = interfaceNatures.get(position).increasedStatName;
             String decreasedStat = interfaceNatures.get(position).decreasedStatName;
 
-            if(increasedStat.equals(decreasedStat)) {
+            if (increasedStat.equals(decreasedStat)) {
                 holder.viewIncreasedStatName.setVisibility(View.GONE);
                 holder.viewDecreasedStatName.setText(R.string.nature_neutral);
-            }
-            else {
+            } else {
                 holder.viewIncreasedStatName.setVisibility(View.VISIBLE);
                 holder.viewIncreasedStatName.setText("+" + interfaceNatures.get(position).increasedStatName);
                 holder.viewDecreasedStatName.setText("-" + interfaceNatures.get(position).decreasedStatName);
@@ -773,6 +672,10 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(60));
             holder.layout.setLayoutParams(layoutParams);
             return natureView;
+        }
+
+        public int dpToPx(float valueInDp) {
+            return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
         }
 
         public static class InterfaceNature {
@@ -790,38 +693,12 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         }
 
         class LayoutHolder {
-            View     layout;
+            View layout;
             TextView viewNatureName;
             TextView viewIncreasedStatName;
             TextView viewDecreasedStatName;
         }
-
-        public int dpToPx(float valueInDp) {
-            return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
-        }
     }
-
-    private void removeRippleEffectFromCheckBox(CheckBox checkBox) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Drawable drawable = checkBox.getBackground();
-            if (drawable instanceof RippleDrawable) {
-                drawable = ((RippleDrawable) drawable).findDrawableByLayerId(0);
-                checkBox.setBackground(drawable);
-            }
-        }
-    }
-
-
-
 
 }
 
-class InterfaceAbility {
-    public String abilityName;
-    public int abilityId;
-
-    public InterfaceAbility(String abilityName, int abilityId) {
-        this.abilityName = abilityName;
-        this.abilityId = abilityId;
-    }
-}

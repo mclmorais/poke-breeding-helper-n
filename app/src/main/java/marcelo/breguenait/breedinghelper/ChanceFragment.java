@@ -190,7 +190,7 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
     @Override
     public void onStart() {
         super.onStart();
-
+        updateCurrentChances();
     }
 
     public void updateCurrentChances() {

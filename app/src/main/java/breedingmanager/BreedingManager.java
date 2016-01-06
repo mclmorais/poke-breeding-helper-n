@@ -16,6 +16,7 @@ import marcelo.breguenait.breedinghelper.ModifierPokemonFragment;
 import marcelo.breguenait.breedinghelper.StoredPokemonFragment;
 import marcelo.breguenait.breedinghelper.StoredPokemonViewerFragment;
 
+//TODO: fazer o sort sempre preferir as combinações com mais IVs no caso de empate?
 
 public class BreedingManager {
 
