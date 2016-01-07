@@ -61,7 +61,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/imagePokemonPopupIcon"
-            android:layout_width="96dp"
+            android:layout_width="80dp"
             android:layout_height="64dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="48dp"

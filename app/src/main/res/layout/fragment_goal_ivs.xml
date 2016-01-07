@@ -131,9 +131,7 @@
                 android:minWidth="160dp"
                 android:layout_below="@+id/textView2"
                 android:layout_toLeftOf="@+id/checkBoxGoalIVsActivateNatures"
-                android:layout_toStartOf="@+id/checkBoxGoalIVsActivateNatures"
-                android:textAlignment="center"
-                style="@style/Widget.AppCompat.Spinner.Underlined" />
+                android:layout_toStartOf="@+id/checkBoxGoalIVsActivateNatures"/>
 
             <Spinner
                 android:id="@+id/spinnerGoalIVsAbilities"
@@ -144,8 +142,7 @@
                 android:layout_alignLeft="@+id/textView8"
                 android:layout_alignStart="@+id/textView8"
                 android:layout_toLeftOf="@+id/checkBoxGoalIVsActivateAbilities"
-                android:layout_toStartOf="@+id/checkBoxGoalIVsActivateAbilities"
-                style="@style/Widget.AppCompat.Spinner.Underlined"/>
+                android:layout_toStartOf="@+id/checkBoxGoalIVsActivateAbilities"/>
 
             <customviews.AutoResizeTextView
                 android:id="@+id/textViewPokemonName"
