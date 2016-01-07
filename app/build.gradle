@@ -25,6 +25,19 @@ repositories {
     }
 }
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.hugo'
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile('com.github.ozodrukh:CircularReveal:1.1.1@aar') {

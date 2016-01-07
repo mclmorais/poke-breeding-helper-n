@@ -5,3 +5,8 @@
 .DS_Store
 /build
 *.apk
+/Screenshots
+*.alloc
+*.log
+*.trace
+*.txt
