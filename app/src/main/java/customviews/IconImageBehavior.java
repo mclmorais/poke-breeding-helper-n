@@ -8,9 +8,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.melnykov.fab.FloatingActionButton;
+
 import marcelo.breguenait.breedinghelper.R;
 
 
+
+@SuppressWarnings("unused")
 public class IconImageBehavior extends CoordinatorLayout.Behavior<ImageView> {
 
     float initialValue = 0.0f;
@@ -38,7 +42,7 @@ public class IconImageBehavior extends CoordinatorLayout.Behavior<ImageView> {
 
         AppBarLayout appBarLayout = (AppBarLayout) dependency;
 
-        Button button = (Button) dependency.findViewById(R.id.moveDex_buttonSelectPokemon);
+        FloatingActionButton button = (FloatingActionButton) dependency.findViewById(R.id.moveDex_buttonSelectPokemon);
 
         View tabLayout = dependency.findViewById(R.id.moveDex_tabLayout);
 

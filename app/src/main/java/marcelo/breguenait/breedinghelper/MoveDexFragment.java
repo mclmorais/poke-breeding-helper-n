@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,7 +48,7 @@ public class MoveDexFragment extends Fragment implements
     @Bind(R.id.moveDex_toolbar)
     Toolbar toolbar;
     @Bind(R.id.moveDex_buttonSelectPokemon)
-    Button buttonSelectPokemon;
+    FloatingActionButton buttonSelectPokemon;
     @Bind(R.id.moveDex_tabLayout)
     TabLayout tabLayout;
     @Bind(R.id.moveDex_floatingIcon)

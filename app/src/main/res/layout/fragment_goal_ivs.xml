@@ -157,7 +157,6 @@
                 android:textSize="24dp"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/imageViewSelectedPokemonIcon"
-                android:fontFamily="sans-serif-condensed"
                 android:layout_marginLeft="4dp"
                 android:layout_toStartOf="@+id/glaucio"
                 android:layout_toLeftOf="@+id/glaucio"

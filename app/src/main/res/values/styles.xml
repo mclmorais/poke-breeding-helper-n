@@ -30,6 +30,13 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="TextAppearance.MyApp.Title.Collapsed" parent="android:TextAppearance">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
+
+    <style name="TextAppearance.MyApp.Title.Expanded" parent="android:TextAppearance">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+    </style>
 
 
 

@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = BreedingFragment.class;
                 break;
             case R.id.nav_settings:
-                fragmentClass = PreferencesFragment.class;
+                fragmentClass = SettingsHolderFragment.class;
                 break;
             default:
                 fragmentClass = MoveDexFragment.class;
@@ -160,13 +160,12 @@ public class MainActivity extends AppCompatActivity {
         setTitle(menuItem.getTitle());
     }
 
-
     @Override
     public void onBackPressed() {
 
         if (currentFragment instanceof MoveDexFragment)
             selectDrawerItem(nvDrawer.getMenu().getItem(0));
-        else if (currentFragment instanceof  PreferencesFragment && lastMenuItem != null)
+        else if (currentFragment instanceof  SettingsHolderFragment && lastMenuItem != null)
             selectDrawerItem(lastMenuItem);
         else
             super.onBackPressed();

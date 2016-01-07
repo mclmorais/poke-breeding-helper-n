@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
@@ -17,37 +18,29 @@
             android:id="@+id/moveDex_collapsingToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:expandedTitleTextAppearance="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:title="">
+            app:title=""
+            app:titleTextAppearance="@style/TextAppearance.MyApp.Title.Collapsed">
 
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/moveDex_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:title=""
+                app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             <RelativeLayout
                 android:id="@+id/moveDex_collapsingToolbarPadding"
                 android:layout_width="match_parent"
                 android:layout_height="192dp">
-
-                <Button
-                    android:id="@+id/moveDex_buttonSelectPokemon"
-                    android:layout_width="96dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:theme="@style/ThemeOverlay.AppCompat.Light"
-                    android:text="Choose" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -60,8 +53,25 @@
                     android:layout_marginStart="50dp"
                     android:gravity="center"
                     android:text="Move Dex"
-                    android:textColor="@android:color/white"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@android:color/white" />
+
+                <com.melnykov.fab.FloatingActionButton
+                    fab:fab_colorNormal="@color/colorAccent"
+                    fab:fab_colorPressed="@color/colorPrimaryDark"
+                    fab:fab_type="mini"
+                    fab:fab_shadow="false"
+                    android:id="@+id/moveDex_buttonSelectPokemon"
+                    android:layout_width="96dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginRight="8dp"
+                    android:src="@drawable/ic_action_edit2"
+                    android:text="Choose"
+/>
 
             </RelativeLayout>
 
@@ -110,6 +120,8 @@
 
 
 </android.support.design.widget.CoordinatorLayout>
+
+
 
 
 

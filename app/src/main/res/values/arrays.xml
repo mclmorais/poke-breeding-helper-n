@@ -12,7 +12,6 @@
         <item>Spanish</item>
         <item>Italian</item>
         <item>Japanese</item>
-        <item>Korean</item>
     </string-array>
 
     <string-array name="game_language_values">
@@ -22,7 +21,6 @@
         <item>7</item>
         <item>8</item>
         <item>1</item>
-        <item>3</item>
     </string-array>
 
 </resources>

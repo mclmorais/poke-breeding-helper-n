@@ -2,17 +2,14 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent">
 
-    <PreferenceCategory
-        android:title="Preferences">
-
         <ListPreference
             android:key="gameLanguage"
             android:title="@string/setting_game_language_title"
             android:summary="@string/setting_game_language_summary"
             android:entries="@array/game_languages"
             android:entryValues="@array/game_language_values"
-            android:dialogTitle="dialog_title_list_preference">
+            android:dialogTitle="Select a game language">
         </ListPreference>
-    </PreferenceCategory>
+
 
 </PreferenceScreen>

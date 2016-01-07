@@ -20,15 +20,6 @@
             android:background="@color/colorPrimary"
             android:visibility="visible" />
 
-        <View
-            android:id="@+id/horizontalSeparator1"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/linearLayout8"
-            android:background="@color/background_light_gray" />
-
         <ImageView
             android:id="@+id/imageViewInsideCircle"
             android:layout_width="62dp"
@@ -309,7 +300,8 @@
             android:gravity="center"
             android:text="@string/label_nature_sans_colon"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:textColor="@color/colorWhiteBgDisabledHint" />
 
         <Spinner
             android:id="@+id/spinnerAddPokemonNature"
@@ -331,7 +323,8 @@
             android:text="@string/label_ability_sans_colon"
             android:textAllCaps="false"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textColor="@color/colorWhiteBgDisabledHint" />
 
         <Spinner
             android:id="@+id/spinnerAddPokemonAbility"
@@ -410,7 +403,6 @@
             android:layout_width="172dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/imageViewSelectedIcon"
-            android:layout_below="@+id/horizontalSeparator1"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:layout_toRightOf="@+id/imageViewInsideCircle"
@@ -420,7 +412,8 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/white"
             android:textSize="24sp"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:layout_below="@+id/linearLayout8" />
 
         <LinearLayout
             android:id="@+id/sdafg"

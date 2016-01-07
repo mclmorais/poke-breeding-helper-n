@@ -87,4 +87,7 @@
     <string name="label_machine">TM/HM</string>
     <string name="label_egg_moves">Egg Moves</string>
     <string name="nature_neutral">Neutral</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

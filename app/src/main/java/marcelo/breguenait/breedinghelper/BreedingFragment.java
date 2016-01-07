@@ -145,9 +145,9 @@ public class BreedingFragment extends Fragment
 //        startActivity(intent);
 
         // Display the fragment as the main content.
-        getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new PreferencesFragment())
-                .commit();
+//        getFragmentManager().beginTransaction()
+//                .replace(android.R.id.content, new PreferencesFragment())
+//                .commit();
     }
 
     private void createAd() {
