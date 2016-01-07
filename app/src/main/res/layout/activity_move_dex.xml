@@ -7,6 +7,7 @@
     android:fitsSystemWindows="false">
 
     <android.support.design.widget.AppBarLayout
+
         android:id="@+id/moveDex_appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,6 +20,7 @@
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:expandedTitleTextAppearance="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:title="">
@@ -29,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             <RelativeLayout
@@ -43,6 +46,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:theme="@style/ThemeOverlay.AppCompat.Light"
                     android:text="Choose" />
 
                 <TextView
@@ -56,6 +60,7 @@
                     android:layout_marginStart="50dp"
                     android:gravity="center"
                     android:text="Move Dex"
+                    android:textColor="@android:color/white"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
             </RelativeLayout>
