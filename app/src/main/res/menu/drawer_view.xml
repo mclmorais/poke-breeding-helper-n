@@ -4,12 +4,15 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_second_fragment"
-            android:title="@string/breeding_fragment_name" />
+            android:title="@string/breeding_fragment_name"
+            android:icon="@drawable/ic_action_dice5"/>
         <item
             android:id="@+id/nav_first_fragment"
-            android:title="@string/movedex_name" />
+            android:title="@string/movedex_name"
+            android:icon="@drawable/ic_action_document"/>
         <item
             android:id="@+id/nav_settings"
-            android:title="@string/action_settings" />
+            android:title="@string/action_settings"
+            android:icon="@drawable/ic_action_settings"/>
     </group>
 </menu>

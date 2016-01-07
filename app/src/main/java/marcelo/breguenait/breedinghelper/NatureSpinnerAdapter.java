@@ -114,7 +114,7 @@ public class NatureSpinnerAdapter extends BaseAdapter {
         }
 
 
-        AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(60));
+        AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(40));
         holder.layout.setLayoutParams(layoutParams);
         return natureView;
     }

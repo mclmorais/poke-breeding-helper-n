@@ -11,8 +11,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.Random;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +37,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_initial);
 
         ButterKnife.bind(this);
+
+        CircleImageView portrait = (CircleImageView) nvDrawer.getHeaderView(0).findViewById(R.id.breeder_portrait);
+
+        Random random = new java.util.Random();
+
+        if(random.nextBoolean())
+            portrait.setImageResource(R.drawable.portrait_breeder_female_whitebg);
+        else
+            portrait.setImageResource(R.drawable.portrait_breeder_male_whitebg);
+
         setupDrawerContent(nvDrawer);
 
         currentMenuItem = nvDrawer.getMenu().getItem(0);
