@@ -65,7 +65,7 @@
             android:layout_height="64dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="48dp"
-            android:src="@drawable/pkmn_big_212"
+            android:src="@drawable/pkmn_big_000"
             app:border_color="@color/colorAccent"
             app:border_width="2dp" />
 
@@ -79,7 +79,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="Condensed"
-            android:text="@string/placeholder"
+            android:text="@string/label_pokemon_missing"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/white" />
 
@@ -170,7 +170,7 @@
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="sans-serif-condensed"
                     android:gravity="center_horizontal"
-                    android:text="@string/placeholder"
+                    android:text="@string/label_no_nature"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/secondary_text"
                     android:textSize="14sp"
@@ -204,7 +204,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="sans-serif-condensed"
-                    android:text="@string/placeholder"
+                    android:text="@string/label_no_ability"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/secondary_text"
                     android:textSize="14sp"

@@ -18,7 +18,7 @@
     <string name="label_done">Done</string>
 
     <string name="label_error">Error</string>
-    <string name="label_filter">FILTER:</string>
+    <string name="label_filter">Filter:</string>
 
     <string name="placeholder_number_2" translatable="false">##</string>
     <string name="placeholder_number_3" translatable="false">###</string>
@@ -88,8 +88,11 @@
     <string name="label_egg_moves">Egg Moves</string>
     <string name="nature_neutral">Neutral</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_button_choose">Choose</string>
     <string name="label_level_abbreviation">Lv</string>
+    <string name="label_report_issue">Report an Issue</string>
+    <string name="label_filter_pokemon_name">Filter Pokémon by name</string>
+    <string name="label_pokemon_missing">MissingNo.</string>
+    <string name="label_no_nature">No Nature</string>
+    <string name="label_no_ability">No Ability</string>
 </resources>

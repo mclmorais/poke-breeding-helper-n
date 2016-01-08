@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.UUID;
 
+import databasemanager.DatabaseConstants;
 import databasemanager.MyDatabase;
 import marcelo.breguenait.breedinghelper.ChanceFragment;
 import marcelo.breguenait.breedinghelper.GoalPokemonFragment;
@@ -179,24 +180,6 @@ public class BreedingManager {
             ));
         }
 
-
-//        for(HashMap.Entry<Integer, String> entry : sortedNatureNames.entrySet()) {
-//            String increasedStatName = database.getNatureChangedStatName(entry.getKey(),languageId, true);
-//            String decreasedStatName = database.getNatureChangedStatName(entry.getKey(),languageId, false);
-//            interfaceNatures.add(new GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature(
-//                    entry.getKey(), entry.getValue(), increasedStatName, decreasedStatName
-//            ));
-//        }
-
-
-//        for (int i = 0; i < natureNames.size(); i++) {
-//            String increasedStatName = database.getNatureChangedStatName(i+1,languageId, true);
-//            String decreasedStatName = database.getNatureChangedStatName(i+1,languageId, false);
-//            interfaceNatures.add(new GoalPokemonFragment.NatureSpinnerAdapter.InterfaceNature(
-//                    natureNames.get(i), increasedStatName, decreasedStatName
-//            ));
-//        }
-
         return interfaceNatures;
     }
 
@@ -213,7 +196,7 @@ public class BreedingManager {
     }
 
     public ArrayList<Integer> getCompatiblePokemonList(int pokemonId) {
-        if (goalPokemon.getPokemonId() > 0) //Only returns something if a goal is set
+        if (DatabaseConstants.pokemonIdIsValid(goalPokemon.getPokemonId())) //Only returns something if a goal is set and valid
             return database.getCompatiblePokemonList(pokemonId);
         else
             return new ArrayList<>(0);

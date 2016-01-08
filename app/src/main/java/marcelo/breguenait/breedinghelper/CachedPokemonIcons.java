@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import databasemanager.DatabaseConstants;
 import databasemanager.MyDatabase;
 
 public class CachedPokemonIcons {
@@ -15,6 +16,7 @@ public class CachedPokemonIcons {
     private static CachedPokemonIcons instance;
     private final HashMap<Integer, Drawable> iconsMap = new HashMap<>();
     private final Context context;
+    Drawable missingno;
 
     private CachedPokemonIcons(Context context) {
         this.context = context;
@@ -39,9 +41,14 @@ public class CachedPokemonIcons {
             iconsMap.put(id, d);
         }
 
+        missingno = ContextCompat.getDrawable(context, R.drawable.pkmn_missingno);
+
     }
 
     Drawable getIcon(int id) {
-        return iconsMap.get(id);
+        if (DatabaseConstants.pokemonIdIsValid(id))
+            return iconsMap.get(id);
+        else
+            return missingno;
     }
 }

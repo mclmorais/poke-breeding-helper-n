@@ -244,7 +244,7 @@ public class MyDatabase extends SQLiteAssetHelper {
      * Gets a Pokémon name string from the database.
      * @param pokemonId ID of the Pokémon to be queried
      * @param languageId Language ID of the game to be queried
-     * @return
+     * @return The desired name. Returns an empty string if the query failed.
      */
     public String getPokemonName(int pokemonId, int languageId) {
         String s = "SELECT " +

@@ -193,6 +193,7 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
         updateCurrentChances();
     }
 
+
     public void updateCurrentChances() {
 
         List<ChancePokemonMatch> chancePokemonMatchList = feederCallback.getChancesList();

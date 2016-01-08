@@ -20,7 +20,11 @@ class AbilityChanceCalculator {
 
         int firstPokemonSlot, secondPokemonSlot, goalSlot;
 
-        if (considerAbility && goalPokemon.getAbilitySlot() > 0) {
+        if(!DatabaseConstants.abilitySlotIsValid(goalPokemon.getAbilitySlot())) goalPokemon.setAbilitySlot(1);
+        if(!DatabaseConstants.abilitySlotIsValid(firstPokemon.getAbilitySlot())) firstPokemon.setAbilitySlot(1);
+        if(!DatabaseConstants.abilitySlotIsValid(secondPokemon.getAbilitySlot())) secondPokemon.setAbilitySlot(1);
+
+        if (considerAbility && DatabaseConstants.abilitySlotIsValid(goalPokemon.getAbilitySlot())) {
             firstPokemonSlot = firstPokemon.getAbilitySlot();
             secondPokemonSlot = secondPokemon.getAbilitySlot();
             goalSlot = goalPokemon.getAbilitySlot();

@@ -11,7 +11,7 @@
         android:layout_height="48dp"
         android:clickable="true">
 
-        <TextView
+        <customviews.AutoResizeTextView
             android:id="@+id/itemGridHeaderTitle"
             style="@style/card_header_title"
             android:layout_width="match_parent"

@@ -3,6 +3,7 @@ package breedingmanager;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import databasemanager.DatabaseConstants;
 import databasemanager.MyDatabase;
 
 public class StoredPokemon {
@@ -41,7 +42,7 @@ public class StoredPokemon {
 
     private void refreshStaticData() {
 
-        if (pokemonId > 0) {
+        if (DatabaseConstants.pokemonIdIsValid(pokemonId)) {
             eggGroup1Id = eggGroup2Id = -1;
 
             ArrayList<Integer> eggGroups = MyDatabase.getInstance().getPokemonEggGroupIds(pokemonId);

@@ -176,7 +176,7 @@ public class MoveDexFragment extends Fragment implements
     @Override
     public void onPokemonSelected(int id) {
 
-        if (id == 0)
+        if (id <= 0)
             return;
 
         String iconId = "pkmn_big_" + String.format("%03d", id);

@@ -70,7 +70,10 @@ class BreedingCompatibilityChecker {
 
     private boolean checkEggGroupCompatibility(StoredPokemon potentialPokemon,
                                                StoredPokemon goalPokemon) {
-        
+
+        if(!DatabaseConstants.eggGroupIsValid(potentialPokemon.getEggGroup1Id())) return false;
+        if(!DatabaseConstants.eggGroupIsValid(goalPokemon.getEggGroup1Id())) return false;
+
 
         /*If the 1st egg group of the potential pokemon matches any of the goal
         * pokemon, it's compatible*/

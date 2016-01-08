@@ -32,7 +32,6 @@ import java.util.LinkedHashMap;
 import databasemanager.DatabaseConstants;
 
 
-//TODO: Gender button is acting demickey
 public class EditorPokemonFragment extends PopupDialogFragment implements
         SelectPokemonFragment.OnPokemonSelectedListener,
         SelectPokemonFragment.FeedDataSelectPokemon {
@@ -355,18 +354,23 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     }
 
     void updateInterfacePokemon(int id) {
-        //selectedPokemonId = id;
-        String name = feederCallback.getPokemonName(id);
-        selectedName.setText(name);
 
-        if (id >= 0) {
+
+        if (DatabaseConstants.pokemonIdIsValid(id)) {
+            String name = feederCallback.getPokemonName(id);
+            selectedName.setText(name);
+
             String iconId = "pkmn_big_" + String.format("%03d", id);
             selectedIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
+        }
+        else {
+            selectedName.setText(R.string.label_pokemon_missing);
+            selectedIcon.setImageResource(R.drawable.pkmn_big_000);
         }
     }
 
     void updateNameButton() {
-        if (selectedPokemonId > 0) {
+        if (DatabaseConstants.pokemonIdIsValid(selectedPokemonId)) {
             buttonPokemonSelector.setVisibility(View.INVISIBLE);
             selectedName.setVisibility(View.VISIBLE);
             buttonEdit.setVisibility(View.VISIBLE);

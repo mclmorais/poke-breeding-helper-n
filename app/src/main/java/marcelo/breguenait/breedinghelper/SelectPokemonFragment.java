@@ -109,7 +109,6 @@ public class SelectPokemonFragment extends PopupDialogFragment {
         editTextFilter.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
             }
 
             @Override
@@ -349,7 +348,7 @@ public class SelectPokemonFragment extends PopupDialogFragment {
 
                         int currentId = pokemonIds.get(i);
 
-                        if (currentId <= 0) continue; //TODO: ver se precisa tambem
+                        if (currentId <= 0) continue;
 
                         /*If only compatible pokemons should be shown, ignores pokemons that don't have
                         * at least one egg group compatible with the current goal pokemon.*/

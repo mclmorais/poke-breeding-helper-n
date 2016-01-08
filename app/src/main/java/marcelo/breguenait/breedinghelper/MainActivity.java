@@ -1,6 +1,8 @@
 package marcelo.breguenait.breedinghelper;
 
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -10,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -66,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             currentFragment = fragment;
-            nvDrawer.getMenu().getItem(0).setChecked(true);
+            lastMenuItem = nvDrawer.getMenu().getItem(0);
+            lastMenuItem.setChecked(true);
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
         }
 
@@ -125,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
         // position
         //Fragment fragment = null;
 //        cleanOldFragments();
+        mDrawer.setDrawerListener(null);
+
         Class fragmentClass;
         switch (menuItem.getItemId()) {
             case R.id.nav_first_fragment:
@@ -136,6 +142,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_settings:
                 fragmentClass = SettingsHolderFragment.class;
                 break;
+            case R.id.nav_issue_report:
+                sendBugReport();
+                lastMenuItem.setChecked(true);
+                return;
             default:
                 fragmentClass = MoveDexFragment.class;
         }
@@ -182,7 +192,24 @@ public class MainActivity extends AppCompatActivity {
         return mDrawer;
     }
 
+    private void sendBugReport() {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"marcelofernandesmorais+bhbug@gmail.com"});
+        i.putExtra(Intent.EXTRA_SUBJECT, "[Breeding Helper Issue]");
 
+        String body = "Android version: " + Build.VERSION.RELEASE + " (" + Integer.toString(Build.VERSION.SDK_INT) + ") " + Build.PRODUCT + System.getProperty("line.separator");
+        body += "Phone Model: " + Build.BRAND + " " + Build.MODEL + System.getProperty("line.separator");
+        body += "Bug Description: ";
+
+        i.putExtra(Intent.EXTRA_TEXT, body);
+        try {
+            startActivity(Intent.createChooser(i, "Please select an e-mail client to send the report"));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this, "There are no e-mail clients installed.", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 }
 
 

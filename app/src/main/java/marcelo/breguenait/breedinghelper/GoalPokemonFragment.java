@@ -32,6 +32,7 @@ import java.util.LinkedHashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import databasemanager.DatabaseConstants;
 
 //TODO: Make checks on the ability spinner when switching pokemon (right now OK - switches to the first)
 // (put it always on the same slot or on the first if it doesn't have the previous slot)
@@ -50,15 +51,6 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
     @Bind(R.id.frameLayoutPokemonSelectorButton)
     View buttonPokemonSelector;
-    private final View.OnClickListener onClickHandler = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v == buttonPokemonSelector) {
-                openSelectPokemonFragment(v);
-            }
-
-        }
-    };
     @Bind(R.id.imageViewSelectedPokemonIcon)
     ImageView selectedIcon;
     @Bind(R.id.spinnerGoalIVsNatures)
@@ -75,6 +67,16 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     ArrayList<InterfaceAbility> interfaceAbilities;
     private FeedDataGoalIVs feederCallback;
     private UpdateGoal updaterCallback;
+
+    private final View.OnClickListener onClickHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v == buttonPokemonSelector) {
+                openSelectPokemonFragment(v);
+            }
+
+        }
+    };
     private final Spinner.OnItemSelectedListener onSpinnerItemSelectedHandler = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -141,7 +143,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         // restarting the app from a termination. Why? It's a mystery to everybody!
         if (savedInstanceState != null) return null;
 
-        View view = inflater.inflate(R.layout.fragment_goal_ivs, container, false);
+        View view = inflater.inflate(R.layout.fragment_goal_pokemon, container, false);
         ButterKnife.bind(this, view);
 
         InterfaceGoalPokemon interfaceGoalPokemon = feederCallback.getInterfaceGoalPokemon();
@@ -216,10 +218,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
     private void feedDisplayedIcon(int id) {
 
-
-        //If not initialized (-1): doesn't update
-
-        if (id > 0) { //TODO: fazer 0 < x < limite
+        if (DatabaseConstants.pokemonIdIsValid(id)) { //TODO: fazer 0 < x < limite
             String iconId = "pkmn_big_" + String.format("%03d", id);
             selectedIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
         }
@@ -257,7 +256,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     private void feedAbilitySpinnerSelection(int abilitySlot) {
 
         //If the slot is valid
-        if (abilitySlot > 0) {
+        if (DatabaseConstants.abilitySlotIsValid(abilitySlot)) {
             //Searches the interfaceAbilities for a one that corresponds to the goal slot
             int position = -1;
             for (int i = 0; i < interfaceAbilities.size(); i++) {

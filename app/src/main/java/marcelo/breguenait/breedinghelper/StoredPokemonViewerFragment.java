@@ -222,21 +222,13 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
         int id = interfaceViewerPokemon.getPokemonId();
 
 
-        String iconId = "pkmn_big_" + String.format("%03d", id);
-        imagePokemonIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
+        if(DatabaseConstants.pokemonIdIsValid(id)) {
+            String iconId = "pkmn_big_" + String.format("%03d", id);
+            imagePokemonIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
+            textPokemonName.setText(interfaceViewerPokemon.getPokemonName());
+        }
 
         //String name = PokemonData.getInstance().getName(id);
-        textPokemonName.setText(interfaceViewerPokemon.getPokemonName());
-
-//        String eggGroup1 = PokemonData.getInstance().getFirstEggGroup(id).toString();
-//        eggGroup1 = eggGroup1.replaceAll("_", " ");
-//        textEggGroup1.setText(eggGroup1);
-//
-//
-//        String eggGroup2 = PokemonData.getInstance().getSecondEggGroup(id).toString();
-//        eggGroup2 = eggGroup2.replaceAll("_", " ");
-//        if (eggGroup2.equals("NONE")) eggGroup2 = "";
-//        textEggGroup2.setText(eggGroup2);
 
         textNature.setText(interfaceViewerPokemon.getNatureName());
 

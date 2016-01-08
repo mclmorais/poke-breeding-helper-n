@@ -14,5 +14,9 @@
             android:id="@+id/nav_settings"
             android:title="@string/action_settings"
             android:icon="@drawable/ic_action_settings"/>
+        <item
+            android:id="@+id/nav_issue_report"
+            android:title="@string/label_report_issue"
+            android:icon="@drawable/ic_action_bug"/>
     </group>
 </menu>

@@ -9,7 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-//TODO: SALVAR ULTIMA POSIÇAO DE TUDO PRA EVITAR FADIGA
+import databasemanager.DatabaseConstants;
+
 public class CreatePokemonFragment extends EditorPokemonFragment {
 
 
@@ -51,7 +52,7 @@ public class CreatePokemonFragment extends EditorPokemonFragment {
 
     void feedAbilitySpinnerSelection(int abilitySlot) {
         //If the slot is valid
-        if (abilitySlot > 0) {
+        if (DatabaseConstants.abilitySlotIsValid(abilitySlot)) {
             //Searches the interfaceAbilities for a one that corresponds to the goal slot
             int position = -1;
             for (int i = 0; i < interfaceAbilities.size(); i++) {
@@ -93,9 +94,9 @@ public class CreatePokemonFragment extends EditorPokemonFragment {
 
 
         updaterCallback.storePokemon(
-                selectedPokemonId, //TODO: fazer tudo atualizar uma variavel na hora ao inves de calcular aqui?
+                selectedPokemonId,
                 selectedGenderId,
-                pokemonIVs,
+                pokemonIVs, //TODO: fazer tudo atualizar uma variavel na hora ao inves de calcular aqui?
                 selectedNatureId,
                 selectedAbilitySlot);
 

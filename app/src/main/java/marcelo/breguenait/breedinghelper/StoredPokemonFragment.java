@@ -81,7 +81,7 @@ public class StoredPokemonFragment extends Fragment implements
         buttonRemove.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b && storedPokemonAdapter.getCount() > 0) {
+                if (b && !storedPokemonAdapter.isEmpty()) {
                     textHintRemove.setVisibility(View.VISIBLE);
                     buttonRemove.setTextColor(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark));
                     storedPokemonAdapter.setDeleteMode(true);
@@ -144,7 +144,7 @@ public class StoredPokemonFragment extends Fragment implements
     }
 
     void updateGridView() {
-        if (storedPokemonAdapter.getCount() > 0) {
+        if (!storedPokemonAdapter.isEmpty()) {
             buttonRemove.setEnabled(true);
             textHintStore.setVisibility(View.GONE);
         } else {
@@ -381,10 +381,8 @@ public class StoredPokemonFragment extends Fragment implements
             else
                 holder.frame.setBackgroundResource(R.drawable.layer_background_round_selector);
 
-            if (interfaceStoredPokemon.getPokemonId() > 0)
-                holder.icon.setBackground(CachedPokemonIcons.getInstance().getIcon(interfaceStoredPokemon.getPokemonId()).getConstantState().newDrawable());
-            else
-                holder.icon.setBackground(preloadedDrawables.missingno);
+            holder.icon.setBackground(CachedPokemonIcons.getInstance().getIcon(interfaceStoredPokemon.getPokemonId()).getConstantState().newDrawable());
+
             holder.gender.setBackground(preloadedDrawables.getGenderDrawable(interfaceStoredPokemon.getGenderId()));
             for (int j = 0; j < 6; j++)
                 holder.IVs[j].setBackground(preloadedDrawables.getIVDrawable(j, (interfaceStoredPokemon.getIVs()[j] == 1)));

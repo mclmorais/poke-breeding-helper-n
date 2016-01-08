@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,44 +7,19 @@
     android:orientation="horizontal">
 
     <RelativeLayout
-        android:layout_width="0dp"
+        android:id="@+id/asd"
+        android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:layout_weight="70"
-        android:orientation="vertical">
-
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="4dp"
-            android:background="@drawable/ic_egg_outline">
-
-            <TextView
-                android:id="@+id/textDynamicChanceNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/placeholder_number_2"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/colorWhitebgSecondaryText"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/imageDynamicChanceShinyIndicator"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="right|bottom"
-                android:background="@drawable/ic_star"
-                android:visibility="invisible" />
-        </FrameLayout>
+        android:orientation="vertical"
+        android:layout_alignParentTop="false"
+        android:gravity="center_horizontal"
+        android:layout_toRightOf="@+id/frameLayout"
+        android:layout_toLeftOf="@+id/dsa"
+        android:layout_toStartOf="@+id/dsa">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_alignParentEnd="false"
             android:layout_alignParentRight="false"
@@ -67,8 +42,8 @@
 
             <ImageView
                 android:id="@+id/imageDynamicChanceFirstGender"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_marginRight="4dp"
                 android:background="@drawable/symbol_male" />
 
@@ -82,7 +57,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/pkmn_051" />
+                    android:background="@drawable/pkmn_717" />
 
                 <ImageView
                     android:id="@+id/imageDynamicChanceFirstItem"
@@ -93,7 +68,7 @@
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="96dp"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent">
 
                 <LinearLayout
@@ -160,23 +135,19 @@
 
         <View
             android:id="@+id/view"
-            android:layout_width="128dp"
+            android:layout_width="100dp"
             android:layout_height="1dp"
-            android:layout_below="@+id/linearLayout2"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="-2dp"
-            android:layout_toRightOf="@+id/frameLayout"
             android:background="@color/background_light_gray"
             android:visibility="invisible" />
 
         <LinearLayout
             android:id="@+id/linearLayout3"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_alignParentBottom="false"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentRight="false"
             android:layout_below="@+id/linearLayout2"
             android:layout_toRightOf="@+id/frameLayout"
             android:gravity="center|center_vertical"
@@ -196,8 +167,8 @@
 
             <ImageView
                 android:id="@+id/imageDynamicChanceSecondGender"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:layout_marginRight="4dp"
                 android:background="@drawable/symbol_male" />
 
@@ -211,7 +182,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/pkmn_687" />
+                    android:background="@drawable/pkmn_718" />
 
                 <ImageView
                     android:id="@+id/imageDynamicChanceSecondItem"
@@ -222,11 +193,11 @@
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="96dp"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent">
 
                 <LinearLayout
-                    android:layout_width="72dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|top"
                     android:layout_marginTop="4dp"
@@ -288,56 +259,91 @@
 
         </LinearLayout>
 
-        <View
-            android:id="@+id/view2"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="false"
-            android:background="@color/background_light_gray" />
-
     </RelativeLayout>
 
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/background_light_gray"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/asd"
+        android:layout_alignBottom="@+id/asd"
+        android:visibility="invisible" />
+
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="30"
+        android:id="@+id/dsa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/asd"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp">
+
 
         <ImageView
             android:id="@+id/imageView23"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:background="@drawable/ic_symbol_luck" />
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/aa_luck_tinted" />
 
-        <LinearLayout
-            android:layout_width="64dp"
+        <TextView
+            android:id="@+id/textDynamicChancePercentage"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:text="@string/placeholder_percentage"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/colorWhitebgSecondaryText"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/textDynamicChancePercentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/placeholder_percentage"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorWhitebgSecondaryText"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textDynamicChanceEggs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/placeholder_eggs"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorWhitebgSecondaryText"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/textDynamicChanceEggs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/placeholder_eggs"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/colorWhitebgSecondaryText"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="4dp"
+        android:background="@drawable/ic_egg_outline">
+
+        <TextView
+            android:id="@+id/textDynamicChanceNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/placeholder_number_2"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/colorWhitebgSecondaryText"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageDynamicChanceShinyIndicator"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="right|bottom"
+            android:background="@drawable/ic_star"
+            android:visibility="invisible" />
+    </FrameLayout>
+
+
+</RelativeLayout>

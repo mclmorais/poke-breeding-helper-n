@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import java.util.UUID;
 
+import databasemanager.DatabaseConstants;
+
 
 public class ModifierPokemonFragment extends EditorPokemonFragment {
 
@@ -88,7 +90,7 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
 
     void feedAbilitySpinnerSelection(int abilitySlot) {
         //If the slot is valid
-        if (abilitySlot > 0) {
+        if (DatabaseConstants.abilitySlotIsValid(abilitySlot)) {
             //Searches the interfaceAbilities for a one that corresponds to the goal slot
             int position = -1;
             for (int i = 0; i < interfaceAbilities.size(); i++) {

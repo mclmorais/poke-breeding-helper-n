@@ -99,6 +99,12 @@ public class BreedingFragment extends Fragment
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         drawerToggle.syncState();
@@ -170,24 +176,6 @@ public class BreedingFragment extends Fragment
         }
     }
 
-    private void sendBugReport() {
-        Intent i = new Intent(Intent.ACTION_SEND);
-        i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"marcelofernandesmorais+bhbug@gmail.com"});
-        i.putExtra(Intent.EXTRA_SUBJECT, "[Breeding Helper Bug Report]");
-
-        String body = "Android version: " + Build.VERSION.RELEASE + " (" + Integer.toString(Build.VERSION.SDK_INT) + ") " + Build.PRODUCT + System.getProperty("line.separator");
-        body += "Phone Model: " + Build.BRAND + " " + Build.MODEL + System.getProperty("line.separator");
-        body += "Bug Description: ";
-
-        i.putExtra(Intent.EXTRA_TEXT, body);
-        try {
-            startActivity(Intent.createChooser(i, "Send mail..."));
-        } catch (android.content.ActivityNotFoundException ex) {
-            Toast.makeText(getContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-        }
-
-    }
 
     private void createGoalIVsFragment(Bundle savedInstanceState, View v) {
 
@@ -417,6 +405,7 @@ public class BreedingFragment extends Fragment
         }
 
         int abilitySlot = MyDatabase.getInstance().getAbilitySlot(pokemonId, compatPokemon.ability);
+        if(abilitySlot <= 0) abilitySlot = 1;
 
 
         return new StoredPokemon.Builder()
@@ -446,7 +435,7 @@ public class BreedingFragment extends Fragment
             }
         }
 
-        //TODO: fazer opçao neutra de nature e ability pra nao foder compatibilidade
+        //TODO: testar compatibilidade
         jsonString = sharedPref.getString("jsonPokemonList", null);
         if (jsonString != null) {
             Type type = new TypeToken<List<PokemonInfo>>() {
@@ -457,7 +446,7 @@ public class BreedingFragment extends Fragment
                 newList.add(convertCompatPokemon(pokemonInfo));
             }
             breedingManager.replaceStoredPokemonObjects(newList);
-            //        sharedPref.edit().remove("jsonPokemonList").apply();
+                    sharedPref.edit().remove("jsonPokemonList").apply();
         } else {
             jsonString = sharedPref.getString("jsonBreedingManagerStoredList", null);
             if (jsonString != null) {
@@ -655,7 +644,6 @@ public class BreedingFragment extends Fragment
     @Override
     public void removeStoredPokemon(UUID uuid) {
         breedingManager.removePokemon(uuid);
-        //TODO: ver pq nao precisa de updatePokemonListFragment(); aqui
         updateLuckFragment();
     }
 
