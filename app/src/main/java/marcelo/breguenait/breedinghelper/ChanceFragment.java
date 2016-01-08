@@ -461,12 +461,12 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
     }
 
     public static class InterfaceChancePokemon {
-        private int pokemonId;
-        private int genderId;
-        private int[] IVs;
-        private String natureName;
-        private String abilityName;
-        private boolean hasSameNatureAsGoal;
+        private final int pokemonId;
+        private final int genderId;
+        private final int[] IVs;
+        private final String natureName;
+        private final String abilityName;
+        private final boolean hasSameNatureAsGoal;
 
         public InterfaceChancePokemon(int pokemonId, int genderId, int[] IVs, String natureName, String abilityName, boolean hasSameNatureAsGoal) {
             this.pokemonId = pokemonId;

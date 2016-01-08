@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -50,11 +49,11 @@ public class BreedingFragment extends Fragment
         ChanceFragment.FeederLuckData {
 
     private final Gson gson = new Gson();
-    @Bind(R.id.main_activity_toolbar)
-    Toolbar toolbar;
     GoalPokemonFragment goalPokemonFragment;
     ChanceFragment chanceFragment;
     StoredPokemonFragment storedPokemonFragment;
+    @Bind(R.id.main_activity_toolbar)
+    Toolbar toolbar;
     private ActionBarDrawerToggle drawerToggle;
     private MainActivity mainActivity;
     private BreedingManager breedingManager;
@@ -80,22 +79,6 @@ public class BreedingFragment extends Fragment
 
 
         toolbar.setTitle("Breeding Helper");
-        //toolbar.inflateMenu(R.menu.main);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_settings:
-                        openSettings();
-                        return true;
-                    case R.id.action_report_bug:
-                        sendBugReport();
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
 
         readData();
 
@@ -130,7 +113,7 @@ public class BreedingFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        setAdVisibility(true);
+        setAdVisibility();
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -138,16 +121,6 @@ public class BreedingFragment extends Fragment
                 mainActivity.getDrawer(), toolbar,
                 R.string.drawer_open,
                 R.string.drawer_close);
-    }
-
-    private void openSettings() {
-//        Intent intent = new Intent(getContext(), SettingsActivity.class);
-//        startActivity(intent);
-
-        // Display the fragment as the main content.
-//        getFragmentManager().beginTransaction()
-//                .replace(android.R.id.content, new PreferencesFragment())
-//                .commit();
     }
 
     private void createAd() {
@@ -180,8 +153,8 @@ public class BreedingFragment extends Fragment
 
     }
 
-    private void setAdVisibility(boolean disabled) {
-        if (disabled) {
+    private void setAdVisibility() {
+        if (true) {
             cardAd.setVisibility(View.GONE);
             if (adView != null) {
                 adView.setEnabled(false);
@@ -583,10 +556,6 @@ public class BreedingFragment extends Fragment
         return breedingManager.considerAbility();
     }
 
-    @Override
-    public ArrayList<String> getListOfNatures() {
-        return breedingManager.getListOfNatures();
-    }
 
     @Override
     public LinkedHashMap<Integer, String> getListOfGoalAbilities() {

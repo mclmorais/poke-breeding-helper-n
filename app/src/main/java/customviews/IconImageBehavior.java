@@ -5,13 +5,11 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.melnykov.fab.FloatingActionButton;
 
 import marcelo.breguenait.breedinghelper.R;
-
 
 
 @SuppressWarnings("unused")

@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 
 //TODO: SALVAR ULTIMA POSIÇAO DE TUDO PRA EVITAR FADIGA
 public class CreatePokemonFragment extends EditorPokemonFragment {
@@ -16,15 +15,14 @@ public class CreatePokemonFragment extends EditorPokemonFragment {
 
     private UpdateCreatePokemon updaterCallback;
     private FeedDataCreatePokemon feederCallback;
-    private InterfaceModifierPokemon interfaceModifierPokemon;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v =  super.onCreateView(inflater, container, savedInstanceState);
+        View v = super.onCreateView(inflater, container, savedInstanceState);
 
-        interfaceModifierPokemon = feederCallback.getLastInterfaceModifierPokemon();
+        InterfaceModifierPokemon interfaceModifierPokemon = feederCallback.getLastInterfaceModifierPokemon();
         selectedPokemonId = interfaceModifierPokemon.getPokemonId();
         selectedNatureId = interfaceModifierPokemon.getNatureId();
         selectedAbilitySlot = interfaceModifierPokemon.getAbilitySlot();
@@ -38,7 +36,7 @@ public class CreatePokemonFragment extends EditorPokemonFragment {
 
     void feedNatureSpinnerSelection() {
         //If there isn't a value received from somewhere else, doesn't select anything
-        if(selectedNatureId < 0) return;
+        if (selectedNatureId < 0) return;
 
         for (int i = 0; i < interfaceNatures.size(); i++) {
             if (interfaceNatures.get(i).id == selectedNatureId) {
@@ -50,6 +48,7 @@ public class CreatePokemonFragment extends EditorPokemonFragment {
         }
         Log.d("GoalFragment", "Received a pokemon with invalid nature");
     }
+
     void feedAbilitySpinnerSelection(int abilitySlot) {
         //If the slot is valid
         if (abilitySlot > 0) {
@@ -73,7 +72,6 @@ public class CreatePokemonFragment extends EditorPokemonFragment {
     }
 
 
-
     private void finishFragment() {
 
 //        boolean hasIVs = false;
@@ -92,7 +90,6 @@ public class CreatePokemonFragment extends EditorPokemonFragment {
         int[] pokemonIVs = new int[6];
         for (int i = 0; i < 6; i++)
             pokemonIVs[i] = checkBoxInputIVs[i].isChecked() ? 1 : 0;
-
 
 
         updaterCallback.storePokemon(

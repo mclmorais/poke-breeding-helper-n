@@ -40,9 +40,9 @@ public class MachineMovesListFragment extends Fragment {
     public static class MachineMoveAdapter extends RecyclerView.Adapter<MachineMoveAdapter.ViewHolder> {
 
 
-        Context context;
+        final Context context;
 
-        List<MoveInfo> moves;
+        final List<MoveInfo> moves;
 
         public MachineMoveAdapter(Context context, ArrayList<MoveInfo> moves) {
             this.context = context;
@@ -107,7 +107,7 @@ public class MachineMovesListFragment extends Fragment {
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
 
-            TextView machineNumber, machineType, name, effect, type, accuracy, power;
+            final TextView machineNumber, machineType, name, effect, type, accuracy, power;
             LinearLayout layout;
 
             public ViewHolder(View itemView) {

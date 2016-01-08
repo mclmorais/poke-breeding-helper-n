@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         Random random = new java.util.Random();
 
-        if(random.nextBoolean())
+        if (random.nextBoolean())
             portrait.setImageResource(R.drawable.portrait_breeder_female_whitebg);
         else
             portrait.setImageResource(R.drawable.portrait_breeder_male_whitebg);
@@ -165,12 +165,13 @@ public class MainActivity extends AppCompatActivity {
 
         if (currentFragment instanceof MoveDexFragment)
             selectDrawerItem(nvDrawer.getMenu().getItem(0));
-        else if (currentFragment instanceof  SettingsHolderFragment && lastMenuItem != null)
+        else if (currentFragment instanceof SettingsHolderFragment && lastMenuItem != null)
             selectDrawerItem(lastMenuItem);
         else
             super.onBackPressed();
     }
 
+    @SuppressWarnings("EmptyMethod")
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         //drawerToggle.onConfigurationChanged(newConfig);

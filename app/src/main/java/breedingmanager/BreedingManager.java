@@ -20,16 +20,12 @@ import marcelo.breguenait.breedinghelper.StoredPokemonViewerFragment;
 
 public class BreedingManager {
 
-    private MyDatabase database;
-
+    private final MyDatabase database;
+    private final IvChanceCalculator ivChanceCalculator;
+    private final NatureChanceCalculator natureChanceCalculator;
+    private final AbilityChanceCalculator abilityChanceCalculator;
+    private final BreedingCompatibilityChecker breedingCompatibilityChecker;
     private int languageId = 9;
-
-
-    private IvChanceCalculator ivChanceCalculator;
-    private NatureChanceCalculator natureChanceCalculator;
-    private AbilityChanceCalculator abilityChanceCalculator;
-    private BreedingCompatibilityChecker breedingCompatibilityChecker;
-
     private StoredPokemon goalPokemon;
 
     private boolean destinyKnot = true;
@@ -165,25 +161,18 @@ public class BreedingManager {
         storedPokemonList.add(newPokemon);
     }
 
-    public ArrayList<String> getListOfNatures() {
-        return database.getListOfNatures(languageId);
-        //return PokemonData.getInstance().getListOfNatures();
-    }
-
     public ArrayList<InterfaceNature> getInterfaceNatures() {
 
-        ArrayList<String> natureNames = database.getListOfNatures(languageId);
-        ArrayList<InterfaceNature>
-                interfaceNatures = new ArrayList<>(natureNames.size());
+        ArrayList<InterfaceNature> interfaceNatures = new ArrayList<>();
 
-        LinkedHashMap<Integer, String> sortedNatureNames = database.getSortedNatureNames(languageId);
+        LinkedHashMap<Integer, String> sortedNatureNames = database.getNatureNames(languageId);
 
 
-        ArrayList<Integer> sortedIds = database.getSortedNatureIds();
+        ArrayList<Integer> sortedIds = database.getNatureIdsSortedByIncreasedStat();
 
         for (Integer sortedId : sortedIds) {
-            String increasedStatName = database.getNatureChangedStatName(sortedId,languageId, true);
-            String decreasedStatName = database.getNatureChangedStatName(sortedId,languageId, false);
+            String increasedStatName = database.getNatureChangedStatName(sortedId, languageId, true);
+            String decreasedStatName = database.getNatureChangedStatName(sortedId, languageId, false);
 
             interfaceNatures.add(new InterfaceNature(
                     sortedId, sortedNatureNames.get(sortedId), increasedStatName, decreasedStatName
@@ -212,11 +201,11 @@ public class BreedingManager {
     }
 
     public LinkedHashMap<Integer, String> getListOfGoalAbilities() {
-        return database.getListOfAbilities(goalPokemon.getPokemonId(), languageId);
+        return database.getListOfAbilitiesNames(goalPokemon.getPokemonId(), languageId);
     }
 
     public LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId) {
-        return database.getListOfAbilities(pokemonId, languageId);
+        return database.getListOfAbilitiesNames(pokemonId, languageId);
     }
 
     public int getGenderRate(int pokemonId) {

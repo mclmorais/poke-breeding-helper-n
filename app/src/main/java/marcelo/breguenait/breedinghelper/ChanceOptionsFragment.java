@@ -19,16 +19,9 @@ import android.widget.CompoundButton;
 
 public class ChanceOptionsFragment extends PopupDialogFragment {
 
-
-    BreedingFragment baseActivity;
-
-    private CheckBox checkBoxShinyCharm;
-    private CheckBox checkBoxMasudaMethod;
     private CheckBox checkBoxShiny;
 
     private OnLuckOptionsChange mCallback;
-
-    private Button buttonClose;
 
     @Override
     public void onAttach(Activity activity) {
@@ -84,12 +77,12 @@ public class ChanceOptionsFragment extends PopupDialogFragment {
 
         int shinyOptions = mCallback.getShinyStatus();
 
-        buttonClose = (Button) view.findViewById(R.id.buttonClose);
+        Button buttonClose = (Button) view.findViewById(R.id.buttonClose);
 
-        checkBoxShinyCharm = (CheckBox) view.findViewById(R.id.checkBoxShinyCharm);
+        CheckBox checkBoxShinyCharm = (CheckBox) view.findViewById(R.id.checkBoxShinyCharm);
         checkBoxShinyCharm.setChecked((shinyOptions & ChanceFragment.CHARM) == ChanceFragment.CHARM);
 
-        checkBoxMasudaMethod = (CheckBox) view.findViewById(R.id.checkBoxMasudaMethod);
+        CheckBox checkBoxMasudaMethod = (CheckBox) view.findViewById(R.id.checkBoxMasudaMethod);
         checkBoxMasudaMethod.setChecked((shinyOptions & ChanceFragment.MASUDA) == ChanceFragment.MASUDA);
 
         checkBoxShiny = (CheckBox) view.findViewById(R.id.luckOptionsCheckBoxShiny);

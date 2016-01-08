@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,6 @@ public class StoredPokemonFragment extends Fragment implements
 
     private StoredPokemonAdapter storedPokemonAdapter;
     private GridView gridViewPokemons;
-    private Button buttonAdd;
     private ToggleButton buttonRemove;
     private int lastAddedPokemonId = 0;
     private TextView textHintStore;
@@ -63,7 +63,7 @@ public class StoredPokemonFragment extends Fragment implements
 
 
         gridViewPokemons = (GridView) view.findViewById(R.id.gridViewPokemonsList);
-        buttonAdd = (Button) view.findViewById(R.id.buttonFragmentPokemonListAdd);
+        Button buttonAdd = (Button) view.findViewById(R.id.buttonFragmentPokemonListAdd);
         buttonRemove = (ToggleButton) view.findViewById(R.id.buttonFragmentPokemonListRemove);
         textHintStore = (TextView) view.findViewById(R.id.textViewHintStore);
         textHintRemove = (TextView) view.findViewById(R.id.textViewHintDelete);
@@ -83,12 +83,12 @@ public class StoredPokemonFragment extends Fragment implements
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b && storedPokemonAdapter.getCount() > 0) {
                     textHintRemove.setVisibility(View.VISIBLE);
-                    buttonRemove.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
+                    buttonRemove.setTextColor(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark));
                     storedPokemonAdapter.setDeleteMode(true);
 
                 } else {
                     textHintRemove.setVisibility(View.GONE);
-                    buttonRemove.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    buttonRemove.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     storedPokemonAdapter.setDeleteMode(false);
                 }
                 updateGridView();
@@ -173,11 +173,6 @@ public class StoredPokemonFragment extends Fragment implements
 
 
     @Override
-    public ArrayList<String> getListOfNatures() {
-        return feederCallback.getListOfNatures();
-    }
-
-    @Override
     public LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId) {
         return feederCallback.getListOfAbilities(pokemonId);
     }
@@ -249,14 +244,13 @@ public class StoredPokemonFragment extends Fragment implements
     @Override
     public InterfaceModifierPokemon getLastInterfaceModifierPokemon() {
         UUID lastPokemonUUID = ((StoredPokemonAdapter) gridViewPokemons.getAdapter()).getLastInterfaceStoredpokemonUUID();
-        if(lastPokemonUUID != null)
+        if (lastPokemonUUID != null)
             return feederCallback.getInterfaceModifierPokemon(lastPokemonUUID);
         else
             return new InterfaceModifierPokemon();
     }
 
     interface FeedDataStoredPokemon {
-        ArrayList<String> getListOfNatures();
 
         LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId);
 
@@ -291,10 +285,10 @@ public class StoredPokemonFragment extends Fragment implements
 
     public static class InterfaceStoredPokemon {
         /*Unique identifier of this stored Pokemon*/
-        private UUID storedId; //NEVER created by itself here
-        private int pokemonId;
-        private int genderId;
-        private int IVs[];
+        final private UUID storedId; //NEVER created by itself here
+        final private int pokemonId;
+        final private int genderId;
+        final private int IVs[];
 
         public InterfaceStoredPokemon(UUID storedId, int pokemonId, int genderId, int[] IVs) {
             this.storedId = storedId;
@@ -400,7 +394,6 @@ public class StoredPokemonFragment extends Fragment implements
         }
 
 
-
         int getPositionByUUID(UUID uuid) {
             for (int i = 0; i < storedPokemonList.size(); i++) {
                 if (storedPokemonList.get(i).getUUID() == uuid)
@@ -412,8 +405,8 @@ public class StoredPokemonFragment extends Fragment implements
         }
 
         UUID getLastInterfaceStoredpokemonUUID() {
-            if(!storedPokemonList.isEmpty())
-                return storedPokemonList.get(storedPokemonList.size()-1).getUUID();
+            if (!storedPokemonList.isEmpty())
+                return storedPokemonList.get(storedPokemonList.size() - 1).getUUID();
             else
                 return null;
         }
@@ -421,32 +414,31 @@ public class StoredPokemonFragment extends Fragment implements
         private class PreloadedDrawables {
             final Drawable[] IVActive = new Drawable[6];
             final Drawable[] IVInactive = new Drawable[6];
-            Drawable maleIcon;
-            Drawable femaleIcon;
-            Drawable genderlessIcon;
-            Drawable missingno;
+            final Drawable maleIcon;
+            final Drawable femaleIcon;
+            final Drawable genderlessIcon;
+            final Drawable missingno;
 
             private PreloadedDrawables(Context c) {
+                maleIcon = ContextCompat.getDrawable(c, R.drawable.symbol_male);
+                femaleIcon = ContextCompat.getDrawable(c, R.drawable.symbol_female);
+                genderlessIcon = ContextCompat.getDrawable(c, R.drawable.symbol_genderless);
 
-                maleIcon = c.getResources().getDrawable(R.drawable.symbol_male);
-                femaleIcon = c.getResources().getDrawable(R.drawable.symbol_female);
-                genderlessIcon = c.getResources().getDrawable(R.drawable.symbol_genderless);
+                missingno = ContextCompat.getDrawable(c, R.drawable.pkmn_missingno);
 
-                missingno = c.getResources().getDrawable(R.drawable.pkmn_missingno);
+                IVActive[0] = ContextCompat.getDrawable(c, R.drawable.iv_circle_checked);
+                IVActive[1] = ContextCompat.getDrawable(c, R.drawable.iv_triangle_checked);
+                IVActive[2] = ContextCompat.getDrawable(c, R.drawable.iv_square_checked);
+                IVActive[3] = ContextCompat.getDrawable(c, R.drawable.iv_heart_checked);
+                IVActive[4] = ContextCompat.getDrawable(c, R.drawable.iv_star_checked);
+                IVActive[5] = ContextCompat.getDrawable(c, R.drawable.iv_diamond_checked);
 
-                IVActive[0] = c.getResources().getDrawable(R.drawable.iv_circle_checked);
-                IVActive[1] = c.getResources().getDrawable(R.drawable.iv_triangle_checked);
-                IVActive[2] = c.getResources().getDrawable(R.drawable.iv_square_checked);
-                IVActive[3] = c.getResources().getDrawable(R.drawable.iv_heart_checked);
-                IVActive[4] = c.getResources().getDrawable(R.drawable.iv_star_checked);
-                IVActive[5] = c.getResources().getDrawable(R.drawable.iv_diamond_checked);
-
-                IVInactive[0] = c.getResources().getDrawable(R.drawable.iv_circle_clear);
-                IVInactive[1] = c.getResources().getDrawable(R.drawable.iv_triangle_clear);
-                IVInactive[2] = c.getResources().getDrawable(R.drawable.iv_square_clear);
-                IVInactive[3] = c.getResources().getDrawable(R.drawable.iv_heart_clear);
-                IVInactive[4] = c.getResources().getDrawable(R.drawable.iv_star_clear);
-                IVInactive[5] = c.getResources().getDrawable(R.drawable.iv_diamond_clear);
+                IVInactive[0] = ContextCompat.getDrawable(c, R.drawable.iv_circle_clear);
+                IVInactive[1] = ContextCompat.getDrawable(c, R.drawable.iv_triangle_clear);
+                IVInactive[2] = ContextCompat.getDrawable(c, R.drawable.iv_square_clear);
+                IVInactive[3] = ContextCompat.getDrawable(c, R.drawable.iv_heart_clear);
+                IVInactive[4] = ContextCompat.getDrawable(c, R.drawable.iv_star_clear);
+                IVInactive[5] = ContextCompat.getDrawable(c, R.drawable.iv_diamond_clear);
             }
 
             Drawable getGenderDrawable(int genderId) {

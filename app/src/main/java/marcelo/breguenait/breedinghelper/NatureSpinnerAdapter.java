@@ -17,9 +17,9 @@ import java.util.ArrayList;
  */
 public class NatureSpinnerAdapter extends BaseAdapter {
 
-    ArrayList<InterfaceNature> interfaceNatures;
-    LayoutInflater inflater;
-    DisplayMetrics metrics;
+    final ArrayList<InterfaceNature> interfaceNatures;
+    final LayoutInflater inflater;
+    final DisplayMetrics metrics;
 
     public NatureSpinnerAdapter(ArrayList<InterfaceNature> interfaceNatures, Context context) {
         this.interfaceNatures = interfaceNatures;
@@ -119,7 +119,7 @@ public class NatureSpinnerAdapter extends BaseAdapter {
         return natureView;
     }
 
-    public int dpToPx(float valueInDp) {
+    public int dpToPx(@SuppressWarnings("SameParameterValue") float valueInDp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
     }
 

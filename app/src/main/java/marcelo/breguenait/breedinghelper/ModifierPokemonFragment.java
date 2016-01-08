@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 
 import java.util.UUID;
 
@@ -74,7 +73,7 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
 
     void feedNatureSpinnerSelection() {
         //If there isn't a value received from somewhere else, doesn't select anything
-        if(selectedNatureId < 0) return;
+        if (selectedNatureId < 0) return;
 
         for (int i = 0; i < interfaceNatures.size(); i++) {
             if (interfaceNatures.get(i).id == selectedNatureId) {
@@ -86,6 +85,7 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
         }
         Log.d("GoalFragment", "Received a pokemon with invalid nature");
     }
+
     void feedAbilitySpinnerSelection(int abilitySlot) {
         //If the slot is valid
         if (abilitySlot > 0) {

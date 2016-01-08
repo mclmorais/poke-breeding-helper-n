@@ -300,7 +300,7 @@
             android:gravity="center"
             android:text="@string/label_nature_sans_colon"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="12dp"
+            android:textSize="12sp"
             android:textColor="@color/colorWhiteBgDisabledHint" />
 
         <Spinner
@@ -410,8 +410,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/white"
             android:textSize="24sp"
-            android:visibility="visible"
-            android:layout_below="@+id/linearLayout8" />
+            android:visibility="visible" />
 
         <LinearLayout
             android:id="@+id/sdafg"
@@ -428,11 +427,8 @@
                 class="com.melnykov.fab.FloatingActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
-                android:layout_alignTop="@+id/imageViewInsideCircle"
                 android:layout_marginTop="2dp"
-                android:layout_toEndOf="@+id/textViewSelectedName"
-                android:layout_toRightOf="@+id/textViewSelectedName"
-                android:src="@drawable/ic_action_edit"
+                android:src="@drawable/ic_action_edit2"
                 fab:fab_colorNormal="@color/colorAccent"
                 fab:fab_colorPressed="@color/colorPrimary"
                 fab:fab_shadow="false"

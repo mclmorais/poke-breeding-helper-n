@@ -77,6 +77,7 @@ public class MoveInfo {
         return parentIds;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public static class MoveInfoBuilder {
         private String name = "";
         private String type = "";

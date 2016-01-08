@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dynMoveMch_mainLayout"
     android:layout_width="match_parent"
     android:layout_height="64dp"
@@ -24,7 +25,8 @@
             android:gravity="center"
             android:text="TM"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="12dp" />
+            android:textSize="12sp"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/dynMoveMch_textMachineNumber"
@@ -35,9 +37,10 @@
             android:singleLine="true"
             android:text="100"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:textStyle="bold"
-            android:typeface="normal" />
+            android:typeface="normal"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 
     <LinearLayout
@@ -56,7 +59,8 @@
             android:fontFamily="sans-serif-condensed"
             android:text="Poison Sludge"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 
     <RelativeLayout
@@ -78,7 +82,8 @@
             android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textIsSelectable="false"
-            android:textSize="12dp" />
+            android:textSize="12sp"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/dynMoveMch_textType"
@@ -94,8 +99,9 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#A890F0"
             android:textIsSelectable="false"
-            android:textSize="14dp"
-            android:textStyle="bold" />
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -116,8 +122,9 @@
             android:text="55%"
             android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="14dp"
-            android:typeface="normal" />
+            android:textSize="14sp"
+            android:typeface="normal"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/dynMoveMch_textPower"
@@ -131,7 +138,8 @@
             android:text="120"
             android:textAllCaps="true"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="14dp" />
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
     </RelativeLayout>
 
 </LinearLayout>

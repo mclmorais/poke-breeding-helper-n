@@ -19,7 +19,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import com.google.gson.Gson;
@@ -147,17 +146,6 @@ public class MoveDexFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         drawerToggle.syncState();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        //onPokemonSelected(getIntent().getIntExtra("goalPokemon",0));
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -315,10 +303,10 @@ public class MoveDexFragment extends Fragment implements
     }
 
     public static class MovesPagerAdapter extends FragmentPagerAdapter {
-        int mNumOfTabs;
-        LevelMovesListFragment tab1;
-        MachineMovesListFragment tab2;
-        EggMovesListFragment tab3;
+        final int mNumOfTabs;
+        final LevelMovesListFragment tab1;
+        final MachineMovesListFragment tab2;
+        final EggMovesListFragment tab3;
 
         public MovesPagerAdapter(FragmentManager fm, int NumOfTabs) {
             super(fm);

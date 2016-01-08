@@ -105,7 +105,7 @@ public class LevelMovesListFragment extends Fragment {
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
 
-            TextView level, name, effect, type, accuracy, power;
+            final TextView level, name, effect, type, accuracy, power;
             LinearLayout layout;
 
             public ViewHolder(View itemView) {

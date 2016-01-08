@@ -1,7 +1,6 @@
 package customviews;
 
 
-
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +10,8 @@ import android.view.ViewGroup;
 public class WrappableGridLayoutManager extends GridLayoutManager {
 
 
+    final private int[] mMeasuredDimension = new int[2];
     public int www, hhh, currentSpanNumber;
-    boolean hasmeasured = false;
-    private int[] mMeasuredDimension = new int[2];
 
     public WrappableGridLayoutManager(Context context, int spanCount) {
         super(context, spanCount);

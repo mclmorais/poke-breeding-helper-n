@@ -9,13 +9,14 @@ import android.util.Log;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import marcelo.breguenait.breedinghelper.MoveInfo;
 
 public class MyDatabase extends SQLiteAssetHelper {
+
+    private final String DEBUG_DATABASE = "SQL_DB";
 
     private static final String DATABASE_NAME = "pkmnsql.db";
     private static final int DATABASE_VERSION = 1;
@@ -239,6 +240,12 @@ public class MyDatabase extends SQLiteAssetHelper {
         return list;
     }
 
+    /**
+     * Gets a Pokémon name string from the database.
+     * @param pokemonId ID of the Pokémon to be queried
+     * @param languageId Language ID of the game to be queried
+     * @return
+     */
     public String getPokemonName(int pokemonId, int languageId) {
         String s = "SELECT " +
                 "name " +
@@ -263,68 +270,72 @@ public class MyDatabase extends SQLiteAssetHelper {
         return name;
     }
 
-    public ArrayList<String> getListOfNatures(int languageId) {
-        String s = "SELECT name FROM nature_names WHERE local_language_id="
-                + Integer.toString(languageId);
-
-
-        Cursor cursorNatureNames = database.rawQuery(s, null);
-        cursorNatureNames.moveToFirst();
-        ArrayList<String> namesList = new ArrayList<>(cursorNatureNames.getCount());
-        while (!cursorNatureNames.isAfterLast()) {
-            namesList.add(cursorNatureNames.getString(0));
-            cursorNatureNames.moveToNext();
-        }
-
-        cursorNatureNames.close();
-
-        return namesList;
-    }
-
-    public LinkedHashMap<Integer, String> getSortedNatureNames(int languageId) {
-        String s = "SELECT name, nature_id FROM nature_names WHERE local_language_id="
-                + Integer.toString(languageId);
-
+    /**
+     * Queries the database for a list of Natures' IDs and names.
+     * @param languageId Language ID of the game to be queried.
+     * @return Returns a map of Nature names linked to their IDs. Returns an empty list if
+     * the query comes back empty.
+     */
+    public LinkedHashMap<Integer, String> getNatureNames(int languageId) {
+        String s = "SELECT " +
+                "name, nature_id " +
+                "FROM " +
+                "nature_names " +
+                "WHERE " +
+                "local_language_id="
+                + String.valueOf(languageId);
 
         Cursor cursorNatureNames = database.rawQuery(s, null);
-        cursorNatureNames.moveToFirst();
         LinkedHashMap<Integer, String> namesList = new LinkedHashMap<>(cursorNatureNames.getCount());
-        while (!cursorNatureNames.isAfterLast()) {
-            namesList.put(cursorNatureNames.getInt(1), cursorNatureNames.getString(0));
-            cursorNatureNames.moveToNext();
-        }
 
+        if(cursorNatureNames.getCount() > 0) {
+            cursorNatureNames.moveToFirst();
+            while (!cursorNatureNames.isAfterLast()) {
+                namesList.put(cursorNatureNames.getInt(1), cursorNatureNames.getString(0));
+                cursorNatureNames.moveToNext();
+            }
+        }
         cursorNatureNames.close();
 
         return namesList;
-
     }
 
-    public ArrayList<Integer> getSortedNatureIds() {
+    /**
+     * Queries natures IDs in a custom order sorted by the increased stat. Hardy is put at the
+     * beginning and the other neutral natures are put at the end.
+     * @return A list of the sorted IDs. Returns an empty list if the query didn't return anything.
+     */
+    public ArrayList<Integer> getNatureIdsSortedByIncreasedStat() {
         String s = "SELECT id FROM natures WHERE decreased_stat_id<>increased_stat_id ORDER BY increased_stat_id";
 
         Cursor c = database.rawQuery(s, null);
-        c.moveToFirst();
 
         ArrayList<Integer> natureIds = new ArrayList<>(c.getCount());
-        while(!c.isAfterLast()){
-            natureIds.add(c.getInt(0));
-            c.moveToNext();
+
+        if(c.getCount() > 0) {
+            c.moveToFirst();
+            while (!c.isAfterLast()) {
+                natureIds.add(c.getInt(0));
+                c.moveToNext();
+            }
+
         }
         c.close();
 
         boolean firstAtTop = true;
         s = "SELECT id FROM natures WHERE decreased_stat_id==increased_stat_id ORDER BY increased_stat_id";
         c = database.rawQuery(s, null);
-        c.moveToFirst();
-        while(!c.isAfterLast()){
-            if(firstAtTop) {
-                natureIds.add(0, c.getInt(0));
-                firstAtTop = false;
-            } else {
-                natureIds.add(c.getInt(0));
+        if (c.getCount() > 0) {
+            c.moveToFirst();
+            while (!c.isAfterLast()) {
+                if (firstAtTop) {
+                    natureIds.add(0, c.getInt(0));
+                    firstAtTop = false;
+                } else {
+                    natureIds.add(c.getInt(0));
+                }
+                c.moveToNext();
             }
-            c.moveToNext();
         }
         c.close();
 
@@ -332,39 +343,45 @@ public class MyDatabase extends SQLiteAssetHelper {
     }
 
 
-
-
-    public LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId, int languageId) {
+    /**
+     * Queries the database for the names of the abilities that a certain Pokémon can have.
+     * @param pokemonId The ID of the Pokémon to be queried.
+     * @param languageId Language ID of the game to be queried.
+     * @return A map of the abilities' name and its respective slot. Returns an empty map if the
+     * query failed.
+     */
+    public LinkedHashMap<Integer, String> getListOfAbilitiesNames(int pokemonId, int languageId) {
 
         String s = "SELECT ability_id, slot FROM pokemon_abilities WHERE pokemon_id="
                 + Integer.toString(pokemonId);
 
         //ABILITYID, SLOT
         Cursor cursorAbilitiesIdSlot = database.rawQuery(s, null);
-        cursorAbilitiesIdSlot.moveToFirst();
-
         LinkedHashMap<Integer, String> abilities = new LinkedHashMap<>(cursorAbilitiesIdSlot.getCount());
 
-        while (!cursorAbilitiesIdSlot.isAfterLast()) {
-            s = "SELECT name FROM ability_names WHERE local_language_id=" +
-                    Integer.toString(languageId) +
-                    " and ability_id=" +
-                    cursorAbilitiesIdSlot.getInt(0);
+        if(cursorAbilitiesIdSlot.getCount() > 0) {
+            cursorAbilitiesIdSlot.moveToFirst();
 
-            //NAME
-            Cursor cursorAbilityNames = database.rawQuery(s, null);
-            cursorAbilityNames.moveToFirst();
+            while (!cursorAbilitiesIdSlot.isAfterLast()) {
+                s = "SELECT name FROM ability_names WHERE local_language_id=" +
+                        Integer.toString(languageId) +
+                        " and ability_id=" +
+                        cursorAbilitiesIdSlot.getInt(0);
 
-            abilities.put(cursorAbilitiesIdSlot.getInt(1), cursorAbilityNames.getString(0));
-            cursorAbilityNames.close();
-
-            cursorAbilitiesIdSlot.moveToNext();
+                //NAME
+                Cursor cursorAbilityNames = database.rawQuery(s, null);
+                if(cursorAbilityNames.getCount() > 0) {
+                    cursorAbilityNames.moveToFirst();
+                    abilities.put(cursorAbilitiesIdSlot.getInt(1), cursorAbilityNames.getString(0));
+                }
+                cursorAbilityNames.close();
+                cursorAbilitiesIdSlot.moveToNext();
+            }
         }
 
         cursorAbilitiesIdSlot.close();
 
         return abilities;
-
     }
 
     public List<MoveInfo> getPokemonMovesInfo(int pokemonId, int pokemonVersionId, int methodId, int languageId) {
@@ -469,6 +486,11 @@ public class MyDatabase extends SQLiteAssetHelper {
         return eggGroups;
     }
 
+    /**
+     * Queries the evolution chain of a certain Pokémon.
+     * @param pokemonId The ID of the Pokémon to be queried.
+     * @return The evolution chain ID. Returns -1 if the query failed.
+     */
     public int getEvolutionChainId(int pokemonId) {
         String s = "SELECT " +
                 "evolution_chain_id " +
@@ -478,14 +500,23 @@ public class MyDatabase extends SQLiteAssetHelper {
                 " id=" +
                 Integer.toString(pokemonId);
 
+        int evolutionChainId = -1;
         Cursor cursorEvolutionChainId = database.rawQuery(s, null);
-        cursorEvolutionChainId.moveToFirst();
-
-        int evolutionChainId = cursorEvolutionChainId.getInt(0);
+        if(cursorEvolutionChainId.getCount() > 0) {
+            cursorEvolutionChainId.moveToFirst();
+            evolutionChainId = cursorEvolutionChainId.getInt(0);
+        }
         cursorEvolutionChainId.close();
         return evolutionChainId;
     }
 
+    /**
+     * Queries the gender rate identifier of a certain Pokémon. {@link DatabaseConstants} has values that
+     * illustrate what the returned values mean.
+     * @param pokemonId The ID of the Pokémon to be queried.
+     * @return The gender rate of the queried Pokémon. Returns -2 if the query failed (due to the
+     * fact that the value -1 is valid in this case).
+     */
     public int getGenderRate(int pokemonId) {
         String s = "SELECT " +
                 "gender_rate " +
@@ -494,13 +525,24 @@ public class MyDatabase extends SQLiteAssetHelper {
                 "WHERE id=" +
                 Integer.toString(pokemonId);
 
+        int genderRate = -2;
+
         Cursor cursorGenderRate = database.rawQuery(s, null);
-        cursorGenderRate.moveToFirst();
-        int genderRate = cursorGenderRate.getInt(0);
+        if(cursorGenderRate.getCount() > 0) {
+            cursorGenderRate.moveToFirst();
+            genderRate = cursorGenderRate.getInt(0);
+        }
         cursorGenderRate.close();
         return genderRate;
     }
 
+    /**
+     * Queries a list of all the Pokémon in the same Egg Group of the queried Pokémon if it's
+     * not genderless; otherwise, queries the family of the received genderless pokémon. Both
+     * queries also return ditto.
+     * @param pokemonId The ID of the Pokémon to be queried.
+     * @return A list of compatible pokémon IDs. Returns an empty list if the query failed.
+     */
     public ArrayList<Integer> getCompatiblePokemonList(int pokemonId) {
 
         int genderRate = getGenderRate(pokemonId);
@@ -546,19 +588,26 @@ public class MyDatabase extends SQLiteAssetHelper {
         }
 
         Cursor cursorCompatible = database.rawQuery(s, null);
-        cursorCompatible.moveToFirst();
-
         ArrayList<Integer> compatiblePokemonList = new ArrayList<>(cursorCompatible.getCount());
 
-        while (!cursorCompatible.isAfterLast()) {
-            compatiblePokemonList.add(cursorCompatible.getInt(0));
-            cursorCompatible.moveToNext();
+        if(cursorCompatible.getCount() > 0) {
+            cursorCompatible.moveToFirst();
+
+            while (!cursorCompatible.isAfterLast()) {
+                compatiblePokemonList.add(cursorCompatible.getInt(0));
+                cursorCompatible.moveToNext();
+            }
         }
         cursorCompatible.close();
         return compatiblePokemonList;
-
     }
 
+    /**
+     * Queries the IDs of Pokémon in the same family as the queried one.
+     * @param pokemonId The ID of the Pokémon to be queried. Special cases (Nidorans and
+     *                  Volbeat/Illumise) are also considered.
+     * @return A list of Pokémon in the same family. Returns an empty list if the query failed.
+     */
     public ArrayList<Integer> getPokemonFamilyList(int pokemonId) {
 
         String s = "SELECT " +
@@ -579,13 +628,14 @@ public class MyDatabase extends SQLiteAssetHelper {
 
 
         Cursor cursorCompatible = database.rawQuery(s, null);
-        cursorCompatible.moveToFirst();
-
         ArrayList<Integer> compatiblePokemonList = new ArrayList<>(cursorCompatible.getCount());
 
-        while (!cursorCompatible.isAfterLast()) {
-            compatiblePokemonList.add(cursorCompatible.getInt(0));
-            cursorCompatible.moveToNext();
+        if(cursorCompatible.getCount() > 0) {
+            cursorCompatible.moveToFirst();
+            while (!cursorCompatible.isAfterLast()) {
+                compatiblePokemonList.add(cursorCompatible.getInt(0));
+                cursorCompatible.moveToNext();
+            }
         }
         cursorCompatible.close();
 
@@ -605,12 +655,16 @@ public class MyDatabase extends SQLiteAssetHelper {
             compatiblePokemonList.add(313);
         }
 
-
         return compatiblePokemonList;
-
-
     }
 
+    /**
+     * Queries all Pokémon that:
+     * * Are the first form in an evolution chain (unless the first form is a baby)
+     * * Are not babies
+     * * Can breed
+     * @return A list of basic Pokémon IDs. Returns an empty list if the query failed.
+     */
     public ArrayList<Integer> getBasicPokemonList() {
         String s = "SELECT id FROM pokemon_species WHERE evolves_from_species_id IS NULL AND is_baby=0 AND id<>132" +
                 " UNION " +
@@ -619,18 +673,26 @@ public class MyDatabase extends SQLiteAssetHelper {
                 "SELECT species_id FROM pokemon_egg_groups WHERE egg_group_id=15";
 
         Cursor cursorBasicPokemon = database.rawQuery(s, null);
-        cursorBasicPokemon.moveToFirst();
-
         ArrayList<Integer> pokemonList = new ArrayList<>(cursorBasicPokemon.getCount());
-        while (!cursorBasicPokemon.isAfterLast()) {
-            pokemonList.add(cursorBasicPokemon.getInt(0));
-            cursorBasicPokemon.moveToNext();
+        if(cursorBasicPokemon.getCount() > 0) {
+            cursorBasicPokemon.moveToFirst();
+            while (!cursorBasicPokemon.isAfterLast()) {
+                pokemonList.add(cursorBasicPokemon.getInt(0));
+                cursorBasicPokemon.moveToNext();
+            }
         }
         cursorBasicPokemon.close();
 
         return pokemonList;
     }
 
+    /**
+     * Queries the name of a nature given its ID and a game language.
+     * @param natureId ID of the nature to be queried
+     * @param languageId ID of the game language to be queried
+     * @return A String contained the desired name. Returns an empty string ("") if the
+     * query failed.
+     */
     public String getNatureName(int natureId, int languageId) {
         String s = "SELECT " +
                 "name " +
@@ -650,12 +712,21 @@ public class MyDatabase extends SQLiteAssetHelper {
             name = c.getString(0);
         else {
             name = "";
-            Log.d("DB", "NAME OF THE NATURE WAS NOT FOUND!!!!!");
+            Log.d(DEBUG_DATABASE, "Couldn't find nature with id="
+                    + String.valueOf(natureId)
+                    + " and language_id=" + String.valueOf(languageId));
         }
         c.close();
         return name;
     }
 
+    /**
+     * Queries an ability name given it's slot on the queried Pokémon and game language.
+     * @param pokemonId ID of the Pokémon to be queried.
+     * @param abilitySlot Slot of the ability on the queried Pokémon.
+     * @param languageId ID of the game language.
+     * @return A string of the desired name. Returns an empty string if the query failed.
+     */
     public String getAbilityName(int pokemonId, int abilitySlot, int languageId) {
         String s = "SELECT " +
                 "name " +
@@ -687,13 +758,19 @@ public class MyDatabase extends SQLiteAssetHelper {
             name = c.getString(0);
         else {
             name = "";
-            Log.d("DB", "NAME OF THE ABILITY WAS NOT FOUND!!!!!");
+            Log.d(DEBUG_DATABASE, "NAME OF THE ABILITY WAS NOT FOUND!!!!!");
         }
 
         c.close();
         return name;
     }
 
+    /**
+     * Queries the slot of an ability in a certain Pokémon.
+     * @param pokemonId ID of the Pokémon to be queried.
+     * @param abilityId ID of the Pokémon's ability.
+     * @return The slot of the desired ability. Returns -1 if the query failed.
+     */
     public int getAbilitySlot(int pokemonId, int abilityId) {
         String s = "SELECT " +
                 "slot " +
@@ -712,29 +789,33 @@ public class MyDatabase extends SQLiteAssetHelper {
         if (c.getCount() > 0)
             slot = c.getInt(0);
         else
-            slot = 1;
+            slot = -1;
 
         c.close();
         return slot;
 
     }
 
-
+    /**
+     * Queries the list of all possible Pokémon IDs.
+     * @return A list of all the IDs. Returns an empty list if the query failed.
+     */
     public ArrayList<Integer> getPokemonIds() {
 
         String s = "SELECT id FROM pokemon_species ORDER BY id ASC";
 
         Cursor cursorIds = database.rawQuery(s, null);
-        cursorIds.moveToFirst();
 
         ArrayList<Integer> ids = new ArrayList<>(cursorIds.getCount());
 
+        if(cursorIds.getCount() > 0) {
+            cursorIds.moveToFirst();
+            while (!cursorIds.isAfterLast()) {
 
-        while (!cursorIds.isAfterLast()) {
+                ids.add(cursorIds.getInt(0));
 
-            ids.add(cursorIds.getInt(0));
-
-            cursorIds.moveToNext();
+                cursorIds.moveToNext();
+            }
         }
 
         cursorIds.close();
@@ -743,6 +824,12 @@ public class MyDatabase extends SQLiteAssetHelper {
 
     }
 
+    /**
+     * Queries a list of all Pokémon names in a given language. The order of the names is the same
+     * as the one given by {@link #getPokemonIds()}.
+     * @param languageId ID of the game language to be queried.
+     * @return A list of desired names. Returns an empty list if the query failed.
+     */
     public ArrayList<String> getPokemonNames(int languageId) {
 
         String s = "SELECT " +
@@ -754,15 +841,15 @@ public class MyDatabase extends SQLiteAssetHelper {
                 Integer.toString(languageId);
 
         Cursor cursorIds = database.rawQuery(s, null);
-        cursorIds.moveToFirst();
 
         ArrayList<String> names = new ArrayList<>(cursorIds.getCount());
 
-        while (!cursorIds.isAfterLast()) {
-
-            names.add(cursorIds.getString(0));
-
-            cursorIds.moveToNext();
+        if(cursorIds.getCount() > 0) {
+            cursorIds.moveToFirst();
+            while (!cursorIds.isAfterLast()) {
+                names.add(cursorIds.getString(0));
+                cursorIds.moveToNext();
+            }
         }
 
         cursorIds.close();
@@ -771,6 +858,14 @@ public class MyDatabase extends SQLiteAssetHelper {
 
     }
 
+    /**
+     * Queries the name of the stat that the queried nature changes in a certain language.
+     * @param natureId The ID of the nature to be queried.
+     * @param languageId The ID of the game language.
+     * @param increased If it should return the increased (true) or the decreased (false) value.
+     * @return A string containing the name of the affected stat. Returns an empty string ("")
+     * if the query fails.
+     */
     public String getNatureChangedStatName(int natureId, int languageId, boolean increased) {
 
         String whichStat = increased ? "increased_stat_id " : "decreased_stat_id ";
@@ -804,8 +899,6 @@ public class MyDatabase extends SQLiteAssetHelper {
 
         return name;
     }
-
-
 
 
 }

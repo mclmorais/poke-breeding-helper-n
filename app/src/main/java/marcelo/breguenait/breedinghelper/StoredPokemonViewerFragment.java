@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -53,9 +54,7 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
 
     private ImageView imageGender;
     private CircleImageView imagePokemonIcon;
-    private TextView textPokemonName, textEggGroup1, textEggGroup2, textNature, textNumber, textAbility;
-    private Button buttonClose;
-    private FloatingActionButton buttonEdit;
+    private TextView textPokemonName, textNature, textNumber, textAbility;
     private ImageView[] IVs = new ImageView[6];
     private PreloadedDrawables preloadedDrawables;
 
@@ -157,12 +156,6 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        //TODO: ver se é necessário colocar null nos callbacks
-    }
-
-    @Override
     protected void setDialogPosition() {
         if (getArguments() == null) {
             return;
@@ -195,10 +188,8 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
         preloadedDrawables = new PreloadedDrawables(getActivity().getApplicationContext());
         imagePokemonIcon = (CircleImageView) v.findViewById(R.id.imagePokemonPopupIcon);
         textPokemonName = (TextView) v.findViewById(R.id.textPokemonPopupName);
-        buttonClose = (Button) v.findViewById(R.id.buttonPokemonPopupClose);
-        buttonEdit = (FloatingActionButton) v.findViewById(R.id.buttonPokemonPopupEdit);
-        textEggGroup1 = (TextView) v.findViewById(R.id.textPokemonPopupEggGroup1);
-        textEggGroup2 = (TextView) v.findViewById(R.id.textPokemonPopupEggGroup2);
+        Button buttonClose = (Button) v.findViewById(R.id.buttonPokemonPopupClose);
+        FloatingActionButton buttonEdit = (FloatingActionButton) v.findViewById(R.id.buttonPokemonPopupEdit);
         textNature = (TextView) v.findViewById(R.id.textPokemonPopupNature);
         textNumber = (TextView) v.findViewById(R.id.textPokemonPopupNumber);
         imageGender = (ImageView) v.findViewById(R.id.imagePokemonPopupGender);
@@ -312,7 +303,6 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
     }
 
 
-
     @Override
     public LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId) {
         return feederCallback.getListOfAbilities(pokemonId);
@@ -367,8 +357,6 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
 
     public interface FeedDataPokemonViewer {
 
-        ArrayList<String> getListOfNatures();
-
         LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId);
 
         int getGenderRate(int pokemonId);
@@ -391,18 +379,17 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
     }
 
 
-
     public interface UpdatePokemonViewer {
         void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot);
     }
 
     public static class InterfaceViewerPokemon {
-        private int pokemonId;
-        private int genderId;
-        private int IVs[];
-        private String natureName;
-        private String abilityName;
-        private String pokemonName;
+        final private int pokemonId;
+        final private int genderId;
+        final private int IVs[];
+        final private String natureName;
+        final private String abilityName;
+        final private String pokemonName;
 
         public InterfaceViewerPokemon(int pokemonId, int genderId, int[] IVs, String natureName, String abilityName, String pokemonName) {
             this.pokemonId = pokemonId;
@@ -441,32 +428,32 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
     private class PreloadedDrawables {
         final Drawable[] IVActive = new Drawable[6];
         final Drawable[] IVInactive = new Drawable[6];
-        Drawable maleIcon;
-        Drawable femaleIcon;
-        Drawable genderlessIcon;
-        Drawable missingno;
+        final Drawable maleIcon;
+        final Drawable femaleIcon;
+        final Drawable genderlessIcon;
+        final Drawable missingno;
 
         private PreloadedDrawables(Context c) {
 
-            maleIcon = c.getResources().getDrawable(R.drawable.symbol_male);
-            femaleIcon = c.getResources().getDrawable(R.drawable.symbol_female);
-            genderlessIcon = c.getResources().getDrawable(R.drawable.symbol_genderless);
+            maleIcon = ContextCompat.getDrawable(c, R.drawable.symbol_male);
+            femaleIcon = ContextCompat.getDrawable(c, R.drawable.symbol_female);
+            genderlessIcon = ContextCompat.getDrawable(c, R.drawable.symbol_genderless);
 
-            missingno = c.getResources().getDrawable(R.drawable.pkmn_missingno);
+            missingno = ContextCompat.getDrawable(c, R.drawable.pkmn_missingno);
 
-            IVActive[0] = c.getResources().getDrawable(R.drawable.iv_circle_checked);
-            IVActive[1] = c.getResources().getDrawable(R.drawable.iv_triangle_checked);
-            IVActive[2] = c.getResources().getDrawable(R.drawable.iv_square_checked);
-            IVActive[3] = c.getResources().getDrawable(R.drawable.iv_heart_checked);
-            IVActive[4] = c.getResources().getDrawable(R.drawable.iv_star_checked);
-            IVActive[5] = c.getResources().getDrawable(R.drawable.iv_diamond_checked);
+            IVActive[0] = ContextCompat.getDrawable(c, R.drawable.iv_circle_checked);
+            IVActive[1] = ContextCompat.getDrawable(c, R.drawable.iv_triangle_checked);
+            IVActive[2] = ContextCompat.getDrawable(c, R.drawable.iv_square_checked);
+            IVActive[3] = ContextCompat.getDrawable(c, R.drawable.iv_heart_checked);
+            IVActive[4] = ContextCompat.getDrawable(c, R.drawable.iv_star_checked);
+            IVActive[5] = ContextCompat.getDrawable(c, R.drawable.iv_diamond_checked);
 
-            IVInactive[0] = c.getResources().getDrawable(R.drawable.iv_circle_clear);
-            IVInactive[1] = c.getResources().getDrawable(R.drawable.iv_triangle_clear);
-            IVInactive[2] = c.getResources().getDrawable(R.drawable.iv_square_clear);
-            IVInactive[3] = c.getResources().getDrawable(R.drawable.iv_heart_clear);
-            IVInactive[4] = c.getResources().getDrawable(R.drawable.iv_star_clear);
-            IVInactive[5] = c.getResources().getDrawable(R.drawable.iv_diamond_clear);
+            IVInactive[0] = ContextCompat.getDrawable(c, R.drawable.iv_circle_clear);
+            IVInactive[1] = ContextCompat.getDrawable(c, R.drawable.iv_triangle_clear);
+            IVInactive[2] = ContextCompat.getDrawable(c, R.drawable.iv_square_clear);
+            IVInactive[3] = ContextCompat.getDrawable(c, R.drawable.iv_heart_clear);
+            IVInactive[4] = ContextCompat.getDrawable(c, R.drawable.iv_star_clear);
+            IVInactive[5] = ContextCompat.getDrawable(c, R.drawable.iv_diamond_clear);
         }
 
         Drawable getIVDrawable(int position, boolean active) {

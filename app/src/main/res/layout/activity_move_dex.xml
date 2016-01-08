@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
@@ -52,7 +53,7 @@
                     android:layout_marginLeft="48dp"
                     android:layout_marginStart="50dp"
                     android:gravity="center"
-                    android:text="Move Dex"
+                    android:text="@string/movedex_name"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@android:color/white" />
 
@@ -70,7 +71,7 @@
                     android:layout_marginBottom="8dp"
                     android:layout_marginRight="8dp"
                     android:src="@drawable/ic_action_edit2"
-                    android:text="Choose"
+                    android:text="@string/label_button_choose"
 />
 
             </RelativeLayout>
@@ -86,7 +87,8 @@
             android:elevation="0dp"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_collapseMode="pin" />
+            app:layout_collapseMode="pin"
+            tools:ignore="UnusedAttribute" />
 
 
     </android.support.design.widget.AppBarLayout>

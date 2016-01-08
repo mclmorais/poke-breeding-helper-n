@@ -5,11 +5,11 @@ package marcelo.breguenait.breedinghelper;
  */
 public class InterfaceModifierPokemon {
 
-    private int pokemonId;
-    private int genderId;
-    private int[] IVs;
-    private int natureId;
-    private int abilitySlot;
+    private final int pokemonId;
+    private final int genderId;
+    private final int[] IVs;
+    private final int natureId;
+    private final int abilitySlot;
 
     public InterfaceModifierPokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
         this.pokemonId = pokemonId;
@@ -23,7 +23,7 @@ public class InterfaceModifierPokemon {
 
         this.pokemonId = -1;
         this.genderId = -1;
-        this.IVs = new int[]{-1,-1,-1,-1,-1,-1};
+        this.IVs = new int[]{-1, -1, -1, -1, -1, -1};
         this.natureId = -1;
         this.abilitySlot = -1;
     }

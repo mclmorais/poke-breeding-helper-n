@@ -24,7 +24,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:visibility="gone"
-        app:indicator="BallTrianglePath"
+        app:indicator="BallGridPulse"
         app:indicator_color="@color/colorAccent" />
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="This Pokemon has no egg moves."
+        android:text="@string/message_no_egg_moves"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:visibility="gone" />
 

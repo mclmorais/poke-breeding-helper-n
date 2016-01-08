@@ -50,6 +50,15 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
     @Bind(R.id.frameLayoutPokemonSelectorButton)
     View buttonPokemonSelector;
+    private final View.OnClickListener onClickHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v == buttonPokemonSelector) {
+                openSelectPokemonFragment(v);
+            }
+
+        }
+    };
     @Bind(R.id.imageViewSelectedPokemonIcon)
     ImageView selectedIcon;
     @Bind(R.id.spinnerGoalIVsNatures)
@@ -62,24 +71,11 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     SwitchCompat checkBoxActivateAbilities;
     @Bind(R.id.textViewPokemonName)
     TextView selectedName;
-
-    private FeedDataGoalIVs feederCallback;
-    private UpdateGoal updaterCallback;
-
     ArrayList<InterfaceNature> interfaceNatures;
     ArrayList<InterfaceAbility> interfaceAbilities;
-
-    private View.OnClickListener onClickHandler = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v == buttonPokemonSelector) {
-                openSelectPokemonFragment(v);
-            }
-
-        }
-    };
-
-    private Spinner.OnItemSelectedListener onSpinnerItemSelectedHandler = new AdapterView.OnItemSelectedListener() {
+    private FeedDataGoalIVs feederCallback;
+    private UpdateGoal updaterCallback;
+    private final Spinner.OnItemSelectedListener onSpinnerItemSelectedHandler = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             if (parent == spinnerNature) {
@@ -100,7 +96,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
         }
     };
-    private CheckBox.OnCheckedChangeListener onCheckBoxCheckHandler = new CompoundButton.OnCheckedChangeListener() {
+    private final CheckBox.OnCheckedChangeListener onCheckBoxCheckHandler = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (buttonView == checkBoxActivateNatures) {
@@ -395,11 +391,11 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
     public static class InterfaceGoalPokemon {
 
-        int[] IVs;
-        int pokemonId;
-        String pokemonName;
-        int natureId;
-        int abilitySlot;
+        final int[] IVs;
+        final int pokemonId;
+        final String pokemonName;
+        final int natureId;
+        final int abilitySlot;
 
         public InterfaceGoalPokemon(int[] IVs, int pokemonId, String pokemonName, int natureId, int abilitySlot) {
             this.IVs = IVs;
@@ -431,14 +427,14 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     }
 
     public static class AbilitySpinnerAdapter extends BaseAdapter {
-        ArrayList<InterfaceAbility> interfaceAbilities;
-        LayoutInflater inflater;
-        DisplayMetrics metrics;
-        Context context;
+        final ArrayList<InterfaceAbility> interfaceAbilities;
+        final LayoutInflater inflater;
+        final DisplayMetrics metrics;
+        final Context context;
 
         public AbilitySpinnerAdapter(ArrayList<InterfaceAbility> interfaceAbilities, Context context) {
             this.interfaceAbilities = interfaceAbilities;
-            if(interfaceAbilities.size() == 0) {
+            if (interfaceAbilities.size() == 0) {
                 interfaceAbilities.add(new InterfaceAbility("No Ability", -1)); //TODO: fazer pegar do sistema
             }
             inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -553,7 +549,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             return natureView;
         }
 
-        public int dpToPx(float valueInDp) {
+        public int dpToPx(@SuppressWarnings("SameParameterValue") float valueInDp) {
             return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
         }
 

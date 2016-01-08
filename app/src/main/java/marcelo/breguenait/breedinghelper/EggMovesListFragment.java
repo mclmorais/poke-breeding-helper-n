@@ -89,7 +89,7 @@ public class EggMovesListFragment extends Fragment {
             return new ViewHolder(v);
         }
 
-        public int dpToPx(float valueInDp) {
+        public int dpToPx(@SuppressWarnings("SameParameterValue") float valueInDp) {
             DisplayMetrics metrics = context.getResources().getDisplayMetrics();
             return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
         }

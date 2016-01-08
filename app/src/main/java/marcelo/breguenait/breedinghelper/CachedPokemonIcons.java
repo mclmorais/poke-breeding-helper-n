@@ -13,8 +13,8 @@ public class CachedPokemonIcons {
 
 
     private static CachedPokemonIcons instance;
-    private HashMap<Integer, Drawable> iconsMap = new HashMap<>();
-    private Context context;
+    private final HashMap<Integer, Drawable> iconsMap = new HashMap<>();
+    private final Context context;
 
     private CachedPokemonIcons(Context context) {
         this.context = context;

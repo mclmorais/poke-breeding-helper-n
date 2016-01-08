@@ -3,9 +3,9 @@ package breedingmanager;
 import java.util.UUID;
 
 public class ChancePokemonMatch {
-    private UUID firstPokemon;
-    private UUID secondPokemon;
-    private double chance;
+    private final UUID firstPokemon;
+    private final UUID secondPokemon;
+    private final double chance;
 
     public ChancePokemonMatch(UUID firstPokemon, UUID secondPokemon, double chance) {
         this.firstPokemon = firstPokemon;

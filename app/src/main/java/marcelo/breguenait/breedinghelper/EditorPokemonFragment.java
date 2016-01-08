@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -41,23 +40,13 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     protected final CheckBox[] checkBoxInputIVs = new CheckBox[6];
     protected Button confirmButton;
     protected Spinner spinnerNature, spinnerAbility;
+    protected ArrayList<InterfaceNature> interfaceNatures;
+    protected ArrayList<InterfaceAbility> interfaceAbilities;
     int selectedPokemonId = -1;
     int selectedGenderId = 2;
     int selectedNatureId = -1;
     int selectedAbilitySlot = -1;
-
-    protected ArrayList<InterfaceNature> interfaceNatures;
-    protected ArrayList<InterfaceAbility> interfaceAbilities;
-
-    private TextView selectedName;
-    private ImageView selectedIcon;
-    private ToggleButton togglePokemonGender;
-    private Button cancelButton;
-    private FloatingActionButton buttonEdit;
-    private View buttonPokemonSelector;
-    private boolean showOnlyCompatible;
-    private FeedDataCreatePokemon feederCallback;
-    private Spinner.OnItemSelectedListener onSpinnerItemSelectedHandler = new AdapterView.OnItemSelectedListener() {
+    private final Spinner.OnItemSelectedListener onSpinnerItemSelectedHandler = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             if (parent == spinnerNature) {
@@ -66,8 +55,7 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
                     InterfaceNature interfaceNature = (InterfaceNature) spinnerNature.getSelectedItem();
                     selectedNatureId = interfaceNature.id;
                 }
-            }
-            else if (parent == spinnerAbility) {
+            } else if (parent == spinnerAbility) {
                 if (spinnerAbility.getTag() != position) {
                     spinnerAbility.setTag(-1);
                     selectedAbilitySlot = interfaceAbilities.get(position).abilitySlot;
@@ -80,8 +68,14 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
 
         }
     };
-
-
+    private TextView selectedName;
+    private ImageView selectedIcon;
+    private ToggleButton togglePokemonGender;
+    private Button cancelButton;
+    private FloatingActionButton buttonEdit;
+    private View buttonPokemonSelector;
+    private boolean showOnlyCompatible;
+    private FeedDataCreatePokemon feederCallback;
 
     @Override
     public void onAttach(Activity activity) {
@@ -287,7 +281,7 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
 //            abilities = new HashMap<>();
 //            abilities.put(-1, "No Ability");
 //        } else {
-//            abilities = feederCallback.getListOfAbilities(id);
+//            abilities = feederCallback.getListOfAbilitiesNames(id);
 //        }
 //        abilityIds = new ArrayList<>();
 //        abilitySlots = new ArrayList<>();
@@ -328,7 +322,7 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
 //            }
 //        }
 
-            spinnerAbility.setAdapter(new GoalPokemonFragment.AbilitySpinnerAdapter(interfaceAbilities, getContext()));
+        spinnerAbility.setAdapter(new GoalPokemonFragment.AbilitySpinnerAdapter(interfaceAbilities, getContext()));
         //spinnerAbility.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, abilityStrings));
 
     }

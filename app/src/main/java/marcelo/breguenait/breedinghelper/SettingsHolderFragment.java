@@ -15,11 +15,11 @@ import android.view.ViewGroup;
 public class SettingsHolderFragment extends Fragment {
 
 
+    Toolbar settingsHolderToolbar;
+
     public SettingsHolderFragment() {
         // Required empty public constructor
     }
-
-    Toolbar settingsHolderToolbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
