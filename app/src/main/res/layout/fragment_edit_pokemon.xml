@@ -310,51 +310,70 @@
 
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/textView20"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="8dp"
-            android:gravity="center"
-            android:text="@string/label_nature_sans_colon"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="12sp"
-            android:textColor="@color/colorWhiteBgDisabledHint"
-            android:layout_below="@+id/layoutivsgender" />
+            android:orientation="vertical"
+            android:id="@+id/frth"
+            android:layout_below="@+id/layoutivsgender"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_nature_sans_colon"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="12sp"
+                android:textColor="@color/colorWhiteBgDisabledHint"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/layoutivsgender"
+                android:layout_marginLeft="4dp" />
 
-        <Spinner
-            android:id="@+id/spinnerAddPokemonNature"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/textView20"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:gravity="center" />
+            <Spinner
+                android:id="@+id/spinnerAddPokemonNature"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/textView20"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView21"
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/spinnerAddPokemonNature"
-            android:layout_marginLeft="8dp"
-            android:gravity="center"
-            android:text="@string/label_ability_sans_colon"
-            android:textAllCaps="false"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textSize="12sp"
-            android:textColor="@color/colorWhiteBgDisabledHint" />
+            android:orientation="vertical"
+            android:id="@+id/lik"
+            android:layout_below="@+id/frth"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_ability_sans_colon"
+                android:textAllCaps="false"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="12sp"
+                android:textColor="@color/colorWhiteBgDisabledHint"
+                android:layout_below="@+id/spinnerAddPokemonNature"
+                android:layout_alignRight="@+id/textView20"
+                android:layout_alignEnd="@+id/textView20"
+                android:layout_marginLeft="4dp" />
 
-        <Spinner
-            android:id="@+id/spinnerAddPokemonAbility"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/textView21"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:gravity="center" />
+            <Spinner
+                android:id="@+id/spinnerAddPokemonAbility"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/textView21"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true" />
+
+        </LinearLayout>
+
 
         <View
             android:id="@+id/horizontalSeparator123123123"
@@ -372,7 +391,7 @@
             android:layout_alignParentBottom="false"
             android:layout_alignParentLeft="false"
             android:layout_alignParentStart="false"
-            android:layout_below="@+id/spinnerAddPokemonAbility"
+            android:layout_below="@+id/lik"
             android:orientation="horizontal"
             android:visibility="visible">
 
@@ -421,12 +440,11 @@
         <customviews.AutoResizeTextView
             android:id="@+id/textViewSelectedName"
             android:layout_width="172dp"
-            android:layout_height="match_parent"
+            android:layout_height="64dp"
             android:layout_alignBottom="@+id/imageViewSelectedIcon"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:layout_toRightOf="@+id/imageViewInsideCircle"
-            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:text="@string/label_select_pokemon"
             android:textAppearance="?android:attr/textAppearanceLarge"

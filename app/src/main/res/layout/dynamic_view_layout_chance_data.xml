@@ -8,14 +8,12 @@
 
     <RelativeLayout
         android:id="@+id/asd"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="72dp"
-        android:orientation="vertical"
         android:layout_alignParentTop="false"
+        android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:layout_toRightOf="@+id/frameLayout"
-        android:layout_toLeftOf="@+id/dsa"
-        android:layout_toStartOf="@+id/dsa">
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -262,35 +260,48 @@
     </RelativeLayout>
 
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="@color/background_light_gray"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/asd"
-        android:layout_alignBottom="@+id/asd"
-        android:visibility="invisible" />
-
     <LinearLayout
         android:id="@+id/dsa"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignBottom="@+id/asd"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp">
-
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="4dp"
+        android:layout_toEndOf="@+id/asd"
+        android:layout_toRightOf="@+id/asd"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/imageView23"
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:layout_marginBottom="2dp"
-            android:background="@drawable/aa_luck_tinted" />
+            android:layout_marginBottom="4dp"
+            android:src="@drawable/ic_new_luck_tinted"
+            android:tint="@color/colorPrimary"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp">
+            <TextView
+                android:id="@+id/textDynamicChanceEggs"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:gravity="center"
+                android:text="@string/placeholder_eggs"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorWhitebgSecondaryText"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:layout_marginLeft="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_small_egg"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textDynamicChancePercentage"
@@ -299,51 +310,47 @@
             android:text="@string/placeholder_percentage"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/colorWhitebgSecondaryText"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/textDynamicChanceEggs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/placeholder_eggs"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/colorWhitebgSecondaryText"
-            android:textSize="12sp"
-            android:textStyle="bold" />
 
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="4dp"
-        android:background="@drawable/ic_egg_outline">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/asd"
+        android:layout_toStartOf="@+id/asd"
+        android:layout_alignBottom="@+id/asd"
+        android:layout_alignParentTop="true"
+        android:gravity="center">
 
-        <TextView
-            android:id="@+id/textDynamicChanceNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/placeholder_number_2"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/colorWhitebgSecondaryText"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/ic_egg_outline">
 
-        <ImageView
-            android:id="@+id/imageDynamicChanceShinyIndicator"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_gravity="right|bottom"
-            android:background="@drawable/ic_star"
-            android:visibility="invisible" />
-    </FrameLayout>
+            <TextView
+                android:id="@+id/textDynamicChanceNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/placeholder_number_2"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/colorWhitebgSecondaryText"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageDynamicChanceShinyIndicator"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="right|bottom"
+                android:background="@drawable/ic_star"
+                android:visibility="invisible" />
+        </FrameLayout>
+    </LinearLayout>
 
 
 </RelativeLayout>

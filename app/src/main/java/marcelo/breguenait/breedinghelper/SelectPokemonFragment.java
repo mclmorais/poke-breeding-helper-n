@@ -171,7 +171,7 @@ public class SelectPokemonFragment extends PopupDialogFragment {
     public void onStart() {
         super.onStart();
 
-        int margin = dpToPx(64);
+        int margin = dpToPx(32);
 
         DisplayMetrics metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -316,7 +316,7 @@ public class SelectPokemonFragment extends PopupDialogFragment {
 
             int pokemonId = filteredPokemonIds.get(position);
 
-            holder.id.setText(String.format("%03d", pokemonId));
+            holder.id.setText(String.valueOf(pokemonId));//String.format("%03d", pokemonId));
             holder.icon.setBackground(CachedPokemonIcons.getInstance().getIcon(pokemonId));
 
             return pokemonDynamicLayout;

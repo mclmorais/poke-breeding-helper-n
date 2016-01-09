@@ -15,7 +15,7 @@
 
         <View
             android:id="@+id/backgroundTop"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_alignBottom="@+id/horizontalSeparator333"
             android:layout_alignParentTop="true"

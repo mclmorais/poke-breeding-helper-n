@@ -60,7 +60,7 @@
     <string name="label_nature_sans_colon">Nature</string>
     <string name="label_ability">Ability:</string>
     <string name="label_ability_sans_colon">Ability</string>
-    <string name="placeholder_eggs" translatable="false">~### eggs</string>
+    <string name="placeholder_eggs" translatable="false">###</string>
     <string name="label_close">Close</string>
     <array name="shiny_spinner_options_strings">
         <item>Normal</item>
@@ -79,8 +79,8 @@
     <string name="message_ability_ignored">Ability ignored.</string>
     <string name="message_dk_enabled">Destiny Knot enabled.</string>
     <string name="message_dk_disabled">Destiny Knot disabled.</string>
-    <string name="label_more_than_999_eggs"><![CDATA[>999 eggs]]></string>
-    <string name="label_about_number">~</string>
+    <string name="label_more_than_999_eggs"><![CDATA[>999]]></string>
+    <string name="label_about_number"></string>
     <string name="label_eggs">eggs</string>
     <string name="label_shiny">Shiny</string>
     <string name="label_level_up">Level Up</string>

@@ -22,7 +22,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="30dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -32,24 +32,8 @@
         android:gravity="bottom">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Unknown"
-            android:id="@+id/textView24"
-            android:textAllCaps="false"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="center_vertical|right"
-            android:textColor="@color/colorWhiteBgDisabledHint"
-            android:textSize="12sp"
-            android:visibility="invisible"
-            android:layout_marginTop="-2dp"
-            android:layout_gravity="right"
-            tools:ignore="HardcodedText" />
-
-        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Unknown"
             android:id="@+id/dynAbility_slot"

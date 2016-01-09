@@ -274,10 +274,14 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
             double chance = chancePokemonMatchList.get(i).getChance();
             chance = applyShinyChance(chance);
             v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChancePercentage);
-            if (chance * 100 > 0.01)
-                v.setText(String.format("%.2f", chance * 100) + "%");
-            else
-                v.setText("<0.01%");
+            if (chance * 100 > 0.01) {
+                String percentChance = String.format("%.2f", chance * 100) + "%";
+                v.setText(percentChance);
+            }
+            else {
+                String percentChance = "<" + String.format("%.2f", 0.01d) + "%";
+                v.setText(percentChance);
+            }
 
             v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceEggs);
             double eggs = 1 / chance;
@@ -288,7 +292,7 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
                 String about = getActivity().getString(R.string.label_about_number);
                 String number = String.format("%.0f", 1 / chance);
                 String eggsLabel = getActivity().getString(R.string.label_eggs);
-                String finalString = about + number + " " + eggsLabel;
+                String finalString = about + number;// + " " + eggsLabel;
                 v.setText(finalString);
             }
 

@@ -89,7 +89,9 @@
                 android:paddingTop="4dp"
                 android:stretchMode="spacingWidth"
                 android:verticalSpacing="6dp"
-                tools:listitem="@layout/dynamic_view_layout_pokemon_selector" />
+                tools:listitem="@layout/dynamic_view_layout_pokemon_selector"
+                android:paddingRight="2dp"
+                android:paddingLeft="2dp" />
 
         </LinearLayout>
     </android.support.v7.widget.CardView>

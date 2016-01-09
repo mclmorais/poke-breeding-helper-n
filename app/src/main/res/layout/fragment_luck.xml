@@ -35,7 +35,7 @@
             android:layout_toStartOf="@+id/luckFragmentButtonOptions"
             android:background="@color/background_light_gray" />
 
-        <ImageButton
+        <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/luckFragmentButtonOptions"
             android:layout_width="42dp"
             android:layout_height="fill_parent"
@@ -44,6 +44,7 @@
             android:layout_centerVertical="true"
             android:background="@drawable/button_press_white_lightgray_selector"
             android:src="@drawable/ic_action_overflow_round"
+            android:tint="@color/colorAccent"
             android:text=""
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
@@ -54,11 +55,11 @@
             android:id="@+id/luckFragmentCheckBoxDestinyKnot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/luckFragmentHeaderTitle"
             android:layout_alignEnd="@+id/luckFragmentSeparator1"
             android:layout_alignRight="@+id/luckFragmentSeparator1"
             android:layout_marginRight="6dp"
-            android:drawableRight="@drawable/ic_toggle_destiny_knot_selector" />
+            android:drawableRight="@drawable/ic_toggle_destiny_knot_selector"
+            android:layout_centerVertical="true" />
 
         <View
             android:id="@+id/luckFragmentSeparator3"
@@ -124,6 +125,6 @@
         android:background="@drawable/button_press_white_lightgray_selector"
         android:checked="true"
         android:drawableTop="@drawable/ct_toggle_expandable"
-        android:enabled="false" />
+        android:enabled="true" />
 
 </LinearLayout>

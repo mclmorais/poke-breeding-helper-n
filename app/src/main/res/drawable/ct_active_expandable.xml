@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/ic_expand_active"
+    <item android:drawable="@drawable/aa_expand_active_tinted"
         android:state_enabled="true" />
     <item android:drawable="@drawable/ic_expand_inactive"
         android:state_checked="false" />
