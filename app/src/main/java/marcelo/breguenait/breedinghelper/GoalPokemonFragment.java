@@ -34,9 +34,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import databasemanager.DatabaseConstants;
 
-//TODO: Make checks on the ability spinner when switching pokemon (right now OK - switches to the first)
-// (put it always on the same slot or on the first if it doesn't have the previous slot)
-
 
 public class GoalPokemonFragment extends Fragment implements SelectPokemonFragment.OnPokemonSelectedListener,
         SelectPokemonFragment.FeedDataSelectPokemon {
@@ -51,6 +48,15 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
     @Bind(R.id.frameLayoutPokemonSelectorButton)
     View buttonPokemonSelector;
+    private final View.OnClickListener onClickHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (v == buttonPokemonSelector) {
+                openSelectPokemonFragment(v);
+            }
+
+        }
+    };
     @Bind(R.id.imageViewSelectedPokemonIcon)
     ImageView selectedIcon;
     @Bind(R.id.spinnerGoalIVsNatures)
@@ -67,16 +73,6 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     ArrayList<InterfaceAbility> interfaceAbilities;
     private FeedDataGoalIVs feederCallback;
     private UpdateGoal updaterCallback;
-
-    private final View.OnClickListener onClickHandler = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v == buttonPokemonSelector) {
-                openSelectPokemonFragment(v);
-            }
-
-        }
-    };
     private final Spinner.OnItemSelectedListener onSpinnerItemSelectedHandler = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

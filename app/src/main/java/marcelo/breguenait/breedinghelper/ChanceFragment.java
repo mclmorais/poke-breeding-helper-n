@@ -277,8 +277,7 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
             if (chance * 100 > 0.01) {
                 String percentChance = String.format("%.2f", chance * 100) + "%";
                 v.setText(percentChance);
-            }
-            else {
+            } else {
                 String percentChance = "<" + String.format("%.2f", 0.01d) + "%";
                 v.setText(percentChance);
             }

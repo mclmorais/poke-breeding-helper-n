@@ -1,8 +1,6 @@
 package marcelo.breguenait.breedinghelper;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -16,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -95,12 +92,6 @@ public class BreedingFragment extends Fragment
         }
 
         return v;
-
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
     }
 
@@ -405,7 +396,7 @@ public class BreedingFragment extends Fragment
         }
 
         int abilitySlot = MyDatabase.getInstance().getAbilitySlot(pokemonId, compatPokemon.ability);
-        if(abilitySlot <= 0) abilitySlot = 1;
+        if (abilitySlot <= 0) abilitySlot = 1;
 
 
         return new StoredPokemon.Builder()
@@ -435,7 +426,6 @@ public class BreedingFragment extends Fragment
             }
         }
 
-        //TODO: testar compatibilidade
         jsonString = sharedPref.getString("jsonPokemonList", null);
         if (jsonString != null) {
             Type type = new TypeToken<List<PokemonInfo>>() {
@@ -446,7 +436,7 @@ public class BreedingFragment extends Fragment
                 newList.add(convertCompatPokemon(pokemonInfo));
             }
             breedingManager.replaceStoredPokemonObjects(newList);
-                    sharedPref.edit().remove("jsonPokemonList").apply();
+            sharedPref.edit().remove("jsonPokemonList").apply();
         } else {
             jsonString = sharedPref.getString("jsonBreedingManagerStoredList", null);
             if (jsonString != null) {

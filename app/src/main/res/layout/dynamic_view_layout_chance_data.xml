@@ -22,7 +22,6 @@
             android:layout_alignParentEnd="false"
             android:layout_alignParentRight="false"
             android:layout_alignParentTop="false"
-            android:layout_toRightOf="@+id/frameLayout"
             android:gravity="center|center_vertical"
             android:orientation="horizontal">
 
@@ -147,7 +146,6 @@
             android:layout_height="36dp"
             android:layout_alignParentBottom="false"
             android:layout_below="@+id/linearLayout2"
-            android:layout_toRightOf="@+id/frameLayout"
             android:gravity="center|center_vertical"
             android:orientation="horizontal">
 

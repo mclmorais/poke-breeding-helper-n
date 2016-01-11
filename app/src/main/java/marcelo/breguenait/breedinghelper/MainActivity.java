@@ -1,9 +1,11 @@
 package marcelo.breguenait.breedinghelper;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -72,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
             lastMenuItem = nvDrawer.getMenu().getItem(0);
             lastMenuItem.setChecked(true);
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        }
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if(!sharedPref.getBoolean("hasSeenDrawer", false)) {
+            mDrawer.openDrawer(nvDrawer);
+            sharedPref.edit().putBoolean("hasSeenDrawer", true).commit();
         }
 
     }
@@ -210,6 +217,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
 }
 
 

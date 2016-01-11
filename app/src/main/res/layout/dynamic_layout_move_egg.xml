@@ -109,7 +109,8 @@
                 android:textColor="#A890F0"
                 android:textIsSelectable="false"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
         </RelativeLayout>
 
         <RelativeLayout

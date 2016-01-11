@@ -362,8 +362,7 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
 
             String iconId = "pkmn_big_" + String.format("%03d", id);
             selectedIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
-        }
-        else {
+        } else {
             selectedName.setText(R.string.label_pokemon_missing);
             selectedIcon.setImageResource(R.drawable.pkmn_big_000);
         }

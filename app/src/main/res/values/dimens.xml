@@ -18,5 +18,6 @@
     <dimen name="spacing_normal">16dp</dimen>
 
     <dimen name="abc_action_bar_content_inset_material">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

@@ -46,7 +46,8 @@
                 android:textOff="REMOVE"
                 android:textOn="REMOVE"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:singleLine="true" />
 
             <View
                 android:id="@+id/separatorFragmentPokemonList1"
@@ -66,7 +67,8 @@
                 android:text="@string/label_add"
                 android:textColor="@color/colorPrimary"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:singleLine="true" />
         </LinearLayout>
 
         <View

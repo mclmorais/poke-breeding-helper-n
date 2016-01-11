@@ -95,4 +95,5 @@
     <string name="label_pokemon_missing">MissingNo.</string>
     <string name="label_no_nature">No Nature</string>
     <string name="label_no_ability">No Ability</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>
