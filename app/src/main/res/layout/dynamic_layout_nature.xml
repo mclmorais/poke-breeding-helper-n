@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="30dp"
+    android:gravity="center"
+    android:id="@+id/dynNature_layout">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Ability Name"
+        android:id="@+id/dynNature_name"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="8dp"
+        tools:ignore="HardcodedText" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/dynNature_name"
+        android:layout_toEndOf="@+id/dynNature_name"
+        android:layout_marginRight="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Unknown"
+            android:id="@+id/dynNature_increasedStat"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:gravity="center_vertical|right"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Unknown"
+            android:id="@+id/dynNature_decreasedStat"
+            android:textAllCaps="false"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center_vertical|right"
+            android:textColor="@color/colorWhiteBgDisabledHint"
+            android:textSize="12sp"
+            android:visibility="visible"
+            android:layout_marginTop="-2dp"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+</RelativeLayout>

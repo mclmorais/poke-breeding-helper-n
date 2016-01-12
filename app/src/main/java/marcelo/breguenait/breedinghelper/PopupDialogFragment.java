@@ -1,22 +1,31 @@
 package marcelo.breguenait.breedinghelper;
 
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 
-/**
- * Created by Marcelo on 08/12/2014.
- */
 public class PopupDialogFragment extends DialogFragment {
 
-
+    /**
+     * This method converts device specific pixels to density independent pixels.
+     *
+     * @param px      A value in px (pixels) unit. Which we need to convert into db
+     * @param context Context to get resources and device specific display metrics
+     * @return A float value to represent dp equivalent to px value
+     */
+    public static float convertPixelsToDp(float px, Context context) {
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        return px / (metrics.densityDpi / 160f);
+    }
 
     @Override
     public void onStart() {
@@ -28,12 +37,12 @@ public class PopupDialogFragment extends DialogFragment {
         window.setAttributes(params);
 
 
-
         // Transparent background; see http://stackoverflow.com/q/15007272/56285
         // (Needed to make dialog's alpha shadow look good)
         window.setBackgroundDrawableResource(android.R.color.transparent);
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
@@ -43,7 +52,7 @@ public class PopupDialogFragment extends DialogFragment {
 
     protected void setDialogPosition() {
 
-        if(getArguments() == null) {
+        if (getArguments() == null) {
             return;
         }
 
@@ -53,22 +62,20 @@ public class PopupDialogFragment extends DialogFragment {
         Window window = getDialog().getWindow();
 
         // set "origin" to top left corner
-        window.setGravity(Gravity.TOP|Gravity.LEFT);
+        window.setGravity(Gravity.TOP | Gravity.LEFT);
 
         WindowManager.LayoutParams params = window.getAttributes();
 
         DisplayMetrics metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int screenWidth = (int) convertPixelsToDp(metrics.widthPixels,getActivity().getApplicationContext());
-        if(sourceX < (screenWidth/2)) {
+        int screenWidth = (int) convertPixelsToDp(metrics.widthPixels, getContext());
+        if (sourceX < (screenWidth / 2)) {
             params.x = sourceX + dpToPx(32); // about half of confirm button size left of source view
-            params.y = sourceY -  dpToPx(32); // above source view
-        }
-        else {
+            params.y = sourceY - dpToPx(32); // above source view
+        } else {
             params.x = sourceX - dpToPx(32); // about half of confirm button size left of source view
-            params.y = sourceY -  dpToPx(32); // above source view
+            params.y = sourceY - dpToPx(32); // above source view
         }
-
 
 
         window.setAttributes(params);
@@ -79,23 +86,8 @@ public class PopupDialogFragment extends DialogFragment {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
     }
 
-    /**
-     * This method converts device specific pixels to density independent pixels.
-     *
-     * @param px A value in px (pixels) unit. Which we need to convert into db
-     * @param context Context to get resources and device specific display metrics
-     * @return A float value to represent dp equivalent to px value
-     */
-    public static float convertPixelsToDp(float px, Context context){
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        return px / (metrics.densityDpi / 160f);
-    }
-
-
-    void closeFragment()
-    {
-        getActivity().getFragmentManager().beginTransaction().remove(this).commit();
+    void closeFragment() {
+        getFragmentManager().beginTransaction().remove(this).commit();
     }
 
 }

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="45dp"
-    android:layout_height="45dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="45dp"
+    android:layout_height="45dp"
+    android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/dynMoveEggParent_icon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/dynMoveEggParent_icon"
-        android:src="@drawable/pkmn_257" />
+        android:src="@drawable/pkmn_257"
+        tools:ignore="ContentDescription" />
 </LinearLayout>

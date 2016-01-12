@@ -2,12 +2,14 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent">
 
-    <!--<CheckBoxPreference-->
-        <!--android:defaultValue="false"-->
-        <!--android:key="adDisabled"-->
-        <!--android:summaryOff="Leaving the Ad running helps me continue to support and add features to this app. \r\nIf you want, you can turn them off here."-->
-        <!--android:summaryOn="Ads disabled. Please consider re-enabling them at a later time to help support the app!"-->
-        <!--android:title="Disable Ads">-->
-    <!--</CheckBoxPreference>-->
+        <ListPreference
+            android:key="gameLanguage"
+            android:title="@string/setting_game_language_title"
+            android:summary="@string/setting_game_language_summary"
+            android:entries="@array/game_languages"
+            android:entryValues="@array/game_language_values"
+            android:dialogTitle="Select a game language">
+        </ListPreference>
+
 
 </PreferenceScreen>

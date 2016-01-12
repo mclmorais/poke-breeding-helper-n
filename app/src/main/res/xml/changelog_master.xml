@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <changelog>
+    <release version="4.0" versioncode="26">
+        <change>
+            A new drawer menu has been added! Swipe from the left to open it.
+        </change>
+        <change>
+            The app is now much more stable! Internal rewriting has been done to ensure a more bug-free experience. Random crashes when adding/removing Pokémon should be fixed.
+        </change>
+        <change>
+            The app now supports multiple game languages! Go to Settings on the navigation drawer to change the language you want the information to be displayed in.
+        </change>
+        <change>
+            The UI has been slightly redesigned to feel less clausthrophobic and cramped. The UI now also fits better in low density screens, and icons will look sharper (a.k.a. as pixellated as in the game) on higher density screens.
+        </change>
+        <change>
+            Fixed some issues with "special" breeding Pokémon (like Nidoran F/M and Volbeat/Illumise).
+        </change>
+
+    </release>
     <release version="3.7" versioncode="22">
         <change>
             In an unexpected turn of events, a new update: MOVE DEX!

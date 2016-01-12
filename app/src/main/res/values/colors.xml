@@ -1,29 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!--<color name="primary">#009688</color>-->
-    <!--<color name="primary_dark">#00796B</color>-->
-    <!--<color name="primary_light">#B2DFDB</color>-->
-    <!--<color name="accent">#FF5722</color>-->
-    <!--<color name="primary_text">#212121</color>-->
-    <!--<color name="secondary_text">#727272</color>-->
-    <!--<color name="icons">#FFFFFF</color>-->
-    <!--<color name="divider">#B6B6B6</color>-->
-
-    <!--<color name="primary">#009688</color>-->
-    <!--<color name="primary_dark">#00796B</color>-->
-    <!--<color name="primary_light">#B2DFDB</color>-->
-    <!--<color name="accent">#607D8B</color>-->
     <color name="accent">#FF5252</color>
-    <color name="primary_text">#212121</color>
-    <color name="secondary_text">#727272</color>
+    <color name="primary_text">#DE000000</color>
+    <color name="secondary_text">#60000000</color>
     <color name="icons">#FFFFFF</color>
-    <color name="divider">#B6B6B6</color>
-    <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryDark">#00796B</color>
-    <!--<color name="accent">#607D8B</color>-->
-    <color name="colorAccent">#FF5252</color>
-
+    <color name="divider">#1F000000</color>
     <color name="white">#ffffff</color>
 
     <color name="background_light_blue">#E0EEEE</color>
@@ -33,7 +14,19 @@
     <color name="light_red">#FFFFBBBB</color>
 
 
-    <array name="type_colors">
+    <!--New Stuff Here-->
+    <color name="colorPrimary">#009688</color>
+    <color name="colorPrimaryDark">#00796B</color>
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <color name="colorAccent">#FF5252</color>
+
+    <color name="colorWhitebgText">#DE000000</color>
+    <color name="colorWhitebgSecondaryText">#89000000</color>
+    <color name="colorWhiteBgDisabledHint">#60000000</color>
+    <color name="colorWhiteBgSeparator">#1F000000</color>
+
+    <array name="colorPokemonTypes">
         <item>#A8A878</item>
         <item>#C03028</item>
         <item>#A890F0</item>
