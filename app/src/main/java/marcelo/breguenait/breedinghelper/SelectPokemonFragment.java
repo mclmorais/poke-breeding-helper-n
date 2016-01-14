@@ -382,7 +382,7 @@ public class SelectPokemonFragment extends PopupDialogFragment {
                         }
                     }
 
-                    if (showOnlyCompatible && addDittoLater)
+                    if (addDittoLater)
                         filteredArray.add(0, DITTO_ID);
 
 

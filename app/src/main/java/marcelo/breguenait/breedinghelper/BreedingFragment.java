@@ -296,6 +296,7 @@ public class BreedingFragment extends Fragment
 
     private StoredPokemon convertCompatPokemon(final PokemonInfo compatPokemon) {
 
+
         int pokemonId = compatPokemon.id;
         int genderId;
         switch (compatPokemon.gender) {
@@ -417,7 +418,10 @@ public class BreedingFragment extends Fragment
 
         jsonString = sharedPref.getString("jsonCurrentGoal", null);
         if (jsonString != null) {
-            breedingManager.replaceGoalObject(convertCompatPokemon(gson.fromJson(jsonString, PokemonInfo.class)));
+            PokemonInfo oldGoal = gson.fromJson(jsonString, PokemonInfo.class);
+            if(oldGoal != null) {
+                breedingManager.replaceGoalObject(convertCompatPokemon(oldGoal));
+            }
             sharedPref.edit().remove("jsonCurrentGoal").apply();
         } else {
             jsonString = sharedPref.getString("jsonBreedingManagerGoal", null);
@@ -428,12 +432,12 @@ public class BreedingFragment extends Fragment
 
         jsonString = sharedPref.getString("jsonPokemonList", null);
         if (jsonString != null) {
-            Type type = new TypeToken<List<PokemonInfo>>() {
-            }.getType();
+            Type type = new TypeToken<List<PokemonInfo>>() {}.getType();
             List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
             ArrayList<StoredPokemon> newList = new ArrayList<>(eggList.size());
             for (PokemonInfo pokemonInfo : eggList) {
-                newList.add(convertCompatPokemon(pokemonInfo));
+                if(pokemonInfo != null)
+                    newList.add(convertCompatPokemon(pokemonInfo));
             }
             breedingManager.replaceStoredPokemonObjects(newList);
             sharedPref.edit().remove("jsonPokemonList").apply();
