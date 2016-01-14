@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <changelog>
+    <release version="4.0b" versioncode="27">
+        <change>
+            Fixed an issue where Dittos wouldn't be selectable.
+        </change>
+        <change>
+            Fixed an issue where the app would crash when importing stored Pokémon from the previous version.
+        </change>
+
+    </release>
     <release version="4.0" versioncode="26">
         <change>
             A new drawer menu has been added! Swipe from the left to open it.
