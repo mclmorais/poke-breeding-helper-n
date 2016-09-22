@@ -49,13 +49,13 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             if (parent == spinnerNature) {
-                if (spinnerNature.getTag() != position) {
+                if (spinnerNature.getTag() != null && !spinnerNature.getTag().equals(position)) {
                     spinnerNature.setTag(-1);
                     InterfaceNature interfaceNature = (InterfaceNature) spinnerNature.getSelectedItem();
                     selectedNatureId = interfaceNature.id;
                 }
             } else if (parent == spinnerAbility) {
-                if (spinnerAbility.getTag() != position) {
+                if (spinnerAbility.getTag() != null && !spinnerAbility.getTag().equals(position)) {
                     spinnerAbility.setTag(-1);
                     selectedAbilitySlot = interfaceAbilities.get(position).abilitySlot;
                 }

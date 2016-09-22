@@ -77,12 +77,12 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             if (parent == spinnerNature) {
-                if (spinnerNature.getTag() != position) {
+                if (spinnerNature.getTag() != null && !spinnerNature.getTag().equals(position)) {
                     spinnerNature.setTag(-1);
                     updateGoalNature();
                 }
             } else if (parent == spinnerAbility) {
-                if (spinnerAbility.getTag() != position) {
+                if (spinnerAbility.getTag() != null && !spinnerAbility.getTag().equals(position)) {
                     spinnerAbility.setTag(-1);
                     updateGoalAbility();
                 }
