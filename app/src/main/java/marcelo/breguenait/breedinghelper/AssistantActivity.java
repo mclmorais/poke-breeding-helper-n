@@ -1,5 +1,6 @@
 package marcelo.breguenait.breedinghelper;
 
+import android.animation.LayoutTransition;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
@@ -11,14 +12,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,6 +30,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import breedingmanager.BreedingManager;
@@ -54,31 +59,65 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
 
     @Bind(R.id.buttonSelector)
     View buttonPokemonSelector;
+
+
+    @Bind(R.id.imageViewSelectedPokemonIcon)
+    ImageView selectedIcon;
+
+
     @Bind(R.id.layoutModifiers)
     LinearLayout layoutModifiers;
+
+    @Bind(R.id.buttonAddNature)
+    Button buttonAddNature;
+    @Bind(R.id.includeNature)
+    View includeNaturePicker;
+    @Bind(R.id.spinnerNature)
+    Spinner spinnerNature;
+    @Bind(R.id.buttonRemoveNature)
+    ImageButton buttonRemoveNature;
+
+    @Bind(R.id.buttonAddAbility)
+    Button buttonAddAbility;
+    @Bind(R.id.includeAbility)
+    View includeAbilityPicker;
+    @Bind(R.id.spinnerAbility)
+    Spinner spinnerAbility;
+    @Bind(R.id.buttonRemoveAbility)
+    ImageButton buttonRemoveAbility;
+
+
+
+
 
 
     private final View.OnClickListener onClickHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
             if (v == buttonPokemonSelector) {
                 openSelectPokemonFragment(v);
             }
             else if (v == buttonAddNature) {
-                LinearLayout item = (LinearLayout) findViewById(R.id.layoutModifiers);
-                Snackbar.make(item , "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                View child = getLayoutInflater().inflate(R.layout.inflatable_nature_picker, item);
-
+                includeNaturePicker.setVisibility(View.VISIBLE);
+                buttonAddNature.setEnabled(false);
+            }
+            else if (v == buttonRemoveNature) {
+                includeNaturePicker.setVisibility(View.GONE);
+                buttonAddNature.setEnabled(true);
+            }
+            else if (v == buttonAddAbility) {
+                includeAbilityPicker.setVisibility(View.VISIBLE);
+                buttonAddAbility.setEnabled(false);
+            }
+            else if (v == buttonRemoveAbility) {
+                includeAbilityPicker.setVisibility(View.GONE);
+                buttonAddAbility.setEnabled(true);
             }
 
         }
     };
-    @Bind(R.id.imageViewSelectedPokemonIcon)
-    ImageView selectedIcon;
 
-    @Bind(R.id.buttonAddNature)
-    Button buttonAddNature;
 
 //    @Bind(R.id.spinnerGoalIVsNatures)
 //    Spinner spinnerNature;
@@ -125,17 +164,17 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     private final Spinner.OnItemSelectedListener onSpinnerItemSelectedHandler = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//            if (parent == spinnerNature) {
-//                if (spinnerNature.getTag() != null && !spinnerNature.getTag().equals(position)) {
-//                    spinnerNature.setTag(-1);
-//                    updateGoalNature();
-//                }
-//            } else if (parent == spinnerAbility) {
-//                if (spinnerAbility.getTag() != null && !spinnerAbility.getTag().equals(position)) {
-//                    spinnerAbility.setTag(-1);
-//                    updateGoalAbility();
-//                }
-//            }
+            if (parent == spinnerNature) {
+                if (spinnerNature.getTag() != null && !spinnerNature.getTag().equals(position)) {
+                    spinnerNature.setTag(-1);
+                    updateGoalNature();
+                }
+            } else if (parent == spinnerAbility) {
+                if (spinnerAbility.getTag() != null && !spinnerAbility.getTag().equals(position)) {
+                    spinnerAbility.setTag(-1);
+                    updateGoalAbility();
+                }
+            }
         }
 
         @Override
@@ -165,6 +204,9 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         readData();
         buttonPokemonSelector.setOnClickListener(onClickHandler);
         buttonAddNature.setOnClickListener(onClickHandler);
+        buttonRemoveNature.setOnClickListener(onClickHandler);
+        buttonAddAbility.setOnClickListener(onClickHandler);
+        buttonRemoveAbility.setOnClickListener(onClickHandler);
 
 
         for (int i = 0; i < goalIVs.length; i++) {
@@ -174,9 +216,20 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         }
 
         feedInterface(breedingManager.getInterfaceGoalPokemon());
-//        spinnerNature.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
-//        spinnerAbility.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
+        spinnerNature.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
+        spinnerAbility.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
 
+//        ViewGroup layout = (ViewGroup) findViewById(R.id.layoutModifiers);
+//        LayoutTransition layoutTransition = layout.getLayoutTransition();
+//        layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
+//
+//        layout = (ViewGroup) findViewById(R.id.goalCardLayout);
+//        layoutTransition = layout.getLayoutTransition();
+//        layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
+//
+//        layout = (ViewGroup) findViewById(R.id.goalCardLayout);
+//        layoutTransition = layout.getLayoutTransition();
+//        layoutTransition.enableTransitionType(LayoutTransition.CHANGING);
 
     }
 
@@ -191,11 +244,11 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         feedDisplayedIcon(interfaceGoalPokemon.getPokemonId());
 
         interfaceNatures = breedingManager.getInterfaceNatures();
-        //spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, this));
-        //feedNatureSpinnerSelection(interfaceGoalPokemon.getNatureId());
+        spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, this));
+        feedNatureSpinnerSelection(interfaceGoalPokemon.getNatureId());
 
-        //feedAbilitySpinner();
-        //feedAbilitySpinnerSelection(interfaceGoalPokemon.getAbilitySlot());
+        feedAbilitySpinner();
+        feedAbilitySpinnerSelection(interfaceGoalPokemon.getAbilitySlot());
     }
 
     private void feedDisplayedName(String name) {
@@ -215,56 +268,56 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     }
 
     private void feedNatureSpinnerSelection(int natureId) {
-//
-//
-//        for (int i = 0; i < interfaceNatures.size(); i++) {
-//
-//            if (interfaceNatures.get(i).id == natureId) {
-//                spinnerNature.setTag(i);
-//                spinnerNature.setSelection(i);
-//                return;
-//            }
-//
-//        }
-//        Log.d("GoalFragment", "Received a pokemon with invalid nature");
+
+
+        for (int i = 0; i < interfaceNatures.size(); i++) {
+
+            if (interfaceNatures.get(i).id == natureId) {
+                spinnerNature.setTag(i);
+                spinnerNature.setSelection(i);
+                return;
+            }
+
+        }
+        Log.d("GoalFragment", "Received a pokemon with invalid nature");
 
     }
 
     private void feedAbilitySpinner() {
-//        if (spinnerAbility == null) return;
-//
-//        LinkedHashMap<Integer, String> abilities = breedingManager.getListOfGoalAbilities();
-//
-//        interfaceAbilities = new ArrayList<>();
-//
-//        //Transforms the slot -> name HashMap into a InterfaceAbility to be used as a list
-//        for (HashMap.Entry<Integer, String> entry : abilities.entrySet())
-//            interfaceAbilities.add(new InterfaceAbility(entry.getValue(), entry.getKey()));
-//
-//        spinnerAbility.setAdapter(new GoalPokemonFragment.AbilitySpinnerAdapter(interfaceAbilities, this));
+        if (spinnerAbility == null) return;
+
+        LinkedHashMap<Integer, String> abilities = breedingManager.getListOfGoalAbilities();
+
+        interfaceAbilities = new ArrayList<>();
+
+        //Transforms the slot -> name HashMap into a InterfaceAbility to be used as a list
+        for (HashMap.Entry<Integer, String> entry : abilities.entrySet())
+            interfaceAbilities.add(new InterfaceAbility(entry.getValue(), entry.getKey()));
+
+        spinnerAbility.setAdapter(new GoalPokemonFragment.AbilitySpinnerAdapter(interfaceAbilities, this));
     }
 
     private void feedAbilitySpinnerSelection(int abilitySlot) {
 
-//        //If the slot is valid
-//        if (DatabaseConstants.abilitySlotIsValid(abilitySlot)) {
-//            //Searches the interfaceAbilities for a one that corresponds to the goal slot
-//            int position = -1;
-//            for (int i = 0; i < interfaceAbilities.size(); i++) {
-//                if (interfaceAbilities.get(i).abilitySlot == abilitySlot) {
-//                    position = i;
-//                    break;
-//                }
-//            }
-//            if (position != -1) {
-//                //If it has been found, sets the spinner to that position
-//                spinnerAbility.setTag(position);
-//                spinnerAbility.setSelection(position);
-//            } else {
-//                Log.d("GOAL", "AbilitySlot " + String.valueOf(abilitySlot) +
-//                        " wasn't found in InterfaceAbilities.");
-//            }
-//        }
+        //If the slot is valid
+        if (DatabaseConstants.abilitySlotIsValid(abilitySlot)) {
+            //Searches the interfaceAbilities for a one that corresponds to the goal slot
+            int position = -1;
+            for (int i = 0; i < interfaceAbilities.size(); i++) {
+                if (interfaceAbilities.get(i).abilitySlot == abilitySlot) {
+                    position = i;
+                    break;
+                }
+            }
+            if (position != -1) {
+                //If it has been found, sets the spinner to that position
+                spinnerAbility.setTag(position);
+                spinnerAbility.setSelection(position);
+            } else {
+                Log.d("GOAL", "AbilitySlot " + String.valueOf(abilitySlot) +
+                        " wasn't found in InterfaceAbilities.");
+            }
+        }
     }
 
     private void openSelectPokemonFragment(View view) {
@@ -518,17 +571,17 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     }
 
     private void updateGoalNature() {
-//        InterfaceNature interfaceNature = (InterfaceNature) spinnerNature.getSelectedItem();
-//        breedingManager.setGoalNature(interfaceNature.id);
+        InterfaceNature interfaceNature = (InterfaceNature) spinnerNature.getSelectedItem();
+        breedingManager.setGoalNature(interfaceNature.id);
     }
 
     private void updateGoalAbility() {
-//
-//        int spinnerPosition = spinnerAbility.getSelectedItemPosition();
-//
-//        int abilitySlot = interfaceAbilities.get(spinnerPosition).abilitySlot;
-//
-//        breedingManager.setGoalAbilitySlot(abilitySlot);
+
+        int spinnerPosition = spinnerAbility.getSelectedItemPosition();
+
+        int abilitySlot = interfaceAbilities.get(spinnerPosition).abilitySlot;
+
+        breedingManager.setGoalAbilitySlot(abilitySlot);
 
     }
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false">
+
+    <TextView
+        android:layout_marginLeft="4dp"
+        android:id="@+id/natureLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/label_nature_sans_colon"
+        android:typeface="normal"
+        android:textStyle="normal|bold"
+        android:fontFamily="sans-serif-condensed" />
+
+    <ImageButton
+        android:id="@+id/buttonRemoveNature"
+        style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="32dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/natureLabel"
+        android:src="@drawable/ic_close"
+        android:tint="@color/accent" />
+
+    <Spinner
+        android:id="@+id/spinnerNature"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/natureLabel"
+        android:layout_toLeftOf="@id/buttonRemoveNature"
+        android:dropDownWidth="200dp"
+        android:gravity="fill"
+        android:minWidth="160dp" />
+
+</RelativeLayout>
