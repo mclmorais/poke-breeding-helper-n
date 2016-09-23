@@ -8,32 +8,43 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import breedingmanager.BreedingManager;
 import breedingmanager.StoredPokemon;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import databasemanager.DatabaseConstants;
 import databasemanager.MyDatabase;
 
-public class AssistantActivity extends AppCompatActivity {
+public class AssistantActivity extends AppCompatActivity implements SelectPokemonFragment.OnPokemonSelectedListener, SelectPokemonFragment.FeedDataSelectPokemon {
 
     private final BreedingManager breedingManager = new BreedingManager();
     private final Gson gson = new Gson();
+
+    ArrayList<InterfaceNature> interfaceNatures;
+    ArrayList<InterfaceAbility> interfaceAbilities;
 
     @Bind({R.id.checkBoxGoalHP,
             R.id.checkBoxGoalATK,
@@ -49,7 +60,7 @@ public class AssistantActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (v == buttonPokemonSelector) {
-                //openSelectPokemonFragment(v);
+                openSelectPokemonFragment(v);
             }
 
         }
@@ -66,6 +77,59 @@ public class AssistantActivity extends AppCompatActivity {
     SwitchCompat checkBoxActivateAbilities;
     @Bind(R.id.textViewPokemonName)
     TextView selectedName;
+
+    private final CheckBox.OnCheckedChangeListener onCheckBoxCheckHandler = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (buttonView == checkBoxActivateNatures) {
+                //updaterCallback.updateNatureStatus(isChecked);
+                String s;
+                if (isChecked)
+                    s = getString(R.string.message_nature_considered);
+                else
+                    s = getString(R.string.message_nature_ignored);
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+            } else if (buttonView == checkBoxActivateAbilities) {
+                //updaterCallback.updateAbilityStatus(isChecked);
+                String s;
+                if (isChecked)
+                    s = getString(R.string.message_ability_considered);
+                else
+                    s = getString(R.string.message_ability_ignored);
+
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+            }
+
+            for (CheckBox goalIVsCheckBox : goalIVs) {
+                if (buttonView == goalIVsCheckBox) {
+                    updateGoalIVs();
+                    return;
+                }
+            }
+        }
+    };
+
+    private final Spinner.OnItemSelectedListener onSpinnerItemSelectedHandler = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            if (parent == spinnerNature) {
+                if (spinnerNature.getTag() != null && !spinnerNature.getTag().equals(position)) {
+                    spinnerNature.setTag(-1);
+                    updateGoalNature();
+                }
+            } else if (parent == spinnerAbility) {
+                if (spinnerAbility.getTag() != null && !spinnerAbility.getTag().equals(position)) {
+                    spinnerAbility.setTag(-1);
+                    updateGoalAbility();
+                }
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,14 +150,16 @@ public class AssistantActivity extends AppCompatActivity {
 
         //Custom content
         readData();
+        buttonPokemonSelector.setOnClickListener(onClickHandler);
+        for (int i = 0; i < goalIVs.length; i++) {
+            removeRippleEffectFromCheckBox(goalIVs[i]);
+            goalIVs[i].setChecked(breedingManager.getGoalObject().getIVs()[i] == 1);
+            goalIVs[i].setOnCheckedChangeListener(onCheckBoxCheckHandler);
+        }
 
-
-
-
-
-
-
-
+        feedInterface(breedingManager.getInterfaceGoalPokemon());
+        spinnerNature.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
+        spinnerAbility.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
 
 
     }
@@ -104,6 +170,96 @@ public class AssistantActivity extends AppCompatActivity {
         saveData();
     }
 
+    private void feedInterface(GoalPokemonFragment.InterfaceGoalPokemon interfaceGoalPokemon) {
+        feedDisplayedName(interfaceGoalPokemon.getPokemonName());
+        feedDisplayedIcon(interfaceGoalPokemon.getPokemonId());
+
+        interfaceNatures = breedingManager.getInterfaceNatures();
+        spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, this));
+        feedNatureSpinnerSelection(interfaceGoalPokemon.getNatureId());
+
+        feedAbilitySpinner();
+        feedAbilitySpinnerSelection(interfaceGoalPokemon.getAbilitySlot());
+    }
+
+    private void feedDisplayedName(String name) {
+
+        //If not initialized (""): doesn't update
+
+        if (!name.equals(""))
+            selectedName.setText(name);
+    }
+
+    private void feedDisplayedIcon(int id) {
+
+        if (DatabaseConstants.pokemonIdIsValid(id)) { //TODO: fazer 0 < x < limite
+            String iconId = "pkmn_big_" + String.format("%03d", id);
+            selectedIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getPackageName()));
+        }
+    }
+
+    private void feedNatureSpinnerSelection(int natureId) {
+
+
+        for (int i = 0; i < interfaceNatures.size(); i++) {
+
+            if (interfaceNatures.get(i).id == natureId) {
+                spinnerNature.setTag(i);
+                spinnerNature.setSelection(i);
+                return;
+            }
+
+        }
+        Log.d("GoalFragment", "Received a pokemon with invalid nature");
+
+    }
+
+    private void feedAbilitySpinner() {
+        if (spinnerAbility == null) return;
+
+        LinkedHashMap<Integer, String> abilities = breedingManager.getListOfGoalAbilities();
+
+        interfaceAbilities = new ArrayList<>();
+
+        //Transforms the slot -> name HashMap into a InterfaceAbility to be used as a list
+        for (HashMap.Entry<Integer, String> entry : abilities.entrySet())
+            interfaceAbilities.add(new InterfaceAbility(entry.getValue(), entry.getKey()));
+
+        spinnerAbility.setAdapter(new GoalPokemonFragment.AbilitySpinnerAdapter(interfaceAbilities, this));
+    }
+
+    private void feedAbilitySpinnerSelection(int abilitySlot) {
+
+        //If the slot is valid
+        if (DatabaseConstants.abilitySlotIsValid(abilitySlot)) {
+            //Searches the interfaceAbilities for a one that corresponds to the goal slot
+            int position = -1;
+            for (int i = 0; i < interfaceAbilities.size(); i++) {
+                if (interfaceAbilities.get(i).abilitySlot == abilitySlot) {
+                    position = i;
+                    break;
+                }
+            }
+            if (position != -1) {
+                //If it has been found, sets the spinner to that position
+                spinnerAbility.setTag(position);
+                spinnerAbility.setSelection(position);
+            } else {
+                Log.d("GOAL", "AbilitySlot " + String.valueOf(abilitySlot) +
+                        " wasn't found in InterfaceAbilities.");
+            }
+        }
+    }
+
+    private void openSelectPokemonFragment(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        SelectPokemonFragment selectPokemonFragment = new SelectPokemonFragment();
+        Bundle b = addPositionAsArguments(view);
+        selectPokemonFragment.setArguments(b);;
+        selectPokemonFragment.show(fm, "");
+    }
+
+
     private void readData() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         String jsonString;
@@ -112,7 +268,7 @@ public class AssistantActivity extends AppCompatActivity {
         jsonString = sharedPref.getString("jsonCurrentGoal", null);
         if (jsonString != null) {
             PokemonInfo oldGoal = gson.fromJson(jsonString, PokemonInfo.class);
-            if(oldGoal != null) {
+            if (oldGoal != null) {
                 breedingManager.replaceGoalObject(convertCompatPokemon(oldGoal));
             }
             sharedPref.edit().remove("jsonCurrentGoal").apply();
@@ -125,11 +281,12 @@ public class AssistantActivity extends AppCompatActivity {
 
         jsonString = sharedPref.getString("jsonPokemonList", null);
         if (jsonString != null) {
-            Type type = new TypeToken<List<PokemonInfo>>() {}.getType();
+            Type type = new TypeToken<List<PokemonInfo>>() {
+            }.getType();
             List<PokemonInfo> eggList = gson.fromJson(jsonString, type);
             ArrayList<StoredPokemon> newList = new ArrayList<>(eggList.size());
             for (PokemonInfo pokemonInfo : eggList) {
-                if(pokemonInfo != null)
+                if (pokemonInfo != null)
                     newList.add(convertCompatPokemon(pokemonInfo));
             }
             breedingManager.replaceStoredPokemonObjects(newList);
@@ -169,6 +326,7 @@ public class AssistantActivity extends AppCompatActivity {
         breedingManager.setLanguageId(gameLanguage);
 
     }
+
     private void saveData() {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -211,6 +369,7 @@ public class AssistantActivity extends AppCompatActivity {
 
 
     }
+
 
     private StoredPokemon convertCompatPokemon(final PokemonInfo compatPokemon) {
 
@@ -328,6 +487,35 @@ public class AssistantActivity extends AppCompatActivity {
 
     }
 
+
+    public void updateGoalIVs() {
+
+
+        int[] IVs = new int[6];
+
+        for (int i = 0; i < 6; i++) {
+            IVs[i] = goalIVs[i].isChecked() ? 1 : 0;
+        }
+
+        breedingManager.setGoalIVs(IVs);
+        //updateLuckFragment();
+    }
+
+    private void updateGoalNature() {
+        InterfaceNature interfaceNature = (InterfaceNature) spinnerNature.getSelectedItem();
+        breedingManager.setGoalNature(interfaceNature.id);
+    }
+
+    private void updateGoalAbility() {
+
+        int spinnerPosition = spinnerAbility.getSelectedItemPosition();
+
+        int abilitySlot = interfaceAbilities.get(spinnerPosition).abilitySlot;
+
+        breedingManager.setGoalAbilitySlot(abilitySlot);
+
+    }
+
     private void removeRippleEffectFromCheckBox(CheckBox checkBox) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Drawable drawable = checkBox.getBackground();
@@ -337,5 +525,56 @@ public class AssistantActivity extends AppCompatActivity {
             }
         }
     }
+
+    private Bundle addPositionAsArguments(View v) {
+        int callerViewPosition[] = new int[2];
+        v.getLocationOnScreen(callerViewPosition);
+        Bundle b = new Bundle();
+        b.putInt("x", callerViewPosition[0]);
+        b.putInt("y", callerViewPosition[1]);
+        return b;
+    }
+
+    @Override
+    public void onPokemonSelected(int id) {
+        breedingManager.setGoalId(id);
+        feedInterface(breedingManager.getInterfaceGoalPokemon());
+    }
+
+    @Override
+    public boolean showEggGroupFilter() {
+        return false;
+    }
+
+    @Override
+    public boolean showOnlyBasic() {
+        return true;
+    }
+
+    @Override
+    public ArrayList<Integer> getPokemonIds() {
+        return breedingManager.getPokemonIds();
+    }
+
+    @Override
+    public ArrayList<String> getPokemonNames() {
+        return breedingManager.getPokemonNames();
+    }
+
+    @Override
+    public ArrayList<Integer> getCompatiblePokemonList() {
+        return breedingManager.getCompatiblePokemonList(breedingManager.getGoalId());
+    }
+
+    @Override
+    public ArrayList<Integer> getBasicPokemonList() {
+        return breedingManager.getBasicPokemonList();
+    }
+
+    @Override
+    public ArrayList<Integer> getPokemonFamilyList() {
+        return breedingManager.getPokemonFamilyList(breedingManager.getGoalId());
+    }
+
 }
 

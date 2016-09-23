@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/label_nature_sans_colon"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        android:layout_below="@+id/LayoutIVs"
+        android:layout_alignLeft="@+id/spinnerGoalIVsNatures"
+        android:layout_alignStart="@+id/spinnerGoalIVsNatures"
+
+        android:textColor="@color/colorWhiteBgDisabledHint" />
+
+    <Spinner
+        android:id="@+id/spinnerGoalIVsNatures"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="fill"
+        android:minWidth="160dp"
+        android:dropDownWidth="200dp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/floatingDeleteNature"
+        android:layout_toLeftOf="@+id/floatingDeleteNature" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingDeleteNature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_close_dark"
+        app:backgroundTint="@color/colorAccent"
+        android:layout_alignBottom="@+id/spinnerGoalIVsNatures"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
