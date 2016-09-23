@@ -46,7 +46,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             R.id.checkBoxGoalSPD})
     CheckBox[] goalIVs;
 
-    @Bind(R.id.frameLayoutPokemonSelectorButton)
+    @Bind(R.id.buttonSelector)
     View buttonPokemonSelector;
     private final View.OnClickListener onClickHandler = new View.OnClickListener() {
         @Override
