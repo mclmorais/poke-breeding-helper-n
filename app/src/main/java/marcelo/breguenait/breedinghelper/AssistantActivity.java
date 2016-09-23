@@ -13,9 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -51,17 +54,32 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
 
     @Bind(R.id.buttonSelector)
     View buttonPokemonSelector;
+    @Bind(R.id.layoutModifiers)
+    LinearLayout layoutModifiers;
+
+
     private final View.OnClickListener onClickHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             if (v == buttonPokemonSelector) {
                 openSelectPokemonFragment(v);
             }
+            else if (v == buttonAddNature) {
+                LinearLayout item = (LinearLayout) findViewById(R.id.layoutModifiers);
+                Snackbar.make(item , "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                View child = getLayoutInflater().inflate(R.layout.inflatable_nature_picker, item);
+
+            }
 
         }
     };
     @Bind(R.id.imageViewSelectedPokemonIcon)
     ImageView selectedIcon;
+
+    @Bind(R.id.buttonAddNature)
+    Button buttonAddNature;
+
 //    @Bind(R.id.spinnerGoalIVsNatures)
 //    Spinner spinnerNature;
 //    @Bind(R.id.spinnerGoalIVsAbilities)
@@ -146,6 +164,9 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         //Custom content
         readData();
         buttonPokemonSelector.setOnClickListener(onClickHandler);
+        buttonAddNature.setOnClickListener(onClickHandler);
+
+
         for (int i = 0; i < goalIVs.length; i++) {
             removeRippleEffectFromCheckBox(goalIVs[i]);
             goalIVs[i].setChecked(breedingManager.getGoalObject().getIVs()[i] == 1);

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:clipChildren="false"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -32,14 +34,19 @@
         android:layout_toStartOf="@+id/floatingDeleteNature"
         android:layout_toLeftOf="@+id/floatingDeleteNature" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.melnykov.fab.FloatingActionButton
         android:id="@+id/floatingDeleteNature"
-        android:layout_width="wrap_content"
+        fab:fab_colorNormal="@color/colorAccent"
+        fab:fab_colorPressed="@color/colorPrimaryDark"
+        fab:fab_type="mini"
+        fab:fab_shadow="false"
+        fab:fabSize="auto"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_close_dark"
-        app:backgroundTint="@color/colorAccent"
+        android:layout_marginRight="4dp"
+        android:src="@drawable/ic_close_dark"
         android:layout_alignBottom="@+id/spinnerGoalIVsNatures"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_width="64dp" />
 
 </RelativeLayout>
