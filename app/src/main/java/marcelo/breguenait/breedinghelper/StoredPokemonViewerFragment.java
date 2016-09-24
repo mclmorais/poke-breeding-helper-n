@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.UUID;
 
+import breedingmanager.NatureManager;
 import databasemanager.DatabaseConstants;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -343,7 +344,7 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
     }
 
     @Override
-    public ArrayList<InterfaceNature> getInterfaceNatures() {
+    public ArrayList<NatureManager.VerboseNature> getInterfaceNatures() {
         return feederCallback.getInterfaceNatures();
     }
 
@@ -367,7 +368,7 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
 
         InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid);
 
-        ArrayList<InterfaceNature> getInterfaceNatures();
+        ArrayList<NatureManager.VerboseNature> getInterfaceNatures();
     }
 
 

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "marcelo.breguenait.breedinghelper"
+        applicationId "marcelo.breguenait.breedinghelper.development"
         minSdkVersion 16
         targetSdkVersion 24
         versionCode 27

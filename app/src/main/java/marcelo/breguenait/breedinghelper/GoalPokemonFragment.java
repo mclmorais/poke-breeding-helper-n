@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import breedingmanager.NatureManager;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import databasemanager.DatabaseConstants;
@@ -69,7 +70,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     SwitchCompat checkBoxActivateAbilities;
     @Bind(R.id.textViewPokemonName)
     TextView selectedName;
-    ArrayList<InterfaceNature> interfaceNatures;
+    ArrayList<NatureManager.VerboseNature> verboseNatures;
     ArrayList<InterfaceAbility> interfaceAbilities;
     private FeedDataGoalIVs feederCallback;
     private UpdateGoal updaterCallback;
@@ -152,8 +153,8 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
             goalIVs[i].setOnCheckedChangeListener(onCheckBoxCheckHandler);
         }
 
-        interfaceNatures = feederCallback.getInterfaceNatures();
-        spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, getContext()));
+        verboseNatures = feederCallback.getInterfaceNatures();
+        spinnerNature.setAdapter(new NatureSpinnerAdapter(verboseNatures, getContext()));
         spinnerNature.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
 
         spinnerAbility.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
@@ -170,8 +171,8 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
     }
 
     private void updateGoalNature() {
-        InterfaceNature interfaceNature = (InterfaceNature) spinnerNature.getSelectedItem();
-        updaterCallback.updateGoalNature(interfaceNature.id);
+        NatureManager.VerboseNature verboseNature = (NatureManager.VerboseNature) spinnerNature.getSelectedItem();
+        updaterCallback.updateGoalNature(verboseNature.id);
     }
 
     private void updateGoalAbility() {
@@ -222,9 +223,9 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
     private void feedNatureSpinnerSelection(int natureId) {
 
-        for (int i = 0; i < interfaceNatures.size(); i++) {
+        for (int i = 0; i < verboseNatures.size(); i++) {
 
-            if (interfaceNatures.get(i).id == natureId) {
+            if (verboseNatures.get(i).id == natureId) {
                 spinnerNature.setTag(i);
                 spinnerNature.setSelection(i);
                 return;
@@ -352,7 +353,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
     interface FeedDataGoalIVs {
 
-        ArrayList<InterfaceNature> getInterfaceNatures();
+        ArrayList<NatureManager.VerboseNature> getInterfaceNatures();
 
         LinkedHashMap<Integer, String> getListOfGoalAbilities();
 

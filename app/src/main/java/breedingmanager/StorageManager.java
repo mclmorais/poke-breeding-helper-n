@@ -10,11 +10,8 @@ import java.util.UUID;
 
 import databasemanager.DatabaseConstants;
 import databasemanager.MyDatabase;
-import marcelo.breguenait.breedinghelper.AssistantActivity;
 import marcelo.breguenait.breedinghelper.ChanceFragment;
-import marcelo.breguenait.breedinghelper.GoalPokemonFragment;
 import marcelo.breguenait.breedinghelper.InterfaceModifierPokemon;
-import marcelo.breguenait.breedinghelper.InterfaceNature;
 import marcelo.breguenait.breedinghelper.StoredPokemonFragment;
 import marcelo.breguenait.breedinghelper.StoredPokemonViewerFragment;
 
@@ -23,8 +20,6 @@ import marcelo.breguenait.breedinghelper.StoredPokemonViewerFragment;
 public class StorageManager {
 
     private final MyDatabase database;
-    private final IvChanceCalculator ivChanceCalculator;
-    private final NatureChanceCalculator natureChanceCalculator;
     private final AbilityChanceCalculator abilityChanceCalculator;
     private final BreedingCompatibilityChecker breedingCompatibilityChecker;
     private int languageId = 9;
@@ -34,8 +29,6 @@ public class StorageManager {
     private ArrayList<StoredPokemon> storedPokemonList = new ArrayList<>();
 
     public StorageManager() {
-        ivChanceCalculator = new IvChanceCalculator();
-        natureChanceCalculator = new NatureChanceCalculator();
         abilityChanceCalculator = new AbilityChanceCalculator();
         breedingCompatibilityChecker = new BreedingCompatibilityChecker();
         goalPokemon = new StoredPokemon.Builder().createStoredPokemon();
@@ -51,72 +44,72 @@ public class StorageManager {
         this.destinyKnot = destinyKnot;
     }
 
-    public ArrayList<ChancePokemonMatch> calculateBestMatches() {
-
-        //Doesn't do any calculations if the goal Pokemon isn't set
-        if (goalPokemon.getPokemonId() == -1)
-            return new ArrayList<>(0);
-
-        ArrayList<ChancePokemonMatch> chancePokemonMatchList = new ArrayList<>();
-
-        //Runs through all possible different combinations of pokémon
-        for (int i = 0; i < storedPokemonList.size(); i++) {
-            StoredPokemon firstPokemon = storedPokemonList.get(i);
-
-            for (int j = (i + 1); j < storedPokemonList.size(); j++) {
-                StoredPokemon secondPokemon = storedPokemonList.get(j);
-
-                //Checks for gender/family/egg group compatibility
-                if (breedingCompatibilityChecker.
-                        checkCompatibility(firstPokemon, secondPokemon, goalPokemon)) {
-
-                    //Gets raw iv chance
-                    double chance = ivChanceCalculator.getIvChance(
-                            firstPokemon.getIVs(),
-                            secondPokemon.getIVs(),
-                            goalPokemon.getIVs(),
-                            destinyKnot);
-
-                    //Adds nature chance multiplier
-                    chance = natureChanceCalculator.getNatureChance(
-                            firstPokemon,
-                            secondPokemon,
-                            goalPokemon,
-                            chance);
-
-                    //Adds ability chance multiplier
-                    chance = abilityChanceCalculator.getAbilityChance(
-                            firstPokemon,
-                            secondPokemon,
-                            goalPokemon,
-                            chance);
-
-                    //Adds chance to list
-                    if (chance > 0.0d)
-                        chancePokemonMatchList.add(
-                                new ChancePokemonMatch(
-                                        firstPokemon.getUUID(),
-                                        secondPokemon.getUUID(),
-                                        chance));
-                }
-            }
-        }
-
-        class ChanceComparator implements Comparator<ChancePokemonMatch> {
-            @Override
-            public int compare(ChancePokemonMatch e1, ChancePokemonMatch e2) {
-                return Double.compare(e1.getChance(), e2.getChance());
-            }
-        }
-
-        //Sorts list by biggest to smallest chance
-        if (!chancePokemonMatchList.isEmpty()) {
-            Collections.sort(chancePokemonMatchList, new ChanceComparator());
-            Collections.reverse(chancePokemonMatchList);
-        }
-
-        return chancePokemonMatchList;
-    }
+//    public ArrayList<ChancePokemonMatch> calculateBestMatches() {
+//
+//        //Doesn't do any calculations if the goal Pokemon isn't set
+//        if (goalPokemon.getPokemonId() == -1)
+//            return new ArrayList<>(0);
+//
+//        ArrayList<ChancePokemonMatch> chancePokemonMatchList = new ArrayList<>();
+//
+//        //Runs through all possible different combinations of pokémon
+//        for (int i = 0; i < storedPokemonList.size(); i++) {
+//            StoredPokemon firstPokemon = storedPokemonList.get(i);
+//
+//            for (int j = (i + 1); j < storedPokemonList.size(); j++) {
+//                StoredPokemon secondPokemon = storedPokemonList.get(j);
+//
+//                //Checks for gender/family/egg group compatibility
+//                if (breedingCompatibilityChecker.
+//                        checkCompatibility(firstPokemon, secondPokemon, goalPokemon)) {
+//
+//                    //Gets raw iv chance
+//                    double chance = ivChanceCalculator.getIvChance(
+//                            firstPokemon.getIVs(),
+//                            secondPokemon.getIVs(),
+//                            goalPokemon.getIVs(),
+//                            destinyKnot);
+//
+//                    //Adds nature chance multiplier
+//                    chance = natureChanceCalculator.getNatureChance(
+//                            firstPokemon,
+//                            secondPokemon,
+//                            goalPokemon,
+//                            chance);
+//
+//                    //Adds ability chance multiplier
+//                    chance = abilityChanceCalculator.getAbilityChance(
+//                            firstPokemon,
+//                            secondPokemon,
+//                            goalPokemon,
+//                            chance);
+//
+//                    //Adds chance to list
+//                    if (chance > 0.0d)
+//                        chancePokemonMatchList.add(
+//                                new ChancePokemonMatch(
+//                                        firstPokemon.getUUID(),
+//                                        secondPokemon.getUUID(),
+//                                        chance));
+//                }
+//            }
+//        }
+//
+//        class ChanceComparator implements Comparator<ChancePokemonMatch> {
+//            @Override
+//            public int compare(ChancePokemonMatch e1, ChancePokemonMatch e2) {
+//                return Double.compare(e1.getChance(), e2.getChance());
+//            }
+//        }
+//
+//        //Sorts list by biggest to smallest chance
+//        if (!chancePokemonMatchList.isEmpty()) {
+//            Collections.sort(chancePokemonMatchList, new ChanceComparator());
+//            Collections.reverse(chancePokemonMatchList);
+//        }
+//
+//        return chancePokemonMatchList;
+//    }
 
     @SuppressWarnings("unused")
     public void setGoalGender(int genderId) {
@@ -159,35 +152,6 @@ public class StorageManager {
                 .createStoredPokemon();
 
         storedPokemonList.add(newPokemon);
-    }
-
-    public ArrayList<InterfaceNature> getInterfaceNatures() {
-
-        ArrayList<InterfaceNature> interfaceNatures = new ArrayList<>();
-
-        LinkedHashMap<Integer, String> sortedNatureNames = database.getNatureNames(languageId);
-
-
-        ArrayList<Integer> sortedIds = database.getNatureIdsSortedByIncreasedStat();
-
-        for (Integer sortedId : sortedIds) {
-            String increasedStatName = database.getNatureChangedStatName(sortedId, languageId, true);
-            String decreasedStatName = database.getNatureChangedStatName(sortedId, languageId, false);
-
-            interfaceNatures.add(new InterfaceNature(
-                    sortedId, sortedNatureNames.get(sortedId), increasedStatName, decreasedStatName
-            ));
-        }
-
-        return interfaceNatures;
-    }
-
-    public LinkedHashMap<Integer, String> getListOfGoalAbilities() {
-        return database.getListOfAbilitiesNames(goalPokemon.getPokemonId(), languageId);
-    }
-
-    public LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId) {
-        return database.getListOfAbilitiesNames(pokemonId, languageId);
     }
 
     public int getGenderRate(int pokemonId) {
@@ -371,7 +335,7 @@ public class StorageManager {
         return storedPokemonList;
     }
 
-    public StoredPokemon getGoalObject() {
+    public final StoredPokemon getGoalObject() {
         return goalPokemon;
     }
 
@@ -383,28 +347,14 @@ public class StorageManager {
         this.goalPokemon = goalPokemon;
     }
 
-    public void setConsiderNature(boolean b) {
-        natureChanceCalculator.setConsiderNature(b);
-    }
 
-    public void setConsiderAbility(boolean b) {
-        abilityChanceCalculator.setConsiderAbility(b);
-    }
-
-    public boolean considerAbility() {
-        return abilityChanceCalculator.considerAbility();
-    }
-
-    public boolean considerNature() {
-        return natureChanceCalculator.considerNature();
-    }
 
     public boolean hasEverstone() {
-        return natureChanceCalculator.hasEverstone();
+        return false;//natureChanceCalculator.hasEverstone();
     }
 
     public void setEverstone(boolean b) {
-        natureChanceCalculator.setHasEverstone(b);
+        //natureChanceCalculator.setHasEverstone(b);
     }
 
     public void setLanguageId(int languageId) {

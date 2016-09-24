@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import breedingmanager.AbilityManager;
+import breedingmanager.NatureManager;
 import breedingmanager.StorageManager;
 import breedingmanager.StoredPokemon;
 import butterknife.Bind;
@@ -41,9 +43,11 @@ import databasemanager.MyDatabase;
 public class AssistantActivity extends AppCompatActivity implements SelectPokemonFragment.OnPokemonSelectedListener, SelectPokemonFragment.FeedDataSelectPokemon {
 
     private final StorageManager storageManager = new StorageManager();
+    private final NatureManager natureManager = new NatureManager();
+    private final AbilityManager abilityManager = new AbilityManager();
     private final Gson gson = new Gson();
 
-    ArrayList<InterfaceNature> interfaceNatures;
+    ArrayList<NatureManager.VerboseNature> verboseNatures;
     ArrayList<InterfaceAbility> interfaceAbilities;
 
     @Bind({R.id.checkBoxGoalHP,
@@ -165,8 +169,8 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         spinnerNature.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
         spinnerAbility.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
 
-        setModifierNatureActive(storageManager.considerNature());
-        setModifierAbilityActive(storageManager.considerAbility());
+        setModifierNatureActive(natureManager.getNatureModifier());
+        setModifierAbilityActive(abilityManager.getAbilityModifier());
 
     }
 
@@ -205,16 +209,16 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     }
 
     private void feedNatureSpinner() {
-        interfaceNatures = storageManager.getInterfaceNatures();
-        spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, this));
+        verboseNatures = natureManager.getInterfaceNatures();
+        spinnerNature.setAdapter(new NatureSpinnerAdapter(verboseNatures, this));
     }
 
     private void feedNatureSpinnerSelection(int natureId) {
 
 
-        for (int i = 0; i < interfaceNatures.size(); i++) {
+        for (int i = 0; i < verboseNatures.size(); i++) {
 
-            if (interfaceNatures.get(i).id == natureId) {
+            if (verboseNatures.get(i).id == natureId) {
                 spinnerNature.setTag(i);
                 spinnerNature.setSelection(i);
                 return;
@@ -228,7 +232,8 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     private void feedAbilitySpinner() {
         if (spinnerAbility == null) return;
 
-        LinkedHashMap<Integer, String> abilities = storageManager.getListOfGoalAbilities();
+        int goalId = storageManager.getGoalId();
+        LinkedHashMap<Integer, String> abilities = abilityManager.getListOfAbilities(goalId);
 
         interfaceAbilities = new ArrayList<>();
 
@@ -273,13 +278,13 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     private void setModifierNatureActive(Boolean choice) {
         includeNaturePicker.setVisibility(choice ? View.VISIBLE : View.GONE);
         buttonAddNature.setEnabled(!choice);
-        storageManager.setConsiderNature(choice);
+        natureManager.setNatureModifier(choice);
     }
 
     private void setModifierAbilityActive(Boolean choice) {
         includeAbilityPicker.setVisibility(choice ? View.VISIBLE : View.GONE);
         buttonAddAbility.setEnabled(!choice);
-        storageManager.setConsiderAbility(choice);
+        abilityManager.setAbilityModifier(choice);
     }
 
     private void readData() {
@@ -331,12 +336,12 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
 
         jsonString = sharedPref.getString("jsonConsiderNature", null);
         if (jsonString != null) {
-            storageManager.setConsiderNature(gson.fromJson(jsonString, Boolean.class));
+            natureManager.setNatureModifier(gson.fromJson(jsonString, Boolean.class));
         }
 
         jsonString = sharedPref.getString("jsonConsiderAbility", null);
         if (jsonString != null) {
-            storageManager.setConsiderAbility(gson.fromJson(jsonString, Boolean.class));
+            abilityManager.setAbilityModifier(gson.fromJson(jsonString, Boolean.class));
         }
 
         jsonString = sharedPref.getString("jsonMaleItem", null); //POR ENQUANTO ARMAZENA O DESTINY KNOT!
@@ -366,10 +371,10 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         jsonString = gson.toJson(storageManager.hasEverstone());
         prefEditor.putString("jsonHasEverstone", jsonString);
 
-        jsonString = gson.toJson(storageManager.considerNature());
+        jsonString = gson.toJson(natureManager.getNatureModifier());
         prefEditor.putString("jsonConsiderNature", jsonString);
 
-        jsonString = gson.toJson(storageManager.considerAbility());
+        jsonString = gson.toJson(abilityManager.getAbilityModifier());
         prefEditor.putString("jsonConsiderAbility", jsonString);
 
         jsonString = gson.toJson(storageManager.hasDestinyKnot());
@@ -519,9 +524,9 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     }
 
     private void updateGoalNature() {
-        InterfaceNature interfaceNature = (InterfaceNature) spinnerNature.getSelectedItem();
-        storageManager.setGoalNature(interfaceNature.id);
-        storageManager.setConsiderNature(true);
+        NatureManager.VerboseNature verboseNature = (NatureManager.VerboseNature) spinnerNature.getSelectedItem();
+        storageManager.setGoalNature(verboseNature.id);
+        natureManager.setNatureModifier(true);
     }
 
     private void updateGoalAbility() {
@@ -562,7 +567,7 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
 
     @Override
     public boolean showOnlyBasic() {
-        return true;
+        return false;
     }
 
     @Override

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.UUID;
 
+import breedingmanager.NatureManager;
 import databasemanager.DatabaseConstants;
 
 //TODO: fazer list do stored adapter ser mais proativo ao invés de ressetar toda vez
@@ -237,7 +238,7 @@ public class StoredPokemonFragment extends Fragment implements
     }
 
     @Override
-    public ArrayList<InterfaceNature> getInterfaceNatures() {
+    public ArrayList<NatureManager.VerboseNature> getInterfaceNatures() {
         return feederCallback.getInterfaceNatures();
     }
 
@@ -272,7 +273,7 @@ public class StoredPokemonFragment extends Fragment implements
 
         InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid);
 
-        ArrayList<InterfaceNature> getInterfaceNatures();
+        ArrayList<NatureManager.VerboseNature> getInterfaceNatures();
     }
 
     interface UpdateStoredPokemonList {

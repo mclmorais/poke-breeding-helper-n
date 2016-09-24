@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import breedingmanager.NatureManager;
 import databasemanager.DatabaseConstants;
 
 
@@ -39,7 +40,7 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     protected final CheckBox[] checkBoxInputIVs = new CheckBox[6];
     protected Button confirmButton;
     protected Spinner spinnerNature, spinnerAbility;
-    protected ArrayList<InterfaceNature> interfaceNatures;
+    protected ArrayList<NatureManager.VerboseNature> verboseNatures;
     protected ArrayList<InterfaceAbility> interfaceAbilities;
     int selectedPokemonId = -1;
     int selectedGenderId = 2;
@@ -51,8 +52,8 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
             if (parent == spinnerNature) {
                 if (spinnerNature.getTag() != null && !spinnerNature.getTag().equals(position)) {
                     spinnerNature.setTag(-1);
-                    InterfaceNature interfaceNature = (InterfaceNature) spinnerNature.getSelectedItem();
-                    selectedNatureId = interfaceNature.id;
+                    NatureManager.VerboseNature verboseNature = (NatureManager.VerboseNature) spinnerNature.getSelectedItem();
+                    selectedNatureId = verboseNature.id;
                 }
             } else if (parent == spinnerAbility) {
                 if (spinnerAbility.getTag() != null && !spinnerAbility.getTag().equals(position)) {
@@ -194,8 +195,8 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     }
 
     void populateNatureSpinner() {
-        interfaceNatures = feederCallback.getInterfaceNatures();
-        spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, getContext()));
+        verboseNatures = feederCallback.getInterfaceNatures();
+        spinnerNature.setAdapter(new NatureSpinnerAdapter(verboseNatures, getContext()));
     }
 
     void openSelectPokemonFragment(View view) {
@@ -421,6 +422,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
 
         ArrayList<Integer> getPokemonFamilyList();
 
-        ArrayList<InterfaceNature> getInterfaceNatures();
+        ArrayList<NatureManager.VerboseNature> getInterfaceNatures();
     }
 }
