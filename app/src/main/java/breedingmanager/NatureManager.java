@@ -15,10 +15,12 @@ import databasemanager.MyDatabase;
 public class NatureManager {
     private final MyDatabase database = MyDatabase.getInstance();
     private int languageId = 9; //TODO: Make dynamic
+    private boolean considerNature = false;
+    private boolean hasEverstone = true;
 
-    public ArrayList<VerboseNature> getInterfaceNatures() {
+    public ArrayList<NatureVerbose> getInterfaceNatures() {
 
-        ArrayList<NatureManager.VerboseNature> verboseNatures = new ArrayList<>();
+        ArrayList<NatureVerbose> natureVerboses = new ArrayList<>();
 
         LinkedHashMap<Integer, String> sortedNatureNames = database.getNatureNames(languageId);
 
@@ -29,37 +31,20 @@ public class NatureManager {
             String increasedStatName = database.getNatureChangedStatName(sortedId, languageId, true);
             String decreasedStatName = database.getNatureChangedStatName(sortedId, languageId, false);
 
-            verboseNatures.add(new NatureManager.VerboseNature(
+            natureVerboses.add(new NatureVerbose(
                     sortedId, sortedNatureNames.get(sortedId), increasedStatName, decreasedStatName
             ));
         }
 
-        return verboseNatures;
-    }
-
-    public static class VerboseNature {
-        public final int id;
-        public final String natureName;
-        public final String increasedStatName;
-        public final String decreasedStatName;
-
-        public VerboseNature(int id, String natureName, String increasedStatName, String decreasedStatName) {
-            this.id = id;
-            this.natureName = natureName;
-            this.increasedStatName = increasedStatName;
-            this.decreasedStatName = decreasedStatName;
-        }
-    }
-
-    private boolean considerNature = false;
-    private boolean hasEverstone = true;
-
-    public void setNatureModifier(boolean considerNature) {
-        this.considerNature = considerNature;
+        return natureVerboses;
     }
 
     public boolean getNatureModifier() {
         return considerNature;
+    }
+
+    public void setNatureModifier(boolean considerNature) {
+        this.considerNature = considerNature;
     }
 
     public boolean hasEverstone() {
@@ -71,9 +56,9 @@ public class NatureManager {
     }
 
     public double getNatureChance(StoredPokemon firstPokemon,
-                           StoredPokemon secondPokemon,
-                           StoredPokemon goalPokemon,
-                           double chance) {
+                                  StoredPokemon secondPokemon,
+                                  StoredPokemon goalPokemon,
+                                  double chance) {
         if (DatabaseConstants.natureIsValid(goalPokemon.getNatureId())) {
             if (considerNature) {
                 if (!hasEverstone ||
@@ -97,5 +82,19 @@ public class NatureManager {
         }
 
         return chance;
+    }
+
+    public static class NatureVerbose {
+        public final int id;
+        public final String natureName;
+        public final String increasedStatName;
+        public final String decreasedStatName;
+
+        public NatureVerbose(int id, String natureName, String increasedStatName, String decreasedStatName) {
+            this.id = id;
+            this.natureName = natureName;
+            this.increasedStatName = increasedStatName;
+            this.decreasedStatName = decreasedStatName;
+        }
     }
 }

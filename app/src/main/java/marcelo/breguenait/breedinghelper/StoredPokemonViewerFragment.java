@@ -344,7 +344,7 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
     }
 
     @Override
-    public ArrayList<NatureManager.VerboseNature> getInterfaceNatures() {
+    public ArrayList<NatureManager.NatureVerbose> getInterfaceNatures() {
         return feederCallback.getInterfaceNatures();
     }
 
@@ -368,7 +368,7 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
 
         InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid);
 
-        ArrayList<NatureManager.VerboseNature> getInterfaceNatures();
+        ArrayList<NatureManager.NatureVerbose> getInterfaceNatures();
     }
 
 

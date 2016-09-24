@@ -1,8 +1,8 @@
-package marcelo.breguenait.breedinghelper;
+package breedingmanager;
 
 import java.util.ArrayList;
 
-public class MoveInfo {
+public class MoveVerbose {
 
     private final String name;
     private final String type;
@@ -15,16 +15,16 @@ public class MoveInfo {
     private final boolean isHiddenMachine;
     private final ArrayList<Integer> parentIds;
 
-    public MoveInfo(String name,
-                    String type,
-                    int typeId,
-                    int power,
-                    int accuracy,
-                    String moveClass,
-                    int level,
-                    int machineNumber,
-                    boolean isHiddenMachine,
-                    ArrayList<Integer> parentIds) {
+    public MoveVerbose(String name,
+                       String type,
+                       int typeId,
+                       int power,
+                       int accuracy,
+                       String moveClass,
+                       int level,
+                       int machineNumber,
+                       boolean isHiddenMachine,
+                       ArrayList<Integer> parentIds) {
         this.name = name;
         this.type = type;
         this.typeId = typeId;
@@ -141,8 +141,8 @@ public class MoveInfo {
             return this;
         }
 
-        public MoveInfo createMoveInfo() {
-            return new MoveInfo(name, type, typeId, power, accuracy, moveClass, level, machineNumber, isHiddenMachine, parentIds);
+        public MoveVerbose createMoveInfo() {
+            return new MoveVerbose(name, type, typeId, power, accuracy, moveClass, level, machineNumber, isHiddenMachine, parentIds);
         }
     }
 }

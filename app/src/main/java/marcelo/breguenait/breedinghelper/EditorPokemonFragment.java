@@ -40,7 +40,7 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     protected final CheckBox[] checkBoxInputIVs = new CheckBox[6];
     protected Button confirmButton;
     protected Spinner spinnerNature, spinnerAbility;
-    protected ArrayList<NatureManager.VerboseNature> verboseNatures;
+    protected ArrayList<NatureManager.NatureVerbose> natureVerboses;
     protected ArrayList<InterfaceAbility> interfaceAbilities;
     int selectedPokemonId = -1;
     int selectedGenderId = 2;
@@ -52,8 +52,8 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
             if (parent == spinnerNature) {
                 if (spinnerNature.getTag() != null && !spinnerNature.getTag().equals(position)) {
                     spinnerNature.setTag(-1);
-                    NatureManager.VerboseNature verboseNature = (NatureManager.VerboseNature) spinnerNature.getSelectedItem();
-                    selectedNatureId = verboseNature.id;
+                    NatureManager.NatureVerbose natureVerbose = (NatureManager.NatureVerbose) spinnerNature.getSelectedItem();
+                    selectedNatureId = natureVerbose.id;
                 }
             } else if (parent == spinnerAbility) {
                 if (spinnerAbility.getTag() != null && !spinnerAbility.getTag().equals(position)) {
@@ -195,8 +195,8 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     }
 
     void populateNatureSpinner() {
-        verboseNatures = feederCallback.getInterfaceNatures();
-        spinnerNature.setAdapter(new NatureSpinnerAdapter(verboseNatures, getContext()));
+        natureVerboses = feederCallback.getInterfaceNatures();
+        spinnerNature.setAdapter(new NatureSpinnerAdapter(natureVerboses, getContext()));
     }
 
     void openSelectPokemonFragment(View view) {
@@ -422,6 +422,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
 
         ArrayList<Integer> getPokemonFamilyList();
 
-        ArrayList<NatureManager.VerboseNature> getInterfaceNatures();
+        ArrayList<NatureManager.NatureVerbose> getInterfaceNatures();
     }
 }

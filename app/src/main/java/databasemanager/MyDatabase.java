@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import marcelo.breguenait.breedinghelper.MoveInfo;
+import breedingmanager.MoveVerbose;
 
 public class MyDatabase extends SQLiteAssetHelper {
 
@@ -384,11 +384,11 @@ public class MyDatabase extends SQLiteAssetHelper {
         return abilities;
     }
 
-    public List<MoveInfo> getPokemonMovesInfo(int pokemonId, int pokemonVersionId, int methodId, int languageId) {
+    public List<MoveVerbose> getPokemonMoves(int pokemonId, int pokemonVersionId, int methodId, int languageId) {
 
         //move, level
         Cursor pokemonMovesCursor = getPokemonMoves(pokemonId, pokemonVersionId, methodId);
-        List<MoveInfo> moveInfoList = new ArrayList<>(pokemonMovesCursor.getCount());
+        List<MoveVerbose> moveVerboseList = new ArrayList<>(pokemonMovesCursor.getCount());
 
         if (methodId == 2 && pokemonMovesCursor.getCount() == 0) {
             pokemonMovesCursor.close();
@@ -398,7 +398,7 @@ public class MyDatabase extends SQLiteAssetHelper {
 
         for (int move = 0; move < pokemonMovesCursor.getCount(); move++) {
 
-            MoveInfo.MoveInfoBuilder moveInfoBuilder = new MoveInfo.MoveInfoBuilder();
+            MoveVerbose.MoveInfoBuilder moveInfoBuilder = new MoveVerbose.MoveInfoBuilder();
 
             if (methodId == 1) //If its from leveling up
                 moveInfoBuilder.setLevel(pokemonMovesCursor.getInt(1));
@@ -446,7 +446,7 @@ public class MyDatabase extends SQLiteAssetHelper {
             else
                 moveInfoBuilder.setMoveClass("");
 
-            moveInfoList.add(moveInfoBuilder.createMoveInfo());
+            moveVerboseList.add(moveInfoBuilder.createMoveInfo());
 
 
             pokemonMovesCursor.moveToNext();
@@ -457,7 +457,7 @@ public class MyDatabase extends SQLiteAssetHelper {
         pokemonMovesCursor.close();
 
 
-        return moveInfoList;
+        return moveVerboseList;
 
 
     }

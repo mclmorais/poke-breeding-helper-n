@@ -20,13 +20,14 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.ArrayList;
 import java.util.List;
 
+import breedingmanager.MoveVerbose;
 import customviews.WrappableGridLayoutManager;
 
 public class EggMovesListFragment extends Fragment {
     RecyclerView mRecyclerView;
     AVLoadingIndicatorView loadingIcon;
     TextView noMovesText;
-    ArrayList<MoveInfo> moveInfoList;
+    ArrayList<MoveVerbose> moveVerboseList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,19 +48,19 @@ public class EggMovesListFragment extends Fragment {
         return v;
     }
 
-    public void switchData(ArrayList<MoveInfo> moveInfoList) {
-        if (moveInfoList == null || moveInfoList.size() == 0)
+    public void switchData(ArrayList<MoveVerbose> moveVerboseList) {
+        if (moveVerboseList == null || moveVerboseList.size() == 0)
             noMovesText.setVisibility(View.VISIBLE);
         else
             noMovesText.setVisibility(View.GONE);
 
-        if (moveInfoList != null) {
-            for (int i = 0; i < moveInfoList.size(); i++) {
-                if (moveInfoList.get(i).getParentIds().isEmpty())
-                    moveInfoList.remove(i);
+        if (moveVerboseList != null) {
+            for (int i = 0; i < moveVerboseList.size(); i++) {
+                if (moveVerboseList.get(i).getParentIds().isEmpty())
+                    moveVerboseList.remove(i);
             }
         }
-        mRecyclerView.swapAdapter(new EggMoveAdapter(getContext(), moveInfoList, mRecyclerView), true);
+        mRecyclerView.swapAdapter(new EggMoveAdapter(getContext(), moveVerboseList, mRecyclerView), true);
         mRecyclerView.getAdapter().notifyDataSetChanged();
         loadingIcon.setVisibility(View.GONE);
     }
@@ -69,9 +70,9 @@ public class EggMovesListFragment extends Fragment {
 
         RecyclerView itself;
         Context context;
-        List<MoveInfo> moves;
+        List<MoveVerbose> moves;
 
-        public EggMoveAdapter(Context context, ArrayList<MoveInfo> moves, RecyclerView itself) {
+        public EggMoveAdapter(Context context, ArrayList<MoveVerbose> moves, RecyclerView itself) {
             this.context = context;
 
             this.itself = itself;

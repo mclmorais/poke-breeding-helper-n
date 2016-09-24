@@ -15,9 +15,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import breedingmanager.MoveVerbose;
+
 public class MachineMovesListFragment extends Fragment {
     RecyclerView mRecyclerView;
-    ArrayList<MoveInfo> moveInfoList;
+    ArrayList<MoveVerbose> moveVerboseList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,8 +35,8 @@ public class MachineMovesListFragment extends Fragment {
         return v;
     }
 
-    public void switchData(ArrayList<MoveInfo> moveInfoList) {
-        mRecyclerView.swapAdapter(new MachineMoveAdapter(getContext(), moveInfoList), true);
+    public void switchData(ArrayList<MoveVerbose> moveVerboseList) {
+        mRecyclerView.swapAdapter(new MachineMoveAdapter(getContext(), moveVerboseList), true);
     }
 
     public static class MachineMoveAdapter extends RecyclerView.Adapter<MachineMoveAdapter.ViewHolder> {
@@ -42,9 +44,9 @@ public class MachineMovesListFragment extends Fragment {
 
         final Context context;
 
-        final List<MoveInfo> moves;
+        final List<MoveVerbose> moves;
 
-        public MachineMoveAdapter(Context context, ArrayList<MoveInfo> moves) {
+        public MachineMoveAdapter(Context context, ArrayList<MoveVerbose> moves) {
             this.context = context;
 
             if (moves != null)

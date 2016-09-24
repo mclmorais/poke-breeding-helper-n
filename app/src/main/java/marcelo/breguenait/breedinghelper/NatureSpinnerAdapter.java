@@ -19,24 +19,24 @@ import breedingmanager.NatureManager;
  */
 public class NatureSpinnerAdapter extends BaseAdapter {
 
-    final ArrayList<NatureManager.VerboseNature> verboseNatures;
+    final ArrayList<NatureManager.NatureVerbose> natureVerboses;
     final LayoutInflater inflater;
     final DisplayMetrics metrics;
 
-    public NatureSpinnerAdapter(ArrayList<NatureManager.VerboseNature> verboseNatures, Context context) {
-        this.verboseNatures = verboseNatures;
+    public NatureSpinnerAdapter(ArrayList<NatureManager.NatureVerbose> natureVerboses, Context context) {
+        this.natureVerboses = natureVerboses;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         metrics = context.getResources().getDisplayMetrics();
     }
 
     @Override
     public int getCount() {
-        return verboseNatures.size();
+        return natureVerboses.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return verboseNatures.get(position);
+        return natureVerboses.get(position);
     }
 
     @Override
@@ -64,18 +64,18 @@ public class NatureSpinnerAdapter extends BaseAdapter {
             holder = (LayoutHolder) natureView.getTag();
         }
 
-        holder.viewNatureName.setText(verboseNatures.get(position).natureName);
+        holder.viewNatureName.setText(natureVerboses.get(position).natureName);
 
-        String increasedStat = verboseNatures.get(position).increasedStatName;
-        String decreasedStat = verboseNatures.get(position).decreasedStatName;
+        String increasedStat = natureVerboses.get(position).increasedStatName;
+        String decreasedStat = natureVerboses.get(position).decreasedStatName;
 
         if (increasedStat.equals(decreasedStat)) {
             holder.viewIncreasedStatName.setVisibility(View.GONE);
             holder.viewDecreasedStatName.setText(R.string.nature_neutral);
         } else {
             holder.viewIncreasedStatName.setVisibility(View.VISIBLE);
-            holder.viewIncreasedStatName.setText("+" + verboseNatures.get(position).increasedStatName);
-            holder.viewDecreasedStatName.setText("-" + verboseNatures.get(position).decreasedStatName);
+            holder.viewIncreasedStatName.setText("+" + natureVerboses.get(position).increasedStatName);
+            holder.viewDecreasedStatName.setText("-" + natureVerboses.get(position).decreasedStatName);
         }
 
         return natureView;
@@ -101,18 +101,18 @@ public class NatureSpinnerAdapter extends BaseAdapter {
             holder = (LayoutHolder) natureView.getTag();
         }
 
-        holder.viewNatureName.setText(verboseNatures.get(position).natureName);
+        holder.viewNatureName.setText(natureVerboses.get(position).natureName);
 
-        String increasedStat = verboseNatures.get(position).increasedStatName;
-        String decreasedStat = verboseNatures.get(position).decreasedStatName;
+        String increasedStat = natureVerboses.get(position).increasedStatName;
+        String decreasedStat = natureVerboses.get(position).decreasedStatName;
 
         if (increasedStat.equals(decreasedStat)) {
             holder.viewIncreasedStatName.setVisibility(View.GONE);
             holder.viewDecreasedStatName.setText(R.string.nature_neutral);
         } else {
             holder.viewIncreasedStatName.setVisibility(View.VISIBLE);
-            holder.viewIncreasedStatName.setText("+" + verboseNatures.get(position).increasedStatName);
-            holder.viewDecreasedStatName.setText("-" + verboseNatures.get(position).decreasedStatName);
+            holder.viewIncreasedStatName.setText("+" + natureVerboses.get(position).increasedStatName);
+            holder.viewDecreasedStatName.setText("-" + natureVerboses.get(position).decreasedStatName);
         }
 
 

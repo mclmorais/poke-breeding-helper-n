@@ -39,8 +39,8 @@ public class CreatePokemonFragment extends EditorPokemonFragment {
         //If there isn't a value received from somewhere else, doesn't select anything
         if (selectedNatureId < 0) return;
 
-        for (int i = 0; i < verboseNatures.size(); i++) {
-            if (verboseNatures.get(i).id == selectedNatureId) {
+        for (int i = 0; i < natureVerboses.size(); i++) {
+            if (natureVerboses.get(i).id == selectedNatureId) {
                 spinnerNature.setTag(i);
                 spinnerNature.setSelection(i);
                 return;

@@ -31,6 +31,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import breedingmanager.AbilityManager;
+import breedingmanager.MoveManager;
+import breedingmanager.MoveVerbose;
 import breedingmanager.NatureManager;
 import breedingmanager.StorageManager;
 import breedingmanager.StoredPokemon;
@@ -45,9 +47,11 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     private final StorageManager storageManager = new StorageManager();
     private final NatureManager natureManager = new NatureManager();
     private final AbilityManager abilityManager = new AbilityManager();
+    private final MoveManager moveManager = new MoveManager();
     private final Gson gson = new Gson();
 
-    ArrayList<NatureManager.VerboseNature> verboseNatures;
+    ArrayList<NatureManager.NatureVerbose> natureVerboses;
+    ArrayList<MoveVerbose> moves;
     ArrayList<InterfaceAbility> interfaceAbilities;
 
     @Bind({R.id.checkBoxGoalHP,
@@ -89,6 +93,12 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
 
     @Bind(R.id.buttonAddEggMove)
     Button buttonAddEggMove;
+    @Bind({R.id.includeEggMove1,
+            R.id.includeEggMove2,
+            R.id.includeEggMove3,
+            R.id.includeEggMove4})
+    View includeEggMoves[];
+
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -97,7 +107,8 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
             R.id.buttonAddNature,
             R.id.buttonRemoveAbility,
             R.id.buttonRemoveNature,
-            R.id.buttonSelector})
+            R.id.buttonSelector,
+            R.id.buttonAddEggMove})
     public void handleClick(View v) {
         if (v == buttonPokemonSelector) {
             openSelectPokemonFragment(v);
@@ -110,6 +121,10 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         } else if (v == buttonRemoveAbility) {
             setModifierAbilityActive(false);
         }
+        else if (v == buttonAddEggMove) {
+            addModifierEggMove();
+        }
+
     }
 
 
@@ -157,12 +172,29 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
 
         readData();
 
-        buttonAddEggMove.setEnabled(false); //Set temporarily until the logic is implemented
-
         for (int i = 0; i < goalIVs.length; i++) {
             removeRippleEffectFromCheckBox(goalIVs[i]);
             goalIVs[i].setChecked(storageManager.getGoalObject().getIVs()[i] == 1);
             goalIVs[i].setOnCheckedChangeListener(onCheckBoxCheckHandler);
+        }
+
+
+        for(int i = 0; i < includeEggMoves.length; i++) {
+            TextView label = (TextView) includeEggMoves[i].findViewById(R.id.eggMoveLabel);
+            label.setText("Egg Move " + Integer.toString(i+1));
+            ImageButton[] buttonRemoveEggMoves = new ImageButton[4];
+            buttonRemoveEggMoves[i] = (ImageButton) includeEggMoves[i].findViewById(R.id.buttonRemoveEggMove);
+            buttonRemoveEggMoves[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for(View eggMove : includeEggMoves) {
+                        if(v.getParent() == eggMove) {
+                            eggMove.setVisibility(View.GONE);
+                            buttonAddEggMove.setEnabled(true);
+                        }
+                    }
+                }
+            });
         }
 
         feedInterface();
@@ -192,6 +224,8 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
 
         feedAbilitySpinner();
         feedAbilitySpinnerSelection(goalPokemon.getAbilitySlot());
+
+        feedEggMoveSpinners();
     }
 
     private void feedDisplayedName(String name) {
@@ -209,16 +243,16 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     }
 
     private void feedNatureSpinner() {
-        verboseNatures = natureManager.getInterfaceNatures();
-        spinnerNature.setAdapter(new NatureSpinnerAdapter(verboseNatures, this));
+        natureVerboses = natureManager.getInterfaceNatures();
+        spinnerNature.setAdapter(new NatureSpinnerAdapter(natureVerboses, this));
     }
 
     private void feedNatureSpinnerSelection(int natureId) {
 
 
-        for (int i = 0; i < verboseNatures.size(); i++) {
+        for (int i = 0; i < natureVerboses.size(); i++) {
 
-            if (verboseNatures.get(i).id == natureId) {
+            if (natureVerboses.get(i).id == natureId) {
                 spinnerNature.setTag(i);
                 spinnerNature.setSelection(i);
                 return;
@@ -267,6 +301,19 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         }
     }
 
+    private void feedEggMoveSpinners() {
+
+
+
+        for(int i = 0; i < includeEggMoves.length; i++) {
+            Spinner[] eggMoveSpinners = new Spinner[4];
+            eggMoveSpinners[i] = (Spinner) includeEggMoves[i].findViewById(R.id.spinnerEggMove);
+            eggMoveSpinners[i].setAdapter(new EggMoveSpinnerAdapter(moveManager.getEggMoves(storageManager.getGoalId()),this));
+        }
+
+
+    }
+
     private void openSelectPokemonFragment(View view) {
         FragmentManager fm = getSupportFragmentManager();
         SelectPokemonFragment selectPokemonFragment = new SelectPokemonFragment();
@@ -285,6 +332,19 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         includeAbilityPicker.setVisibility(choice ? View.VISIBLE : View.GONE);
         buttonAddAbility.setEnabled(!choice);
         abilityManager.setAbilityModifier(choice);
+    }
+
+    private void addModifierEggMove() {
+        int total = 0;
+        for (View eggMove : includeEggMoves) {
+            total++;
+            if(eggMove.getVisibility() == View.GONE) {
+                eggMove.setVisibility(View.VISIBLE);
+                break;
+            }
+        }
+        if (total >= 4)
+            buttonAddEggMove.setEnabled(false);
     }
 
     private void readData() {
@@ -524,8 +584,8 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     }
 
     private void updateGoalNature() {
-        NatureManager.VerboseNature verboseNature = (NatureManager.VerboseNature) spinnerNature.getSelectedItem();
-        storageManager.setGoalNature(verboseNature.id);
+        NatureManager.NatureVerbose natureVerbose = (NatureManager.NatureVerbose) spinnerNature.getSelectedItem();
+        storageManager.setGoalNature(natureVerbose.id);
         natureManager.setNatureModifier(true);
     }
 

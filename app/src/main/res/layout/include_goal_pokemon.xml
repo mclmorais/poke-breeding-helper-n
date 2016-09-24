@@ -275,6 +275,31 @@
                 <include layout="@layout/include_ability_picker"
                     android:id="@+id/includeAbility"
                     android:visibility="gone"/>
+
+                <include
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/includeEggMove1"
+                    layout="@layout/include_eggmove_picker" />
+                <include
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/includeEggMove2"
+                    layout="@layout/include_eggmove_picker" />
+                <include
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/includeEggMove3"
+                    layout="@layout/include_eggmove_picker" />
+                <include
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/includeEggMove4"
+                    layout="@layout/include_eggmove_picker" />
             </LinearLayout>
 
             <LinearLayout

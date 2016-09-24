@@ -15,6 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import breedingmanager.MoveVerbose;
+
 public class LevelMovesListFragment extends Fragment {
     RecyclerView mRecyclerView;
 
@@ -32,9 +34,9 @@ public class LevelMovesListFragment extends Fragment {
         return v;
     }
 
-    public void switchData(ArrayList<MoveInfo> moveInfoList) {
+    public void switchData(ArrayList<MoveVerbose> moveVerboseList) {
         if (mRecyclerView != null)
-            mRecyclerView.swapAdapter(new LevelMoveAdapter(getContext(), moveInfoList), true);
+            mRecyclerView.swapAdapter(new LevelMoveAdapter(getContext(), moveVerboseList), true);
     }
 
     public static class LevelMoveAdapter extends RecyclerView.Adapter<LevelMoveAdapter.ViewHolder> {
@@ -42,9 +44,9 @@ public class LevelMovesListFragment extends Fragment {
 
         Context context;
 
-        List<MoveInfo> moves;
+        List<MoveVerbose> moves;
 
-        public LevelMoveAdapter(Context context, ArrayList<MoveInfo> moves) {
+        public LevelMoveAdapter(Context context, ArrayList<MoveVerbose> moves) {
             this.context = context;
 
             if (moves != null)
