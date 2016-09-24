@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import databasemanager.DatabaseConstants;
 import databasemanager.MyDatabase;
+import marcelo.breguenait.breedinghelper.AssistantActivity;
 import marcelo.breguenait.breedinghelper.ChanceFragment;
 import marcelo.breguenait.breedinghelper.GoalPokemonFragment;
 import marcelo.breguenait.breedinghelper.InterfaceModifierPokemon;
@@ -117,7 +118,6 @@ public class BreedingManager {
         return chancePokemonMatchList;
     }
 
-
     @SuppressWarnings("unused")
     public void setGoalGender(int genderId) {
         goalPokemon.setGenderId(genderId);
@@ -147,7 +147,6 @@ public class BreedingManager {
     public void setGoalId(int goalId) {
         goalPokemon.setPokemonId(goalId);
     }
-
 
     public void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
 
@@ -368,9 +367,9 @@ public class BreedingManager {
         }
     }
 
-    public GoalPokemonFragment.InterfaceGoalPokemon getInterfaceGoalPokemon() {
+    public AssistantActivity.InterfaceGoalPokemon getInterfaceGoalPokemon() {
         String pokemonName = database.getPokemonName(goalPokemon.getPokemonId(), languageId);
-        return new GoalPokemonFragment.InterfaceGoalPokemon(
+        return new AssistantActivity.InterfaceGoalPokemon(
                 goalPokemon.getIVs(),
                 goalPokemon.getPokemonId(),
                 pokemonName,
