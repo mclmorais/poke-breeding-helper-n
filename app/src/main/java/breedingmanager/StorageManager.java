@@ -12,7 +12,6 @@ import databasemanager.DatabaseConstants;
 import databasemanager.MyDatabase;
 import marcelo.breguenait.breedinghelper.AssistantActivity;
 import marcelo.breguenait.breedinghelper.ChanceFragment;
-import marcelo.breguenait.breedinghelper.GoalPokemonFragment;
 import marcelo.breguenait.breedinghelper.InterfaceModifierPokemon;
 import marcelo.breguenait.breedinghelper.InterfaceNature;
 import marcelo.breguenait.breedinghelper.StoredPokemonFragment;
@@ -20,7 +19,7 @@ import marcelo.breguenait.breedinghelper.StoredPokemonViewerFragment;
 
 //TODO: fazer o sort sempre preferir as combinações com mais IVs no caso de empate?
 
-public class BreedingManager {
+public class StorageManager {
 
     private final MyDatabase database;
     private final IvChanceCalculator ivChanceCalculator;
@@ -33,7 +32,7 @@ public class BreedingManager {
     private boolean destinyKnot = true;
     private ArrayList<StoredPokemon> storedPokemonList = new ArrayList<>();
 
-    public BreedingManager() {
+    public StorageManager() {
         ivChanceCalculator = new IvChanceCalculator();
         natureChanceCalculator = new NatureChanceCalculator();
         abilityChanceCalculator = new AbilityChanceCalculator();
@@ -376,8 +375,8 @@ public class BreedingManager {
                 goalPokemon.getNatureId(),
                 goalPokemon.getAbilitySlot()
         );
-
     }
+
 
     public ArrayList<StoredPokemon> getStoredPokemonObjects() {
         return storedPokemonList;

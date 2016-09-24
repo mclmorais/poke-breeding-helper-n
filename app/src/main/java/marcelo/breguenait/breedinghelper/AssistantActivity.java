@@ -6,8 +6,6 @@ import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,18 +30,17 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import breedingmanager.BreedingManager;
+import breedingmanager.StorageManager;
 import breedingmanager.StoredPokemon;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import databasemanager.DatabaseConstants;
 import databasemanager.MyDatabase;
 
 public class AssistantActivity extends AppCompatActivity implements SelectPokemonFragment.OnPokemonSelectedListener, SelectPokemonFragment.FeedDataSelectPokemon {
 
-    private final BreedingManager breedingManager = new BreedingManager();
+    private final StorageManager storageManager = new StorageManager();
     private final Gson gson = new Gson();
 
     ArrayList<InterfaceNature> interfaceNatures;
@@ -160,16 +157,16 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
 
         for (int i = 0; i < goalIVs.length; i++) {
             removeRippleEffectFromCheckBox(goalIVs[i]);
-            goalIVs[i].setChecked(breedingManager.getGoalObject().getIVs()[i] == 1);
+            goalIVs[i].setChecked(storageManager.getGoalObject().getIVs()[i] == 1);
             goalIVs[i].setOnCheckedChangeListener(onCheckBoxCheckHandler);
         }
 
-        feedInterface(breedingManager.getInterfaceGoalPokemon());
+        feedInterface();
         spinnerNature.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
         spinnerAbility.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
 
-        setModifierNatureActive(breedingManager.considerNature());
-        setModifierAbilityActive(breedingManager.considerAbility());
+        setModifierNatureActive(storageManager.considerNature());
+        setModifierAbilityActive(storageManager.considerAbility());
 
     }
 
@@ -179,15 +176,18 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         saveData();
     }
 
-    private void feedInterface(InterfaceGoalPokemon interfaceGoalPokemon) {
-        feedDisplayedName(interfaceGoalPokemon.getPokemonName());
-        feedDisplayedIcon(interfaceGoalPokemon.getPokemonId());
+    private void feedInterface() {
+
+        StoredPokemon goalPokemon = storageManager.getGoalObject();
+
+        feedDisplayedName(storageManager.getPokemonName(goalPokemon.getPokemonId()));
+        feedDisplayedIcon(goalPokemon.getPokemonId());
 
         feedNatureSpinner();
-        feedNatureSpinnerSelection(interfaceGoalPokemon.getNatureId());
+        feedNatureSpinnerSelection(goalPokemon.getNatureId());
 
         feedAbilitySpinner();
-        feedAbilitySpinnerSelection(interfaceGoalPokemon.getAbilitySlot());
+        feedAbilitySpinnerSelection(goalPokemon.getAbilitySlot());
     }
 
     private void feedDisplayedName(String name) {
@@ -205,7 +205,7 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     }
 
     private void feedNatureSpinner() {
-        interfaceNatures = breedingManager.getInterfaceNatures();
+        interfaceNatures = storageManager.getInterfaceNatures();
         spinnerNature.setAdapter(new NatureSpinnerAdapter(interfaceNatures, this));
     }
 
@@ -228,7 +228,7 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     private void feedAbilitySpinner() {
         if (spinnerAbility == null) return;
 
-        LinkedHashMap<Integer, String> abilities = breedingManager.getListOfGoalAbilities();
+        LinkedHashMap<Integer, String> abilities = storageManager.getListOfGoalAbilities();
 
         interfaceAbilities = new ArrayList<>();
 
@@ -274,13 +274,13 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     private void setModifierNatureActive(Boolean choice) {
         includeNaturePicker.setVisibility(choice ? View.VISIBLE : View.GONE);
         buttonAddNature.setEnabled(!choice);
-        breedingManager.setConsiderNature(choice);
+        storageManager.setConsiderNature(choice);
     }
 
     private void setModifierAbilityActive(Boolean choice) {
         includeAbilityPicker.setVisibility(choice ? View.VISIBLE : View.GONE);
         buttonAddAbility.setEnabled(!choice);
-        breedingManager.setConsiderAbility(choice);
+        storageManager.setConsiderAbility(choice);
     }
 
     private void readData() {
@@ -292,13 +292,13 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         if (jsonString != null) {
             PokemonInfo oldGoal = gson.fromJson(jsonString, PokemonInfo.class);
             if (oldGoal != null) {
-                breedingManager.replaceGoalObject(convertCompatPokemon(oldGoal));
+                storageManager.replaceGoalObject(convertCompatPokemon(oldGoal));
             }
             sharedPref.edit().remove("jsonCurrentGoal").apply();
         } else {
             jsonString = sharedPref.getString("jsonBreedingManagerGoal", null);
             if (jsonString != null) {
-                breedingManager.replaceGoalObject(gson.fromJson(jsonString, StoredPokemon.class));
+                storageManager.replaceGoalObject(gson.fromJson(jsonString, StoredPokemon.class));
             }
         }
 
@@ -312,7 +312,7 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
                 if (pokemonInfo != null)
                     newList.add(convertCompatPokemon(pokemonInfo));
             }
-            breedingManager.replaceStoredPokemonObjects(newList);
+            storageManager.replaceStoredPokemonObjects(newList);
             sharedPref.edit().remove("jsonPokemonList").apply();
         } else {
             jsonString = sharedPref.getString("jsonBreedingManagerStoredList", null);
@@ -320,33 +320,33 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
                 Type type = new TypeToken<ArrayList<StoredPokemon>>() {
                 }.getType();
                 ArrayList<StoredPokemon> objectsList = gson.fromJson(jsonString, type);
-                breedingManager.replaceStoredPokemonObjects(objectsList);
+                storageManager.replaceStoredPokemonObjects(objectsList);
             }
         }
 
 
         jsonString = sharedPref.getString("jsonHasEverstone", null);
         if (jsonString != null) {
-            breedingManager.setEverstone(gson.fromJson(jsonString, Boolean.class));
+            storageManager.setEverstone(gson.fromJson(jsonString, Boolean.class));
         }
 
         jsonString = sharedPref.getString("jsonConsiderNature", null);
         if (jsonString != null) {
-            breedingManager.setConsiderNature(gson.fromJson(jsonString, Boolean.class));
+            storageManager.setConsiderNature(gson.fromJson(jsonString, Boolean.class));
         }
 
         jsonString = sharedPref.getString("jsonConsiderAbility", null);
         if (jsonString != null) {
-            breedingManager.setConsiderAbility(gson.fromJson(jsonString, Boolean.class));
+            storageManager.setConsiderAbility(gson.fromJson(jsonString, Boolean.class));
         }
 
         jsonString = sharedPref.getString("jsonMaleItem", null); //POR ENQUANTO ARMAZENA O DESTINY KNOT!
         if (jsonString != null) {
-            breedingManager.setDestinyKnot(gson.fromJson(jsonString, Boolean.class));
+            storageManager.setDestinyKnot(gson.fromJson(jsonString, Boolean.class));
         }
 
         int gameLanguage = Integer.valueOf(sharedPref.getString("gameLanguage", "9"));
-        breedingManager.setLanguageId(gameLanguage);
+        storageManager.setLanguageId(gameLanguage);
 
     }
 
@@ -364,16 +364,16 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
 //        prefEditor.putString("jsonCurrentGoal", jsonString);
 
 
-        jsonString = gson.toJson(breedingManager.hasEverstone());
+        jsonString = gson.toJson(storageManager.hasEverstone());
         prefEditor.putString("jsonHasEverstone", jsonString);
 
-        jsonString = gson.toJson(breedingManager.considerNature());
+        jsonString = gson.toJson(storageManager.considerNature());
         prefEditor.putString("jsonConsiderNature", jsonString);
 
-        jsonString = gson.toJson(breedingManager.considerAbility());
+        jsonString = gson.toJson(storageManager.considerAbility());
         prefEditor.putString("jsonConsiderAbility", jsonString);
 
-        jsonString = gson.toJson(breedingManager.hasDestinyKnot());
+        jsonString = gson.toJson(storageManager.hasDestinyKnot());
         prefEditor.putString("jsonMaleItem", jsonString);
 
 //        ChanceFragment l = (ChanceFragment) getChildFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
@@ -382,10 +382,10 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
 
         //-------Breeding Manager---------------
 
-        jsonString = gson.toJson(breedingManager.getStoredPokemonObjects());
+        jsonString = gson.toJson(storageManager.getStoredPokemonObjects());
         prefEditor.putString("jsonBreedingManagerStoredList", jsonString);
 
-        jsonString = gson.toJson(breedingManager.getGoalObject());
+        jsonString = gson.toJson(storageManager.getGoalObject());
         prefEditor.putString("jsonBreedingManagerGoal", jsonString);
 
         prefEditor.apply();
@@ -510,28 +510,25 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     }
 
     public void updateGoalIVs() {
-
         int[] IVs = new int[6];
 
         for (int i = 0; i < 6; i++) {
             IVs[i] = goalIVs[i].isChecked() ? 1 : 0;
         }
 
-        breedingManager.setGoalIVs(IVs);
+        storageManager.setGoalIVs(IVs);
     }
 
     private void updateGoalNature() {
         InterfaceNature interfaceNature = (InterfaceNature) spinnerNature.getSelectedItem();
-        breedingManager.setGoalNature(interfaceNature.id);
-        breedingManager.setConsiderNature(true);
+        storageManager.setGoalNature(interfaceNature.id);
+        storageManager.setConsiderNature(true);
     }
 
     private void updateGoalAbility() {
-
         int spinnerPosition = spinnerAbility.getSelectedItemPosition();
         int abilitySlot = interfaceAbilities.get(spinnerPosition).abilitySlot;
-        breedingManager.setGoalAbilitySlot(abilitySlot);
-
+        storageManager.setGoalAbilitySlot(abilitySlot);
     }
 
     private void removeRippleEffectFromCheckBox(CheckBox checkBox) {
@@ -555,8 +552,8 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
 
     @Override
     public void onPokemonSelected(int id) {
-        breedingManager.setGoalId(id);
-        feedInterface(breedingManager.getInterfaceGoalPokemon());
+        storageManager.setGoalId(id);
+        feedInterface();
     }
 
     @Override
@@ -571,27 +568,27 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
 
     @Override
     public ArrayList<Integer> getPokemonIds() {
-        return breedingManager.getPokemonIds();
+        return storageManager.getPokemonIds();
     }
 
     @Override
     public ArrayList<String> getPokemonNames() {
-        return breedingManager.getPokemonNames();
+        return storageManager.getPokemonNames();
     }
 
     @Override
     public ArrayList<Integer> getCompatiblePokemonList() {
-        return breedingManager.getCompatiblePokemonList(breedingManager.getGoalId());
+        return storageManager.getCompatiblePokemonList(storageManager.getGoalId());
     }
 
     @Override
     public ArrayList<Integer> getBasicPokemonList() {
-        return breedingManager.getBasicPokemonList();
+        return storageManager.getBasicPokemonList();
     }
 
     @Override
     public ArrayList<Integer> getPokemonFamilyList() {
-        return breedingManager.getPokemonFamilyList(breedingManager.getGoalId());
+        return storageManager.getPokemonFamilyList(storageManager.getGoalId());
     }
 
     public static class InterfaceGoalPokemon {

@@ -27,7 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
 
-import breedingmanager.BreedingManager;
+import breedingmanager.StorageManager;
 import breedingmanager.ChancePokemonMatch;
 import breedingmanager.StoredPokemon;
 import butterknife.Bind;
@@ -53,7 +53,7 @@ public class BreedingFragment extends Fragment
     Toolbar toolbar;
     private ActionBarDrawerToggle drawerToggle;
     private MainActivity mainActivity;
-    private BreedingManager breedingManager;
+    private StorageManager storageManager;
     private View cardAd;
     private AdView adView;
 
@@ -69,7 +69,7 @@ public class BreedingFragment extends Fragment
         mainActivity = (MainActivity) getActivity();
 
         ButterKnife.bind(this, v);
-        breedingManager = new BreedingManager();
+        storageManager = new StorageManager();
 
         drawerToggle = setupDrawerToggle();
         mainActivity.mDrawer.setDrawerListener(drawerToggle);
@@ -242,7 +242,7 @@ public class BreedingFragment extends Fragment
 
     private void updatePokemonListFragment() {
         StoredPokemonFragment frag = (StoredPokemonFragment) getChildFragmentManager().findFragmentById(R.id.framePokemonListFragmentContainer);
-        frag.setHatchAdapter(breedingManager.getInterfaceStoredPokemonList(), getContext());
+        frag.setHatchAdapter(storageManager.getInterfaceStoredPokemonList(), getContext());
     }
 
 
@@ -265,16 +265,16 @@ public class BreedingFragment extends Fragment
 //        prefEditor.putString("jsonCurrentGoal", jsonString);
 
 
-        jsonString = gson.toJson(breedingManager.hasEverstone());
+        jsonString = gson.toJson(storageManager.hasEverstone());
         prefEditor.putString("jsonHasEverstone", jsonString);
 
-        jsonString = gson.toJson(breedingManager.considerNature());
+        jsonString = gson.toJson(storageManager.considerNature());
         prefEditor.putString("jsonConsiderNature", jsonString);
 
-        jsonString = gson.toJson(breedingManager.considerAbility());
+        jsonString = gson.toJson(storageManager.considerAbility());
         prefEditor.putString("jsonConsiderAbility", jsonString);
 
-        jsonString = gson.toJson(breedingManager.hasDestinyKnot());
+        jsonString = gson.toJson(storageManager.hasDestinyKnot());
         prefEditor.putString("jsonMaleItem", jsonString);
 
         ChanceFragment l = (ChanceFragment) getChildFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
@@ -283,10 +283,10 @@ public class BreedingFragment extends Fragment
 
         //-------Breeding Manager---------------
 
-        jsonString = gson.toJson(breedingManager.getStoredPokemonObjects());
+        jsonString = gson.toJson(storageManager.getStoredPokemonObjects());
         prefEditor.putString("jsonBreedingManagerStoredList", jsonString);
 
-        jsonString = gson.toJson(breedingManager.getGoalObject());
+        jsonString = gson.toJson(storageManager.getGoalObject());
         prefEditor.putString("jsonBreedingManagerGoal", jsonString);
 
         prefEditor.apply();
@@ -420,13 +420,13 @@ public class BreedingFragment extends Fragment
         if (jsonString != null) {
             PokemonInfo oldGoal = gson.fromJson(jsonString, PokemonInfo.class);
             if(oldGoal != null) {
-                breedingManager.replaceGoalObject(convertCompatPokemon(oldGoal));
+                storageManager.replaceGoalObject(convertCompatPokemon(oldGoal));
             }
             sharedPref.edit().remove("jsonCurrentGoal").apply();
         } else {
             jsonString = sharedPref.getString("jsonBreedingManagerGoal", null);
             if (jsonString != null) {
-                breedingManager.replaceGoalObject(gson.fromJson(jsonString, StoredPokemon.class));
+                storageManager.replaceGoalObject(gson.fromJson(jsonString, StoredPokemon.class));
             }
         }
 
@@ -439,7 +439,7 @@ public class BreedingFragment extends Fragment
                 if(pokemonInfo != null)
                     newList.add(convertCompatPokemon(pokemonInfo));
             }
-            breedingManager.replaceStoredPokemonObjects(newList);
+            storageManager.replaceStoredPokemonObjects(newList);
             sharedPref.edit().remove("jsonPokemonList").apply();
         } else {
             jsonString = sharedPref.getString("jsonBreedingManagerStoredList", null);
@@ -447,47 +447,47 @@ public class BreedingFragment extends Fragment
                 Type type = new TypeToken<ArrayList<StoredPokemon>>() {
                 }.getType();
                 ArrayList<StoredPokemon> objectsList = gson.fromJson(jsonString, type);
-                breedingManager.replaceStoredPokemonObjects(objectsList);
+                storageManager.replaceStoredPokemonObjects(objectsList);
             }
         }
 
 
         jsonString = sharedPref.getString("jsonHasEverstone", null);
         if (jsonString != null) {
-            breedingManager.setEverstone(gson.fromJson(jsonString, Boolean.class));
+            storageManager.setEverstone(gson.fromJson(jsonString, Boolean.class));
         }
 
         jsonString = sharedPref.getString("jsonConsiderNature", null);
         if (jsonString != null) {
-            breedingManager.setConsiderNature(gson.fromJson(jsonString, Boolean.class));
+            storageManager.setConsiderNature(gson.fromJson(jsonString, Boolean.class));
         }
 
         jsonString = sharedPref.getString("jsonConsiderAbility", null);
         if (jsonString != null) {
-            breedingManager.setConsiderAbility(gson.fromJson(jsonString, Boolean.class));
+            storageManager.setConsiderAbility(gson.fromJson(jsonString, Boolean.class));
         }
 
         jsonString = sharedPref.getString("jsonMaleItem", null); //POR ENQUANTO ARMAZENA O DESTINY KNOT!
         if (jsonString != null) {
-            breedingManager.setDestinyKnot(gson.fromJson(jsonString, Boolean.class));
+            storageManager.setDestinyKnot(gson.fromJson(jsonString, Boolean.class));
         }
 
         int gameLanguage = Integer.valueOf(sharedPref.getString("gameLanguage", "9"));
-        breedingManager.setLanguageId(gameLanguage);
+        storageManager.setLanguageId(gameLanguage);
 
     }
 
 
     @Override
     public void setDestinyKnot(boolean b) {
-        breedingManager.setDestinyKnot(b);
+        storageManager.setDestinyKnot(b);
         updateLuckFragment();
     }
 
     @Override
     public boolean isDestinyKnotActive() {
         //return ivManager.getMaleItem() == Item.DESTINY_KNOT;
-        return breedingManager.hasDestinyKnot();
+        return storageManager.hasDestinyKnot();
     }
 
     @Override
@@ -503,162 +503,162 @@ public class BreedingFragment extends Fragment
 
     @Override
     public void updateNatureStatus(boolean b) {
-        breedingManager.setConsiderNature(b);
+        storageManager.setConsiderNature(b);
         updateLuckFragment();
     }
 
     @Override
     public boolean careAboutNatures() {
-        return (breedingManager.hasEverstone() && breedingManager.considerNature());
+        return (storageManager.hasEverstone() && storageManager.considerNature());
     }
 
     @Override
     public void setEverstone(boolean b) {
-        breedingManager.setEverstone(b);
+        storageManager.setEverstone(b);
         updateLuckFragment();
     }
 
     @Override
     public boolean getConsiderNatureStatus() {
-        return breedingManager.considerNature();
+        return storageManager.considerNature();
     }
 
     @Override
     public boolean updateEverstoneStatus() {
-        return breedingManager.hasEverstone();
+        return storageManager.hasEverstone();
     }
 
     @Override
     public void updateAbilityStatus(boolean b) {
-        breedingManager.setConsiderAbility(b);
+        storageManager.setConsiderAbility(b);
         updateLuckFragment();
     }
 
     @Override
     public boolean getConsiderAbilityStatus() {
-        return breedingManager.considerAbility();
+        return storageManager.considerAbility();
     }
 
 
     @Override
     public LinkedHashMap<Integer, String> getListOfGoalAbilities() {
-        return breedingManager.getListOfGoalAbilities();
+        return storageManager.getListOfGoalAbilities();
     }
 
 
     @Override
     public void updateGoalId(int id) {
-        breedingManager.setGoalId(id);
+        storageManager.setGoalId(id);
         updateLuckFragment();
     }
 
     @Override
     public void updateGoalNature(int natureId) {
-        breedingManager.setGoalNature(natureId);
+        storageManager.setGoalNature(natureId);
         updateLuckFragment();
     }
 
     @Override
     public void updateGoalAbilitySlot(int abilitySlot) {
-        breedingManager.setGoalAbilitySlot(abilitySlot);
+        storageManager.setGoalAbilitySlot(abilitySlot);
         updateLuckFragment();
     }
 
     @Override
     public void updateGoalIVs(int[] IVs) {
-        breedingManager.setGoalIVs(IVs);
+        storageManager.setGoalIVs(IVs);
         updateLuckFragment();
     }
 
 
     @Override
     public LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId) {
-        return breedingManager.getListOfAbilities(pokemonId);
+        return storageManager.getListOfAbilities(pokemonId);
     }
 
     @Override
     public int getGenderRate(int pokemonId) {
-        return breedingManager.getGenderRate(pokemonId);
+        return storageManager.getGenderRate(pokemonId);
     }
 
     @Override
     public ArrayList<StoredPokemonFragment.InterfaceStoredPokemon> getInterfaceStoredPokemonList() {
-        return breedingManager.getInterfaceStoredPokemonList();
+        return storageManager.getInterfaceStoredPokemonList();
     }
 
     @Override
     public ArrayList<Integer> getCompatiblePokemonList() {
-        return breedingManager.getCompatiblePokemonList(breedingManager.getGoalId());
+        return storageManager.getCompatiblePokemonList(storageManager.getGoalId());
     }
 
     @Override
     public ArrayList<Integer> getBasicPokemonList() {
-        return breedingManager.getBasicPokemonList();
+        return storageManager.getBasicPokemonList();
     }
 
     @Override
     public ArrayList<Integer> getPokemonIds() {
-        return breedingManager.getPokemonIds();
+        return storageManager.getPokemonIds();
     }
 
     @Override
     public ArrayList<String> getPokemonNames() {
-        return breedingManager.getPokemonNames();
+        return storageManager.getPokemonNames();
     }
 
     @Override
     public StoredPokemonViewerFragment.InterfaceViewerPokemon getInterfaceViewerPokemon(UUID uuid) {
-        return breedingManager.getInterfaceViewerPokemon(uuid);
+        return storageManager.getInterfaceViewerPokemon(uuid);
     }
 
     @Override
     public String getPokemonName(int pokemonId) {
-        return breedingManager.getPokemonName(pokemonId);
+        return storageManager.getPokemonName(pokemonId);
     }
 
     @Override
     public InterfaceModifierPokemon getInterfaceModifierPokemon(UUID uuid) {
-        return breedingManager.getInterfaceModifierPokemon(uuid);
+        return storageManager.getInterfaceModifierPokemon(uuid);
     }
 
     @Override
     public void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
-        breedingManager.storePokemon(pokemonId, genderId, IVs, natureId, abilitySlot);
+        storageManager.storePokemon(pokemonId, genderId, IVs, natureId, abilitySlot);
         updatePokemonListFragment();
         updateLuckFragment();
     }
 
     @Override
     public void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot) {
-        breedingManager.updateStoredPokemon(uuid, pokemonId, genderId, IVs, natureId, abilitySlot);
+        storageManager.updateStoredPokemon(uuid, pokemonId, genderId, IVs, natureId, abilitySlot);
         updatePokemonListFragment();
         updateLuckFragment();
     }
 
     @Override
     public void removeStoredPokemon(UUID uuid) {
-        breedingManager.removePokemon(uuid);
+        storageManager.removePokemon(uuid);
         updateLuckFragment();
     }
 
     @Override
     public ArrayList<ChancePokemonMatch> getChancesList() {
-        return breedingManager.calculateBestMatches();
+        return storageManager.calculateBestMatches();
     }
 
     @Override
     public ChanceFragment.InterfaceChancePokemon getInterfaceChancePokemon(UUID uuid) {
-        return breedingManager.getInterfaceChancePokemon(uuid);
+        return storageManager.getInterfaceChancePokemon(uuid);
     }
 
     @Override
     public AssistantActivity.InterfaceGoalPokemon getInterfaceGoalPokemon() {
-        return breedingManager.getInterfaceGoalPokemon();
+        return storageManager.getInterfaceGoalPokemon();
     }
 
     @Override
     public ArrayList<Integer> getPokemonFamilyList() {
-        return breedingManager.getPokemonFamilyList(breedingManager.getGoalId());
+        return storageManager.getPokemonFamilyList(storageManager.getGoalId());
     }
 
     @Override
@@ -669,6 +669,6 @@ public class BreedingFragment extends Fragment
 
     @Override
     public ArrayList<InterfaceNature> getInterfaceNatures() {
-        return breedingManager.getInterfaceNatures();
+        return storageManager.getInterfaceNatures();
     }
 }
