@@ -267,7 +267,6 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         SelectPokemonFragment selectPokemonFragment = new SelectPokemonFragment();
         Bundle b = addPositionAsArguments(view);
         selectPokemonFragment.setArguments(b);
-        ;
         selectPokemonFragment.show(fm, "");
     }
 
@@ -591,42 +590,6 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         return storageManager.getPokemonFamilyList(storageManager.getGoalId());
     }
 
-    public static class InterfaceGoalPokemon {
-
-        final int[] IVs;
-        final int pokemonId;
-        final String pokemonName;
-        final int natureId;
-        final int abilitySlot;
-
-        public InterfaceGoalPokemon(int[] IVs, int pokemonId, String pokemonName, int natureId, int abilitySlot) {
-            this.IVs = IVs;
-            this.pokemonId = pokemonId;
-            this.pokemonName = pokemonName;
-            this.natureId = natureId;
-            this.abilitySlot = abilitySlot;
-        }
-
-        public int[] getIVs() {
-            return IVs;
-        }
-
-        public int getPokemonId() {
-            return pokemonId;
-        }
-
-        public String getPokemonName() {
-            return pokemonName;
-        }
-
-        public int getNatureId() {
-            return natureId;
-        }
-
-        public int getAbilitySlot() {
-            return abilitySlot;
-        }
-    }
 
 }
 

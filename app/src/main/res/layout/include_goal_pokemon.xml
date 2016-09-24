@@ -149,15 +149,15 @@
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/imageViewSelectedPokemonIcon"
                 android:layout_width="64dp"
-                android:layout_height="64dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/textViewPokemonName"
                 android:layout_gravity="center"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="-4dp"
                 android:src="@drawable/pkmn_big_003"
                 app:border_color="@color/colorPrimaryDark"
-                app:border_width="2dp" />
+                app:border_width="2dp"
+                android:layout_height="72dp" />
 
 
             <LinearLayout

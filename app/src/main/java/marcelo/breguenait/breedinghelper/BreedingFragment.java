@@ -652,8 +652,9 @@ public class BreedingFragment extends Fragment
     }
 
     @Override
-    public AssistantActivity.InterfaceGoalPokemon getInterfaceGoalPokemon() {
-        return storageManager.getInterfaceGoalPokemon();
+    public GoalPokemonFragment.InterfaceGoalPokemon getInterfaceGoalPokemon() {
+       // return storageManager.getInterfaceGoalPokemon();
+        return null;
     }
 
     @Override

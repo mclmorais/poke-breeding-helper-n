@@ -12,6 +12,7 @@ import databasemanager.DatabaseConstants;
 import databasemanager.MyDatabase;
 import marcelo.breguenait.breedinghelper.AssistantActivity;
 import marcelo.breguenait.breedinghelper.ChanceFragment;
+import marcelo.breguenait.breedinghelper.GoalPokemonFragment;
 import marcelo.breguenait.breedinghelper.InterfaceModifierPokemon;
 import marcelo.breguenait.breedinghelper.InterfaceNature;
 import marcelo.breguenait.breedinghelper.StoredPokemonFragment;
@@ -365,18 +366,6 @@ public class StorageManager {
             );
         }
     }
-
-    public AssistantActivity.InterfaceGoalPokemon getInterfaceGoalPokemon() {
-        String pokemonName = database.getPokemonName(goalPokemon.getPokemonId(), languageId);
-        return new AssistantActivity.InterfaceGoalPokemon(
-                goalPokemon.getIVs(),
-                goalPokemon.getPokemonId(),
-                pokemonName,
-                goalPokemon.getNatureId(),
-                goalPokemon.getAbilitySlot()
-        );
-    }
-
 
     public ArrayList<StoredPokemon> getStoredPokemonObjects() {
         return storedPokemonList;

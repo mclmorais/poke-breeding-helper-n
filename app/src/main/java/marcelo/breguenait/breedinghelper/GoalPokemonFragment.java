@@ -142,7 +142,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         View view = inflater.inflate(R.layout.fragment_goal_pokemon, container, false);
         ButterKnife.bind(this, view);
 
-        AssistantActivity.InterfaceGoalPokemon interfaceGoalPokemon = feederCallback.getInterfaceGoalPokemon();
+        InterfaceGoalPokemon interfaceGoalPokemon = feederCallback.getInterfaceGoalPokemon();
 
         buttonPokemonSelector.setOnClickListener(onClickHandler);
 
@@ -194,7 +194,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         updaterCallback.updateGoalIVs(IVs);
     }
 
-    private void feedInterface(AssistantActivity.InterfaceGoalPokemon interfaceGoalPokemon) {
+    private void feedInterface(InterfaceGoalPokemon interfaceGoalPokemon) {
         feedDisplayedName(interfaceGoalPokemon.getPokemonName());
         feedDisplayedIcon(interfaceGoalPokemon.getPokemonId());
 
@@ -232,7 +232,6 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
         }
         Log.d("GoalFragment", "Received a pokemon with invalid nature");
-
     }
 
     private void feedAbilitySpinner() {
@@ -361,7 +360,7 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
 
         ArrayList<String> getPokemonNames();
 
-        AssistantActivity.InterfaceGoalPokemon getInterfaceGoalPokemon();
+        InterfaceGoalPokemon getInterfaceGoalPokemon();
 
         ArrayList<Integer> getBasicPokemonList();
 
@@ -384,42 +383,42 @@ public class GoalPokemonFragment extends Fragment implements SelectPokemonFragme
         void updateNatureStatus(boolean b);
     }
 
-//    public static class InterfaceGoalPokemon {
-//
-//        final int[] IVs;
-//        final int pokemonId;
-//        final String pokemonName;
-//        final int natureId;
-//        final int abilitySlot;
-//
-//        public InterfaceGoalPokemon(int[] IVs, int pokemonId, String pokemonName, int natureId, int abilitySlot) {
-//            this.IVs = IVs;
-//            this.pokemonId = pokemonId;
-//            this.pokemonName = pokemonName;
-//            this.natureId = natureId;
-//            this.abilitySlot = abilitySlot;
-//        }
-//
-//        public int[] getIVs() {
-//            return IVs;
-//        }
-//
-//        public int getPokemonId() {
-//            return pokemonId;
-//        }
-//
-//        public String getPokemonName() {
-//            return pokemonName;
-//        }
-//
-//        public int getNatureId() {
-//            return natureId;
-//        }
-//
-//        public int getAbilitySlot() {
-//            return abilitySlot;
-//        }
-//    }
+    public static class InterfaceGoalPokemon {
+
+        final int[] IVs;
+        final int pokemonId;
+        final String pokemonName;
+        final int natureId;
+        final int abilitySlot;
+
+        public InterfaceGoalPokemon(int[] IVs, int pokemonId, String pokemonName, int natureId, int abilitySlot) {
+            this.IVs = IVs;
+            this.pokemonId = pokemonId;
+            this.pokemonName = pokemonName;
+            this.natureId = natureId;
+            this.abilitySlot = abilitySlot;
+        }
+
+        public int[] getIVs() {
+            return IVs;
+        }
+
+        public int getPokemonId() {
+            return pokemonId;
+        }
+
+        public String getPokemonName() {
+            return pokemonName;
+        }
+
+        public int getNatureId() {
+            return natureId;
+        }
+
+        public int getAbilitySlot() {
+            return abilitySlot;
+        }
+    }
 
     public static class AbilitySpinnerAdapter extends BaseAdapter {
         final ArrayList<InterfaceAbility> interfaceAbilities;
