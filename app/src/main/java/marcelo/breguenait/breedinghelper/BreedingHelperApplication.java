@@ -2,7 +2,7 @@ package marcelo.breguenait.breedinghelper;
 
 import android.app.Application;
 
-import databasemanager.JsonDatabase;
+import databasemanager.JsonDataProvider;
 import databasemanager.SqlDatabase;
 
 public class BreedingHelperApplication extends Application {
@@ -11,8 +11,8 @@ public class BreedingHelperApplication extends Application {
     public void onCreate() {
         super.onCreate();
         SqlDatabase.initialize(getApplicationContext());
-        JsonDatabase.initialize(getApplicationContext());
-        //JsonDatabase.initialize(getApplicationContext());
+        JsonDataProvider.initialize(getApplicationContext());
+        //JsonDataProvider.initialize(getApplicationContext());
         CachedPokemonIcons.initialize(getApplicationContext());
     }
 }

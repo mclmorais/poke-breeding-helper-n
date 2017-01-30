@@ -9,23 +9,24 @@ import java.util.List;
 import breedingmanager.MoveVerbose;
 
 /**
- * Implementation of the necessary database calls through JSON data. As of 30/01/2017, this is the
- * only implementation that is up to date to the 7th generation.
+ * Implementation of the necessary database calls through JSON data. All calls for data in the app
+ * should be made from this class. As of 30/01/2017, this is theonly implementation that is up to
+ * date with the 7th generation.
  */
 
-public class JsonDatabase implements NecessaryDatabaseCalls {
+public class JsonDataProvider implements NecessaryDatabaseCalls {
 
-    private static JsonDatabase instance;
+    private static JsonDataProvider instance;
 
-    private JsonDatabase() {
+    private JsonDataProvider() {
     }
 
     public static void initialize(Context c) {
 
-        instance = new JsonDatabase();
+        instance = new JsonDataProvider();
     }
 
-    public static JsonDatabase getInstance() {
+    public static JsonDataProvider getInstance() {
         return instance;
 
     }

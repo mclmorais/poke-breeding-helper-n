@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import databasemanager.DatabaseConstants;
-import databasemanager.JsonDatabase;
+import databasemanager.JsonDataProvider;
 import marcelo.breguenait.breedinghelper.ChanceFragment;
 import marcelo.breguenait.breedinghelper.InterfaceModifierPokemon;
 import marcelo.breguenait.breedinghelper.StoredPokemonFragment;
@@ -16,7 +16,7 @@ import marcelo.breguenait.breedinghelper.StoredPokemonViewerFragment;
 
 public class StorageManager {
 
-    private final JsonDatabase database;
+    private final JsonDataProvider database;
     private final AbilityChanceCalculator abilityChanceCalculator;
     private final BreedingCompatibilityChecker breedingCompatibilityChecker;
     private int languageId = 9;
@@ -29,7 +29,7 @@ public class StorageManager {
         abilityChanceCalculator = new AbilityChanceCalculator();
         breedingCompatibilityChecker = new BreedingCompatibilityChecker();
         goalPokemon = new StoredPokemon.Builder().createStoredPokemon();
-        database = JsonDatabase.getInstance();
+        database = JsonDataProvider.getInstance();
 
     }
 
