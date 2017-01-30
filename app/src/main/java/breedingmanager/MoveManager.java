@@ -1,12 +1,11 @@
 package breedingmanager;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import databasemanager.MyDatabase;
+import databasemanager.JsonDatabase;
 
 public class MoveManager {
-    private final MyDatabase database = MyDatabase.getInstance();
+    private final JsonDatabase database = JsonDatabase.getInstance();
     private int languageId = 9; //TODO: Make dynamic
 
     public ArrayList<MoveVerbose> getEggMoves(int pokemonId) {

@@ -14,16 +14,17 @@ import java.util.List;
 
 import breedingmanager.MoveVerbose;
 
-public class MyDatabase extends SQLiteAssetHelper {
+public class SqlDatabase extends SQLiteAssetHelper implements NecessaryDatabaseCalls {
+
 
     private final String DEBUG_DATABASE = "SQL_DB";
 
     private static final String DATABASE_NAME = "pkmnsql.db";
     private static final int DATABASE_VERSION = 1;
-    private static MyDatabase instance;
-    SQLiteDatabase database;
+    private static SqlDatabase instance;
+    private SQLiteDatabase database;
 
-    private MyDatabase(Context context) {
+    public SqlDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         database = getReadableDatabase();
 
@@ -31,10 +32,10 @@ public class MyDatabase extends SQLiteAssetHelper {
 
     public static void initialize(Context c) {
 
-        instance = new MyDatabase(c);
+        instance = new SqlDatabase(c);
     }
 
-    public static MyDatabase getInstance() {
+    public static SqlDatabase getInstance() {
         return instance;
 
     }
@@ -341,7 +342,6 @@ public class MyDatabase extends SQLiteAssetHelper {
 
         return natureIds;
     }
-
 
     /**
      * Queries the database for the names of the abilities that a certain Pokémon can have.

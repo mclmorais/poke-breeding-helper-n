@@ -3,13 +3,10 @@ package breedingmanager;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.UUID;
 
 import databasemanager.DatabaseConstants;
-import databasemanager.MyDatabase;
+import databasemanager.JsonDatabase;
 import marcelo.breguenait.breedinghelper.ChanceFragment;
 import marcelo.breguenait.breedinghelper.InterfaceModifierPokemon;
 import marcelo.breguenait.breedinghelper.StoredPokemonFragment;
@@ -19,7 +16,7 @@ import marcelo.breguenait.breedinghelper.StoredPokemonViewerFragment;
 
 public class StorageManager {
 
-    private final MyDatabase database;
+    private final JsonDatabase database;
     private final AbilityChanceCalculator abilityChanceCalculator;
     private final BreedingCompatibilityChecker breedingCompatibilityChecker;
     private int languageId = 9;
@@ -32,7 +29,7 @@ public class StorageManager {
         abilityChanceCalculator = new AbilityChanceCalculator();
         breedingCompatibilityChecker = new BreedingCompatibilityChecker();
         goalPokemon = new StoredPokemon.Builder().createStoredPokemon();
-        database = MyDatabase.getInstance();
+        database = JsonDatabase.getInstance();
 
     }
 

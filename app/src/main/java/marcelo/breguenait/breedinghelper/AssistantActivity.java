@@ -40,7 +40,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import databasemanager.DatabaseConstants;
-import databasemanager.MyDatabase;
+import databasemanager.SqlDatabase;
 
 public class AssistantActivity extends AppCompatActivity implements SelectPokemonFragment.OnPokemonSelectedListener, SelectPokemonFragment.FeedDataSelectPokemon {
 
@@ -559,7 +559,7 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
                 break;
         }
 
-        int abilitySlot = MyDatabase.getInstance().getAbilitySlot(pokemonId, compatPokemon.ability);
+        int abilitySlot = SqlDatabase.getInstance().getAbilitySlot(pokemonId, compatPokemon.ability);
         if (abilitySlot <= 0) abilitySlot = 1;
 
 

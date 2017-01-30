@@ -8,19 +8,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import databasemanager.DatabaseConstants;
-import databasemanager.MyDatabase;
+import databasemanager.SqlDatabase;
 
 public class CachedPokemonIcons {
 
 
     private static CachedPokemonIcons instance;
     private final HashMap<Integer, Drawable> iconsMap = new HashMap<>();
-    private final Context context;
+    //private final Context context;
     Drawable missingno;
 
     private CachedPokemonIcons(Context context) {
-        this.context = context;
-        fillIconsList();
+        //this.context = context;
+        fillIconsList(context);
     }
 
     public static CachedPokemonIcons getInstance() {
@@ -31,9 +31,9 @@ public class CachedPokemonIcons {
         instance = new CachedPokemonIcons(context);
     }
 
-    private void fillIconsList() {
+    private void fillIconsList(Context context) {
 
-        ArrayList<Integer> ids = MyDatabase.getInstance().getPokemonIds();
+        ArrayList<Integer> ids = SqlDatabase.getInstance().getPokemonIds();
 
         for (Integer id : ids) {
             String iconId = "pkmn_" + String.format("%03d", id);

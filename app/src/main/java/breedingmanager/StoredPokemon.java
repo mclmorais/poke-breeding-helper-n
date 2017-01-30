@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import databasemanager.DatabaseConstants;
-import databasemanager.MyDatabase;
+import databasemanager.JsonDatabase;
 
 public class StoredPokemon {
 
@@ -45,12 +45,12 @@ public class StoredPokemon {
         if (DatabaseConstants.pokemonIdIsValid(pokemonId)) {
             eggGroup1Id = eggGroup2Id = -1;
 
-            ArrayList<Integer> eggGroups = MyDatabase.getInstance().getPokemonEggGroupIds(pokemonId);
+            ArrayList<Integer> eggGroups = JsonDatabase.getInstance().getPokemonEggGroupIds(pokemonId);
             eggGroup1Id = eggGroups.get(0);
             if (eggGroups.size() >= 2)
                 eggGroup2Id = eggGroups.get(1);
 
-            evolutionChainId = MyDatabase.getInstance().getEvolutionChainId(pokemonId);
+            evolutionChainId = JsonDatabase.getInstance().getEvolutionChainId(pokemonId);
 
         }
     }
