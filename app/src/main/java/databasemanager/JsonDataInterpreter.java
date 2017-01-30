@@ -6,4 +6,5 @@ package databasemanager;
  */
 
 public class JsonDataInterpreter {
+
 }

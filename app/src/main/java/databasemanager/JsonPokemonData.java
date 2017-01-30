@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 class JsonPokemonData {
     private int number = -1;
-    private String species = "";
+    private String name = "";
     private int[] types = {-1, -1};
     private int genderRestriction = -1;
     private int genderRatio = -1;
