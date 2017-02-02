@@ -3,14 +3,14 @@ package breedingmanager;
 import java.util.LinkedHashMap;
 
 import databasemanager.DatabaseConstants;
-import databasemanager.JsonDataProvider;
+import databasemanager.JsonDatabaseManager;
 
 /**
  * Created by Marcelo on 24/09/2016.
  */
 
 public class AbilityManager {
-    private final JsonDataProvider database = JsonDataProvider.getInstance();
+    private final JsonDatabaseManager database = JsonDatabaseManager.getInstance();
     private int languageId = 9; //TODO: Make dynamic (external?)
     private boolean considerAbility = false;
 

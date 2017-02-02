@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import databasemanager.DatabaseConstants;
-import databasemanager.JsonDataProvider;
+import databasemanager.JsonDatabaseManager;
 
 /**
  * Created by Marcelo on 23/09/2016.
  */
 
 public class NatureManager {
-    private final JsonDataProvider database = JsonDataProvider.getInstance();
+    private final JsonDatabaseManager database = JsonDatabaseManager.getInstance();
     private int languageId = 9; //TODO: Make dynamic
     private boolean considerNature = false;
     private boolean hasEverstone = true;
