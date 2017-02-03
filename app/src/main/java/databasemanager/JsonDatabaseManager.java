@@ -1,12 +1,15 @@
 package databasemanager;
 
 import android.content.Context;
+import android.util.SparseArray;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import breedingmanager.MoveVerbose;
+import databasemanager.jsondatablocks.JsonNatureDataBlock;
+import databasemanager.jsondatablocks.JsonTypeDataBlock;
 
 /**
  * Implementation of the necessary database calls through JSON data. All calls for data in the app
@@ -14,19 +17,30 @@ import breedingmanager.MoveVerbose;
  * date with the 7th generation.
  */
 
-public class JsonDataProvider implements NecessaryDatabaseCalls {
+public class JsonDatabaseManager implements NecessaryDatabaseCalls {
 
-    private static JsonDataProvider instance;
+    private static JsonDatabaseManager instance;
 
-    private JsonDataProvider() {
+    private static SparseArray<JsonNatureDataBlock> natureData = new SparseArray<>();
+    private static SparseArray<JsonTypeDataBlock> typeData = new SparseArray<>();
+
+    private JsonDatabaseManager() {
+    }
+
+    public static void setNatureData(SparseArray<JsonNatureDataBlock> natureData) {
+        JsonDatabaseManager.natureData = natureData;
+    }
+
+    public static void setTypeData(SparseArray<JsonTypeDataBlock> typeData) {
+        JsonDatabaseManager.typeData = typeData;
     }
 
     public static void initialize(Context c) {
 
-        instance = new JsonDataProvider();
+        instance = new JsonDatabaseManager();
     }
 
-    public static JsonDataProvider getInstance() {
+    public static JsonDatabaseManager getInstance() {
         return instance;
 
     }
