@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * a "none" value instead of being left at -1.
  */
 
-class JsonPokedexDataBlock {
+public class JsonPokedexDataBlock {
     private int number = -1;
     private String name = "";
     private int[] types = {-1, -1};
@@ -23,4 +23,20 @@ class JsonPokedexDataBlock {
     private int previousEvolution = -1;
     private ArrayList<Integer> possibleEvolutions = new ArrayList<>();
     private int color = -1;
+
+    public JsonPokedexDataBlock(int number, String name, int[] types, int genderRestriction, int genderRatio, int[]
+            abilities, int form, int[] eggGroups, int previousEvolution, ArrayList<Integer> possibleEvolutions, int
+            color) {
+        this.number = number;
+        this.name = name;
+        this.types = types;
+        this.genderRestriction = genderRestriction;
+        this.genderRatio = genderRatio;
+        this.abilities = abilities;
+        this.form = form;
+        this.eggGroups = eggGroups;
+        this.previousEvolution = previousEvolution;
+        this.possibleEvolutions = possibleEvolutions;
+        this.color = color;
+    }
 }

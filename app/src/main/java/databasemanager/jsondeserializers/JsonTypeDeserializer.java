@@ -4,7 +4,6 @@ import android.util.SparseArray;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -21,7 +20,7 @@ import databasemanager.jsondatablocks.JsonTypeDataBlock;
  */
 public class JsonTypeDeserializer extends JsonGenericDeserializer<SparseArray<JsonTypeDataBlock>> {
 
-    private Type StructureType = new TypeToken<SparseArray<JsonTypeDataBlock>>() {
+    private final Type StructureType = new TypeToken<SparseArray<JsonTypeDataBlock>>() {
     }.getType();
 
     @Override

@@ -22,9 +22,9 @@ public class SqlDatabase extends SQLiteAssetHelper implements NecessaryDatabaseC
     private static final String DATABASE_NAME = "pkmnsql.db";
     private static final int DATABASE_VERSION = 1;
     private static SqlDatabase instance;
-    private SQLiteDatabase database;
+    private final SQLiteDatabase database;
 
-    public SqlDatabase(Context context) {
+    private SqlDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         database = getReadableDatabase();
 
