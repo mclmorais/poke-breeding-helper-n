@@ -12,14 +12,14 @@ package databasemanager.jsondatablocks;
 public class JsonNatureDataBlock {
     private int id = -1;
     private String name = null;
-    private int increased_stat_id = -1;
-    private int decreased_stat_id = -1;
+    private int increasedStatId = -1;
+    private int decreasedStatId = -1;
 
-    public JsonNatureDataBlock(int id, String name, int increased_stat_id, int decreased_stat_id) {
+    public JsonNatureDataBlock(int id, String name, int increasedStatId, int decreasedStatId) {
         this.id = id;
         this.name = name;
-        this.increased_stat_id = increased_stat_id;
-        this.decreased_stat_id = decreased_stat_id;
+        this.increasedStatId = increasedStatId;
+        this.decreasedStatId = decreasedStatId;
     }
 
     public int getId() {
@@ -30,11 +30,15 @@ public class JsonNatureDataBlock {
         return name;
     }
 
-    public int getIncreased_stat_id() {
-        return increased_stat_id;
+    public String getCapitalizedName() {
+        return Character.toUpperCase(name.charAt(0)) + name.substring(1);
     }
 
-    public int getDecreased_stat_id() {
-        return decreased_stat_id;
+    public int getIncreasedStatId() {
+        return increasedStatId;
+    }
+
+    public int getDecreasedStatId() {
+        return decreasedStatId;
     }
 }

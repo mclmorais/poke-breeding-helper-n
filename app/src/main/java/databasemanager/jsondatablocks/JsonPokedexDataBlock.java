@@ -66,7 +66,7 @@ public class JsonPokedexDataBlock {
         return eggGroups;
     }
 
-    public int getEvolutionChain() {
+    public int getEvolutionChainId() {
         return evolutionChain;
     }
 

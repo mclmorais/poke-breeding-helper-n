@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.SparseArray;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -29,32 +32,32 @@ public class JsonDatabaseManager implements NecessaryDatabaseCalls {
     private static SparseArray<JsonEggGroupDataBlock> eggGroupData = new SparseArray<>();
     private static SparseArray<JsonAbilityDataBlock> abilityData = new SparseArray<>();
     private static SparseArray<JsonPokedexDataBlock> pokedexData = new SparseArray<>();
+    private final SqlDatabase tempSqlDatabase = SqlDatabase.getInstance();
 
     private JsonDatabaseManager() {
     }
 
-    public static void setNatureData(SparseArray<JsonNatureDataBlock> natureData) {
+    static void setNatureData(SparseArray<JsonNatureDataBlock> natureData) {
         JsonDatabaseManager.natureData = natureData;
     }
 
-    public static void setTypeData(SparseArray<JsonTypeDataBlock> typeData) {
+    static void setTypeData(SparseArray<JsonTypeDataBlock> typeData) {
         JsonDatabaseManager.typeData = typeData;
     }
 
-    public static void setEggGroupData(SparseArray<JsonEggGroupDataBlock> eggGroupData) {
+    static void setEggGroupData(SparseArray<JsonEggGroupDataBlock> eggGroupData) {
         JsonDatabaseManager.eggGroupData = eggGroupData;
     }
 
-    public static void setAbilityData(SparseArray<JsonAbilityDataBlock> abilityData) {
+    static void setAbilityData(SparseArray<JsonAbilityDataBlock> abilityData) {
         JsonDatabaseManager.abilityData = abilityData;
     }
 
-    public static void setPokedexData(SparseArray<JsonPokedexDataBlock> pokedexData) {
+    static void setPokedexData(SparseArray<JsonPokedexDataBlock> pokedexData) {
         JsonDatabaseManager.pokedexData = pokedexData;
     }
 
     public static void initialize(Context c) {
-
         instance = new JsonDatabaseManager();
     }
 
@@ -63,26 +66,57 @@ public class JsonDatabaseManager implements NecessaryDatabaseCalls {
 
     }
 
-    private final SqlDatabase tempSqlDatabase = SqlDatabase.getInstance();
-
     @Override
     public String getPokemonName(int pokemonId, int languageId) {
-        return tempSqlDatabase.getPokemonName(pokemonId, languageId);
+        return pokedexData.get(pokemonId).getName();
+        //return tempSqlDatabase.getPokemonName(pokemonId, languageId);
     }
 
     @Override
     public LinkedHashMap<Integer, String> getNatureNames(int languageId) {
-        return tempSqlDatabase.getNatureNames(languageId);
+        LinkedHashMap<Integer, String> linkedNatures = new LinkedHashMap<>();
+        for (int i = 0; i < natureData.size(); i++) {
+            linkedNatures.put(natureData.valueAt(i).getId(), natureData.valueAt(i).getCapitalizedName());
+        }
+        return linkedNatures;
+        //return tempSqlDatabase.getNatureNames(languageId);
     }
 
     @Override
     public ArrayList<Integer> getNatureIdsSortedByIncreasedStat() {
-        return tempSqlDatabase.getNatureIdsSortedByIncreasedStat();
+        ArrayList<JsonNatureDataBlock> natureDataList = new ArrayList<>();
+        for (int i = 0; i < natureData.size(); i++)
+            natureDataList.add(natureData.valueAt(i));
+        Collections.sort(natureDataList, new Comparator<JsonNatureDataBlock>() {
+            @Override
+            public int compare(JsonNatureDataBlock o1, JsonNatureDataBlock o2) {
+                return o1.getIncreasedStatId() - o2.getIncreasedStatId();
+            }
+        });
+
+        ArrayList<Integer> sortedIds = new ArrayList<>();
+        for (Iterator<JsonNatureDataBlock> iterator = natureDataList.iterator(); iterator.hasNext(); ) {
+            JsonNatureDataBlock b = iterator.next();
+            if (b.getIncreasedStatId() == b.getDecreasedStatId()) {
+                iterator.remove();
+                continue;
+            }
+            sortedIds.add(b.getId());
+        }
+        return sortedIds;
+        //return tempSqlDatabase.getNatureIdsSortedByIncreasedStat();
     }
 
     @Override
     public LinkedHashMap<Integer, String> getListOfAbilitiesNames(int pokemonId, int languageId) {
-        return tempSqlDatabase.getListOfAbilitiesNames(pokemonId, languageId);
+        int[] abilityIds = pokedexData.get(pokemonId).getAbilities();
+        LinkedHashMap<Integer, String> abilityNames = new LinkedHashMap<>();
+        for (int i = 0; i < abilityIds.length; i++) {
+            if (abilityIds[i] > 0)
+                abilityNames.put(i + 1, abilityData.get(abilityIds[i]).getName());
+        }
+        return abilityNames;
+        //return tempSqlDatabase.getListOfAbilitiesNames(pokemonId, languageId);
     }
 
     @Override
@@ -92,16 +126,23 @@ public class JsonDatabaseManager implements NecessaryDatabaseCalls {
 
     @Override
     public ArrayList<Integer> getPokemonEggGroupIds(int pokemonId) {
-        return tempSqlDatabase.getPokemonEggGroupIds(pokemonId);
+        ArrayList<Integer> eggGroupIds = new ArrayList<>();
+        for (int id : pokedexData.get(pokemonId).getEggGroups())
+            if (id > 0)
+                eggGroupIds.add(id);
+        return eggGroupIds;
+        //return tempSqlDatabase.getPokemonEggGroupIds(pokemonId);
     }
 
     @Override
     public int getEvolutionChainId(int pokemonId) {
-        return tempSqlDatabase.getEvolutionChainId(pokemonId);
+        return pokedexData.get(pokemonId).getEvolutionChainId();
+        //return tempSqlDatabase.getEvolutionChainId(pokemonId);
     }
 
     @Override
     public int getGenderRate(int pokemonId) {
+        //TODO: Transform
         return tempSqlDatabase.getGenderRate(pokemonId);
     }
 
