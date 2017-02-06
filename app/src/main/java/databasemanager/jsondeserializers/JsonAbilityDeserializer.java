@@ -43,17 +43,17 @@ public class JsonAbilityDeserializer extends JsonGenericDeserializer<SparseArray
         JsonObject jsonObject = json.getAsJsonObject();
         JsonArray jsonArray = jsonObject.get("abilities").getAsJsonArray();
 
-        SparseArray<JsonAbilityDataBlock> abilityData = new SparseArray<>();
+        SparseArray<JsonAbilityDataBlock> abilityData = new SparseArray<>(260);
 
         for (JsonElement abilityJsonElement : jsonArray) {
 
             JsonObject abilityJsonObject = (JsonObject) abilityJsonElement;
 
             JsonAbilityDataBlock deserializedAbilityBlock = new
-                    JsonAbilityDataBlock(abilityJsonObject.get("id").getAsInt(),
+                    JsonAbilityDataBlock(abilityJsonObject.get("num").getAsInt(),
                     abilityJsonObject.get("name").getAsString());
 
-            abilityData.append(abilityJsonObject.get("id").getAsInt(), deserializedAbilityBlock);
+            abilityData.append(abilityJsonObject.get("num").getAsInt(), deserializedAbilityBlock);
 
         }
 

@@ -11,6 +11,7 @@ import breedingmanager.MoveVerbose;
 import databasemanager.jsondatablocks.JsonAbilityDataBlock;
 import databasemanager.jsondatablocks.JsonEggGroupDataBlock;
 import databasemanager.jsondatablocks.JsonNatureDataBlock;
+import databasemanager.jsondatablocks.JsonPokedexDataBlock;
 import databasemanager.jsondatablocks.JsonTypeDataBlock;
 
 /**
@@ -27,6 +28,7 @@ public class JsonDatabaseManager implements NecessaryDatabaseCalls {
     private static SparseArray<JsonTypeDataBlock> typeData = new SparseArray<>();
     private static SparseArray<JsonEggGroupDataBlock> eggGroupData = new SparseArray<>();
     private static SparseArray<JsonAbilityDataBlock> abilityData = new SparseArray<>();
+    private static SparseArray<JsonPokedexDataBlock> pokedexData = new SparseArray<>();
 
     private JsonDatabaseManager() {
     }
@@ -45,6 +47,10 @@ public class JsonDatabaseManager implements NecessaryDatabaseCalls {
 
     public static void setAbilityData(SparseArray<JsonAbilityDataBlock> abilityData) {
         JsonDatabaseManager.abilityData = abilityData;
+    }
+
+    public static void setPokedexData(SparseArray<JsonPokedexDataBlock> pokedexData) {
+        JsonDatabaseManager.pokedexData = pokedexData;
     }
 
     public static void initialize(Context c) {

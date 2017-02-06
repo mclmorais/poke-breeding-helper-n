@@ -15,11 +15,13 @@ import java.util.Collection;
 import databasemanager.jsondatablocks.JsonAbilityDataBlock;
 import databasemanager.jsondatablocks.JsonEggGroupDataBlock;
 import databasemanager.jsondatablocks.JsonNatureDataBlock;
+import databasemanager.jsondatablocks.JsonPokedexDataBlock;
 import databasemanager.jsondatablocks.JsonTypeDataBlock;
 import databasemanager.jsondeserializers.JsonAbilityDeserializer;
 import databasemanager.jsondeserializers.JsonEggGroupDeserializer;
 import databasemanager.jsondeserializers.JsonGenericDeserializer;
 import databasemanager.jsondeserializers.JsonNatureDeserializer;
+import databasemanager.jsondeserializers.JsonPokedexDeserializer;
 import databasemanager.jsondeserializers.JsonTypeDeserializer;
 
 /**
@@ -42,12 +44,15 @@ public class JsonFileReader {
         SparseArray<JsonAbilityDataBlock> abilityData =
                 OpenWithCustomDeserializer(new JsonAbilityDeserializer(), "abilities.json", context);
         JsonDatabaseManager.setAbilityData(abilityData);
+        SparseArray<JsonPokedexDataBlock> pokedexData =
+            OpenWithCustomDeserializer(new JsonPokedexDeserializer(), "pokedex.json", context);
+        JsonDatabaseManager.setPokedexData(pokedexData);
 
 
     }
 
 
-    private <T extends Collection> T OpenWithCustomDeserializer(JsonGenericDeserializer deserializer, String
+    private <T> T OpenWithCustomDeserializer(JsonGenericDeserializer deserializer, String
             fileName, Context context) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson customGson;
