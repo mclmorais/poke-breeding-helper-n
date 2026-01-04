@@ -3,9 +3,9 @@ package marcelo.breguenait.breedinghelper;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +24,7 @@ public class LevelMovesListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_moves_list, container, false);
 
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.movesRecyclerView);
+        mRecyclerView = v.findViewById(R.id.movesRecyclerView);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -89,9 +89,7 @@ public class LevelMovesListFragment extends Fragment {
 
             TypedArray ids = context.getResources().obtainTypedArray(R.array.colorPokemonTypes);
 
-            // Get resource id by its index
             ids.getResourceId(moves.get(position).getTypeId() - 1, -1);
-            // be sure to call TypedArray.recycle() when done with the array
             holder.type.setTextColor(ids.getColor(moves.get(position).getTypeId() - 1, -1));
             ids.recycle();
         }
@@ -101,9 +99,6 @@ public class LevelMovesListFragment extends Fragment {
             return moves.size();
         }
 
-        // Provide a reference to the views for each data item
-        // Complex data items may need more than one view per item, and
-        // you provide access to all the views for a data item in a view holder
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
 
@@ -113,14 +108,13 @@ public class LevelMovesListFragment extends Fragment {
             public ViewHolder(View itemView) {
                 super(itemView);
                 layout = (LinearLayout) itemView;
-                level = (TextView) itemView.findViewById(R.id.dynMoveLvl_textLevel);
-                name = (TextView) itemView.findViewById(R.id.dynMoveLvl_textName);
-                effect = (TextView) itemView.findViewById(R.id.dynMoveLvl_textEffect);
-                type = (TextView) itemView.findViewById(R.id.dynMoveLvl_textType);
-                accuracy = (TextView) itemView.findViewById(R.id.dynMoveLvl_textAccuracy);
-                power = (TextView) itemView.findViewById(R.id.dynMoveLvl_textPower);
+                level = itemView.findViewById(R.id.dynMoveLvl_textLevel);
+                name = itemView.findViewById(R.id.dynMoveLvl_textName);
+                effect = itemView.findViewById(R.id.dynMoveLvl_textEffect);
+                type = itemView.findViewById(R.id.dynMoveLvl_textType);
+                accuracy = itemView.findViewById(R.id.dynMoveLvl_textAccuracy);
+                power = itemView.findViewById(R.id.dynMoveLvl_textPower);
             }
         }
     }
 }
-

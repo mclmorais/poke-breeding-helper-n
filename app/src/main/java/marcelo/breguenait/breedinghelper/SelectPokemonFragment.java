@@ -1,72 +1,72 @@
 package marcelo.breguenait.breedinghelper;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.graphics.drawable.Drawable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import io.codetail.animation.SupportAnimator;
-import io.codetail.animation.ViewAnimationUtils;
+import marcelo.breguenait.breedinghelper.databinding.FragmentSelectPokemonBinding;
 
 
 public class SelectPokemonFragment extends PopupDialogFragment {
-    CardView mRevealView;
+    private FragmentSelectPokemonBinding binding;
     private OnPokemonSelectedListener updaterCallback;
-    private EditText editTextFilter;
     private SelectPokemonAdapter interfaceSelectorAdapter;
 
     private FeedDataSelectPokemon feederCallback;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
         try {
-
             Fragment targetFragment = getTargetFragment();
+            if (targetFragment == null) {
+                targetFragment = getParentFragment();
+            }
             if (targetFragment == null)
-                updaterCallback = (OnPokemonSelectedListener) activity;
+                updaterCallback = (OnPokemonSelectedListener) context;
             else
-                updaterCallback = (OnPokemonSelectedListener) getTargetFragment();
+                updaterCallback = (OnPokemonSelectedListener) targetFragment;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(context.toString()
                     + " must implement OnPokemonSelectedListener");
         }
 
         try {
-
             Fragment targetFragment = getTargetFragment();
+            if (targetFragment == null) {
+                targetFragment = getParentFragment();
+            }
             if (targetFragment == null)
-                feederCallback = (FeedDataSelectPokemon) activity;
+                feederCallback = (FeedDataSelectPokemon) context;
             else
-                feederCallback = (FeedDataSelectPokemon) getTargetFragment();
+                feederCallback = (FeedDataSelectPokemon) targetFragment;
         } catch (ClassCastException e) {
-            throw new ClassCastException(getTargetFragment().toString()
+            Fragment targetFragment = getTargetFragment();
+            if (targetFragment == null) {
+                targetFragment = getParentFragment();
+            }
+            throw new ClassCastException((targetFragment != null ? targetFragment.toString() : context.toString())
                     + " must implement FeedDataSelectPokemon");
         }
 
@@ -74,39 +74,27 @@ public class SelectPokemonFragment extends PopupDialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        // create ContextThemeWrapper from the original Activity Context with the custom theme
-        final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.AppTheme);
-
-        // clone the inflater using the ContextThemeWrapper
-        LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-        View view = localInflater.inflate(R.layout.fragment_select_pokemon, container, false);
-
-        mRevealView = (CardView) view.findViewById(R.id.revealable);
+        binding = FragmentSelectPokemonBinding.inflate(inflater, container, false);
 
         interfaceSelectorAdapter = new SelectPokemonAdapter(
-                getActivity().getApplicationContext(),
+                requireActivity().getApplicationContext(),
                 feederCallback.getPokemonIds(),
                 feederCallback.getPokemonNames());
 
-        interfaceSelectorAdapter.setCompatiblePokemonList(feederCallback.getCompatiblePokemonList()); //TODO: ver se nao da pra fazer essa call somente se o fragment for pedir isso
+        interfaceSelectorAdapter.setCompatiblePokemonList(feederCallback.getCompatiblePokemonList());
         interfaceSelectorAdapter.setBasicPokemonList(feederCallback.getBasicPokemonList());
         interfaceSelectorAdapter.setPokemonFamilyList(feederCallback.getPokemonFamilyList());
 
-        GridView gridViewSelector = (GridView) view.findViewById(R.id.gridViewSelectPokemon);
-        gridViewSelector.setAdapter(interfaceSelectorAdapter);
-        gridViewSelector.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                int p = (int) interfaceSelectorAdapter.getItem(i);
-                updaterCallback.onPokemonSelected(p);
-                closeFragment();
-            }
+        binding.gridViewSelectPokemon.setAdapter(interfaceSelectorAdapter);
+        binding.gridViewSelectPokemon.setOnItemClickListener((adapterView, view, i, l) -> {
+            int p = (int) interfaceSelectorAdapter.getItem(i);
+            updaterCallback.onPokemonSelected(p);
+            closeFragment();
         });
 
-        editTextFilter = (EditText) view.findViewById(R.id.editTextSelectPokemon);
-        editTextFilter.addTextChangedListener(new TextWatcher() {
+        binding.editTextSelectPokemon.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
             }
@@ -122,91 +110,40 @@ public class SelectPokemonFragment extends PopupDialogFragment {
             }
         });
 
-        CheckBox checkBoxCompatible = (CheckBox) view.findViewById(R.id.checkBoxSelectPokemonCompatible);
 
-
-        if (getArguments().getBoolean("showOnlyCompatible", false)) {
-            checkBoxCompatible.setChecked(true);
-            checkBoxCompatible.setEnabled(false);
+        if (getArguments() != null && getArguments().getBoolean("showOnlyCompatible", false)) {
+            binding.checkBoxSelectPokemonCompatible.setChecked(true);
+            binding.checkBoxSelectPokemonCompatible.setEnabled(false);
             interfaceSelectorAdapter.showOnlyCompatible(true);
         }
 
         if (updaterCallback.showOnlyBasic()) {
             interfaceSelectorAdapter.setShowOnlyBasic(updaterCallback.showOnlyBasic());
-            checkBoxCompatible.setChecked(true);
-            checkBoxCompatible.setText("Basic Pokémon"); //TODO: mudar pra sistema
+            binding.checkBoxSelectPokemonCompatible.setChecked(true);
+            binding.checkBoxSelectPokemonCompatible.setText("Basic Pokémon");
         }
 
-        checkBoxCompatible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                interfaceSelectorAdapter.showOnlyCompatible(b);
-                interfaceSelectorAdapter.getFilter().filter(editTextFilter.getText());
-            }
+        binding.checkBoxSelectPokemonCompatible.setOnCheckedChangeListener((compoundButton, b) -> {
+            interfaceSelectorAdapter.showOnlyCompatible(b);
+            interfaceSelectorAdapter.getFilter().filter(binding.editTextSelectPokemon.getText());
         });
 
 
-        interfaceSelectorAdapter.getFilter().filter(editTextFilter.getText());
+        interfaceSelectorAdapter.getFilter().filter(binding.editTextSelectPokemon.getText());
 
 
-        Button buttonCancel = (Button) view.findViewById(R.id.fragmentSelectPokemonButtonCancel);
-        buttonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeFragment();
-            }
-        });
+        binding.fragmentSelectPokemonButtonCancel.setOnClickListener(v -> closeFragment());
 
 
         setDialogPosition();
 
         boolean showEggGroupFilter = updaterCallback.showEggGroupFilter();
 
-        checkBoxCompatible.setEnabled(showEggGroupFilter);
+        binding.checkBoxSelectPokemonCompatible.setEnabled(showEggGroupFilter);
 
-        return view;
+        return binding.getRoot();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        int margin = dpToPx(32);
-
-        DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int screenWidth = metrics.widthPixels;
-        int screenHeight = metrics.heightPixels;
-        Dialog dialog = getDialog();
-        if (dialog != null) {
-            dialog.getWindow().setLayout(screenWidth - margin, screenHeight - margin);
-        }
-        //  reveal();
-    }
-
-    void reveal() {
-
-        int cx = getArguments().getInt("x");
-        int cy = getArguments().getInt("y");
-
-        int radius = Math.max(mRevealView.getWidth(), mRevealView.getHeight());
-
-        SupportAnimator animator =
-                ViewAnimationUtils.createCircularReveal(mRevealView, cx, cy, 0, radius);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        animator.setDuration(400);
-        mRevealView.setVisibility(View.VISIBLE);
-        animator.start();
-
-//        Animator anim = android.view.ViewAnimationUtils.createCircularReveal(mRevealView, cx, cy, 0, radius);
-//        anim.setInterpolator(new AccelerateDecelerateInterpolator());
-//        anim.setDuration(500);
-//        anim.start();
-
-    }
-
-
-    //BreedingFragment baseActivity;
     public interface OnPokemonSelectedListener {
         void onPokemonSelected(int id);
 
@@ -303,12 +240,11 @@ public class SelectPokemonFragment extends PopupDialogFragment {
             LayoutHolder holder;
 
             if (convertView == null) {
-                //If this view is new (instead of recycled)
                 pokemonDynamicLayout = inflater.inflate(R.layout.dynamic_view_layout_pokemon_selector, parent, false);
 
                 holder = new LayoutHolder();
-                holder.icon = (ImageView) pokemonDynamicLayout.findViewById(R.id.imageViewIcon);
-                holder.id = (TextView) pokemonDynamicLayout.findViewById(R.id.textViewId);
+                holder.icon = pokemonDynamicLayout.findViewById(R.id.imageViewIcon);
+                holder.id = pokemonDynamicLayout.findViewById(R.id.textViewId);
                 pokemonDynamicLayout.setTag(holder);
             } else {
                 holder = (LayoutHolder) convertView.getTag();
@@ -316,8 +252,25 @@ public class SelectPokemonFragment extends PopupDialogFragment {
 
             int pokemonId = filteredPokemonIds.get(position);
 
-            holder.id.setText(String.valueOf(pokemonId));//String.format("%03d", pokemonId));
-            holder.icon.setBackground(CachedPokemonIcons.getInstance().getIcon(pokemonId));
+            holder.id.setText(String.valueOf(pokemonId));
+            
+            // Clear background - only show pokemon sprite
+            holder.icon.setBackground(null);
+            
+            // Load pokemon icon from cache and set as image source
+            if (CachedPokemonIcons.getInstance() != null) {
+                Drawable icon = CachedPokemonIcons.getInstance().getIcon(pokemonId);
+                holder.icon.setImageDrawable(icon);
+            } else {
+                // Fallback if cache not initialized
+                String iconId = "pkmn_" + String.format("%03d", pokemonId);
+                int resId = inflater.getContext().getResources().getIdentifier(iconId, "drawable", inflater.getContext().getPackageName());
+                if (resId != 0) {
+                    holder.icon.setImageResource(resId);
+                } else {
+                    holder.icon.setImageResource(R.drawable.pkmn_missingno);
+                }
+            }
 
             return pokemonDynamicLayout;
 
@@ -350,8 +303,6 @@ public class SelectPokemonFragment extends PopupDialogFragment {
 
                         if (currentId <= 0) continue;
 
-                        /*If only compatible pokemons should be shown, ignores pokemons that don't have
-                        * at least one egg group compatible with the current goal pokemon.*/
                         if (showOnlyCompatible) {
                             if (!compatiblePokemonList.contains(currentId))
                                 continue;
@@ -365,8 +316,6 @@ public class SelectPokemonFragment extends PopupDialogFragment {
 
                         String nameToBeCompared = pokemonNames.get(i);
 
-
-                        //IF CONSTRAINT IS EMPTY, ADDS ALL
                         if (nameToBeCompared.toLowerCase().contains(constraint.toString())) {
 
                             if (currentId == DITTO_ID) {

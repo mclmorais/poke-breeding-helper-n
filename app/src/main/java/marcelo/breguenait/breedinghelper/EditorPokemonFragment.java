@@ -1,11 +1,11 @@
 package marcelo.breguenait.breedinghelper;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,14 +16,13 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.melnykov.fab.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +30,7 @@ import java.util.LinkedHashMap;
 
 import breedingmanager.NatureManager;
 import databasemanager.DatabaseConstants;
+import marcelo.breguenait.breedinghelper.R;
 
 
 public class EditorPokemonFragment extends PopupDialogFragment implements
@@ -78,18 +78,16 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     private FeedDataCreatePokemon feederCallback;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
         try {
-            Fragment targetFragment = getTargetFragment();
+            Fragment targetFragment = getParentFragment();
             if (targetFragment == null)
-                feederCallback = (FeedDataCreatePokemon) activity;
+                feederCallback = (FeedDataCreatePokemon) context;
             else
-                feederCallback = (FeedDataCreatePokemon) getTargetFragment();
+                feederCallback = (FeedDataCreatePokemon) targetFragment;
         } catch (ClassCastException e) {
-            throw new ClassCastException(getTargetFragment().toString()
+            throw new ClassCastException(context.toString()
                     + " must implement FeedDataCreatePokemon");
         }
 
@@ -98,50 +96,41 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.AppTheme);
+        final Context contextThemeWrapper = new ContextThemeWrapper(requireActivity(), R.style.AppTheme);
 
-        // clone the inflater using the ContextThemeWrapper
         LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
         View view = localInflater.inflate(R.layout.fragment_edit_pokemon, container, false);
 
 
         buttonPokemonSelector = view.findViewById(R.id.buttonSelectPokemon);
 
-        selectedName = (TextView) view.findViewById(R.id.textViewSelectedName);
-        selectedIcon = (ImageView) view.findViewById(R.id.imageViewSelectedIcon);
+        selectedName = view.findViewById(R.id.textViewSelectedName);
+        selectedIcon = view.findViewById(R.id.imageViewSelectedIcon);
 
-        togglePokemonGender = (ToggleButton) view.findViewById(R.id.toggleButtonInputGender);
+        togglePokemonGender = view.findViewById(R.id.toggleButtonInputGender);
 
-        confirmButton = (Button) view.findViewById(R.id.confirmIVsButton);
-        cancelButton = (Button) view.findViewById(R.id.fragmentAddPokemonButtonCancel);
+        confirmButton = view.findViewById(R.id.confirmIVsButton);
+        cancelButton = view.findViewById(R.id.fragmentAddPokemonButtonCancel);
 
-        checkBoxInputIVs[0] = (CheckBox) view.findViewById(R.id.checkBoxInputHP);
-        checkBoxInputIVs[1] = (CheckBox) view.findViewById(R.id.checkBoxInputATK);
-        checkBoxInputIVs[2] = (CheckBox) view.findViewById(R.id.checkBoxInputDEF);
-        checkBoxInputIVs[3] = (CheckBox) view.findViewById(R.id.checkBoxInputSATK);
-        checkBoxInputIVs[4] = (CheckBox) view.findViewById(R.id.checkBoxInputSDEF);
-        checkBoxInputIVs[5] = (CheckBox) view.findViewById(R.id.checkBoxInputSPD);
+        checkBoxInputIVs[0] = view.findViewById(R.id.checkBoxInputHP);
+        checkBoxInputIVs[1] = view.findViewById(R.id.checkBoxInputATK);
+        checkBoxInputIVs[2] = view.findViewById(R.id.checkBoxInputDEF);
+        checkBoxInputIVs[3] = view.findViewById(R.id.checkBoxInputSATK);
+        checkBoxInputIVs[4] = view.findViewById(R.id.checkBoxInputSDEF);
+        checkBoxInputIVs[5] = view.findViewById(R.id.checkBoxInputSPD);
 
-        spinnerNature = (Spinner) view.findViewById(R.id.spinnerAddPokemonNature);
+        spinnerNature = view.findViewById(R.id.spinnerAddPokemonNature);
         spinnerNature.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
 
-        spinnerAbility = (Spinner) view.findViewById(R.id.spinnerAddPokemonAbility);
+        spinnerAbility = view.findViewById(R.id.spinnerAddPokemonAbility);
         spinnerAbility.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
 
-        buttonEdit = (FloatingActionButton) view.findViewById(R.id.buttonAddPokemonEdit);
+        buttonEdit = view.findViewById(R.id.buttonAddPokemonEdit);
 
-
-        showOnlyCompatible = getArguments().getBoolean("showOnlyCompatible", false);
-        //setGenderDisplay();
+        if(getArguments() != null) {
+            showOnlyCompatible = getArguments().getBoolean("showOnlyCompatible", false);
+        }
         setListeners();
-
-//        int receivedId = getArguments().getInt("defaultPokemon", 0);
-//        if (receivedId != 0) {
-//            updateInterfacePokemon(receivedId);
-//            updateInterfaceGender(receivedId);
-//            feedAbilities(receivedId);
-//        }
-
 
         updateNameButton();
 
@@ -154,40 +143,13 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
 
     void setListeners() {
 
-        buttonPokemonSelector.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openSelectPokemonFragment(view);
-            }
-        });
+        buttonPokemonSelector.setOnClickListener(this::openSelectPokemonFragment);
 
-        buttonEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openSelectPokemonFragment(view);
-            }
-        });
+        buttonEdit.setOnClickListener(this::openSelectPokemonFragment);
 
-//        confirmButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                finishFragment();
-//            }
-//        });
+        togglePokemonGender.setOnCheckedChangeListener((buttonView, isChecked) -> selectedGenderId = isChecked ? DatabaseConstants.MALE_ID : DatabaseConstants.FEMALE_ID);
 
-        togglePokemonGender.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                selectedGenderId = isChecked ? DatabaseConstants.MALE_ID : DatabaseConstants.FEMALE_ID;
-            }
-        });
-
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeFragment();
-            }
-        });
+        cancelButton.setOnClickListener(v -> closeFragment());
     }
 
     void initialize() {
@@ -200,17 +162,16 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     }
 
     void openSelectPokemonFragment(View view) {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getParentFragmentManager();
         SelectPokemonFragment selectPokemonFragment = new SelectPokemonFragment();
         Bundle b = addPositionAsArguments(view);
         b.putBoolean("showOnlyCompatible", showOnlyCompatible);
         selectPokemonFragment.setArguments(b);
-        selectPokemonFragment.setTargetFragment(this, 0);
-        selectPokemonFragment.show(fm, "");
+        selectPokemonFragment.show(fm, "SelectPokemonFragment");
     }
 
     Bundle addPositionAsArguments(View v) {
-        int callerViewPosition[] = new int[2];
+        int[] callerViewPosition = new int[2];
         v.getLocationOnScreen(callerViewPosition);
         Bundle b = new Bundle();
         b.putInt("x", callerViewPosition[0]);
@@ -219,12 +180,12 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     }
 
     void showToast(String string) {
-        Toast.makeText(getActivity().getApplicationContext(), string, Toast.LENGTH_LONG).show();
+        Toast.makeText(requireActivity().getApplicationContext(), string, Toast.LENGTH_LONG).show();
     }
 
     @Override
     protected void setDialogPosition() {
-        if (getArguments() == null) {
+        if (getArguments() == null || getDialog() == null || getDialog().getWindow() == null) {
             return;
         }
 
@@ -232,7 +193,6 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
 
         Window window = getDialog().getWindow();
 
-        // set "origin" to top left corner
         window.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
 
         WindowManager.LayoutParams params = window.getAttributes();
@@ -268,62 +228,18 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
     void feedAbilities(int id) {
         if (spinnerAbility == null) return;
 
-
         interfaceAbilities = new ArrayList<>();
 
         LinkedHashMap<Integer, String> abilities = feederCallback.getListOfAbilities(id);
 
-        //Transforms the slot -> name HashMap into a InterfaceAbility to be used as a list
         for (HashMap.Entry<Integer, String> entry : abilities.entrySet())
             interfaceAbilities.add(new InterfaceAbility(entry.getValue(), entry.getKey()));
 
-//        if (selectedPokemonId < 0) {
-//            abilities = new HashMap<>();
-//            abilities.put(-1, "No Ability");
-//        } else {
-//            abilities = feederCallback.getListOfAbilitiesNames(id);
-//        }
-//        abilityIds = new ArrayList<>();
-//        abilitySlots = new ArrayList<>();
-//
-//        ArrayList<String> abilityStrings = new ArrayList<>();
-//
-//        if (abilities.containsKey(1)) {
-//            abilityStrings.add(abilities.get(1));
-//            abilitySlots.add(1);
-//        }
-//        if (abilities.containsKey(2)) {
-//            abilityStrings.add(abilities.get(2));
-//            abilitySlots.add(2);
-//        }
-//        if (abilities.containsKey(3)) {
-//            abilityStrings.add(abilities.get(3) + " (Hidden)");
-//            abilitySlots.add(3);
-//        }
-
-
-//        if (id != 0) {
-//
-//            String s = PokemonData.getInstance().getFirstAbility(id);
-//            int d = PokemonData.getInstance().getFirstAbilityId(id);
-//
-//            abilityIds.add(d);
-//
-//            d = PokemonData.getInstance().getSecondAbilityId(id);
-//            if (d != -1) {
-//                s = PokemonData.getInstance().getSecondAbility(id);
-//                abilityIds.add(d);
-//            }
-//
-//            d = PokemonData.getInstance().getHiddenAbilityId(id);
-//            if (d != -1) {
-//                s = PokemonData.getInstance().getHiddenAbility(id) + " (Hidden)";
-//                abilityIds.add(d);
-//            }
-//        }
-
-        spinnerAbility.setAdapter(new GoalPokemonFragment.AbilitySpinnerAdapter(interfaceAbilities, getContext()));
-        //spinnerAbility.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), R.layout.spinner_item, abilityStrings));
+        ArrayList<marcelo.breguenait.breedinghelper.InterfaceAbility> sharedAbilities = new ArrayList<>();
+        for (EditorPokemonFragment.InterfaceAbility ability : interfaceAbilities) {
+            sharedAbilities.add(new marcelo.breguenait.breedinghelper.InterfaceAbility(ability.abilityName, ability.abilitySlot));
+        }
+        spinnerAbility.setAdapter(new GoalPokemonFragment.AbilitySpinnerAdapter(sharedAbilities, getContext()));
 
     }
 
@@ -362,7 +278,7 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
             selectedName.setText(name);
 
             String iconId = "pkmn_big_" + String.format("%03d", id);
-            selectedIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
+            selectedIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", requireActivity().getPackageName()));
         } else {
             selectedName.setText(R.string.label_pokemon_missing);
             selectedIcon.setImageResource(R.drawable.pkmn_big_000);
@@ -423,5 +339,14 @@ public class EditorPokemonFragment extends PopupDialogFragment implements
         ArrayList<Integer> getPokemonFamilyList();
 
         ArrayList<NatureManager.NatureVerbose> getInterfaceNatures();
+    }
+    public static class InterfaceAbility {
+        public String abilityName;
+        public int abilitySlot;
+
+        InterfaceAbility(String abilityName, int abilitySlot) {
+            this.abilityName = abilityName;
+            this.abilitySlot = abilitySlot;
+        }
     }
 }

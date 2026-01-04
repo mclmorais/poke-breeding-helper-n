@@ -1,158 +1,103 @@
 package marcelo.breguenait.breedinghelper;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+
+import marcelo.breguenait.breedinghelper.databinding.FragmentLuckOptionsBinding;
 
 public class ChanceOptionsFragment extends PopupDialogFragment {
 
-    private CheckBox checkBoxShiny;
-
     private OnLuckOptionsChange mCallback;
+    private FragmentLuckOptionsBinding binding;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
         try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                mCallback = (OnLuckOptionsChange) activity;
-            else
-                mCallback = (OnLuckOptionsChange) getTargetFragment();
+            if (getParentFragment() != null) {
+                mCallback = (OnLuckOptionsChange) getParentFragment();
+            } else {
+                mCallback = (OnLuckOptionsChange) context;
+            }
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(context.toString()
                     + " must implement OnLuckOptionsChange!");
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-//        shinyOptionsDrawables = getResources().obtainTypedArray(R.array.shiny_spinner_options_drawables);
-//        shinyOptionsStrings = getResources().getStringArray(R.array.shiny_spinner_options_strings);
-
-        // create ContextThemeWrapper from the original Activity Context with the custom theme
         final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.AppTheme);
 
-        // clone the inflater using the ContextThemeWrapper
         LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
-        View view = localInflater.inflate(R.layout.fragment_luck_options, container, false);
+        binding = FragmentLuckOptionsBinding.inflate(localInflater, container, false);
 
         setDialogPosition();
 
-        setListeners(view);
+        setListeners();
 
-        return view;
+        return binding.getRoot();
     }
 
     @Override
     public void onStart() {
         super.onStart();
         DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        requireActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
         Dialog dialog = getDialog();
-        if (dialog != null) {
+        if (dialog != null && dialog.getWindow() != null) {
             int width = ViewGroup.LayoutParams.WRAP_CONTENT;
             int height = ViewGroup.LayoutParams.WRAP_CONTENT;
             dialog.getWindow().setLayout(width, height);
         }
     }
 
-    private void setListeners(View view) {
+    private void setListeners() {
 
         int shinyOptions = mCallback.getShinyStatus();
 
-        Button buttonClose = (Button) view.findViewById(R.id.buttonClose);
+        binding.checkBoxShinyCharm.setChecked((shinyOptions & ChanceFragment.CHARM) == ChanceFragment.CHARM);
+        binding.checkBoxMasudaMethod.setChecked((shinyOptions & ChanceFragment.MASUDA) == ChanceFragment.MASUDA);
 
-        CheckBox checkBoxShinyCharm = (CheckBox) view.findViewById(R.id.checkBoxShinyCharm);
-        checkBoxShinyCharm.setChecked((shinyOptions & ChanceFragment.CHARM) == ChanceFragment.CHARM);
-
-        CheckBox checkBoxMasudaMethod = (CheckBox) view.findViewById(R.id.checkBoxMasudaMethod);
-        checkBoxMasudaMethod.setChecked((shinyOptions & ChanceFragment.MASUDA) == ChanceFragment.MASUDA);
-
-        checkBoxShiny = (CheckBox) view.findViewById(R.id.luckOptionsCheckBoxShiny);
-        checkBoxShiny.setChecked((shinyOptions & ChanceFragment.SHINY) == ChanceFragment.SHINY);
-        checkBoxShiny.setText((shinyOptions & ChanceFragment.SHINY) == ChanceFragment.SHINY ? getActivity().getString(R.string.label_shiny) : getActivity().getString(R.string.label_normal));
+        binding.luckOptionsCheckBoxShiny.setChecked((shinyOptions & ChanceFragment.SHINY) == ChanceFragment.SHINY);
+        binding.luckOptionsCheckBoxShiny.setText((shinyOptions & ChanceFragment.SHINY) == ChanceFragment.SHINY ? requireActivity().getString(R.string.label_shiny) : requireActivity().getString(R.string.label_normal));
 
 
-        checkBoxShinyCharm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mCallback.changeShinyStatus(0x02, isChecked);
-            }
-        });
-        checkBoxMasudaMethod.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mCallback.changeShinyStatus(0x04, isChecked);
-            }
-        });
+        binding.checkBoxShinyCharm.setOnCheckedChangeListener((buttonView, isChecked) -> mCallback.changeShinyStatus(0x02, isChecked));
+        binding.checkBoxMasudaMethod.setOnCheckedChangeListener((buttonView, isChecked) -> mCallback.changeShinyStatus(0x04, isChecked));
 
-        buttonClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeFragment();
-            }
-        });
+        binding.buttonClose.setOnClickListener(v -> closeFragment());
 
 
-        checkBoxShiny.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    checkBoxShiny.setText(getActivity().getString(R.string.label_shiny));
-                    mCallback.changeShinyStatus(ChanceFragment.SHINY, true);
-                } else {
-                    checkBoxShiny.setText(getActivity().getString(R.string.label_normal));
-                    mCallback.changeShinyStatus(ChanceFragment.SHINY, false);
-                }
+        binding.luckOptionsCheckBoxShiny.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                binding.luckOptionsCheckBoxShiny.setText(requireActivity().getString(R.string.label_shiny));
+                mCallback.changeShinyStatus(ChanceFragment.SHINY, true);
+            } else {
+                binding.luckOptionsCheckBoxShiny.setText(requireActivity().getString(R.string.label_normal));
+                mCallback.changeShinyStatus(ChanceFragment.SHINY, false);
             }
         });
     }
 
     @Override
     protected void setDialogPosition() {
-        if (getArguments() == null) {
+        if (getArguments() == null || getDialog() == null) {
             return;
         }
-
-        int sourceX = getArguments().getInt("x");
-        int sourceY = getArguments().getInt("y");
-
         Window window = getDialog().getWindow();
+        if (window == null) return;
 
-        // set "origin" to top left corner
-        window.setGravity(Gravity.TOP | Gravity.LEFT);
-
-        WindowManager.LayoutParams params = window.getAttributes();
-
-        DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int screenWidth = (int) convertPixelsToDp(metrics.widthPixels, getActivity().getApplicationContext());
-        if (sourceX < (screenWidth / 2)) {
-            // Just an example; edit to suit your needs.
-            params.x = sourceX + dpToPx(32); // about half of confirm button size left of source view
-            params.y = sourceY - dpToPx(32); // above source view
-        } else {
-            params.x = sourceX - dpToPx(180); // about half of confirm button size left of source view
-            params.y = sourceY - dpToPx(24); // above source view
-        }
-        window.setAttributes(params);
+        super.setDialogPosition();
     }
 
     interface OnLuckOptionsChange {
@@ -163,4 +108,3 @@ public class ChanceOptionsFragment extends PopupDialogFragment {
 
 
 }
-

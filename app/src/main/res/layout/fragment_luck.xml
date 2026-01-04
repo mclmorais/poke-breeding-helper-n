@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="48dp">
 
-        <customviews.AutoResizeTextView
+        <TextView
             android:id="@+id/luckFragmentHeaderTitle"
             style="@style/card_header_title"
             android:layout_width="50dp"
@@ -35,7 +35,7 @@
             android:layout_toStartOf="@+id/luckFragmentButtonOptions"
             android:background="@color/background_light_gray" />
 
-        <android.support.v7.widget.AppCompatImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/luckFragmentButtonOptions"
             android:layout_width="42dp"
             android:layout_height="fill_parent"
@@ -49,7 +49,7 @@
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android.textStyle="bold" />
 
         <CheckBox
             android:id="@+id/luckFragmentCheckBoxDestinyKnot"

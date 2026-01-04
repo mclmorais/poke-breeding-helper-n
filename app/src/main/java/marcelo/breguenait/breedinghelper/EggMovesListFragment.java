@@ -3,9 +3,9 @@ package marcelo.breguenait.breedinghelper;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -13,9 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ import customviews.WrappableGridLayoutManager;
 
 public class EggMovesListFragment extends Fragment {
     RecyclerView mRecyclerView;
-    AVLoadingIndicatorView loadingIcon;
+    ProgressBar loadingIcon;
     TextView noMovesText;
     ArrayList<MoveVerbose> moveVerboseList;
 
@@ -33,12 +32,12 @@ public class EggMovesListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_moves_list, container, false);
 
-        noMovesText = (TextView) v.findViewById(R.id.fragmentMoves_textNoMoves);
+        noMovesText = v.findViewById(R.id.fragmentMoves_textNoMoves);
         noMovesText.setText(R.string.message_no_egg_moves);
 
-        loadingIcon = (AVLoadingIndicatorView) v.findViewById(R.id.fragmentMoves_loadingIcon);
+        loadingIcon = v.findViewById(R.id.fragmentMoves_loadingIcon);
 
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.movesRecyclerView);
+        mRecyclerView = v.findViewById(R.id.movesRecyclerView);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -130,9 +129,7 @@ public class EggMovesListFragment extends Fragment {
 
             TypedArray ids = context.getResources().obtainTypedArray(R.array.colorPokemonTypes);
 
-            // Get resource id by its index
             ids.getResourceId(moves.get(position).getTypeId() - 1, -1);
-            // be sure to call TypedArray.recycle() when done with the array
             holder.type.setTextColor(ids.getColor(moves.get(position).getTypeId() - 1, -1));
             ids.recycle();
         }
@@ -153,21 +150,18 @@ public class EggMovesListFragment extends Fragment {
             public ViewHolder(View itemView) {
                 super(itemView);
                 layout = (LinearLayout) itemView;
-                machineNumber = (TextView) itemView.findViewById(R.id.dynMoveEgg_textMachineNumber);
-                machineType = (TextView) itemView.findViewById(R.id.dynMoveEgg_textMachineType);
-                name = (TextView) itemView.findViewById(R.id.dynMoveEgg_textName);
-                effect = (TextView) itemView.findViewById(R.id.dynMoveEgg_textEffect);
-                type = (TextView) itemView.findViewById(R.id.dynMoveEgg_textType);
-                accuracy = (TextView) itemView.findViewById(R.id.dynMoveEgg_textAccuracy);
-                power = (TextView) itemView.findViewById(R.id.dynMoveEgg_textPower);
-                parentsRecyclerView = (RecyclerView) itemView.findViewById(R.id.dynMoveEgg_parentsRecyclerView);
+                machineNumber = itemView.findViewById(R.id.dynMoveEgg_textMachineNumber);
+                machineType = itemView.findViewById(R.id.dynMoveEgg_textMachineType);
+                name = itemView.findViewById(R.id.dynMoveEgg_textName);
+                effect = itemView.findViewById(R.id.dynMoveEgg_textEffect);
+                type = itemView.findViewById(R.id.dynMoveEgg_textType);
+                accuracy = itemView.findViewById(R.id.dynMoveEgg_textAccuracy);
+                power = itemView.findViewById(R.id.dynMoveEgg_textPower);
+                parentsRecyclerView = itemView.findViewById(R.id.dynMoveEgg_parentsRecyclerView);
             }
         }
     }
 
-    /**
-     * Created by Marcelo on 17/12/2015.
-     */
     public static class EggMoveParentAdapter extends RecyclerView.Adapter<EggMoveParentAdapter.ViewHolder> {
 
 
@@ -193,7 +187,7 @@ public class EggMovesListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.icon.setImageDrawable(CachedPokemonIcons.getInstance().getIcon(list.get(position)).getConstantState().newDrawable());
+            holder.icon.setImageResource(R.drawable.pkmn_missingno);
         }
 
         @Override
@@ -207,9 +201,8 @@ public class EggMovesListFragment extends Fragment {
 
             public ViewHolder(View itemView) {
                 super(itemView);
-                this.icon = (ImageView) itemView.findViewById(R.id.dynMoveEggParent_icon);
+                this.icon = itemView.findViewById(R.id.dynMoveEggParent_icon);
             }
         }
     }
 }
-

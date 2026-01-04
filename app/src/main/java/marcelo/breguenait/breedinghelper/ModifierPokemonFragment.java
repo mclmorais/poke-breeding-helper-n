@@ -1,9 +1,9 @@
 package marcelo.breguenait.breedinghelper;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,13 +25,6 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
     private FeedDataModifyPokemon modifierFeederCallback;
     private UpdateModifyPokemon updaterFeederCallback;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param callerPos Parameter 1.
-     * @return A new instance of fragment StoredPokemonViewerFragment.
-     */
     public static ModifierPokemonFragment newInstance(int[] callerPos, UUID receivedUUID) {
         ModifierPokemonFragment fragment = new ModifierPokemonFragment();
         Bundle args = new Bundle();
@@ -45,7 +38,7 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
         interfaceModifierPokemon = modifierFeederCallback.getInterfaceModifierPokemon(receivedUUID);
@@ -74,7 +67,6 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
     }
 
     void feedNatureSpinnerSelection() {
-        //If there isn't a value received from somewhere else, doesn't select anything
         if (selectedNatureId < 0) return;
 
         for (int i = 0; i < natureVerboses.size(); i++) {
@@ -89,9 +81,7 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
     }
 
     void feedAbilitySpinnerSelection(int abilitySlot) {
-        //If the slot is valid
         if (DatabaseConstants.abilitySlotIsValid(abilitySlot)) {
-            //Searches the interfaceAbilities for a one that corresponds to the goal slot
             int position = -1;
             for (int i = 0; i < interfaceAbilities.size(); i++) {
                 if (interfaceAbilities.get(i).abilitySlot == abilitySlot) {
@@ -100,11 +90,10 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
                 }
             }
             if (position != -1) {
-                //If it has been found, sets the spinner to that position
                 spinnerAbility.setTag(position);
                 spinnerAbility.setSelection(position);
             } else {
-                Log.d("GOAL", "AbilitySlot " + String.valueOf(abilitySlot) +
+                Log.d("GOAL", "AbilitySlot " + abilitySlot +
                         " wasn't found in InterfaceAbilities.");
             }
         }
@@ -117,16 +106,8 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
 
     void finishFragment() {
 
-//        boolean hasIVs = false;
-//        for (CheckBox IVs : checkBoxInputIVs) {
-//            if (IVs.isChecked()) hasIVs = true;
-//        }
-//        if (!hasIVs) {
-//            showToast(getActivity().getString(R.string.message_select_one_iv));
-//            return;
-//        }
         if (selectedPokemonId <= 0) {
-            showToast(getActivity().getString(R.string.message_select_pokemon));
+            showToast(requireActivity().getString(R.string.message_select_pokemon));
             return;
         }
 
@@ -142,38 +123,24 @@ public class ModifierPokemonFragment extends EditorPokemonFragment {
     @Override
     void setListeners() {
         super.setListeners();
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finishFragment();
-            }
-        });
+        confirmButton.setOnClickListener(view -> finishFragment());
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
 
         try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                modifierFeederCallback = (FeedDataModifyPokemon) activity;
-            else
-                modifierFeederCallback = (FeedDataModifyPokemon) getTargetFragment();
+            if (getParentFragment() != null) {
+                modifierFeederCallback = (FeedDataModifyPokemon) getParentFragment();
+                updaterFeederCallback = (UpdateModifyPokemon) getParentFragment();
+            } else {
+                modifierFeederCallback = (FeedDataModifyPokemon) context;
+                updaterFeederCallback = (UpdateModifyPokemon) context;
+            }
         } catch (ClassCastException e) {
-            throw new ClassCastException(getTargetFragment().toString()
-                    + " must implement FeedDataModifyPokemon");
-        }
-
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                updaterFeederCallback = (UpdateModifyPokemon) activity;
-            else
-                updaterFeederCallback = (UpdateModifyPokemon) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getTargetFragment().toString()
-                    + " must implement UpdateModifyPokemon");
+            throw new ClassCastException(context.toString()
+                    + " must implement callbacks");
         }
     }
 

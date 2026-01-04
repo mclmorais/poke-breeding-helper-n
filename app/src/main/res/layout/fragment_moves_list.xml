@@ -6,8 +6,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movesRecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,15 +16,12 @@
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.wang.avi.AVLoadingIndicatorView
+    <ProgressBar
         android:id="@+id/fragmentMoves_loadingIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone"
-        app:indicator="BallGridPulse"
-        app:indicator_color="@color/colorAccent" />
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/fragmentMoves_textNoMoves"

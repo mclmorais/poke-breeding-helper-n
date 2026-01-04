@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_activity_toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/abc_action_bar_default_height_material"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/frameLuckFragmentContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                     android:animateLayoutChanges="true"
                     android:layout_weight="1" />
 
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/framePokemonListFragmentContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -68,7 +68,11 @@ public class JsonDatabaseManager implements NecessaryDatabaseCalls {
 
     @Override
     public String getPokemonName(int pokemonId, int languageId) {
-        return pokedexData.get(pokemonId).getName();
+        JsonPokedexDataBlock pokemonData = pokedexData.get(pokemonId);
+        if (pokemonData != null) {
+            return pokemonData.getName();
+        }
+        return "";
         //return tempSqlDatabase.getPokemonName(pokemonId, languageId);
     }
 
@@ -109,11 +113,19 @@ public class JsonDatabaseManager implements NecessaryDatabaseCalls {
 
     @Override
     public LinkedHashMap<Integer, String> getListOfAbilitiesNames(int pokemonId, int languageId) {
-        int[] abilityIds = pokedexData.get(pokemonId).getAbilities();
+        JsonPokedexDataBlock pokemonData = pokedexData.get(pokemonId);
+        if (pokemonData == null) {
+            return new LinkedHashMap<>();
+        }
+        int[] abilityIds = pokemonData.getAbilities();
         LinkedHashMap<Integer, String> abilityNames = new LinkedHashMap<>();
         for (int i = 0; i < abilityIds.length; i++) {
-            if (abilityIds[i] > 0)
-                abilityNames.put(i + 1, abilityData.get(abilityIds[i]).getName());
+            if (abilityIds[i] > 0) {
+                JsonAbilityDataBlock abilityDataBlock = abilityData.get(abilityIds[i]);
+                if (abilityDataBlock != null) {
+                    abilityNames.put(i + 1, abilityDataBlock.getName());
+                }
+            }
         }
         return abilityNames;
         //return tempSqlDatabase.getListOfAbilitiesNames(pokemonId, languageId);

@@ -2,7 +2,7 @@ package marcelo.breguenait.breedinghelper;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,11 +15,9 @@ public class CachedPokemonIcons {
 
     private static CachedPokemonIcons instance;
     private final HashMap<Integer, Drawable> iconsMap = new HashMap<>();
-    //private final Context context;
     Drawable missingno;
 
     private CachedPokemonIcons(Context context) {
-        //this.context = context;
         fillIconsList(context);
     }
 

@@ -1,14 +1,12 @@
 package marcelo.breguenait.breedinghelper;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,14 +34,13 @@ import breedingmanager.MoveVerbose;
 import breedingmanager.NatureManager;
 import breedingmanager.StorageManager;
 import breedingmanager.StoredPokemon;
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import databasemanager.DatabaseConstants;
 import databasemanager.SqlDatabase;
+import marcelo.breguenait.breedinghelper.databinding.ActivityAssistantBinding;
 
 public class AssistantActivity extends AppCompatActivity implements SelectPokemonFragment.OnPokemonSelectedListener, SelectPokemonFragment.FeedDataSelectPokemon {
 
+    private ActivityAssistantBinding binding;
     private final StorageManager storageManager = new StorageManager();
     private final NatureManager natureManager = new NatureManager();
     private final AbilityManager abilityManager = new AbilityManager();
@@ -54,103 +51,28 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     ArrayList<MoveVerbose> moves;
     ArrayList<InterfaceAbility> interfaceAbilities;
 
-    @Bind({R.id.checkBoxGoalHP,
-            R.id.checkBoxGoalATK,
-            R.id.checkBoxGoalDEF,
-            R.id.checkBoxGoalSATK,
-            R.id.checkBoxGoalSDEF,
-            R.id.checkBoxGoalSPD})
-    CheckBox[] goalIVs;
-
-    @Bind(R.id.buttonSelector)
-    View buttonPokemonSelector;
-
-    @Bind(R.id.imageViewSelectedPokemonIcon)
-    ImageView selectedIcon;
-    @Bind(R.id.textViewPokemonName)
-    TextView selectedName;
-
-    @Bind(R.id.layoutModifiers)
-    LinearLayout layoutModifiers;
-
-    @Bind(R.id.buttonAddNature)
-    Button buttonAddNature;
-    @Bind(R.id.includeNature)
-    View includeNaturePicker;
-    @Bind(R.id.spinnerNature)
-    Spinner spinnerNature;
-    @Bind(R.id.buttonRemoveNature)
-    ImageButton buttonRemoveNature;
-
-    @Bind(R.id.buttonAddAbility)
-    Button buttonAddAbility;
-    @Bind(R.id.includeAbility)
-    View includeAbilityPicker;
-    @Bind(R.id.spinnerAbility)
-    Spinner spinnerAbility;
-    @Bind(R.id.buttonRemoveAbility)
-    ImageButton buttonRemoveAbility;
-
-    @Bind(R.id.buttonAddEggMove)
-    Button buttonAddEggMove;
-    @Bind({R.id.includeEggMove1,
-            R.id.includeEggMove2,
-            R.id.includeEggMove3,
-            R.id.includeEggMove4})
-    View includeEggMoves[];
-
-
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
-
-    @OnClick({R.id.buttonAddAbility,
-            R.id.buttonAddNature,
-            R.id.buttonRemoveAbility,
-            R.id.buttonRemoveNature,
-            R.id.buttonSelector,
-            R.id.buttonAddEggMove})
-    public void handleClick(View v) {
-        if (v == buttonPokemonSelector) {
-            openSelectPokemonFragment(v);
-        } else if (v == buttonAddNature) {
-            setModifierNatureActive(true);
-        } else if (v == buttonRemoveNature) {
-            setModifierNatureActive(false);
-        } else if (v == buttonAddAbility) {
-            setModifierAbilityActive(true);
-        } else if (v == buttonRemoveAbility) {
-            setModifierAbilityActive(false);
-        }
-        else if (v == buttonAddEggMove) {
-            addModifierEggMove();
-        }
-
-    }
-
-
-    private final CheckBox.OnCheckedChangeListener onCheckBoxCheckHandler = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            for (CheckBox goalIVsCheckBox : goalIVs) {
-                if (buttonView == goalIVsCheckBox) {
-                    updateGoalIVs();
-                    return;
-                }
+    private final CompoundButton.OnCheckedChangeListener onCheckBoxCheckHandler = (buttonView, isChecked) -> {
+        for (CheckBox goalIVsCheckBox : getGoalIVs()) {
+            if (buttonView == goalIVsCheckBox) {
+                updateGoalIVs();
+                return;
             }
         }
     };
 
-    private final Spinner.OnItemSelectedListener onSpinnerItemSelectedHandler = new AdapterView.OnItemSelectedListener() {
+    private final AdapterView.OnItemSelectedListener onSpinnerItemSelectedHandler = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            if (parent == spinnerNature) {
-                if (spinnerNature.getTag() == null || (spinnerNature.getTag() != null && !spinnerNature.getTag().equals(position))) {
-                    spinnerNature.setTag(-1);
+            Spinner natureSpinner = binding.contentInclude.goalInclude.includeNature.spinnerNature;
+            Spinner abilitySpinner = binding.contentInclude.goalInclude.includeAbility.spinnerAbility;
+            if (parent == natureSpinner) {
+                if (natureSpinner.getTag() == null || !natureSpinner.getTag().equals(position)) {
+                    natureSpinner.setTag(-1);
                     updateGoalNature();
                 }
-            } else if (parent == spinnerAbility) {
-                if (spinnerAbility.getTag() == null || (spinnerAbility.getTag() != null && !spinnerAbility.getTag().equals(position))) {
-                    spinnerAbility.setTag(-1);
+            } else if (parent == abilitySpinner) {
+                if (abilitySpinner.getTag() == null || !abilitySpinner.getTag().equals(position)) {
+                    abilitySpinner.setTag(-1);
                     updateGoalAbility();
                 }
             }
@@ -165,45 +87,67 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_assistant);
-        ButterKnife.bind(this);
+        binding = ActivityAssistantBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.toolbar);
 
         readData();
 
-        for (int i = 0; i < goalIVs.length; i++) {
-            removeRippleEffectFromCheckBox(goalIVs[i]);
-            goalIVs[i].setChecked(storageManager.getGoalObject().getIVs()[i] == 1);
-            goalIVs[i].setOnCheckedChangeListener(onCheckBoxCheckHandler);
+        for (int i = 0; i < getGoalIVs().length; i++) {
+            removeRippleEffectFromCheckBox(getGoalIVs()[i]);
+            getGoalIVs()[i].setChecked(storageManager.getGoalObject().getIVs()[i] == 1);
+            getGoalIVs()[i].setOnCheckedChangeListener(onCheckBoxCheckHandler);
         }
 
-
-        for(int i = 0; i < includeEggMoves.length; i++) {
-            TextView label = (TextView) includeEggMoves[i].findViewById(R.id.eggMoveLabel);
-            label.setText("Egg Move " + Integer.toString(i+1));
-            ImageButton[] buttonRemoveEggMoves = new ImageButton[4];
-            buttonRemoveEggMoves[i] = (ImageButton) includeEggMoves[i].findViewById(R.id.buttonRemoveEggMove);
-            buttonRemoveEggMoves[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for(View eggMove : includeEggMoves) {
-                        if(v.getParent() == eggMove) {
-                            eggMove.setVisibility(View.GONE);
-                            buttonAddEggMove.setEnabled(true);
-                        }
+        for (int i = 0; i < getIncludeEggMoves().length; i++) {
+            View eggMoveView = getIncludeEggMoves()[i];
+            TextView label = eggMoveView.findViewById(R.id.eggMoveLabel);
+            label.setText("Egg Move " + (i + 1));
+            ImageButton buttonRemoveEggMove = eggMoveView.findViewById(R.id.buttonRemoveEggMove);
+            buttonRemoveEggMove.setOnClickListener(v -> {
+                    for (View eggMove : getIncludeEggMoves()) {
+                    if (v.getParent() == eggMove) {
+                        eggMove.setVisibility(View.GONE);
+                        binding.contentInclude.goalInclude.buttonAddEggMove.setEnabled(true);
                     }
                 }
             });
         }
 
         feedInterface();
-        spinnerNature.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
-        spinnerAbility.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
+        binding.contentInclude.goalInclude.includeNature.spinnerNature.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
+        binding.contentInclude.goalInclude.includeAbility.spinnerAbility.setOnItemSelectedListener(onSpinnerItemSelectedHandler);
 
         setModifierNatureActive(natureManager.getNatureModifier());
         setModifierAbilityActive(abilityManager.getAbilityModifier());
 
+        binding.contentInclude.goalInclude.buttonAddAbility.setOnClickListener(v -> setModifierAbilityActive(true));
+        binding.contentInclude.goalInclude.buttonAddNature.setOnClickListener(v -> setModifierNatureActive(true));
+        binding.contentInclude.goalInclude.includeAbility.buttonRemoveAbility.setOnClickListener(v -> setModifierAbilityActive(false));
+        binding.contentInclude.goalInclude.includeNature.buttonRemoveNature.setOnClickListener(v -> setModifierNatureActive(false));
+        binding.contentInclude.goalInclude.buttonSelector.setOnClickListener(this::openSelectPokemonFragment);
+        binding.contentInclude.goalInclude.buttonAddEggMove.setOnClickListener(v -> addModifierEggMove());
+    }
+
+    private CheckBox[] getGoalIVs() {
+        return new CheckBox[]{
+            binding.contentInclude.goalInclude.checkBoxGoalHP,
+            binding.contentInclude.goalInclude.checkBoxGoalATK,
+            binding.contentInclude.goalInclude.checkBoxGoalDEF,
+            binding.contentInclude.goalInclude.checkBoxGoalSATK,
+            binding.contentInclude.goalInclude.checkBoxGoalSDEF,
+            binding.contentInclude.goalInclude.checkBoxGoalSPD
+        };
+    }
+
+    private View[] getIncludeEggMoves() {
+        return new View[]{
+            binding.contentInclude.goalInclude.includeEggMove1.getRoot(),
+            binding.contentInclude.goalInclude.includeEggMove2.getRoot(),
+            binding.contentInclude.goalInclude.includeEggMove3.getRoot(),
+            binding.contentInclude.goalInclude.includeEggMove4.getRoot()
+        };
     }
 
     @Override
@@ -215,9 +159,14 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     private void feedInterface() {
 
         StoredPokemon goalPokemon = storageManager.getGoalObject();
+        int pokemonId = goalPokemon.getPokemonId();
 
-        feedDisplayedName(storageManager.getPokemonName(goalPokemon.getPokemonId()));
-        feedDisplayedIcon(goalPokemon.getPokemonId());
+        if (DatabaseConstants.pokemonIdIsValid(pokemonId)) {
+            feedDisplayedName(storageManager.getPokemonName(pokemonId));
+        } else {
+            feedDisplayedName("");
+        }
+        feedDisplayedIcon(pokemonId);
 
         feedNatureSpinner();
         feedNatureSpinnerSelection(goalPokemon.getNatureId());
@@ -229,22 +178,21 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     }
 
     private void feedDisplayedName(String name) {
-        //If not initialized (""): doesn't update
         if (!name.equals(""))
-            selectedName.setText(name);
+            binding.contentInclude.goalInclude.textViewPokemonName.setText(name);
     }
 
     private void feedDisplayedIcon(int id) {
 
         if (DatabaseConstants.pokemonIdIsValid(id)) { //TODO: fazer 0 < x < limite
             String iconId = "pkmn_big_" + String.format("%03d", id);
-            selectedIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getPackageName()));
+            binding.contentInclude.goalInclude.imageViewSelectedPokemonIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getPackageName()));
         }
     }
 
     private void feedNatureSpinner() {
         natureVerboses = natureManager.getInterfaceNatures();
-        spinnerNature.setAdapter(new NatureSpinnerAdapter(natureVerboses, this));
+        binding.contentInclude.goalInclude.includeNature.spinnerNature.setAdapter(new NatureSpinnerAdapter(natureVerboses, this));
     }
 
     private void feedNatureSpinnerSelection(int natureId) {
@@ -253,8 +201,8 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         for (int i = 0; i < natureVerboses.size(); i++) {
 
             if (natureVerboses.get(i).id == natureId) {
-                spinnerNature.setTag(i);
-                spinnerNature.setSelection(i);
+                binding.contentInclude.goalInclude.includeNature.spinnerNature.setTag(i);
+                binding.contentInclude.goalInclude.includeNature.spinnerNature.setSelection(i);
                 return;
             }
 
@@ -264,25 +212,25 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     }
 
     private void feedAbilitySpinner() {
-        if (spinnerAbility == null) return;
+        Spinner abilitySpinner = binding.contentInclude.goalInclude.includeAbility.spinnerAbility;
+        if (abilitySpinner == null) return;
 
         int goalId = storageManager.getGoalId();
+        if (!DatabaseConstants.pokemonIdIsValid(goalId)) return;
+
         LinkedHashMap<Integer, String> abilities = abilityManager.getListOfAbilities(goalId);
 
         interfaceAbilities = new ArrayList<>();
 
-        //Transforms the slot -> name HashMap into a InterfaceAbility to be used as a list
         for (HashMap.Entry<Integer, String> entry : abilities.entrySet())
             interfaceAbilities.add(new InterfaceAbility(entry.getValue(), entry.getKey()));
 
-        spinnerAbility.setAdapter(new GoalPokemonFragment.AbilitySpinnerAdapter(interfaceAbilities, this));
+        abilitySpinner.setAdapter(new GoalPokemonFragment.AbilitySpinnerAdapter(interfaceAbilities, this));
     }
 
     private void feedAbilitySpinnerSelection(int abilitySlot) {
 
-        //If the slot is valid
         if (DatabaseConstants.abilitySlotIsValid(abilitySlot)) {
-            //Searches the interfaceAbilities for a one that corresponds to the goal slot
             int position = -1;
             for (int i = 0; i < interfaceAbilities.size(); i++) {
                 if (interfaceAbilities.get(i).abilitySlot == abilitySlot) {
@@ -291,64 +239,61 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
                 }
             }
             if (position != -1) {
-                //If it has been found, sets the spinner to that position
-                spinnerAbility.setTag(position);
-                spinnerAbility.setSelection(position);
+                binding.contentInclude.goalInclude.includeAbility.spinnerAbility.setTag(position);
+                binding.contentInclude.goalInclude.includeAbility.spinnerAbility.setSelection(position);
             } else {
                 Log.d("GOAL", "AbilitySlot " + String.valueOf(abilitySlot) +
-                        " wasn't found in InterfaceAbilities.");
+                        " wasn\'t found in InterfaceAbilities.");
             }
         }
     }
 
     private void feedEggMoveSpinners() {
+        int goalId = storageManager.getGoalId();
+        if (!DatabaseConstants.pokemonIdIsValid(goalId)) return;
 
-
-
-        for(int i = 0; i < includeEggMoves.length; i++) {
-            Spinner[] eggMoveSpinners = new Spinner[4];
-            eggMoveSpinners[i] = (Spinner) includeEggMoves[i].findViewById(R.id.spinnerEggMove);
-            eggMoveSpinners[i].setAdapter(new EggMoveSpinnerAdapter(moveManager.getEggMoves(storageManager.getGoalId()),this));
+        for (View eggMoveView : getIncludeEggMoves()) {
+            Spinner eggMoveSpinner = eggMoveView.findViewById(R.id.spinnerEggMove);
+            eggMoveSpinner.setAdapter(new EggMoveSpinnerAdapter(moveManager.getEggMoves(goalId), this));
         }
 
 
     }
 
     private void openSelectPokemonFragment(View view) {
-        FragmentManager fm = getSupportFragmentManager();
         SelectPokemonFragment selectPokemonFragment = new SelectPokemonFragment();
         Bundle b = addPositionAsArguments(view);
         selectPokemonFragment.setArguments(b);
-        selectPokemonFragment.show(fm, "");
+        selectPokemonFragment.show(getSupportFragmentManager(), "");
     }
 
     private void setModifierNatureActive(Boolean choice) {
-        includeNaturePicker.setVisibility(choice ? View.VISIBLE : View.GONE);
-        buttonAddNature.setEnabled(!choice);
+        binding.contentInclude.goalInclude.includeNature.getRoot().setVisibility(choice ? View.VISIBLE : View.GONE);
+        binding.contentInclude.goalInclude.buttonAddNature.setEnabled(!choice);
         natureManager.setNatureModifier(choice);
     }
 
     private void setModifierAbilityActive(Boolean choice) {
-        includeAbilityPicker.setVisibility(choice ? View.VISIBLE : View.GONE);
-        buttonAddAbility.setEnabled(!choice);
+        binding.contentInclude.goalInclude.includeAbility.getRoot().setVisibility(choice ? View.VISIBLE : View.GONE);
+        binding.contentInclude.goalInclude.buttonAddAbility.setEnabled(!choice);
         abilityManager.setAbilityModifier(choice);
     }
 
     private void addModifierEggMove() {
         int total = 0;
-        for (View eggMove : includeEggMoves) {
+        for (View eggMove : getIncludeEggMoves()) {
             total++;
-            if(eggMove.getVisibility() == View.GONE) {
+            if (eggMove.getVisibility() == View.GONE) {
                 eggMove.setVisibility(View.VISIBLE);
                 break;
             }
         }
         if (total >= 4)
-            buttonAddEggMove.setEnabled(false);
+            binding.contentInclude.goalInclude.buttonAddEggMove.setEnabled(false);
     }
 
     private void readData() {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         String jsonString;
 
 
@@ -409,24 +354,17 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
             storageManager.setDestinyKnot(gson.fromJson(jsonString, Boolean.class));
         }
 
-        int gameLanguage = Integer.valueOf(sharedPref.getString("gameLanguage", "9"));
+        int gameLanguage = Integer.parseInt(sharedPref.getString("gameLanguage", "9"));
         storageManager.setLanguageId(gameLanguage);
 
     }
 
     private void saveData() {
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor prefEditor = sharedPreferences.edit();
 
         String jsonString;
-
-//        jsonString = gson.toJson(ivManager.getStoredPokemonList());
-//        prefEditor.putString("jsonPokemonList", jsonString);
-
-//        jsonString = gson.toJson(ivManager.getGoalPokemon());
-//        prefEditor.putString("jsonCurrentGoal", jsonString);
-
 
         jsonString = gson.toJson(storageManager.hasEverstone());
         prefEditor.putString("jsonHasEverstone", jsonString);
@@ -439,12 +377,6 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
 
         jsonString = gson.toJson(storageManager.hasDestinyKnot());
         prefEditor.putString("jsonMaleItem", jsonString);
-
-//        ChanceFragment l = (ChanceFragment) getChildFragmentManager().findFragmentById(R.id.frameLuckFragmentContainer);
-//        jsonString = gson.toJson(l.getShinyOptions());
-//        prefEditor.putString("jsonShinyOptions", jsonString);
-
-        //-------Breeding Manager---------------
 
         jsonString = gson.toJson(storageManager.getStoredPokemonObjects());
         prefEditor.putString("jsonBreedingManagerStoredList", jsonString);
@@ -577,36 +509,35 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
         int[] IVs = new int[6];
 
         for (int i = 0; i < 6; i++) {
-            IVs[i] = goalIVs[i].isChecked() ? 1 : 0;
+            IVs[i] = getGoalIVs()[i].isChecked() ? 1 : 0;
         }
 
         storageManager.setGoalIVs(IVs);
     }
 
     private void updateGoalNature() {
-        NatureManager.NatureVerbose natureVerbose = (NatureManager.NatureVerbose) spinnerNature.getSelectedItem();
+        NatureManager.NatureVerbose natureVerbose = (NatureManager.NatureVerbose) binding.contentInclude.goalInclude.includeNature.spinnerNature.getSelectedItem();
         storageManager.setGoalNature(natureVerbose.id);
         natureManager.setNatureModifier(true);
     }
 
     private void updateGoalAbility() {
-        int spinnerPosition = spinnerAbility.getSelectedItemPosition();
+        int spinnerPosition = binding.contentInclude.goalInclude.includeAbility.spinnerAbility.getSelectedItemPosition();
         int abilitySlot = interfaceAbilities.get(spinnerPosition).abilitySlot;
         storageManager.setGoalAbilitySlot(abilitySlot);
     }
 
     private void removeRippleEffectFromCheckBox(CheckBox checkBox) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Drawable drawable = checkBox.getBackground();
-            if (drawable instanceof RippleDrawable) {
-                drawable = ((RippleDrawable) drawable).findDrawableByLayerId(0);
-                checkBox.setBackground(drawable);
+            Drawable background = checkBox.getBackground();
+            if (background instanceof android.graphics.drawable.RippleDrawable) {
+                checkBox.setBackground(((android.graphics.drawable.RippleDrawable) background).findDrawableByLayerId(0));
             }
         }
     }
 
     private Bundle addPositionAsArguments(View v) {
-        int callerViewPosition[] = new int[2];
+        int[] callerViewPosition = new int[2];
         v.getLocationOnScreen(callerViewPosition);
         Bundle b = new Bundle();
         b.putInt("x", callerViewPosition[0]);
@@ -654,7 +585,4 @@ public class AssistantActivity extends AppCompatActivity implements SelectPokemo
     public ArrayList<Integer> getPokemonFamilyList() {
         return storageManager.getPokemonFamilyList(storageManager.getGoalId());
     }
-
-
 }
-

@@ -1,26 +1,22 @@
 package marcelo.breguenait.breedinghelper;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.melnykov.fab.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -29,6 +25,7 @@ import java.util.UUID;
 import breedingmanager.NatureManager;
 import databasemanager.DatabaseConstants;
 import de.hdodenhof.circleimageview.CircleImageView;
+import marcelo.breguenait.breedinghelper.R;
 
 
 public class StoredPokemonViewerFragment extends PopupDialogFragment
@@ -36,7 +33,6 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
         EditorPokemonFragment.FeedDataCreatePokemon,
         ModifierPokemonFragment.FeedDataModifyPokemon,
         ModifierPokemonFragment.UpdateModifyPokemon {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
     private static final String ARG_POS_X = "x";
     private static final String ARG_POS_Y = "y";
@@ -60,16 +56,8 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
     private PreloadedDrawables preloadedDrawables;
 
     public StoredPokemonViewerFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param callerPos Parameter 1.
-     * @return A new instance of fragment StoredPokemonViewerFragment.
-     */
     public static StoredPokemonViewerFragment newInstance(int[] callerPos, UUID receivedUUID, int pokemonPos) {
         StoredPokemonViewerFragment fragment = new StoredPokemonViewerFragment();
         Bundle args = new Bundle();
@@ -84,24 +72,18 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState == null) {
-            if (getArguments() != null) {
-                mPosX = getArguments().getInt(ARG_POS_X);
-                mPosY = getArguments().getInt(ARG_POS_Y);
-            }
+        if (getArguments() != null) {
+            mPosX = getArguments().getInt(ARG_POS_X);
+            mPosY = getArguments().getInt(ARG_POS_Y);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //View thisFragment = inflater.inflate(R.layout.fragment_stored_pokemon_popup, container, false);
 
-        // create ContextThemeWrapper from the original Activity Context with the custom theme
         final Context contextThemeWrapper = new ContextThemeWrapper(getActivity(), R.style.AppTheme);
 
-        // clone the inflater using the ContextThemeWrapper
         LayoutInflater localInflater = inflater.cloneInContext(contextThemeWrapper);
         View thisFragment = localInflater.inflate(R.layout.fragment_stored_pokemon_viewer, container, false);
 
@@ -122,7 +104,7 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
         int width = dpToPx(250);
 
         Dialog dialog = getDialog();
-        if (dialog != null) {
+        if (dialog != null && dialog.getWindow() != null) {
             dialog.getWindow().setLayout(width, height);
         }
 
@@ -130,93 +112,54 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
 
         try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                feederCallback = (FeedDataPokemonViewer) activity;
-            else
-                feederCallback = (FeedDataPokemonViewer) getTargetFragment();
+            if (getParentFragment() == null) {
+                feederCallback = (FeedDataPokemonViewer) context;
+                updaterCallback = (UpdatePokemonViewer) context;
+            } else {
+                feederCallback = (FeedDataPokemonViewer) getParentFragment();
+                updaterCallback = (UpdatePokemonViewer) getParentFragment();
+            }
         } catch (ClassCastException e) {
-            throw new ClassCastException(getTargetFragment().toString()
-                    + " must implement FeedDataPokemonViewer");
-        }
-
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                updaterCallback = (UpdatePokemonViewer) activity;
-            else
-                updaterCallback = (UpdatePokemonViewer) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getTargetFragment().toString()
-                    + " must implement UpdatePokemonViewer");
+            throw new ClassCastException(context.toString()
+                    + " must implement callbacks");
         }
     }
 
     @Override
     protected void setDialogPosition() {
-        if (getArguments() == null) {
+        if (getArguments() == null || getDialog() == null || getDialog().getWindow() == null) {
             return;
         }
-
-        Window window = getDialog().getWindow();
-
-        // set "origin" to top left corner
-        window.setGravity(Gravity.TOP | Gravity.LEFT);
-
-        WindowManager.LayoutParams params = window.getAttributes();
-
-        DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int screenWidth = (int) convertPixelsToDp(metrics.widthPixels, getActivity().getApplicationContext());
-        if (mPosX < (screenWidth / 2)) {
-            params.x = mPosX + dpToPx(40); // about half of confirm button size left of source view
-            params.y = mPosY - dpToPx(32 + 160); // above source view
-        } else {
-            params.x = mPosX + dpToPx(40); // about half of confirm button size left of source view
-            params.y = mPosY - dpToPx(32 + 160); // above source view
-        }
-
-
-        window.setAttributes(params);
+        super.setDialogPosition();
     }
 
     private void setListeners(View v) {
 
-        preloadedDrawables = new PreloadedDrawables(getActivity().getApplicationContext());
-        imagePokemonIcon = (CircleImageView) v.findViewById(R.id.imagePokemonPopupIcon);
-        textPokemonName = (TextView) v.findViewById(R.id.textPokemonPopupName);
-        Button buttonClose = (Button) v.findViewById(R.id.buttonPokemonPopupClose);
-        FloatingActionButton buttonEdit = (FloatingActionButton) v.findViewById(R.id.buttonPokemonPopupEdit);
-        textNature = (TextView) v.findViewById(R.id.textPokemonPopupNature);
-        textNumber = (TextView) v.findViewById(R.id.textPokemonPopupNumber);
-        imageGender = (ImageView) v.findViewById(R.id.imagePokemonPopupGender);
-        textAbility = (TextView) v.findViewById(R.id.textPokemonPopupAbility);
+        preloadedDrawables = new PreloadedDrawables(requireActivity().getApplicationContext());
+        imagePokemonIcon = v.findViewById(R.id.imagePokemonPopupIcon);
+        textPokemonName = v.findViewById(R.id.textPokemonPopupName);
+        Button buttonClose = v.findViewById(R.id.buttonPokemonPopupClose);
+        FloatingActionButton buttonEdit = v.findViewById(R.id.buttonPokemonPopupEdit);
+        textNature = v.findViewById(R.id.textPokemonPopupNature);
+        textNumber = v.findViewById(R.id.textPokemonPopupNumber);
+        imageGender = v.findViewById(R.id.imagePokemonPopupGender);
+        textAbility = v.findViewById(R.id.textPokemonPopupAbility);
 
-        IVs[0] = (ImageView) v.findViewById(R.id.imagePokemonPopupHP);
-        IVs[1] = (ImageView) v.findViewById(R.id.imagePokemonPopupATK);
-        IVs[2] = (ImageView) v.findViewById(R.id.imagePokemonPopupDEF);
-        IVs[3] = (ImageView) v.findViewById(R.id.imagePokemonPopupSATK);
-        IVs[4] = (ImageView) v.findViewById(R.id.imagePokemonPopupSDEF);
-        IVs[5] = (ImageView) v.findViewById(R.id.imagePokemonPopupSPD);
+        IVs[0] = v.findViewById(R.id.imagePokemonPopupHP);
+        IVs[1] = v.findViewById(R.id.imagePokemonPopupATK);
+        IVs[2] = v.findViewById(R.id.imagePokemonPopupDEF);
+        IVs[3] = v.findViewById(R.id.imagePokemonPopupSATK);
+        IVs[4] = v.findViewById(R.id.imagePokemonPopupSDEF);
+        IVs[5] = v.findViewById(R.id.imagePokemonPopupSPD);
 
 
-        buttonClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeFragment();
-            }
-        });
+        buttonClose.setOnClickListener(v1 -> closeFragment());
 
-        buttonEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openModifierPokemonFragment(v);
-            }
-        });
+        buttonEdit.setOnClickListener(this::openModifierPokemonFragment);
     }
 
     private void updateInterface() {
@@ -225,11 +168,9 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
 
         if(DatabaseConstants.pokemonIdIsValid(id)) {
             String iconId = "pkmn_big_" + String.format("%03d", id);
-            imagePokemonIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", getActivity().getPackageName()));
+            imagePokemonIcon.setImageResource(getResources().getIdentifier(iconId, "drawable", requireActivity().getPackageName()));
             textPokemonName.setText(interfaceViewerPokemon.getPokemonName());
         }
-
-        //String name = PokemonData.getInstance().getName(id);
 
         textNature.setText(interfaceViewerPokemon.getNatureName());
 
@@ -252,42 +193,20 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
 
         textAbility.setText(interfaceViewerPokemon.getAbilityName());
 
-//        if (selectedPokemon.ability == PokemonData.getInstance().getFirstAbilityId(selectedPokemon.id))
-//            textAbility.setText(PokemonData.getInstance().getFirstAbility(selectedPokemon.id));
-//        else if (selectedPokemon.ability == PokemonData.getInstance().getSecondAbilityId(selectedPokemon.id))
-//            textAbility.setText(PokemonData.getInstance().getSecondAbility(selectedPokemon.id));
-//        else if (selectedPokemon.ability == PokemonData.getInstance().getHiddenAbilityId(selectedPokemon.id))
-//            textAbility.setText(PokemonData.getInstance().getHiddenAbility(selectedPokemon.id));
-//        else
-//            textAbility.setText("Unset");
-
-
-//        for (int i = 0; i < Nature.values().length; i++)
-//            if (Nature.values()[i] == selectedPokemon.nature) {
-//                textNature.setText(PokemonData.getInstance().getNatureName(i));
-//                break;
-//            }
-
-//        Nature nature = selectedPokemon.nature;
-//        if(nature == null) nature = Nature.UNSET;
-//        textNature.setText(nature.toString());
-
-
     }
 
     void openModifierPokemonFragment(View callerView) {
-        FragmentManager fm = getFragmentManager();
-        int callerViewPosition[] = new int[2];
+        FragmentManager fm = getParentFragmentManager();
+        int[] callerViewPosition = new int[2];
         callerView.getLocationOnScreen(callerViewPosition);
         EditorPokemonFragment fragment = ModifierPokemonFragment.newInstance(callerViewPosition, receivedUUID);
         Bundle b = addPositionAsArguments(callerView);
         fragment.setArguments(b);
-        fragment.setTargetFragment(this, 0);
-        fragment.show(fm, "");
+        fragment.show(fm, "ModifierPokemonFragment");
     }
 
     Bundle addPositionAsArguments(View v) {
-        int callerViewPosition[] = new int[2];
+        int[] callerViewPosition = new int[2];
         v.getLocationOnScreen(callerViewPosition);
         Bundle b = new Bundle();
         b.putInt("x", callerViewPosition[0]);
@@ -379,7 +298,7 @@ public class StoredPokemonViewerFragment extends PopupDialogFragment
     public static class InterfaceViewerPokemon {
         final private int pokemonId;
         final private int genderId;
-        final private int IVs[];
+        final private int[] IVs;
         final private String natureName;
         final private String abilityName;
         final private String pokemonName;

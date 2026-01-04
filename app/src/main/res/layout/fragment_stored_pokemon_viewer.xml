@@ -1,12 +1,10 @@
 <!--suppress AndroidUnknownAttribute -->
-<view xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/view3"
-    class="android.support.v7.widget.CardView"
     android:layout_width="250dp"
     android:layout_height="232dp">
 
     <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:fab="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="250dp"
         android:layout_height="232dp"
@@ -59,15 +57,14 @@
             android:src="@drawable/circle" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/imagePokemonPopupIcon"
             android:layout_width="80dp"
             android:layout_height="64dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="48dp"
             android:src="@drawable/pkmn_big_000"
-            app:border_color="@color/colorAccent"
-            app:border_width="2dp" />
+            app:civ_border_color="@color/colorAccent"
+            app:civ_border_width="2dp" />
 
         <TextView
             android:id="@+id/textPokemonPopupName"
@@ -193,7 +190,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout7"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android.layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -270,18 +267,17 @@
             android:textStyle="italic"
             android:visibility="invisible" />
 
-        <view
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/buttonPokemonPopupEdit"
-            class="com.melnykov.fab.FloatingActionButton"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="27dp"
             android:layout_marginTop="60dp"
             android:src="@drawable/ic_action_edit2"
-            fab:fab_colorNormal="@color/colorAccent"
-            fab:fab_colorPressed="@color/colorPrimary"
-            fab:fab_shadow="false"
-            fab:fab_type="mini" />
+            app:backgroundTint="@color/colorAccent"
+            app:elevation="0dp"
+            app:fabSize="mini"
+            app:rippleColor="@color/colorPrimary" />
 
         <Button
             android:id="@+id/buttonPokemonPopupClose"
@@ -302,4 +298,4 @@
             android:visibility="visible" />
 
     </RelativeLayout>
-</view>
+</androidx.cardview.widget.CardView>

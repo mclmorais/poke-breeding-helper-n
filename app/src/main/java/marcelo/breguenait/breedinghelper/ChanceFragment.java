@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.core.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,15 +29,8 @@ import java.util.UUID;
 import breedingmanager.ChancePokemonMatch;
 import customviews.ResizeAnimation;
 import databasemanager.DatabaseConstants;
+import marcelo.breguenait.breedinghelper.databinding.FragmentLuckBinding;
 
-import static marcelo.breguenait.breedinghelper.R.id.imageDynamicChanceSecondItem;
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ChanceFragment.UpdateLuckInterface} interface
- * to handle interaction events.
- */
 public class ChanceFragment extends Fragment implements ChanceOptionsFragment.OnLuckOptionsChange {
 
 
@@ -49,38 +41,19 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
     private boolean showOnlyBestChance = true;
     private PreloadedDrawables preloadedDrawables;
     private UpdateLuckInterface mListener;
-    private LinearLayout layoutChances;
-    private LayoutInflater inflater2;
-    private ToggleButton buttonExpandChances;
-    private CheckBox checkBoxDestinyKnot, checkBoxEverstone;
-    private ImageButton buttonOptions;
-    private int shinyOptions;
     private FeederLuckData feederCallback;
+    private FragmentLuckBinding binding;
+    private int shinyOptions;
 
     public ChanceFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * This method converts dp unit to equivalent pixels, depending on device density.
-     *
-     * @param dp      A value in dp (density independent pixels) unit. Which we need to convert into pixels
-     * @param context Context to get resources and device specific display metrics
-     * @return A float value to represent px equivalent to dp depending on device density
-     */
     private static float convertDpToPixel(float dp, Context context) {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
         return dp * (metrics.densityDpi / 160f);
     }
 
-    /**
-     * This method converts device specific pixels to density independent pixels.
-     *
-     * @param px      A value in px (pixels) unit. Which we need to convert into db
-     * @param context Context to get resources and device specific display metrics
-     * @return A float value to represent dp equivalent to px value
-     */
     public static float convertPixelsToDp(float px, Context context) {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
@@ -95,89 +68,57 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if (savedInstanceState != null) {
-            return null;
-        }
+        binding = FragmentLuckBinding.inflate(inflater, container, false);
 
+        preloadedDrawables = new PreloadedDrawables(requireActivity().getApplicationContext());
 
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_luck, container, false);
-
-
-        preloadedDrawables = new PreloadedDrawables(getActivity().getApplicationContext());
-        layoutChances = (LinearLayout) v.findViewById(R.id.luckFragmentLayoutChances);
-
-        inflater2 = (LayoutInflater) getActivity().getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        buttonExpandChances = (ToggleButton) v.findViewById(R.id.luckFragmentExpandCollapseButton);
-
-
-        buttonExpandChances.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                showOnlyBestChance = isChecked;
-                updateCurrentChances();
-            }
+        binding.luckFragmentExpandCollapseButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            showOnlyBestChance = isChecked;
+            updateCurrentChances();
         });
 
-        checkBoxDestinyKnot = (CheckBox) v.findViewById(R.id.luckFragmentCheckBoxDestinyKnot);
-        checkBoxDestinyKnot.setChecked(feederCallback.isDestinyKnotActive());
+        binding.luckFragmentCheckBoxDestinyKnot.setChecked(feederCallback.isDestinyKnotActive());
 
-        checkBoxDestinyKnot.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String s;
-                if (isChecked)
-                    s = getActivity().getString(R.string.message_dk_enabled);
-                else
-                    s = getActivity().getString(R.string.message_dk_disabled);
+        binding.luckFragmentCheckBoxDestinyKnot.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            String s;
+            if (isChecked)
+                s = requireActivity().getString(R.string.message_dk_enabled);
+            else
+                s = requireActivity().getString(R.string.message_dk_disabled);
 
-                int pos[] = new int[2];
-                checkBoxDestinyKnot.getLocationOnScreen(pos);
-                Toast t = Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT);
-                t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, pos[1] - (int) convertDpToPixel(80, getActivity().getApplicationContext()));
-                t.show();
-                mListener.setDestinyKnot(isChecked);
-            }
+            int[] pos = new int[2];
+            binding.luckFragmentCheckBoxDestinyKnot.getLocationOnScreen(pos);
+            Toast t = Toast.makeText(requireActivity().getApplicationContext(), s, Toast.LENGTH_SHORT);
+            t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, pos[1] - (int) convertDpToPixel(80, requireActivity().getApplicationContext()));
+            t.show();
+            mListener.setDestinyKnot(isChecked);
         });
 
-        checkBoxEverstone = (CheckBox) v.findViewById(R.id.checkBoxLuckFragmentEverstone);
+        binding.checkBoxLuckFragmentEverstone.setChecked(mListener.updateEverstoneStatus());
 
-        checkBoxEverstone.setChecked(mListener.updateEverstoneStatus());
+        binding.checkBoxLuckFragmentEverstone.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            String s;
+            if (isChecked)
+                s = "Everstone enabled.";
+            else
+                s = "Everstone disabled.";
 
-        checkBoxEverstone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String s;
-                if (isChecked)
-                    s = "Everstone enabled.";
-                else
-                    s = "Everstone disabled.";
-
-                int pos[] = new int[2];
-                checkBoxEverstone.getLocationOnScreen(pos);
-                Toast t = Toast.makeText(getActivity().getApplicationContext(), s, Toast.LENGTH_SHORT);
-                t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, pos[1] - (int) convertDpToPixel(80, getActivity().getApplicationContext()));
-                t.show();
-                mListener.setEverstone(isChecked);
-            }
+            int[] pos = new int[2];
+            binding.checkBoxLuckFragmentEverstone.getLocationOnScreen(pos);
+            Toast t = Toast.makeText(requireActivity().getApplicationContext(), s, Toast.LENGTH_SHORT);
+            t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, pos[1] - (int) convertDpToPixel(80, requireActivity().getApplicationContext()));
+            t.show();
+            mListener.setEverstone(isChecked);
         });
 
-        buttonOptions = (ImageButton) v.findViewById(R.id.luckFragmentButtonOptions);
-        buttonOptions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openLuckOptionsFragment();
-            }
-        });
+        binding.luckFragmentButtonOptions.setOnClickListener(v -> openLuckOptionsFragment());
 
         shinyOptions = mListener.loadShinyOptions();
 
-        //updateCurrentChances();
-        return v;
+        return binding.getRoot();
 
     }
 
@@ -198,32 +139,31 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
 
         List<ChancePokemonMatch> chancePokemonMatchList = feederCallback.getChancesList();
         if (chancePokemonMatchList.isEmpty()) {
-            layoutChances.removeAllViews();
+            binding.luckFragmentLayoutChances.removeAllViews();
         }
 
 
-        if (layoutChances != null)
-            layoutChances.removeAllViews();
+        if (binding.luckFragmentLayoutChances != null)
+            binding.luckFragmentLayoutChances.removeAllViews();
         interfaceChanceList.clear();
 
         if (chancePokemonMatchList.isEmpty()) {
-            int targetHeight = (int) convertDpToPixel(32, getActivity().getApplicationContext());
-            View noMatch = inflater2.inflate(R.layout.text_no_matches, layoutChances, false);
+            int targetHeight = (int) convertDpToPixel(32, requireActivity().getApplicationContext());
+            View noMatch = getLayoutInflater().inflate(R.layout.text_no_matches, binding.luckFragmentLayoutChances, false);
             interfaceChanceList.add(noMatch);
-            layoutChances.addView(noMatch);
-            ResizeAnimation r = new ResizeAnimation(layoutChances, targetHeight);
+            binding.luckFragmentLayoutChances.addView(noMatch);
+            ResizeAnimation r = new ResizeAnimation(binding.luckFragmentLayoutChances, targetHeight);
             r.setInterpolator(new AccelerateDecelerateInterpolator());
             r.setDuration(300);
-            layoutChances.startAnimation(r);
+            binding.luckFragmentLayoutChances.startAnimation(r);
 
-            buttonExpandChances.setEnabled(false);
-            buttonExpandChances.setChecked(true);
+            binding.luckFragmentExpandCollapseButton.setEnabled(false);
+            binding.luckFragmentExpandCollapseButton.setChecked(true);
             return;
 
 
         }
 
-        /*Inflates generic chance views based on how many chances (up to a maximum)*/
         for (int i = 0; i < chancePokemonMatchList.size(); i++) {
             if (showOnlyBestChance) {
                 if (i > 0) break;
@@ -232,30 +172,27 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
             }
 
 
-            /*Adds separators in between views*/
             if (!interfaceChanceList.isEmpty()) {
-                View separator = new View(getActivity().getApplicationContext());
-                ViewGroup.LayoutParams viewLp = new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) convertDpToPixel(1, getActivity().getApplicationContext()));
+                View separator = new View(requireActivity().getApplicationContext());
+                ViewGroup.LayoutParams viewLp = new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) convertDpToPixel(1, requireActivity().getApplicationContext()));
                 separator.setLayoutParams(viewLp);
-                separator.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.background_light_gray));
+                separator.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.background_light_gray));
                 separator.setVisibility(View.VISIBLE);
-                layoutChances.addView(separator);
+                binding.luckFragmentLayoutChances.addView(separator);
             }
 
-            View v = inflater2.inflate(R.layout.dynamic_view_layout_chance_data, layoutChances, false);
-            layoutChances.addView(v);
+            View v = getLayoutInflater().inflate(R.layout.dynamic_view_layout_chance_data, binding.luckFragmentLayoutChances, false);
+            binding.luckFragmentLayoutChances.addView(v);
             interfaceChanceList.add(v);
         }
 
-        /*Decides on the expand/collapse button behavior based on how many chances there are*/
         if (chancePokemonMatchList.size() < 2) {
-            buttonExpandChances.setEnabled(false);
-            buttonExpandChances.setChecked(true);
-        } else buttonExpandChances.setEnabled(true);
+            binding.luckFragmentExpandCollapseButton.setEnabled(false);
+            binding.luckFragmentExpandCollapseButton.setChecked(true);
+        } else binding.luckFragmentExpandCollapseButton.setEnabled(true);
 
-        //  LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)convertDpToPixel(72,getActivity().getApplicationContext()));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) getResources().getDimension(R.dimen.chance_data_height));
-        int margin = (int) convertDpToPixel(5, getActivity().getApplicationContext());
+        int margin = (int) convertDpToPixel(5, requireActivity().getApplicationContext());
         params.setMargins(margin, margin, margin, margin);
 
         for (int i = 0; i < interfaceChanceList.size(); i++) {
@@ -265,15 +202,15 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
 
             interfaceChanceList.get(i).setLayoutParams(params);
 
-            TextView v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceFirstNumber);
+            TextView v = interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceFirstNumber);
             v.setText(String.valueOf(feederCallback.getInterfacePokemonPosition(chancePokemonMatchList.get(i).getFirstPokemonUUID()) + 1));
 
-            v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceSecondNumber);
+            v = interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceSecondNumber);
             v.setText(String.valueOf(feederCallback.getInterfacePokemonPosition(chancePokemonMatchList.get(i).getSecondPokemonUUID()) + 1));
 
             double chance = chancePokemonMatchList.get(i).getChance();
             chance = applyShinyChance(chance);
-            v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChancePercentage);
+            v = interfaceChanceList.get(i).findViewById(R.id.textDynamicChancePercentage);
             if (chance * 100 > 0.01) {
                 String percentChance = String.format("%.2f", chance * 100) + "%";
                 v.setText(percentChance);
@@ -282,74 +219,64 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
                 v.setText(percentChance);
             }
 
-            v = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceEggs);
+            v = interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceEggs);
             double eggs = 1 / chance;
             if (eggs > 999)
                 v.setText(R.string.label_more_than_999_eggs);
             else {
-//                v.setText("~" + String.format("%.0f", 1 / chance) + " eggs");
-                String about = getActivity().getString(R.string.label_about_number);
+                String about = requireActivity().getString(R.string.label_about_number);
                 String number = String.format("%.0f", 1 / chance);
-                String eggsLabel = getActivity().getString(R.string.label_eggs);
-                String finalString = about + number;// + " " + eggsLabel;
+                String finalString = about + number;
                 v.setText(finalString);
             }
 
-            ImageView firstIcon = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstIcon);
-            //String iconId = "pkmn_big_" + String.format("%03d", chancePokemonMatchList.get(i).firstPokemon.id);
-            // firstIcon.setBackgroundResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
+            ImageView firstIcon = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstIcon);
+            firstIcon.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.pkmn_missingno));
+
+            ImageView secondIcon = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondIcon);
+            secondIcon.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.pkmn_missingno));
 
 
-            firstIcon.setBackground(CachedPokemonIcons.getInstance().getIcon(firstPokemon.getPokemonId()).getConstantState().newDrawable());
-            //firstIcon.setBackground(PokemonData.getInstance().getDrawableFromId(firstPokemon.getPokemonId()).getConstantState().newDrawable());
-
-            ImageView secondIcon = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondIcon);
-            //iconId = "pkmn_big_" + String.format("%03d", chancePokemonMatchList.get(i).secondPokemon.id);
-            // secondIcon.setBackgroundResource(getResources().getIdentifier(iconId,"drawable",getActivity().getPackageName()));
-            secondIcon.setBackground(CachedPokemonIcons.getInstance().getIcon(secondPokemon.getPokemonId()).getConstantState().newDrawable());
-            //secondIcon.setBackground(PokemonData.getInstance().getDrawableFromId(secondPokemon.getPokemonId()).getConstantState().newDrawable());
-
-
-            ImageView firstIVs[] = new ImageView[6];
-            firstIVs[0] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstHP);
-            firstIVs[1] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstATK);
-            firstIVs[2] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstDEF);
-            firstIVs[3] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstSATK);
-            firstIVs[4] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstSDEF);
-            firstIVs[5] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstSPD);
+            ImageView[] firstIVs = new ImageView[6];
+            firstIVs[0] = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstHP);
+            firstIVs[1] = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstATK);
+            firstIVs[2] = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstDEF);
+            firstIVs[3] = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstSATK);
+            firstIVs[4] = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstSDEF);
+            firstIVs[5] = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstSPD);
             for (int j = 0; j < 6; j++) {
                 firstIVs[j].setBackground(preloadedDrawables.getIVDrawable(j, firstPokemon.getIVs()[j] != 0));
             }
 
-            ImageView secondIVs[] = new ImageView[6];
-            secondIVs[0] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondHP);
-            secondIVs[1] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondATK);
-            secondIVs[2] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondDEF);
-            secondIVs[3] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondSATK);
-            secondIVs[4] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondSDEF);
-            secondIVs[5] = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondSPD);
+            ImageView[] secondIVs = new ImageView[6];
+            secondIVs[0] = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondHP);
+            secondIVs[1] = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondATK);
+            secondIVs[2] = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondDEF);
+            secondIVs[3] = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondSATK);
+            secondIVs[4] = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondSDEF);
+            secondIVs[5] = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondSPD);
 
             for (int j = 0; j < 6; j++) {
                 secondIVs[j].setBackground(preloadedDrawables.getIVDrawable(j, secondPokemon.getIVs()[j] != 0));
             }
 
-            ImageView firstGender = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstGender);
+            ImageView firstGender = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstGender);
             firstGender.setBackground(preloadedDrawables.getGenderDrawable(firstPokemon.getGenderId()));
 
-            ImageView secondGender = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondGender);
+            ImageView secondGender = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondGender);
             secondGender.setBackground(preloadedDrawables.getGenderDrawable(secondPokemon.getGenderId()));
 
-            TextView number = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceNumber);
+            TextView number = interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceNumber);
             number.setText(String.valueOf(i + 1));
 
             if ((shinyOptions & SHINY) == SHINY) {
-                ImageView shiny = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceShinyIndicator);
+                ImageView shiny = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceShinyIndicator);
                 shiny.setVisibility(View.VISIBLE);
             }
 
             if (mListener.careAboutNatures()) {
-                ImageView firstItem = (ImageView) interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstItem);
-                ImageView secondItem = (ImageView) interfaceChanceList.get(i).findViewById(imageDynamicChanceSecondItem);
+                ImageView firstItem = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceFirstItem);
+                ImageView secondItem = interfaceChanceList.get(i).findViewById(R.id.imageDynamicChanceSecondItem);
 
                 if (firstPokemon.hasSameNatureAsGoal())
                     firstItem.setBackgroundResource(R.drawable.ic_everstone_active);
@@ -357,7 +284,7 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
                     secondItem.setBackgroundResource(R.drawable.ic_everstone_active);
             }
 
-            TextView firstNature = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceFirstNature);
+            TextView firstNature = interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceFirstNature);
             String natureName = firstPokemon.getNatureName();
 
             String abilityName;
@@ -365,37 +292,35 @@ public class ChanceFragment extends Fragment implements ChanceOptionsFragment.On
             abilityName = firstPokemon.getAbilityName();
 
 
-            firstNature.setText(natureName + " | " + abilityName); //TODO: converter para sistema
+            firstNature.setText(natureName + " | " + abilityName);
 
-            TextView secondNature = (TextView) interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceSecondNature);
+            TextView secondNature = interfaceChanceList.get(i).findViewById(R.id.textDynamicChanceSecondNature);
 
             natureName = secondPokemon.getNatureName();
             abilityName = secondPokemon.getAbilityName();
 
-            secondNature.setText(natureName + " | " + abilityName); //TODO: converter para sistema
+            secondNature.setText(natureName + " | " + abilityName);
 
 
         }
 
         int targetHeight = (int) (interfaceChanceList.size() * getResources().getDimension(R.dimen.chance_data_height));
-        targetHeight += interfaceChanceList.size() * convertDpToPixel(11, getActivity().getApplicationContext());
-        ResizeAnimation r = new ResizeAnimation(layoutChances, targetHeight);
+        targetHeight += interfaceChanceList.size() * convertDpToPixel(11, requireActivity().getApplicationContext());
+        ResizeAnimation r = new ResizeAnimation(binding.luckFragmentLayoutChances, targetHeight);
         r.setInterpolator(new DecelerateInterpolator());
         r.setDuration(300);
-        layoutChances.startAnimation(r);
+        binding.luckFragmentLayoutChances.startAnimation(r);
     }
 
     private void openLuckOptionsFragment() {
-        FragmentManager fm = getFragmentManager();
         ChanceOptionsFragment chanceOptionsFragment = new ChanceOptionsFragment();
-        Bundle b = addPositionAsArguments(buttonOptions);
+        Bundle b = addPositionAsArguments(binding.luckFragmentButtonOptions);
         chanceOptionsFragment.setArguments(b);
-        chanceOptionsFragment.setTargetFragment(this, 0);
-        chanceOptionsFragment.show(fm, "luckOptions");
+        chanceOptionsFragment.show(getParentFragmentManager(), "luckOptions");
     }
 
     private Bundle addPositionAsArguments(View v) {
-        int callerViewPosition[] = new int[2];
+        int[] callerViewPosition = new int[2];
         v.getLocationOnScreen(callerViewPosition);
         Bundle b = new Bundle();
         b.putInt("x", callerViewPosition[0]);

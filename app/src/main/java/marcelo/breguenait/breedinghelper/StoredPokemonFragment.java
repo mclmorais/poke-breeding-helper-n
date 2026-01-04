@@ -3,18 +3,17 @@ package marcelo.breguenait.breedinghelper;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,8 +25,7 @@ import java.util.UUID;
 
 import breedingmanager.NatureManager;
 import databasemanager.DatabaseConstants;
-
-//TODO: fazer list do stored adapter ser mais proativo ao invés de ressetar toda vez
+import marcelo.breguenait.breedinghelper.R;
 
 public class StoredPokemonFragment extends Fragment implements
         EditorPokemonFragment.FeedDataCreatePokemon,
@@ -54,62 +52,51 @@ public class StoredPokemonFragment extends Fragment implements
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        if (savedInstanceState != null) {
-            return null;
-        }
 
         View view = inflater.inflate(R.layout.fragment_stored_pokemon, container, false);
 
-
-        gridViewPokemons = (GridView) view.findViewById(R.id.gridViewPokemonsList);
-        Button buttonAdd = (Button) view.findViewById(R.id.buttonFragmentPokemonListAdd);
-        buttonRemove = (ToggleButton) view.findViewById(R.id.buttonFragmentPokemonListRemove);
-        textHintStore = (TextView) view.findViewById(R.id.textViewHintStore);
-        textHintRemove = (TextView) view.findViewById(R.id.textViewHintDelete);
+        gridViewPokemons = view.findViewById(R.id.gridViewPokemonsList);
+        Button buttonAdd = view.findViewById(R.id.buttonFragmentPokemonListAdd);
+        buttonRemove = view.findViewById(R.id.buttonFragmentPokemonListRemove);
+        textHintStore = view.findViewById(R.id.textViewHintStore);
+        textHintRemove = view.findViewById(R.id.textViewHintDelete);
 
         textHintRemove.setVisibility(View.GONE);
 
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openAddPokemonFragment(view);
-                buttonRemove.setChecked(false);
-            }
+        buttonAdd.setOnClickListener(v -> {
+            openAddPokemonFragment(v);
+            buttonRemove.setChecked(false);
         });
 
-        buttonRemove.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b && !storedPokemonAdapter.isEmpty()) {
-                    textHintRemove.setVisibility(View.VISIBLE);
-                    buttonRemove.setTextColor(ContextCompat.getColor(getContext(), android.R.color.holo_red_dark));
-                    storedPokemonAdapter.setDeleteMode(true);
+        buttonRemove.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b && storedPokemonAdapter != null && !storedPokemonAdapter.isEmpty()) {
+                textHintRemove.setVisibility(View.VISIBLE);
+                buttonRemove.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark));
+                storedPokemonAdapter.setDeleteMode(true);
 
-                } else {
-                    textHintRemove.setVisibility(View.GONE);
-                    buttonRemove.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+            } else {
+                textHintRemove.setVisibility(View.GONE);
+                buttonRemove.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary));
+                if (storedPokemonAdapter != null) {
                     storedPokemonAdapter.setDeleteMode(false);
                 }
-                updateGridView();
             }
+            updateGridView();
         });
 
-        gridViewPokemons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (buttonRemove.isChecked()) {
-                    InterfaceStoredPokemon p = (InterfaceStoredPokemon) gridViewPokemons.getAdapter().getItem(i);
-                    updaterCallback.removeStoredPokemon(p.getUUID());
-                    setHatchAdapter(feederCallback.getInterfaceStoredPokemonList(), getContext());
-                    updateGridView();
+        gridViewPokemons.setOnItemClickListener((adapterView, view1, i, l) -> {
+            if (buttonRemove.isChecked()) {
+                InterfaceStoredPokemon p = (InterfaceStoredPokemon) gridViewPokemons.getAdapter().getItem(i);
+                updaterCallback.removeStoredPokemon(p.getUUID());
+                setHatchAdapter(feederCallback.getInterfaceStoredPokemonList(), getContext());
+                updateGridView();
 
 
-                } else {
-                    InterfaceStoredPokemon p = (InterfaceStoredPokemon) gridViewPokemons.getAdapter().getItem(i);
-                    openStoredPokemonViewerFragment(view, p.getUUID(), i);
-                }
+            } else {
+                InterfaceStoredPokemon p = (InterfaceStoredPokemon) gridViewPokemons.getAdapter().getItem(i);
+                openStoredPokemonViewerFragment(view1, p.getUUID(), i);
             }
         });
 
@@ -119,52 +106,56 @@ public class StoredPokemonFragment extends Fragment implements
 
     void setHatchAdapter(ArrayList<InterfaceStoredPokemon> list, Context context) {
         storedPokemonAdapter = new StoredPokemonAdapter(list, context);
-        storedPokemonAdapter.setDeleteMode(buttonRemove.isChecked()); //TODO: meio merda implementaçao geral disso aqui, bom mudar quando eu tirar esse gridview talvez?
+        storedPokemonAdapter.setDeleteMode(buttonRemove.isChecked());
         gridViewPokemons.setAdapter(storedPokemonAdapter);
         updateGridView();
 
     }
 
     void openAddPokemonFragment(View callerView) {
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getParentFragmentManager();
         CreatePokemonFragment fragment = new CreatePokemonFragment();
         Bundle b = addPositionAsArguments(callerView);
         b.putInt("defaultPokemon", lastAddedPokemonId);
         fragment.setArguments(b);
+        // Set this fragment as the target so CreatePokemonFragment can find it
         fragment.setTargetFragment(this, 0);
-        fragment.show(fm, "");
+        fragment.show(fm, "CreatePokemonFragment");
     }
 
     void openStoredPokemonViewerFragment(View callerView, UUID pokemonUUID, int pokemonPos) {
-        FragmentManager fragmentManager = getFragmentManager();
-        int callerViewPosition[] = new int[2];
+        FragmentManager fragmentManager = getParentFragmentManager();
+        int[] callerViewPosition = new int[2];
         callerView.getLocationOnScreen(callerViewPosition);
         StoredPokemonViewerFragment fragment = StoredPokemonViewerFragment.newInstance(callerViewPosition, pokemonUUID, pokemonPos);
-        fragment.setTargetFragment(this, 0);
         fragment.show(fragmentManager, "storedPokemonPopup");
     }
 
     void updateGridView() {
-        if (!storedPokemonAdapter.isEmpty()) {
-            buttonRemove.setEnabled(true);
-            textHintStore.setVisibility(View.GONE);
-        } else {
+        if (storedPokemonAdapter != null && !storedPokemonAdapter.isEmpty()) {
+            if(buttonRemove != null) buttonRemove.setEnabled(true);
+            if(textHintStore != null) textHintStore.setVisibility(View.GONE);
+        } else if (buttonRemove != null && textHintStore != null) {
             buttonRemove.setChecked(false);
             buttonRemove.setEnabled(false);
             textHintStore.setVisibility(View.VISIBLE);
         }
-        storedPokemonAdapter.notifyDataSetChanged();
+        if (storedPokemonAdapter != null) {
+            storedPokemonAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        setHatchAdapter(feederCallback.getInterfaceStoredPokemonList(), getContext());
+        if (feederCallback != null) {
+            setHatchAdapter(feederCallback.getInterfaceStoredPokemonList(), getContext());
+        }
         updateGridView();
     }
 
     Bundle addPositionAsArguments(View v) {
-        int callerViewPosition[] = new int[2];
+        int[] callerViewPosition = new int[2];
         v.getLocationOnScreen(callerViewPosition);
         Bundle b = new Bundle();
         b.putInt("x", callerViewPosition[0]);
@@ -251,7 +242,7 @@ public class StoredPokemonFragment extends Fragment implements
             return new InterfaceModifierPokemon();
     }
 
-    interface FeedDataStoredPokemon {
+    public interface FeedDataStoredPokemon {
 
         LinkedHashMap<Integer, String> getListOfAbilities(int pokemonId);
 
@@ -276,7 +267,7 @@ public class StoredPokemonFragment extends Fragment implements
         ArrayList<NatureManager.NatureVerbose> getInterfaceNatures();
     }
 
-    interface UpdateStoredPokemonList {
+    public interface UpdateStoredPokemonList {
         void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot);
 
         void updateStoredPokemon(UUID uuid, int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot);
@@ -285,11 +276,10 @@ public class StoredPokemonFragment extends Fragment implements
     }
 
     public static class InterfaceStoredPokemon {
-        /*Unique identifier of this stored Pokemon*/
-        final private UUID storedId; //NEVER created by itself here
+        final private UUID storedId;
         final private int pokemonId;
         final private int genderId;
-        final private int IVs[];
+        final private int[] IVs;
 
         public InterfaceStoredPokemon(UUID storedId, int pokemonId, int genderId, int[] IVs) {
             this.storedId = storedId;
@@ -319,7 +309,7 @@ public class StoredPokemonFragment extends Fragment implements
 
         private final PreloadedDrawables preloadedDrawables;
         private final LayoutInflater inflater;
-        private ArrayList<InterfaceStoredPokemon> storedPokemonList;
+        private final ArrayList<InterfaceStoredPokemon> storedPokemonList;
         private boolean deleteMode = false;
 
         public StoredPokemonAdapter(ArrayList<InterfaceStoredPokemon> storedPokemonList, Context context) {
@@ -360,15 +350,15 @@ public class StoredPokemonFragment extends Fragment implements
 
                 holder = new LayoutHolder();
                 holder.frame = hatch.findViewById(R.id.frameDynamicHatch);
-                holder.icon = (ImageView) hatch.findViewById(R.id.imageDynamicHatchIcon);
-                holder.gender = (ImageView) hatch.findViewById(R.id.imageDynamicHatchGender);
-                holder.number = (TextView) hatch.findViewById(R.id.textDynamicHatchNumber);
-                holder.IVs[0] = (ImageView) hatch.findViewById(R.id.imageDynamicHatchHP);
-                holder.IVs[1] = (ImageView) hatch.findViewById(R.id.imageDynamicHatchATK);
-                holder.IVs[2] = (ImageView) hatch.findViewById(R.id.imageDynamicHatchDEF);
-                holder.IVs[3] = (ImageView) hatch.findViewById(R.id.imageDynamicHatchSATK);
-                holder.IVs[4] = (ImageView) hatch.findViewById(R.id.imageDynamicHatchSDEF);
-                holder.IVs[5] = (ImageView) hatch.findViewById(R.id.imageDynamicHatchSPD);
+                holder.icon = hatch.findViewById(R.id.imageDynamicHatchIcon);
+                holder.gender = hatch.findViewById(R.id.imageDynamicHatchGender);
+                holder.number = hatch.findViewById(R.id.textDynamicHatchNumber);
+                holder.IVs[0] = hatch.findViewById(R.id.imageDynamicHatchHP);
+                holder.IVs[1] = hatch.findViewById(R.id.imageDynamicHatchATK);
+                holder.IVs[2] = hatch.findViewById(R.id.imageDynamicHatchDEF);
+                holder.IVs[3] = hatch.findViewById(R.id.imageDynamicHatchSATK);
+                holder.IVs[4] = hatch.findViewById(R.id.imageDynamicHatchSDEF);
+                holder.IVs[5] = hatch.findViewById(R.id.imageDynamicHatchSPD);
 
                 hatch.setTag(holder);
             } else {
@@ -382,7 +372,7 @@ public class StoredPokemonFragment extends Fragment implements
             else
                 holder.frame.setBackgroundResource(R.drawable.layer_background_round_selector);
 
-            holder.icon.setBackground(CachedPokemonIcons.getInstance().getIcon(interfaceStoredPokemon.getPokemonId()).getConstantState().newDrawable());
+            holder.icon.setBackground(ContextCompat.getDrawable(hatch.getContext(), R.drawable.pkmn_missingno));
 
             holder.gender.setBackground(preloadedDrawables.getGenderDrawable(interfaceStoredPokemon.getGenderId()));
             for (int j = 0; j < 6; j++)
@@ -395,7 +385,7 @@ public class StoredPokemonFragment extends Fragment implements
 
         int getPositionByUUID(UUID uuid) {
             for (int i = 0; i < storedPokemonList.size(); i++) {
-                if (storedPokemonList.get(i).getUUID() == uuid)
+                if (storedPokemonList.get(i).getUUID().equals(uuid))
                     return i;
             }
 
@@ -410,7 +400,7 @@ public class StoredPokemonFragment extends Fragment implements
                 return null;
         }
 
-        private class PreloadedDrawables {
+        private static class PreloadedDrawables {
             final Drawable[] IVActive = new Drawable[6];
             final Drawable[] IVInactive = new Drawable[6];
             final Drawable maleIcon;
@@ -456,7 +446,7 @@ public class StoredPokemonFragment extends Fragment implements
 
         }
 
-        class LayoutHolder {
+        static class LayoutHolder {
             ImageView icon;
             ImageView gender;
             TextView number;

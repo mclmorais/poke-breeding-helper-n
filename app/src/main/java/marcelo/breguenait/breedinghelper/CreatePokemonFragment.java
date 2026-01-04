@@ -1,37 +1,55 @@
 package marcelo.breguenait.breedinghelper;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Spinner;
 
+import java.util.ArrayList;
+
+import breedingmanager.NatureManager;
 import databasemanager.DatabaseConstants;
 
-public class CreatePokemonFragment extends EditorPokemonFragment {
+public class CreatePokemonFragment extends DialogFragment {
 
 
     private UpdateCreatePokemon updaterCallback;
     private FeedDataCreatePokemon feederCallback;
+    private int selectedPokemonId = -1;
+    private int selectedGenderId = 2;
+    private int selectedNatureId = -1;
+    private int selectedAbilitySlot = -1;
+    private ArrayList<NatureManager.NatureVerbose> natureVerboses;
+    private ArrayList<InterfaceAbility> interfaceAbilities;
+    private Spinner spinnerNature;
+    private Spinner spinnerAbility;
+    private CheckBox[] checkBoxInputIVs = new CheckBox[6];
+    private Button confirmButton;
 
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
         InterfaceModifierPokemon interfaceModifierPokemon = feederCallback.getLastInterfaceModifierPokemon();
-        selectedPokemonId = interfaceModifierPokemon.getPokemonId();
-        selectedNatureId = interfaceModifierPokemon.getNatureId();
-        selectedAbilitySlot = interfaceModifierPokemon.getAbilitySlot();
-        selectedGenderId = interfaceModifierPokemon.getGenderId();
+        int selectedPokemonId = interfaceModifierPokemon.getPokemonId();
+        int selectedNatureId = interfaceModifierPokemon.getNatureId();
+        int selectedAbilitySlot = interfaceModifierPokemon.getAbilitySlot();
+        int selectedGenderId = interfaceModifierPokemon.getGenderId();
 
-        feedInterface();
-        feedNatureSpinnerSelection();
-        feedAbilitySpinnerSelection(selectedAbilitySlot);
+        // feedInterface();
+        // feedNatureSpinnerSelection();
+        // feedAbilitySpinnerSelection(selectedAbilitySlot);
         return v;
     }
 
@@ -100,52 +118,51 @@ public class CreatePokemonFragment extends EditorPokemonFragment {
                 selectedNatureId,
                 selectedAbilitySlot);
 
-        closeFragment();
+        dismiss();
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
 
         try {
             Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                updaterCallback = (UpdateCreatePokemon) activity;
-            else
-                updaterCallback = (UpdateCreatePokemon) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getTargetFragment().toString()
-                    + " must implement UpdateCreatePokemon");
-        }
-
-        try {
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment == null)
-                feederCallback = (FeedDataCreatePokemon) activity;
-            else
-                feederCallback = (FeedDataCreatePokemon) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getTargetFragment().toString()
-                    + " must implement FeedDataCreatePokemon");
-        }
-    }
-
-    @Override
-    void setListeners() {
-        super.setListeners();
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finishFragment();
+            if (targetFragment == null) {
+                targetFragment = getParentFragment();
             }
-        });
+            if (targetFragment == null) {
+                updaterCallback = (UpdateCreatePokemon) context;
+                feederCallback = (FeedDataCreatePokemon) context;
+            } else {
+                updaterCallback = (UpdateCreatePokemon) targetFragment;
+                feederCallback = (FeedDataCreatePokemon) targetFragment;
+            }
+        } catch (ClassCastException e) {
+            Fragment targetFragment = getTargetFragment();
+            if (targetFragment == null) {
+                targetFragment = getParentFragment();
+            }
+            throw new ClassCastException((targetFragment != null ? targetFragment.toString() : context.toString())
+                    + " must implement callbacks");
+        }
     }
 
-    interface FeedDataCreatePokemon {
+    void setListeners() {
+        if (confirmButton != null) {
+            confirmButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finishFragment();
+                }
+            });
+        }
+    }
+
+    public interface FeedDataCreatePokemon {
         InterfaceModifierPokemon getLastInterfaceModifierPokemon();
     }
 
-    interface UpdateCreatePokemon {
+    public interface UpdateCreatePokemon {
         void storePokemon(int pokemonId, int genderId, int[] IVs, int natureId, int abilitySlot);
     }
 }

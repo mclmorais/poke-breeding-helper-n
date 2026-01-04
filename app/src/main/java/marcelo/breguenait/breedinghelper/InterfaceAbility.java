@@ -1,6 +1,6 @@
 package marcelo.breguenait.breedinghelper;
 
-class InterfaceAbility {
+public class InterfaceAbility {
     final public String abilityName;
     final public int abilitySlot;
 
